@@ -28,6 +28,7 @@ player_yΔ = 0
 # Player Bullet
 bullet_img = pygame.image.load('bullets.png')
 l_bullet = 64
+bullet_rect = pygame.Surface(l_bullet, l_bullet)
 bullet_x = 0
 bullet_y = 480
 bullet_xΔ = 0
@@ -37,6 +38,7 @@ bullet_state = "ready"  # At this state we can't see bullet on screen
 # Enemy
 enemy_img = pygame.image.load('enemy_img.png')
 l_enemy = 64
+enemy_rect = pygame.Surface(l_enemy, l_enemy)
 enemy_x = random.randint(0, width - l_enemy)
 enemy_y = random.randint(50, height / 4)
 enemy_xΔ = 0.3
@@ -80,7 +82,7 @@ while running:
                 player_yΔ = 0.3
             # Player Bullet Keyboard
             elif event.key == pygame.K_SPACE:
-                if bullet_state is "ready":
+                if bullet_state == "ready":
                     # Get current x coordinate of player
                     bullet_x = player_x
                     bullet_y = player_y
@@ -115,9 +117,14 @@ while running:
     if bullet_y <= 0:
         bullet_y = 480
         bullet_state = "ready"
-    if bullet_state is "fire":
+    if bullet_state == "fire":
         fire_bullet(bullet_x, bullet_y)
         bullet_y -= bullet_yΔ
+
+    # Collision Detection
+
+    if pygame.Rect.colliderect(bullet_rect.get_rect(), enemy_rect.get_rect()):
+        print("collision")
 
     show_player(player_x, player_y)
     show_enemy(enemy_x, enemy_y)
