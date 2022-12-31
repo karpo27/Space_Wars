@@ -4,12 +4,18 @@
 # Modules
 import pygame
 import random
+import math
 
 # Initialize Pygame
 pygame.init()
 
+# Define Clock for Screen FPS
+clock = pygame.time.Clock()
+FPS = 60
+dt = clock.tick(FPS)
+
 # Create the screen
-size = width, height = (800, 800)
+size = width, height = (1000, 800)
 screen = pygame.display.set_mode(size)
 
 # Title and Icon
@@ -20,8 +26,8 @@ pygame.display.set_icon(icon)
 # Player
 player_img = pygame.image.load('player_img.png')
 l_player = 64
-player_x = 370
-player_y = 480
+player_x = width / 2 - l_player / 2
+player_y = 8/9 * height
 player_xΔ = 0
 player_yΔ = 0
 
@@ -31,7 +37,7 @@ l_bullet = 64
 bullet_x = 0
 bullet_y = 480
 bullet_xΔ = 0
-bullet_yΔ = 1.5
+bullet_yΔ = 1.2 * dt
 bullet_state = "ready"  # At this state we can't see bullet on screen
 
 # Enemy
@@ -39,10 +45,19 @@ enemy_img = pygame.image.load('enemy_img.png')
 l_enemy = 64
 enemy_x = random.randint(0, width - l_enemy)
 enemy_y = random.randint(50, height / 4)
-enemy_xΔ = 0.3
+enemy_xΔ = 0.3 * dt
 enemy_yΔ = 40
 
+# Score
 score = 0
+
+# Space Background
+space_bg = pygame.image.load('space_bg.jpg')
+bg_height = space_bg.get_height()
+
+# Define Scrolling
+scroll = 0
+tiles = math.ceil(height / bg_height)
 
 
 def show_player(x, y):
@@ -62,8 +77,19 @@ def show_enemy(x, y):
 # Game Loop
 running = True
 while running:
-    # Set background color - RGB
-    screen.fill((0, 0, 0))
+    # Set screen FPS
+    clock.tick(FPS)
+
+    # Draw Scrolling Background
+    screen.blit(space_bg, (0, -height + scroll))    # Position 2
+    screen.blit(space_bg, (0, scroll))              # Position 1
+
+    # Scroll Movement Speed
+    scroll += 0.8
+
+    # Reset Scroll
+    if scroll >= bg_height:
+        scroll = 0
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -73,13 +99,13 @@ while running:
         if event.type == pygame.KEYDOWN:
             # Player Keyboard Movement
             if event.key == pygame.K_LEFT:
-                player_xΔ = -0.3
+                player_xΔ = -0.3 * dt
             elif event.key == pygame.K_RIGHT:
-                player_xΔ = 0.3
+                player_xΔ = 0.3 * dt
             elif event.key == pygame.K_UP:
-                player_yΔ = -0.3
+                player_yΔ = -0.3 * dt
             elif event.key == pygame.K_DOWN:
-                player_yΔ = 0.3
+                player_yΔ = 0.3 * dt
             # Player Bullet Keyboard
             elif event.key == pygame.K_SPACE:
                 if bullet_state == "ready":
@@ -95,22 +121,27 @@ while running:
             elif event.key in (pygame.K_UP, pygame.K_DOWN):
                 player_yΔ = 0
 
-    # Movement Boundaries
+    # Player Movement Boundaries
     player_x += player_xΔ
     player_y += player_yΔ
 
     if player_x <= 0:
         player_x = 0
-    elif player_x >= width - l_player:
+    if player_y <= 0:
+        player_y = 0
+    if player_x >= width - l_player:
         player_x = width - l_player
+    if player_y >= height - l_player:
+        player_y = height - l_player
 
+    # Enemy Movement
     enemy_x += enemy_xΔ
 
     if enemy_x <= 0:
-        enemy_xΔ = 0.3
+        enemy_xΔ = 0.3 * dt
         enemy_y += enemy_yΔ
-    elif enemy_x >= width - l_enemy:
-        enemy_xΔ = -0.3
+    if enemy_x >= width - l_enemy:
+        enemy_xΔ = -0.3 * dt
         enemy_y += enemy_yΔ
 
     # Player Bullet Movement
