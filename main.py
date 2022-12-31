@@ -3,6 +3,7 @@
 
 # Modules
 import pygame
+from pygame import mixer
 import random
 import math
 
@@ -27,7 +28,7 @@ pygame.display.set_icon(icon)
 player_img = pygame.image.load('player_img.png')
 l_player = 64
 player_x = width / 2 - l_player / 2
-player_y = 8/9 * height
+player_y = 8 / 9 * height
 player_Δx = 0
 player_Δy = 0
 
@@ -48,16 +49,20 @@ enemy_y = random.randint(50, height / 4)
 enemy_Δx = 0.3 * dt
 enemy_Δy = 40
 
-# Score
-score = 0
-
 # Space Background
 space_bg = pygame.image.load('space_bg.jpg')
 bg_height = space_bg.get_height()
+mixer.music.load('Sounds/background.wav')
+mixer.music.play(-1)    # (-1) for playing on loop
 
 # Define Scrolling
 scroll = 0
 tiles = math.ceil(height / bg_height)
+
+# Score
+score_value = 0
+font = pygame.font.Font('freesansbold.ttf', 32)
+score_pos = text_x, text_y = (10, 10)
 
 
 def show_player(x, y):
@@ -74,6 +79,11 @@ def show_enemy(x, y):
     screen.blit(enemy_img, (x, y))
 
 
+def show_score(x, y):
+    score = font.render("Score: " + str(score_value), True, (255, 255, 255))
+    screen.blit(score, (x, y))
+
+
 # Game Loop
 running = True
 while running:
@@ -81,8 +91,8 @@ while running:
     clock.tick(FPS)
 
     # Draw Scrolling Background
-    screen.blit(space_bg, (0, -height + scroll))    # Position 2
-    screen.blit(space_bg, (0, scroll))              # Position 1
+    screen.blit(space_bg, (0, -height + scroll))  # Position 2
+    screen.blit(space_bg, (0, scroll))  # Position 1
 
     # Scroll Movement Speed
     scroll += 0.8
@@ -109,6 +119,8 @@ while running:
             # Player Bullet Keyboard
             elif event.key == pygame.K_SPACE:
                 if bullet_state == "ready":
+                    bullet_sound = mixer.Sound('Sounds/laser.wav')
+                    bullet_sound.play()
                     # Get current (x, y) coordinate of player
                     bullet_x = player_x
                     bullet_y = player_y
@@ -156,23 +168,20 @@ while running:
     collision = pygame.Rect.colliderect(
         bullet_img.get_rect(x=bullet_x, y=bullet_y),
         enemy_img.get_rect(x=enemy_x, y=enemy_y)
-        )
+    )
     if collision:
         bullet_y = player_y
         bullet_state = "ready"
-        score += 1
-        print(score)
+        score_value += 1
+        bullet_col_sound = mixer.Sound('Sounds/explosion.wav')
+        bullet_col_sound.play()
 
     show_player(player_x, player_y)
     show_enemy(enemy_x, enemy_y)
+    show_score(text_x, text_y)
 
     # Apply changes
     pygame.display.update()
 
-
-
-
 if __name__ == '__main__':
     pass
-
-
