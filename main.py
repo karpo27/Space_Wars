@@ -24,6 +24,10 @@ pygame.display.set_caption("Game_Project")
 icon = pygame.image.load('icon.png')
 pygame.display.set_icon(icon)
 
+# Mouse Button Constants
+LEFT = 1
+RIGHT = 3
+
 # Player
 player_img = pygame.image.load('player_img.png')
 l_player = 64
@@ -55,6 +59,13 @@ bg_height = space_bg.get_height()
 mixer.music.load('Sounds/background.wav')
 mixer.music.play(-1)    # (-1) for playing on loop
 
+# Speakers
+speakers_on_img = pygame.image.load('Images/Speakers/speakers_on_img.png')
+speakers_off_img = pygame.image.load('Images/Speakers/speakers_off_img.png')
+speakers_pos = speakers_x, speakers_y = (13/14 * width, 1/75 * height)
+speakers_on_rect = speakers_on_img.get_rect(x=speakers_x, y=speakers_y)
+speakers_off_rect = speakers_off_img.get_rect(x=speakers_x, y=speakers_y)
+
 # Define Scrolling
 scroll = 0
 tiles = math.ceil(height / bg_height)
@@ -82,6 +93,10 @@ def show_enemy(x, y):
 def show_score(x, y):
     score = font.render("Score: " + str(score_value), True, (255, 255, 255))
     screen.blit(score, (x, y))
+
+
+def show_speakers(x, y):
+    screen.blit(speakers_off_img, (x, y))
 
 
 # Game Loop
@@ -133,6 +148,13 @@ while running:
             elif event.key in (pygame.K_UP, pygame.K_DOWN):
                 player_Δy = 0
 
+        # Press Mouse
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
+            mouse_pos = pygame.mouse.get_pos()
+            if speakers_off_rect.collidepoint(mouse_pos):
+                print("hit")
+
+
     # Player Movement Boundaries
     player_x += player_Δx
     player_y += player_Δy
@@ -179,6 +201,7 @@ while running:
     show_player(player_x, player_y)
     show_enemy(enemy_x, enemy_y)
     show_score(text_x, text_y)
+    show_speakers(speakers_x, speakers_y)
 
     # Apply changes
     pygame.display.update()
