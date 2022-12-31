@@ -28,16 +28,16 @@ player_img = pygame.image.load('player_img.png')
 l_player = 64
 player_x = width / 2 - l_player / 2
 player_y = 8/9 * height
-player_xΔ = 0
-player_yΔ = 0
+player_Δx = 0
+player_Δy = 0
 
 # Player Bullet
 bullet_img = pygame.image.load('bullets.png')
 l_bullet = 64
 bullet_x = 0
 bullet_y = 480
-bullet_xΔ = 0
-bullet_yΔ = 1.2 * dt
+bullet_Δx = 0
+bullet_Δy = 1.2 * dt
 bullet_state = "ready"  # At this state we can't see bullet on screen
 
 # Enemy
@@ -45,8 +45,8 @@ enemy_img = pygame.image.load('enemy_img.png')
 l_enemy = 64
 enemy_x = random.randint(0, width - l_enemy)
 enemy_y = random.randint(50, height / 4)
-enemy_xΔ = 0.3 * dt
-enemy_yΔ = 40
+enemy_Δx = 0.3 * dt
+enemy_Δy = 40
 
 # Score
 score = 0
@@ -99,13 +99,13 @@ while running:
         if event.type == pygame.KEYDOWN:
             # Player Keyboard Movement
             if event.key == pygame.K_LEFT:
-                player_xΔ = -0.3 * dt
+                player_Δx = -0.3 * dt
             elif event.key == pygame.K_RIGHT:
-                player_xΔ = 0.3 * dt
+                player_Δx = 0.3 * dt
             elif event.key == pygame.K_UP:
-                player_yΔ = -0.3 * dt
+                player_Δy = -0.3 * dt
             elif event.key == pygame.K_DOWN:
-                player_yΔ = 0.3 * dt
+                player_Δy = 0.3 * dt
             # Player Bullet Keyboard
             elif event.key == pygame.K_SPACE:
                 if bullet_state == "ready":
@@ -117,13 +117,13 @@ while running:
         # Release Keyboard
         if event.type == pygame.KEYUP:
             if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
-                player_xΔ = 0
+                player_Δx = 0
             elif event.key in (pygame.K_UP, pygame.K_DOWN):
-                player_yΔ = 0
+                player_Δy = 0
 
     # Player Movement Boundaries
-    player_x += player_xΔ
-    player_y += player_yΔ
+    player_x += player_Δx
+    player_y += player_Δy
 
     if player_x <= 0:
         player_x = 0
@@ -135,14 +135,14 @@ while running:
         player_y = height - l_player
 
     # Enemy Movement
-    enemy_x += enemy_xΔ
+    enemy_x += enemy_Δx
 
     if enemy_x <= 0:
-        enemy_xΔ = 0.3 * dt
-        enemy_y += enemy_yΔ
+        enemy_Δx = 0.3 * dt
+        enemy_y += enemy_Δy
     if enemy_x >= width - l_enemy:
-        enemy_xΔ = -0.3 * dt
-        enemy_y += enemy_yΔ
+        enemy_Δx = -0.3 * dt
+        enemy_y += enemy_Δy
 
     # Player Bullet Movement
     if bullet_y <= 0:
@@ -150,9 +150,9 @@ while running:
         bullet_state = "ready"
     if bullet_state == "fire":
         fire_bullet(bullet_x, bullet_y)
-        bullet_y -= bullet_yΔ
+        bullet_y -= bullet_Δy
 
-    # Collision Detection
+    # Collision Detection (fix problem at intersection of objects when pressing "spacebar")
     collision = pygame.Rect.colliderect(
         bullet_img.get_rect(x=bullet_x, y=bullet_y),
         enemy_img.get_rect(x=enemy_x, y=enemy_y)
