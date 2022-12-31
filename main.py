@@ -44,6 +44,8 @@ bullet_y = 480
 bullet_Δx = 0
 bullet_Δy = 1.2 * dt
 bullet_state = "ready"  # At this state we can't see bullet on screen
+bullet_sound = mixer.Sound('Sounds/laser.wav')
+bullet_col_sound = mixer.Sound('Sounds/explosion.wav')
 
 # Enemy
 enemy_img = pygame.image.load('enemy_img.png')
@@ -58,6 +60,8 @@ space_bg = pygame.image.load('space_bg.jpg')
 bg_height = space_bg.get_height()
 mixer.music.load('Sounds/background.wav')
 mixer.music.play(-1)    # (-1) for playing on loop
+mixer.music.set_volume(0.0)
+
 
 # Speakers
 speakers_on_img = pygame.image.load('Images/Speakers/speakers_on_img.png')
@@ -65,6 +69,8 @@ speakers_off_img = pygame.image.load('Images/Speakers/speakers_off_img.png')
 speakers_pos = speakers_x, speakers_y = (13/14 * width, 1/75 * height)
 speakers_on_rect = speakers_on_img.get_rect(x=speakers_x, y=speakers_y)
 speakers_off_rect = speakers_off_img.get_rect(x=speakers_x, y=speakers_y)
+speakers_state = "off"      # This means game will begin with Speakers-Off
+initial_sound = 0.0
 
 # Define Scrolling
 scroll = 0
@@ -95,8 +101,17 @@ def show_score(x, y):
     screen.blit(score, (x, y))
 
 
-def show_speakers(x, y):
-    screen.blit(speakers_off_img, (x, y))
+def action_speakers(x, y, state):
+    if state == "off":
+        screen.blit(speakers_off_img, (x, y))
+        mixer.music.set_volume(0.0)
+        bullet_sound.set_volume(initial_sound)
+        bullet_col_sound.set_volume(initial_sound)
+    else:
+        screen.blit(speakers_on_img, (x, y))
+        mixer.music.set_volume(0.08)
+        bullet_sound.set_volume(0.08)
+        bullet_col_sound.set_volume(0.08)
 
 
 # Game Loop
@@ -134,8 +149,8 @@ while running:
             # Player Bullet Keyboard
             elif event.key == pygame.K_SPACE:
                 if bullet_state == "ready":
-                    bullet_sound = mixer.Sound('Sounds/laser.wav')
                     bullet_sound.play()
+                    bullet_sound.set_volume(initial_sound)
                     # Get current (x, y) coordinate of player
                     bullet_x = player_x
                     bullet_y = player_y
@@ -152,8 +167,10 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             mouse_pos = pygame.mouse.get_pos()
             if speakers_off_rect.collidepoint(mouse_pos):
-                print("hit")
-
+                if speakers_state == "off":
+                    speakers_state = "on"
+                else:
+                    speakers_state = "off"
 
     # Player Movement Boundaries
     player_x += player_Δx
@@ -195,13 +212,12 @@ while running:
         bullet_y = player_y
         bullet_state = "ready"
         score_value += 1
-        bullet_col_sound = mixer.Sound('Sounds/explosion.wav')
         bullet_col_sound.play()
 
     show_player(player_x, player_y)
     show_enemy(enemy_x, enemy_y)
     show_score(text_x, text_y)
-    show_speakers(speakers_x, speakers_y)
+    action_speakers(speakers_x, speakers_y, speakers_state)
 
     # Apply changes
     pygame.display.update()
