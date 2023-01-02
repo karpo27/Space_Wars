@@ -21,7 +21,7 @@ screen = pygame.display.set_mode(size)
 
 # Title and Icon
 pygame.display.set_caption("Game_Project")
-icon = pygame.image.load('icon.png')
+icon = pygame.image.load('Images/Screen/icon.png')
 pygame.display.set_icon(icon)
 
 # Mouse Button Constants
@@ -29,7 +29,7 @@ LEFT = 1
 RIGHT = 3
 
 # Player
-player_img = pygame.image.load('player_img.png')
+player_img = pygame.image.load('Images/Player/player_img.png')
 l_player = 64
 player_x = width / 2 - l_player / 2
 player_y = 8 / 9 * height
@@ -37,7 +37,7 @@ player_Δx = 0
 player_Δy = 0
 
 # Player Bullet
-bullet_img = pygame.image.load('bullets.png')
+bullet_img = pygame.image.load('Images/Player/bullets.png')
 l_bullet = 64
 bullet_x = 0
 bullet_y = 480
@@ -48,7 +48,7 @@ bullet_sound = mixer.Sound('Sounds/laser.wav')
 bullet_col_sound = mixer.Sound('Sounds/explosion.wav')
 
 # Enemy
-enemy_img = pygame.image.load('enemy_img.png')
+enemy_img = pygame.image.load('Images/Enemy/enemy_img.png')
 l_enemy = 64
 enemy_x = random.randint(0, width - l_enemy)
 enemy_y = random.randint(50, height / 4)
@@ -56,7 +56,7 @@ enemy_Δx = 0.3 * dt
 enemy_Δy = 40
 
 # Space Background
-space_bg = pygame.image.load('space_bg.jpg')
+space_bg = pygame.image.load('Images/Levels_Background/space_bg.jpg')
 bg_height = space_bg.get_height()
 mixer.music.load('Sounds/background.wav')
 mixer.music.play(-1)    # (-1) for playing on loop
