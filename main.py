@@ -1,5 +1,6 @@
 # Scripts
-
+from constants import *
+from main_menu import *
 
 # Modules
 import pygame
@@ -15,31 +16,23 @@ clock = pygame.time.Clock()
 FPS = 60
 dt = clock.tick(FPS)
 
-# Create the screen
-size = width, height = (1000, 800)
-screen = pygame.display.set_mode(size)
-
 # Title and Icon
 pygame.display.set_caption("Game_Project")
 icon = pygame.image.load('Images/Screen/icon.png')
 pygame.display.set_icon(icon)
-
-# Mouse Button Constants
-LEFT = 1
-RIGHT = 3
 
 
 class Player:
     def __init__(self):
         self.image = pygame.image.load('Images/Player/player_img.png')
         self.l_image = 64
-        self.x = width / 2 - self.l_image / 2
-        self.y = 8 / 9 * height
+        self.x = WIDTH / 2 - self.l_image / 2
+        self.y = 8 / 9 * HEIGHT
         self.Δx = 0
         self.Δy = 0
 
     def show_image(self, x, y):
-        screen.blit(self.image, (x, y))
+        SCREEN.blit(self.image, (x, y))
 
 
 class PlayerBullet:
@@ -56,27 +49,27 @@ class PlayerBullet:
 
     def fire_bullet(self, x, y):
         self.state = "fire"
-        screen.blit(self.image, (x + 16, y + 10))
+        SCREEN.blit(self.image, (x + 16, y + 10))
 
 
 class Enemy:
     def __init__(self):
         self.image = pygame.image.load('Images/Enemy/enemy_img.png')
         self.l_image = 64
-        self.x = random.randint(0, width - self.l_image)
-        self.y = random.randint(50, height / 4)
+        self.x = random.randint(0, WIDTH - self.l_image)
+        self.y = random.randint(50, HEIGHT / 4)
         self.Δx = 0.3 * dt
         self.Δy = 40
 
     def show_image(self, x, y):
-        screen.blit(self.image, (x, y))
+        SCREEN.blit(self.image, (x, y))
 
 
 class Speakers:
     def __init__(self):
         self.on_image = pygame.image.load('Images/Speakers/speakers_on_img.png')
         self.off_image = pygame.image.load('Images/Speakers/speakers_off_img.png')
-        self.position = self.x, self.y = (13/14 * width, 1/75 * height)
+        self.position = self.x, self.y = (13/14 * WIDTH, 1/75 * HEIGHT)
         self.on_rect = self.on_image.get_rect(x=self.x, y=self.y)
         self.off_rect = self.off_image.get_rect(x=self.x, y=self.y)
         self.state = "off"      # This means game will begin with Speakers-Off as default
@@ -84,12 +77,12 @@ class Speakers:
 
     def action(self, x, y, state):
         if state == "off":
-            screen.blit(self.off_image, (x, y))
+            SCREEN.blit(self.off_image, (x, y))
             mixer.music.set_volume(0.0)
             p_bullet.sound.set_volume(self.initial_sound)
             p_bullet.col_sound.set_volume(self.initial_sound)
         else:
-            screen.blit(self.on_image, (x, y))
+            SCREEN.blit(self.on_image, (x, y))
             mixer.music.set_volume(0.08)
             p_bullet.sound.set_volume(0.08)
             p_bullet.col_sound.set_volume(0.08)
@@ -103,7 +96,7 @@ class Score:
 
     def show(self, x, y):
         score_screen = self.font.render("Score: " + str(self.value), True, (255, 255, 255))
-        screen.blit(score_screen, (x, y))
+        SCREEN.blit(score_screen, (x, y))
 
 
 # Initialize Classes:
@@ -123,10 +116,6 @@ mixer.music.set_volume(0.0)
 # Define Scrolling
 scroll = 0
 
-
-
-
-
 # Game Loop
 running = True
 while running:
@@ -134,8 +123,8 @@ while running:
     clock.tick(FPS)
 
     # Draw Scrolling Background
-    screen.blit(space_bg, (0, -height + scroll))  # Position 2
-    screen.blit(space_bg, (0, scroll))  # Position 1
+    SCREEN.blit(space_bg, (0, -HEIGHT + scroll))  # Position 2
+    SCREEN.blit(space_bg, (0, scroll))  # Position 1
 
     # Scroll Movement Speed
     scroll += 0.8
@@ -193,10 +182,10 @@ while running:
         player.x = 0
     if player.y <= 0:
         player.y = 0
-    if player.x >= width - player.l_image:
-        player.x = width - player.l_image
-    if player.y >= height - player.l_image:
-        player.y = height - player.l_image
+    if player.x >= WIDTH - player.l_image:
+        player.x = WIDTH - player.l_image
+    if player.y >= WIDTH - player.l_image:
+        player.y = WIDTH - player.l_image
 
     # Enemy Movement
     enemy.x += enemy.Δx
@@ -204,7 +193,7 @@ while running:
     if enemy.x <= 0:
         enemy.Δx = 0.3 * dt
         enemy.y += enemy.Δy
-    if enemy.x >= width - enemy.l_image:
+    if enemy.x >= WIDTH - enemy.l_image:
         enemy.Δx = -0.3 * dt
         enemy.y += enemy.Δy
 
@@ -238,8 +227,7 @@ while running:
 
 class Game:
     def __init__(self):
-
-        self.player = Player()
+        pass
 
     def process_events(self):
         pass
