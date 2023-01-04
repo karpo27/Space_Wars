@@ -10,25 +10,36 @@ pygame.init()
 
 class MainMenu:
     scroll = 0
+    angle = 0
+    Δy_init = 30
 
     def __init__(self):
-        self.image = pygame.image.load('Images/Main_Menu/main_menu_img.png')
-        self.img_height = self.image.get_height()
+        # Background
+        self.space_bg = pygame.image.load('Images/Main_Menu/main_menu_img.png')
+        self.bg_height = self.space_bg.get_height()
+
+        # Player Icon
+        self.player_img = pygame.image.load('Images/Player/player_img.png')
+        self.Δx = 40
+        self.Δy = 30
+
+        # Text
         self.font_size_title = 94
-        self.font_size_item = 50
+        self.font_size_item = 64
         self.title_font = pygame.font.Font('freesansbold.ttf', self.font_size_title)
         self.item_font = pygame.font.Font('freesansbold.ttf', self.font_size_item)
+        self.separation = 70
 
     def show(self):
         # Background Image
-        SCREEN.blit(self.image, (0, -HEIGHT + MainMenu.scroll))     # Position 2
-        SCREEN.blit(self.image, (0, MainMenu.scroll))     # Position 1
+        SCREEN.blit(self.space_bg, (0, -HEIGHT + MainMenu.scroll))     # Position 2
+        SCREEN.blit(self.space_bg, (0, MainMenu.scroll))     # Position 1
 
         # Scroll Movement Speed
         MainMenu.scroll += 0.38
 
         # Reset Scroll
-        if MainMenu.scroll >= self.img_height:
+        if MainMenu.scroll >= self.bg_height:
             MainMenu.scroll = 0
 
         # Main Menu Text
@@ -46,44 +57,34 @@ class MainMenu:
         # Load Button Text
         load_text = self.item_font.render("LOAD", True, (255, 255, 255))
         load_text_rect = load_text.get_rect()
-        load_text_position = play_text_position[0], play_text_position[1] + 70
+        load_text_position = play_text_position[0], play_text_position[1] + self.separation
         SCREEN.blit(load_text, load_text_position)
 
         # Options Button Text
         opt_text = self.item_font.render("OPTIONS", True, (255, 255, 255))
         opt_text_rect = opt_text.get_rect()
-        opt_text_position = play_text_position[0], play_text_position[1] + 140
+        opt_text_position = play_text_position[0], play_text_position[1] + 2 * self.separation
         SCREEN.blit(opt_text, opt_text_position)
 
         # Quit Button Text
         quit_text = self.item_font.render("QUIT", True, (255, 255, 255))
         quit_text_rect = quit_text.get_rect()
-        quit_text_position = play_text_position[0], play_text_position[1] + 210
+        quit_text_position = play_text_position[0], play_text_position[1] + 3 * self.separation
         SCREEN.blit(quit_text, quit_text_position)
 
-
-        '''
-        for button in [PLAY_BUTTON, OPTIONS_BUTTON, QUIT_BUTTON]:
-            button.changeColor(MENU_MOUSE_POS)
-            button.update(SCREEN)
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    play()
-                if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    options()
-                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    pygame.quit()
-
-        pygame.display.update()'''
+        # Player Icon
+        rot_player_img = pygame.transform.rotate(self.player_img, self.angle)
+        rot_player_img_rect = rot_player_img.get_rect()
+        rot_player_img_position = (
+            play_text_position[0] - self.Δx - rot_player_img_rect.width/2,
+            play_text_position[1] + self.Δy - rot_player_img_rect.height/2
+        )
+        SCREEN.blit(rot_player_img, rot_player_img_position)
+        pygame.display.flip()
+        MainMenu.angle += 2.2
 
 
-
-    def play(self):
+def play(self):
         pass
         '''
         while True:
@@ -109,11 +110,11 @@ class MainMenu:
                     if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                         main_menu()
 
-            pygame.display.update()'''
+            pygame.display.update()
 
     def options(self):
         pass
-        '''
+        
         while True:
             OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
 
@@ -162,12 +163,21 @@ while run:
             run = False
 
         # Press Keyboard
-
+        if event.type == pygame.KEYDOWN:
+            # Main Menu Selection Movement
+            if event.key == pygame.K_DOWN:
+                main_menu.Δy += main_menu.separation
+            elif event.key == pygame.K_UP:
+                main_menu.Δy -= main_menu.separation
 
         # Release Keyboard
 
+        # Player Icon Movement Boundaries
+        if main_menu.Δy > 4 * main_menu.separation:
+            main_menu.Δy = main_menu.Δy_init
+        if main_menu.Δy < main_menu.Δy_init:
+            main_menu.Δy = 4 * main_menu.separation - main_menu.Δy_init
 
-        # Press Mouse
 
     # Apply changes
     pygame.display.update()
