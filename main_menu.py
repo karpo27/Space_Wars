@@ -8,6 +8,7 @@ from pygame import mixer
 # Initialize Pygame
 pygame.init()
 
+
 class MainMenu:
     scroll = 0
     angle = 0
@@ -32,11 +33,11 @@ class MainMenu:
 
     def show(self):
         # Background Image
-        SCREEN.blit(self.space_bg, (0, -HEIGHT + MainMenu.scroll))     # Position 2
+        SCREEN.blit(self.space_bg, (0, -self.bg_height + MainMenu.scroll))     # Position 2
         SCREEN.blit(self.space_bg, (0, MainMenu.scroll))     # Position 1
 
         # Scroll Movement Speed
-        MainMenu.scroll += 0.38
+        MainMenu.scroll += 0.45
 
         # Reset Scroll
         if MainMenu.scroll >= self.bg_height:
@@ -169,6 +170,17 @@ while run:
                 main_menu.Δy += main_menu.separation
             elif event.key == pygame.K_UP:
                 main_menu.Δy -= main_menu.separation
+
+            if event.key == pygame.K_RETURN:
+                if main_menu.Δy == main_menu.Δy_init:
+                    pass
+                elif main_menu.Δy == main_menu.Δy_init + main_menu.separation:
+                    print("load")
+                elif main_menu.Δy == main_menu.Δy_init + 2 * main_menu.separation:
+                    print("opt")
+                elif main_menu.Δy == main_menu.Δy_init + 3 * main_menu.separation:
+                    run = False
+
 
         # Release Keyboard
 

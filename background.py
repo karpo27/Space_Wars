@@ -17,7 +17,7 @@ class Background:
         mixer.music.set_volume(0.0)
 
     def show(self):
-        SCREEN.blit(self.space_bg, (0, -HEIGHT + Background.scroll))  # Position 2
+        SCREEN.blit(self.space_bg, (0, -self.bg_height + Background.scroll))  # Position 2
         SCREEN.blit(self.space_bg, (0, Background.scroll))  # Position 1
         # Scroll Movement Speed
         Background.scroll += 0.8
