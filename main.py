@@ -1,12 +1,13 @@
 # Scripts
 from constants import *
+from background import *
 from main_menu import *
 
 # Modules
 import pygame
 from pygame import mixer
 import random
-import math
+
 
 # Initialize Pygame
 pygame.init()
@@ -26,8 +27,8 @@ class Player:
     def __init__(self):
         self.image = pygame.image.load('Images/Player/player_img.png')
         self.l_image = 64
-        self.x = WIDTH / 2 - self.l_image / 2
-        self.y = 8 / 9 * HEIGHT
+        self.x = WIDTH/2 - self.l_image/2
+        self.y = 8/9 * HEIGHT
         self.Δx = 0
         self.Δy = 0
 
@@ -57,7 +58,7 @@ class Enemy:
         self.image = pygame.image.load('Images/Enemy/enemy_img.png')
         self.l_image = 64
         self.x = random.randint(0, WIDTH - self.l_image)
-        self.y = random.randint(50, HEIGHT / 4)
+        self.y = random.randint(50, HEIGHT/4)
         self.Δx = 0.3 * dt
         self.Δy = 40
 
@@ -81,7 +82,7 @@ class Speakers:
             mixer.music.set_volume(0.0)
             p_bullet.sound.set_volume(self.initial_sound)
             p_bullet.col_sound.set_volume(self.initial_sound)
-        else:
+        elif state == "on":
             SCREEN.blit(self.on_image, (x, y))
             mixer.music.set_volume(0.08)
             p_bullet.sound.set_volume(0.08)
@@ -105,16 +106,10 @@ enemy = Enemy()
 p_bullet = PlayerBullet()
 speakers = Speakers()
 score = Score()
+background = Background()
+main_menu = MainMenu()
 
-# Space Background
-space_bg = pygame.image.load('Images/Levels_Background/space_bg.jpg')
-bg_height = space_bg.get_height()
-mixer.music.load('Sounds/background.wav')
-mixer.music.play(-1)    # (-1) for playing on loop
-mixer.music.set_volume(0.0)
 
-# Define Scrolling
-scroll = 0
 
 # Game Loop
 running = True
@@ -123,15 +118,9 @@ while running:
     clock.tick(FPS)
 
     # Draw Scrolling Background
-    SCREEN.blit(space_bg, (0, -HEIGHT + scroll))  # Position 2
-    SCREEN.blit(space_bg, (0, scroll))  # Position 1
+    main_menu.show()
+    #background.show()
 
-    # Scroll Movement Speed
-    scroll += 0.8
-
-    # Reset Scroll
-    if scroll >= bg_height:
-        scroll = 0
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -184,8 +173,8 @@ while running:
         player.y = 0
     if player.x >= WIDTH - player.l_image:
         player.x = WIDTH - player.l_image
-    if player.y >= WIDTH - player.l_image:
-        player.y = WIDTH - player.l_image
+    if player.y >= HEIGHT - player.l_image:
+        player.y = HEIGHT - player.l_image
 
     # Enemy Movement
     enemy.x += enemy.Δx
@@ -244,4 +233,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    pass
