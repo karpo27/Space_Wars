@@ -12,10 +12,7 @@ import random
 # Initialize Pygame
 pygame.init()
 
-# Define Clock for Screen FPS
-clock = pygame.time.Clock()
-FPS = 60
-dt = clock.tick(FPS)
+
 
 # Title and Icon
 pygame.display.set_caption("Game_Project")
