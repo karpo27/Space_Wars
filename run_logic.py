@@ -12,19 +12,30 @@ import random
 # Initialize Pygame
 pygame.init()
 
-# Game Loop
 def run_level_1():
-    running = True
-    while running:
+    # Game Loop
+    run = True
+    while run:
         # Set screen FPS
         clock.tick(FPS)
 
         # Draw Scrolling Background
         background.show()
 
+        # Enter Level Animation
+        if player.y < Player.y_temp - Player.Δd:
+            pygame.event.set_blocked([pygame.KEYDOWN, pygame.KEYUP])
+            player.show_image(player.x, Player.y_temp - Player.Δd)
+            Player.Δd += 2.1
+        else:
+            Player.y_temp = 0
+            Player.Δd = 0
+            pygame.event.set_allowed([pygame.KEYDOWN, pygame.KEYUP])
+            player.show_image(player.x, player.y)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                run = False
 
             # Press Keyboard
             if event.type == pygame.KEYDOWN:
@@ -105,7 +116,8 @@ def run_level_1():
             score.value += 1
             p_bullet.col_sound.play()
 
-        player.show_image(player.x, player.y)
+
+
         enemy.show_image(enemy.x, enemy.y)
         score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)

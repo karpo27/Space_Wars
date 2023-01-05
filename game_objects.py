@@ -12,20 +12,22 @@ import random
 # Initialize Pygame
 pygame.init()
 
+
 class Player:
+    y_temp = 19/18 * HEIGHT
+    Δd = 0
+
     def __init__(self):
         self.image = pygame.image.load('Images/Player/player_img.png')
         self.l_image = 64
         self.x = WIDTH/2 - self.l_image/2
-        self.y = 8/9 * HEIGHT
+        self.y = 5/6 * HEIGHT
         self.Δx = 0
         self.Δy = 0
 
     def show_image(self, x, y):
         SCREEN.blit(self.image, (x, y))
 
-    def enter_level(self):
-        pass
 
 class PlayerBullet:
     def __init__(self):
