@@ -13,13 +13,16 @@ class MainMenu:
     scroll = 0
     angle = 0
     Δy_init = 30
-    base_color = (236, 255, 220)
-    hover_color = (255, 255, 255)
-    text_color = [
-        base_color,
-        base_color,
-        base_color,
-        base_color
+    base_color = (193, 225, 193)    # Pastel Green
+    hover_color = (255, 255, 255)   # White
+    Δfont_size = 4
+    font_size_item = 48
+    # Variable Text Parameters: (Text Color, Font Size)
+    var_text_param = [
+        (base_color, font_size_item),
+        (base_color, font_size_item),
+        (base_color, font_size_item),
+        (base_color, font_size_item)
     ]
 
     def __init__(self):
@@ -34,9 +37,7 @@ class MainMenu:
 
         # Text
         self.font_size_title = 94
-        self.font_size_item = 64
         self.title_font = pygame.font.Font('freesansbold.ttf', self.font_size_title)
-        self.item_font = pygame.font.Font('freesansbold.ttf', self.font_size_item)
         self.separation = 70
 
     def show(self):
@@ -58,26 +59,29 @@ class MainMenu:
         SCREEN.blit(mm_text, mm_text_position)
 
         # Play Button Text
-        play_text = self.item_font.render("PLAY", True, MainMenu.text_color[0])
-        play_text_rect = play_text.get_rect()
-        play_text_position = (WIDTH/2 - play_text_rect.width/2, 3/5 * HEIGHT - play_text_rect. height/2)
+        play_item_font = pygame.font.Font('freesansbold.ttf', MainMenu.var_text_param[0][1])
+        play_text = play_item_font.render("PLAY", True, MainMenu.var_text_param[0][0])
+        # For not moving while change font size
+        fixed_text = pygame.font.Font('freesansbold.ttf', MainMenu.font_size_item)
+        fixed_text_width, fixed_text_height = fixed_text.size("PLAY")
+        play_text_position = (WIDTH/2 - fixed_text_width/2, 3/5 * HEIGHT - fixed_text_height/2)
         SCREEN.blit(play_text, play_text_position)
 
         # Load Button Text
-        load_text = self.item_font.render("LOAD", True, MainMenu.text_color[1])
-        load_text_rect = load_text.get_rect()
+        load_item_font = pygame.font.Font('freesansbold.ttf', MainMenu.var_text_param[1][1])
+        load_text = load_item_font.render("LOAD", True, MainMenu.var_text_param[1][0])
         load_text_position = play_text_position[0], play_text_position[1] + self.separation
         SCREEN.blit(load_text, load_text_position)
 
         # Options Button Text
-        opt_text = self.item_font.render("OPTIONS", True, MainMenu.text_color[2])
-        opt_text_rect = opt_text.get_rect()
+        opt_item_font = pygame.font.Font('freesansbold.ttf', MainMenu.var_text_param[2][1])
+        opt_text = opt_item_font.render("OPTIONS", True, MainMenu.var_text_param[2][0])
         opt_text_position = play_text_position[0], play_text_position[1] + 2 * self.separation
         SCREEN.blit(opt_text, opt_text_position)
 
         # Quit Button Text
-        quit_text = self.item_font.render("QUIT", True, MainMenu.text_color[3])
-        quit_text_rect = quit_text.get_rect()
+        quit_item_font = pygame.font.Font('freesansbold.ttf', MainMenu.var_text_param[3][1])
+        quit_text = quit_item_font.render("QUIT", True, MainMenu.var_text_param[3][0])
         quit_text_position = play_text_position[0], play_text_position[1] + 3 * self.separation
         SCREEN.blit(quit_text, quit_text_position)
 
@@ -92,62 +96,33 @@ class MainMenu:
         pygame.display.flip()
         MainMenu.angle += 2.2
 
-
-def play(self):
-        pass
-        '''
-        while True:
-            PLAY_MOUSE_POS = pygame.mouse.get_pos()
-
-            SCREEN.fill("black")
-
-            PLAY_TEXT = get_font(45).render("This is the PLAY screen.", True, "White")
-            PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
-            SCREEN.blit(PLAY_TEXT, PLAY_RECT)
-
-            PLAY_BACK = Button(image=None, pos=(640, 460),
-                               text_input="BACK", font=get_font(75), base_color="White", hovering_color="Green")
-
-            PLAY_BACK.changeColor(PLAY_MOUSE_POS)
-            PLAY_BACK.update(SCREEN)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
-                        main_menu()
-
-            pygame.display.update()
-
-    def options(self):
-        pass
-        
-        while True:
-            OPTIONS_MOUSE_POS = pygame.mouse.get_pos()
+    def show_play(self):
+        run = True
+        while run:
+            # Set screen FPS
+            clock.tick(FPS)
 
             SCREEN.fill("white")
 
-            OPTIONS_TEXT = get_font(45).render("This is the OPTIONS screen.", True, "Black")
-            OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(640, 260))
-            SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
 
-            OPTIONS_BACK = Button(image=None, pos=(640, 460),
-                                  text_input="BACK", font=get_font(75), base_color="Black", hovering_color="Green")
+            pygame.display.update()
 
-            OPTIONS_BACK.changeColor(OPTIONS_MOUSE_POS)
-            OPTIONS_BACK.update(SCREEN)
+    def show_options(self):
+        run = True
+        while run:
+            # Set screen FPS
+            clock.tick(FPS)
+
+            SCREEN.fill("white")
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
+                    run = False
 
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if OPTIONS_BACK.checkForInput(OPTIONS_MOUSE_POS):
-                        main_menu()
-
-            pygame.display.update()'''
+            pygame.display.update()
 
 
 # Initialize Classes:
@@ -178,9 +153,9 @@ while run:
                 if main_menu.Δy == main_menu.Δy_init:   # Position: Play
                     pass
                 elif main_menu.Δy == main_menu.Δy_init + main_menu.separation:  # Position: Load
-                    print("load")
+                    pass
                 elif main_menu.Δy == main_menu.Δy_init + 2 * main_menu.separation:  # Position: Options
-                    print("opt")
+                    main_menu.show_options()
                 elif main_menu.Δy == main_menu.Δy_init + 3 * main_menu.separation:  # Position: Quit
                     run = False
 
@@ -193,32 +168,32 @@ while run:
 
     # Change text color when selected
     if main_menu.Δy == main_menu.Δy_init:
-        MainMenu.text_color = [
-            MainMenu.hover_color,
-            MainMenu.base_color,
-            MainMenu.base_color,
-            MainMenu.base_color
+        MainMenu.var_text_param = [
+            (MainMenu.hover_color, MainMenu.font_size_item + MainMenu.Δfont_size),
+            (MainMenu.base_color, MainMenu.font_size_item),
+            (MainMenu.base_color, MainMenu.font_size_item),
+            (MainMenu.base_color, MainMenu.font_size_item)
         ]
     if main_menu.Δy == main_menu.Δy_init + main_menu.separation:
-        MainMenu.text_color = [
-            MainMenu.base_color,
-            MainMenu.hover_color,
-            MainMenu.base_color,
-            MainMenu.base_color
+        MainMenu.var_text_param = [
+            (MainMenu.base_color, MainMenu.font_size_item),
+            (MainMenu.hover_color, MainMenu.font_size_item + MainMenu.Δfont_size),
+            (MainMenu.base_color, MainMenu.font_size_item),
+            (MainMenu.base_color, MainMenu.font_size_item)
         ]
     if main_menu.Δy == main_menu.Δy_init + 2 * main_menu.separation:
-        MainMenu.text_color = [
-            MainMenu.base_color,
-            MainMenu.base_color,
-            MainMenu.hover_color,
-            MainMenu.base_color
+        MainMenu.var_text_param = [
+            (MainMenu.base_color, MainMenu.font_size_item),
+            (MainMenu.base_color, MainMenu.font_size_item),
+            (MainMenu.hover_color, MainMenu.font_size_item + MainMenu.Δfont_size),
+            (MainMenu.base_color, MainMenu.font_size_item)
         ]
     if main_menu.Δy == main_menu.Δy_init + 3 * main_menu.separation:
-        MainMenu.text_color = [
-            MainMenu.base_color,
-            MainMenu.base_color,
-            MainMenu.base_color,
-            MainMenu.hover_color
+        MainMenu.var_text_param = [
+            (MainMenu.base_color, MainMenu.font_size_item),
+            (MainMenu.base_color, MainMenu.font_size_item),
+            (MainMenu.base_color, MainMenu.font_size_item),
+            (MainMenu.hover_color, MainMenu.font_size_item + MainMenu.Δfont_size)
         ]
 
     # Apply Changes
