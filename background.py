@@ -5,7 +5,6 @@ from constants import *
 import pygame
 from pygame import mixer
 
-
 class Background:
     scroll = 0
 
