@@ -14,12 +14,12 @@ pygame.init()
 
 
 class Player:
-    y_temp = 19/18 * HEIGHT
+    y_enter = 19/18 * HEIGHT
     Δd = 0
 
     def __init__(self):
         self.image = pygame.image.load('Images/Player/player_img.png')
-        self.l_image = 64
+        self.l_image = self.image.get_rect().width
         self.x = WIDTH/2 - self.l_image/2
         self.y = 5/6 * HEIGHT
         self.Δx = 0
@@ -32,7 +32,7 @@ class Player:
 class PlayerBullet:
     def __init__(self):
         self.image = pygame.image.load('Images/Player/bullets.png')
-        self.l_image = 64
+        self.l_image = self.image.get_rect().width
         self.x = 0
         self.y = 480
         self.Δx = 0
@@ -47,16 +47,50 @@ class PlayerBullet:
 
 
 class Enemy:
+    enemy_list = []
+    image = []
+    x = []
+    y = []
+    Δx = []
+    Δy = []
+
+    # Define time delay between enemies to spawn: 3.0 sec
+    time_to_spawn = 3000
+    spawn_enemy = pygame.USEREVENT + 0
+    pygame.time.set_timer(spawn_enemy, time_to_spawn)
+
     def __init__(self):
         self.image = pygame.image.load('Images/Enemy/enemy_img.png')
-        self.l_image = 64
-        self.x = random.randint(0, WIDTH - self.l_image)
-        self.y = random.randint(50, HEIGHT/4)
-        self.Δx = 0.3 * dt
-        self.Δy = 40
+        self.l_image = self.image.get_rect().width
 
-    def show_image(self, x, y):
-        SCREEN.blit(self.image, (x, y))
+    def show_image(self, x, y, i):
+        SCREEN.blit(Enemy.image[i], (x, y))
+
+    def generate_enemies(self, n):
+        for i in range(0, n):
+            Enemy.enemy_list.append(i)
+            Enemy.image.append(self.image)
+            Enemy.x.append(random.randint(0, WIDTH - self.l_image))
+            Enemy.y.append(random.randint(-100, 0 - self.l_image))
+            Enemy.Δx.append(0.25 * dt)
+            Enemy.Δy.append(30)
+
+
+class EnemyBullet:
+    def __init__(self):
+        self.image = pygame.image.load('Images/Player/bullets.png')
+        self.l_image = 64
+        self.x = 0
+        self.y = 480
+        self.Δx = 0
+        self.Δy = 1.2 * dt
+        self.state = "ready"  # At this state we can't see bullet on screen
+        self.sound = mixer.Sound('Sounds/laser.wav')
+        self.col_sound = mixer.Sound('Sounds/explosion.wav')
+
+    def fire_bullet(self, x, y):
+        self.state = "fire"
+        SCREEN.blit(self.image, (x + 16, y + 10))
 
 
 class Speakers:
@@ -97,6 +131,7 @@ class Score:
 player = Player()
 enemy = Enemy()
 p_bullet = PlayerBullet()
+e_bullet = EnemyBullet()
 speakers = Speakers()
 score = Score()
 background = Background()
@@ -124,3 +159,4 @@ def main():
 
 if __name__ == '__main__':
     pass
+

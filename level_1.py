@@ -1,8 +1,5 @@
 # Scripts
-from constants import *
-from background import *
 from game_objects import *
-
 
 # Modules
 import pygame
@@ -11,6 +8,7 @@ import random
 
 # Initialize Pygame
 pygame.init()
+
 
 def run_level_1():
     # Game Loop
@@ -23,12 +21,12 @@ def run_level_1():
         background.show()
 
         # Enter Level Animation
-        if player.y < Player.y_temp - Player.Δd:
+        if player.y < Player.y_enter - Player.Δd:
             pygame.event.set_blocked([pygame.KEYDOWN, pygame.KEYUP])
-            player.show_image(player.x, Player.y_temp - Player.Δd)
-            Player.Δd += 2.1
+            player.show_image(player.x, Player.y_enter - Player.Δd)
+            Player.Δd += 1.9
         else:
-            Player.y_temp = 0
+            Player.y_enter = 0
             Player.Δd = 0
             pygame.event.set_allowed([pygame.KEYDOWN, pygame.KEYUP])
             player.show_image(player.x, player.y)
@@ -74,6 +72,12 @@ def run_level_1():
                     else:
                         speakers.state = "off"
 
+            # Define Number of Enemies to spawn in Level 1: 10
+            n_enemies = 10
+            if len(Enemy.enemy_list) < n_enemies:
+                if event.type == Enemy.spawn_enemy:
+                    enemy.generate_enemies(1)
+
         # Player Movement Boundaries
         player.x += player.Δx
         player.y += player.Δy
@@ -87,15 +91,31 @@ def run_level_1():
         if player.y >= HEIGHT - player.l_image:
             player.y = HEIGHT - player.l_image
 
-        # Enemy Movement
-        enemy.x += enemy.Δx
+        # Enemies Movement
+        for i in range(len(Enemy.enemy_list)):
+            enemy.x[i] += enemy.Δx[i]
 
-        if enemy.x <= 0:
-            enemy.Δx = 0.3 * dt
-            enemy.y += enemy.Δy
-        if enemy.x >= WIDTH - enemy.l_image:
-            enemy.Δx = -0.3 * dt
-            enemy.y += enemy.Δy
+            if enemy.x[i] <= 0:
+                enemy.Δx[i] = 0.3 * dt
+                enemy.y[i] += enemy.Δy[i]
+            elif enemy.x[i] >= WIDTH - enemy.l_image:
+                enemy.Δx[i] = -0.3 * dt
+                enemy.y[i] += enemy.Δy[i]
+
+            # Collision Detection (fix problem at intersection of objects when pressing "spacebar")
+            collision = pygame.Rect.colliderect(
+                p_bullet.image.get_rect(x=p_bullet.x, y=p_bullet.y),
+                enemy.image.get_rect(x=enemy.x[i], y=enemy.y[i])
+            )
+            if collision:
+                # The collision will affect only if this:
+                if enemy.y[i] + enemy.l_image >= 0:
+                    p_bullet.y = player.y
+                    p_bullet.state = "ready"
+                    score.value += 1
+                    p_bullet.col_sound.play()
+
+            enemy.show_image(enemy.x[i], enemy.y[i], i)
 
         # Player Bullet Movement
         if p_bullet.y <= 0:
@@ -105,24 +125,11 @@ def run_level_1():
             p_bullet.fire_bullet(p_bullet.x, p_bullet.y)
             p_bullet.y -= p_bullet.Δy
 
-        # Collision Detection (fix problem at intersection of objects when pressing "spacebar")
-        collision = pygame.Rect.colliderect(
-            p_bullet.image.get_rect(x=p_bullet.x, y=p_bullet.y),
-            enemy.image.get_rect(x=enemy.x, y=enemy.y)
-        )
-        if collision:
-            p_bullet.y = player.y
-            p_bullet.state = "ready"
-            score.value += 1
-            p_bullet.col_sound.play()
-
-
-
-        enemy.show_image(enemy.x, enemy.y)
         score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)
 
         # Apply changes
         pygame.display.update()
+
 
 run_level_1()
