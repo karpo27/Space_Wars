@@ -115,6 +115,7 @@ def run_level_1():
                     score.value += 1
                     p_bullet.col_sound.play()
 
+            # Show Enemies Images
             enemy.show_image(enemy.x[i], enemy.y[i], i)
 
         # Player Bullet Movement
@@ -125,6 +126,7 @@ def run_level_1():
             p_bullet.fire_bullet(p_bullet.x, p_bullet.y)
             p_bullet.y -= p_bullet.Δy
 
+        player.draw_hp_bar()
         score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)
 
