@@ -158,7 +158,8 @@ while run:
 
             if event.key == pygame.K_RETURN:
                 if main_menu.Δy == main_menu.Δy_init:   # Position: Play
-                    level_1.run_level_1()
+                    pass
+                    #level_1.run_level_1()
                 elif main_menu.Δy == main_menu.Δy_init + main_menu.separation:  # Position: Load
                     pass
                 elif main_menu.Δy == main_menu.Δy_init + 2 * main_menu.separation:  # Position: Options

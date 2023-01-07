@@ -126,7 +126,7 @@ def run_level_1():
             p_bullet.fire_bullet(p_bullet.x, p_bullet.y)
             p_bullet.y -= p_bullet.Δy
 
-        player.draw_hp_bar()
+        player.draw_hp_bar(Player.hp)
         score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)
 
