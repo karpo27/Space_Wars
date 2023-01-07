@@ -1,6 +1,7 @@
 # Scripts
 from constants import *
 from background import *
+from assets import *
 
 
 # Modules
@@ -19,7 +20,7 @@ class Player:
     Δd = 0
 
     def __init__(self):
-        self.image = pygame.image.load('Images/Player/player_img.png')
+        self.image = pygame.image.load(player_img['1'])
         self.l_image = self.image.get_rect().width
         self.x = WIDTH/2 - self.l_image/2
         self.y = 5/6 * HEIGHT
@@ -75,7 +76,7 @@ class Player:
 
 class PlayerBullet:
     def __init__(self):
-        self.image = pygame.image.load('Images/Player/bullets.png')
+        self.image = pygame.image.load(p_bullet_img['1'])
         self.l_image = self.image.get_rect().width
         self.x = 0
         self.y = 480
@@ -104,7 +105,7 @@ class Enemy:
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
     def __init__(self):
-        self.image = pygame.image.load('Images/Enemy/enemy_img.png')
+        self.image = pygame.image.load(enemies_img['common'])
         self.l_image = self.image.get_rect().width
 
     def show_image(self, x, y, i):
@@ -122,7 +123,7 @@ class Enemy:
 
 class EnemyBullet:
     def __init__(self):
-        self.image = pygame.image.load('Images/Player/bullets.png')
+        self.image = pygame.image.load(e_bullet_img['common'])
         self.l_image = 64
         self.x = 0
         self.y = 480

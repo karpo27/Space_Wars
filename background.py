@@ -1,5 +1,6 @@
 # Scripts
 from constants import *
+from assets import *
 
 # Modules
 import pygame
@@ -9,7 +10,7 @@ class Background:
     scroll = 0
 
     def __init__(self):
-        self.space_bg = pygame.image.load('Images/Levels_Background/space_bg.jpg')
+        self.space_bg = pygame.image.load(background_img['level_1'])
         self.bg_height = self.space_bg.get_height()
         mixer.music.load('Sounds/background.wav')
         mixer.music.play(-1)    # (-1) for playing on loop
