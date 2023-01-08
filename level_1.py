@@ -51,7 +51,7 @@ def run_level_1():
                     if p_bullet.state == "ready":
                         p_bullet.sound.play()
                         p_bullet.sound.set_volume(speakers.initial_sound)
-                        # Get current (x, y) coordinate of player
+                        # Get current (x, y) coordinate of Player
                         p_bullet.x = player.x
                         p_bullet.y = player.y
                         p_bullet.fire_bullet(p_bullet.x, p_bullet.y)
@@ -73,10 +73,23 @@ def run_level_1():
                         speakers.state = "off"
 
             # Define Number of Enemies to spawn in Level 1: 10
-            n_enemies = 10
+            n_enemies = 1
             if len(Enemy.enemy_list) < n_enemies:
                 if event.type == Enemy.spawn_enemy:
                     enemy.generate_enemies(1)
+                    e_bullet.generate_bullet(1)
+
+            # Enemy Bullet Movement
+            for i in range(len(EnemyBullet.enemy_shot)):
+                if event.type == EnemyBullet.enemy_shot[i]:
+                    if EnemyBullet.state[i] == e_bullet.ready:
+                        #e_bullet.sound.play()
+                        #e_bullet.sound.set_volume(speakers.initial_sound)
+                        # Get current (x, y) coordinate of Enemy[i]
+                        EnemyBullet.x[i] = Enemy.x[i]
+                        EnemyBullet.y[i] = Enemy.y[i]
+                        e_bullet.fire_bullet(EnemyBullet.x[i], EnemyBullet.y[i], i)
+
 
         # Player Movement Boundaries
         player.x += player.Δx
@@ -115,16 +128,24 @@ def run_level_1():
                     score.value += 1
                     p_bullet.col_sound.play()
 
+            # Enemy Bullet Movement
+            if EnemyBullet.state[i] == e_bullet.fire:
+                e_bullet.fire_bullet(EnemyBullet.x[i], EnemyBullet.y[i], i)
+                EnemyBullet.y[i] += EnemyBullet.Δy[i]
+            if EnemyBullet.y[i] > HEIGHT - e_bullet.l_image:
+                EnemyBullet.y[i] = HEIGHT
+                EnemyBullet.state[i] = e_bullet.ready
+
             # Show Enemies Images
             enemy.show_image(enemy.x[i], enemy.y[i], i)
 
         # Player Bullet Movement
-        if p_bullet.y <= 0:
-            p_bullet.y = 480
-            p_bullet.state = "ready"
         if p_bullet.state == "fire":
             p_bullet.fire_bullet(p_bullet.x, p_bullet.y)
             p_bullet.y -= p_bullet.Δy
+        if p_bullet.y <= 0 - p_bullet.l_image:
+            p_bullet.y = 480
+            p_bullet.state = "ready"
 
         player.draw_hp_bar(Player.hp)
         score.show(score.x, score.y)
