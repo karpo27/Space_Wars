@@ -73,12 +73,14 @@ def run_level_1():
                         speakers.state = "off"
 
             # Define Number of Enemies to spawn in Level 1: 10
-            enemies_lvl_1 = ['common', 'common']
+            enemies_lvl_1 = ['common']
             n_enemies = len(enemies_lvl_1)
             if len(Enemy.enemy_list) < n_enemies:
-                #for i in range(len(enemies_lvl_1)):
                 if event.type == Enemy.spawn_enemy:
                     enemy.generate_enemies(1)
+
+            if event.type == EnemyBullet.enemy_bullet_shoot:
+                e_bullet.generate_bullet(1)
 
         # Player Movement Boundaries
         player.x += player.Δx
@@ -92,6 +94,13 @@ def run_level_1():
             player.x = WIDTH - player.l_image
         if player.y >= HEIGHT - player.l_image:
             player.y = HEIGHT - player.l_image
+
+        # Player Bullet Movement
+        if p_bullet.state == "fire":
+            p_bullet.fire_bullet(p_bullet.x, p_bullet.y)
+            p_bullet.y -= p_bullet.Δy
+        if p_bullet.y <= 0 - p_bullet.l_image:
+            p_bullet.state = "ready"
 
         # Enemies Movement
         for i in range(len(Enemy.enemy_list)):
@@ -120,13 +129,17 @@ def run_level_1():
             # Show Enemies Images
             enemy.show_image(enemy.x[i], enemy.y[i], i)
 
-        # Player Bullet Movement
-        if p_bullet.state == "fire":
-            p_bullet.fire_bullet(p_bullet.x, p_bullet.y)
-            p_bullet.y -= p_bullet.Δy
-        if p_bullet.y <= 0 - p_bullet.l_image:
-            p_bullet.state = "ready"
+        # Enemy Bullet Movement
+        for bullet_pos in EnemyBullet.pos[:]:
+            bullet_pos[1] += e_bullet.Δy
 
+            if bullet_pos[1] > HEIGHT:
+                EnemyBullet.image.pop()
+                EnemyBullet.pos.remove(bullet_pos)
+                EnemyBullet.Δpos.pop()
+
+        e_bullet.fire_bullet()
+        # Call Functions
         player.draw_hp_bar(Player.hp)
         score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)

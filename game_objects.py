@@ -105,7 +105,7 @@ class Enemy:
     Δy = []
 
     # Define time delay between enemies to spawn: 8.0 sec
-    time_to_spawn = 4000
+    time_to_spawn = 1000
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
@@ -129,10 +129,12 @@ class Enemy:
 class EnemyBullet:
     # Define Bullet Variables
     image = []
-    x = []
-    y = []
-    Δx = []
-    Δy = []
+    pos = []
+    Δpos = []
+
+    time_to_shoot = 2000
+    enemy_bullet_shoot = pygame.USEREVENT + 1
+    pygame.time.set_timer(enemy_bullet_shoot, time_to_shoot)
 
     def __init__(self):
         self.image = pygame.image.load(enemies_bullet_img['common'])
@@ -140,24 +142,22 @@ class EnemyBullet:
         self.x = 0
         self.y = 480
         self.Δx = 0
-        self.Δy = 0.6 * dt
+        self.Δy = 0.2 * dt
         self.ready = "ready"    # At this state we can't see bullet on screen
         self.fire = "fire"      # At this state we can see bullet on screen
         self.time_to_shoot = 1000   # Define time delay for enemies to shoot bullet: 4.0 sec
         self.sound = mixer.Sound('Sounds/laser.wav')
         self.col_sound = mixer.Sound('Sounds/explosion.wav')
 
-    def fire_bullet(self, x, y, i):
-        for j in range(len(Enemy.enemy_list)):
-            SCREEN.blit(EnemyBullet.image[i], (x, y))
+    def fire_bullet(self):
+        for i in range(len(EnemyBullet.pos[:])):
+            SCREEN.blit(EnemyBullet.image[i], EnemyBullet.pos[i])
 
     def generate_bullet(self, n):
         for i in range(0, n):
             EnemyBullet.image.append(self.image)
-            EnemyBullet.x.append(Enemy.x[i])
-            EnemyBullet.y.append(Enemy.y[i])
-            EnemyBullet.Δx.append(0)
-            EnemyBullet.Δy.append(0.2 * dt)
+            EnemyBullet.pos.append([Enemy.x[i], Enemy.y[i]])
+            EnemyBullet.Δpos.append((self.Δx, self.Δy))
 
 class Speakers:
     def __init__(self):
