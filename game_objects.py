@@ -9,6 +9,11 @@ import pygame
 from pygame import mixer
 import random
 
+# Defines Number of max bullets on Screen per Type
+enemy_bullet_type = {
+    'common': 3
+}
+
 
 # Initialize Pygame
 pygame.init()
@@ -100,7 +105,7 @@ class Enemy:
     Δy = []
 
     # Define time delay between enemies to spawn: 8.0 sec
-    time_to_spawn = 3000
+    time_to_spawn = 4000
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
@@ -123,18 +128,11 @@ class Enemy:
 
 class EnemyBullet:
     # Define Bullet Variables
-    state = []
     image = []
     x = []
     y = []
     Δx = []
     Δy = []
-
-    # Define time delay for enemies to shoot bullet:
-    time_to_shoot = 3000
-    enemy_shot = []
-    enemy_shot_timer = []
-    #pygame.time.set_timer(enemy_shot, time_to_shoot)
 
     def __init__(self):
         self.image = pygame.image.load(enemies_bullet_img['common'])
@@ -145,24 +143,21 @@ class EnemyBullet:
         self.Δy = 0.6 * dt
         self.ready = "ready"    # At this state we can't see bullet on screen
         self.fire = "fire"      # At this state we can see bullet on screen
+        self.time_to_shoot = 1000   # Define time delay for enemies to shoot bullet: 4.0 sec
         self.sound = mixer.Sound('Sounds/laser.wav')
         self.col_sound = mixer.Sound('Sounds/explosion.wav')
 
     def fire_bullet(self, x, y, i):
-        EnemyBullet.state[i] = self.fire
-        SCREEN.blit(EnemyBullet.image[i], (x, y))
+        for j in range(len(Enemy.enemy_list)):
+            SCREEN.blit(EnemyBullet.image[i], (x, y))
 
     def generate_bullet(self, n):
         for i in range(0, n):
-            EnemyBullet.state.append(self.ready)
             EnemyBullet.image.append(self.image)
             EnemyBullet.x.append(Enemy.x[i])
             EnemyBullet.y.append(Enemy.y[i])
             EnemyBullet.Δx.append(0)
             EnemyBullet.Δy.append(0.2 * dt)
-            EnemyBullet.enemy_shot.append(pygame.USEREVENT + 1)
-            EnemyBullet.enemy_shot_timer.append(pygame.time.set_timer(EnemyBullet.enemy_shot[i], EnemyBullet.time_to_shoot))
-
 
 class Speakers:
     def __init__(self):
