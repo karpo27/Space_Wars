@@ -99,19 +99,19 @@ class PlayerBullet:
 class Enemy:
     enemy_list = []
     image = []
-    x = []
-    y = []
-    Δx = []
-    Δy = []
+    pos = []
+    Δpos = []
 
     # Define time delay between enemies to spawn: 8.0 sec
-    time_to_spawn = 1000
+    time_to_spawn = 4000
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
     def __init__(self):
         self.image = pygame.image.load(enemies_img['common'])
         self.l_image = self.image.get_rect().width
+        self.Δx = 0.25 * dt
+        self.Δy = 30
 
     def show_image(self, x, y, i):
         SCREEN.blit(Enemy.image[i], (x, y))
@@ -120,10 +120,8 @@ class Enemy:
         for i in range(0, n):
             Enemy.enemy_list.append(i)
             Enemy.image.append(self.image)
-            Enemy.x.append(random.randint(0, WIDTH - self.l_image))
-            Enemy.y.append(random.randint(-100, 0 - self.l_image))
-            Enemy.Δx.append(0.25 * dt)
-            Enemy.Δy.append(30)
+            Enemy.pos.append([random.randint(0, WIDTH - self.l_image), random.randint(-100, 0 - self.l_image)])
+            Enemy.Δpos.append([self.Δx, self.Δy])
 
 
 class EnemyBullet:
@@ -153,10 +151,10 @@ class EnemyBullet:
         for i in range(len(EnemyBullet.pos[:])):
             SCREEN.blit(EnemyBullet.image[i], EnemyBullet.pos[i])
 
-    def generate_bullet(self, n):
-        for i in range(0, n):
+    def generate_bullet(self):
+        for i in range(len(Enemy.enemy_list)):
             EnemyBullet.image.append(self.image)
-            EnemyBullet.pos.append([Enemy.x[i], Enemy.y[i]])
+            EnemyBullet.pos.append([Enemy.pos[i][0], Enemy.pos[i][1]])
             EnemyBullet.Δpos.append((self.Δx, self.Δy))
 
 class Speakers:

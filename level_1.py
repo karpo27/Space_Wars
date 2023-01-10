@@ -73,14 +73,16 @@ def run_level_1():
                         speakers.state = "off"
 
             # Define Number of Enemies to spawn in Level 1: 10
-            enemies_lvl_1 = ['common']
+            enemies_lvl_1 = ['common', 'common']
             n_enemies = len(enemies_lvl_1)
             if len(Enemy.enemy_list) < n_enemies:
                 if event.type == Enemy.spawn_enemy:
                     enemy.generate_enemies(1)
 
-            if event.type == EnemyBullet.enemy_bullet_shoot:
-                e_bullet.generate_bullet(1)
+            # After Enemies Appear Generate Enemy Bullet
+            if len(Enemy.enemy_list) > 0:
+                if event.type == EnemyBullet.enemy_bullet_shoot:
+                    e_bullet.generate_bullet()
 
         # Player Movement Boundaries
         player.x += player.Δx
@@ -104,30 +106,30 @@ def run_level_1():
 
         # Enemies Movement
         for i in range(len(Enemy.enemy_list)):
-            enemy.x[i] += enemy.Δx[i]
+            Enemy.pos[i][0] += Enemy.Δpos[i][0]
 
-            if enemy.x[i] <= 0:
-                enemy.Δx[i] = 0.3 * dt
-                enemy.y[i] += enemy.Δy[i]
-            elif enemy.x[i] >= WIDTH - enemy.l_image:
-                enemy.Δx[i] = -0.3 * dt
-                enemy.y[i] += enemy.Δy[i]
+            if Enemy.pos[i][0] <= 0:
+                Enemy.Δpos[i][0] = 0.3 * dt
+                Enemy.pos[i][1] += Enemy.Δpos[i][1]
+            elif Enemy.pos[i][0] >= WIDTH - enemy.l_image:
+                Enemy.Δpos[i][0] = -0.3 * dt
+                Enemy.pos[i][1] += Enemy.Δpos[i][1]
 
             # Collision Detection (fix problem at intersection of objects when pressing "spacebar")
             collision = pygame.Rect.colliderect(
                 p_bullet.image.get_rect(x=p_bullet.x, y=p_bullet.y),
-                enemy.image.get_rect(x=enemy.x[i], y=enemy.y[i])
+                enemy.image.get_rect(x=Enemy.pos[i][0], y=Enemy.pos[i][1])
             )
             if collision:
                 # The collision will affect only if this:
-                if enemy.y[i] + enemy.l_image >= 0:
+                if Enemy.pos[i][1] + enemy.l_image >= 0:
                     p_bullet.y = player.y
                     p_bullet.state = "ready"
                     score.value += 1
                     p_bullet.col_sound.play()
 
             # Show Enemies Images
-            enemy.show_image(enemy.x[i], enemy.y[i], i)
+            enemy.show_image(Enemy.pos[i][0], Enemy.pos[i][1], i)
 
         # Enemy Bullet Movement
         for bullet_pos in EnemyBullet.pos[:]:
