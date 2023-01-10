@@ -153,9 +153,10 @@ class EnemyBullet:
 
     def generate_bullet(self):
         for i in range(len(Enemy.enemy_list)):
-            EnemyBullet.image.append(self.image)
-            EnemyBullet.pos.append([Enemy.pos[i][0], Enemy.pos[i][1]])
-            EnemyBullet.Δpos.append((self.Δx, self.Δy))
+            if Enemy.pos[i][1] >= 0:
+                EnemyBullet.image.append(self.image)
+                EnemyBullet.pos.append([Enemy.pos[i][0], Enemy.pos[i][1]])
+                EnemyBullet.Δpos.append((self.Δx, self.Δy))
 
 class Speakers:
     def __init__(self):
