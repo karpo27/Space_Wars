@@ -1,8 +1,6 @@
 # Scripts
 from constants import *
 from background import *
-from assets import *
-
 
 # Modules
 import pygame
@@ -18,13 +16,13 @@ class Player:
     y_enter = 19/18 * HEIGHT
     Δd = 0
 
-    def __init__(self):
-        self.image = pygame.image.load(player_img['1'])
+    def __init__(self, image, pos, Δpos):
+        self.image = pygame.image.load(image)
         self.l_image = self.image.get_rect().width
-        self.x = WIDTH/2 - self.l_image/2
-        self.y = 5/6 * HEIGHT
-        self.Δx = 0
-        self.Δy = 0
+        self.pos = pos
+        #self.Δx = 0
+        #self.Δy = 0
+        self.Δpos = Δpos
 
         # HP Bar
         self.hp_bar_pos = (1/43 * WIDTH, 16/17 * HEIGHT)
@@ -35,9 +33,7 @@ class Player:
         self.hp_bar_full_color = (15, 255, 80)     # Neon Green
         self.line_width = 2
         self.border_radius = 4
-        self.hp_bar_col = [
 
-        ]
 
     def show_image(self, x, y):
         SCREEN.blit(self.image, (x, y))
@@ -74,6 +70,13 @@ class Player:
 
 
 class PlayerBullet:
+    image = []
+    pos = []
+    Δpos = []
+    # Time Delay to Shoot Player Bullet
+    Δt_p_bullet = 30
+    p_bullet_ref = 30   # Initial Reference
+
     def __init__(self):
         self.image = pygame.image.load(player_bullet_img['1'])
         self.l_image = self.image.get_rect().width
@@ -81,13 +84,17 @@ class PlayerBullet:
         self.y = 480
         self.Δx = 0
         self.Δy = 1.2 * dt
-        self.state = "ready"  # At this state we can't see bullet on screen
         self.sound = mixer.Sound('Sounds/laser.wav')
         self.col_sound = mixer.Sound('Sounds/explosion.wav')
 
-    def fire_bullet(self, x, y):
-        self.state = "fire"
-        SCREEN.blit(self.image, (x + 16, y + 10))
+    def fire_bullet(self):
+        for i in range(len(PlayerBullet.pos[:])):
+            SCREEN.blit(PlayerBullet.image[i], (PlayerBullet.pos[i], PlayerBullet.pos[i]))
+
+    def generate_bullet(self):
+        PlayerBullet.image.append(self.image)
+        PlayerBullet.pos.append([player.pos[0] + 16, player.pos[1] + 10])
+        PlayerBullet.Δpos.append((self.Δx, self.Δy))
 
 
 class Enemy:
@@ -128,13 +135,8 @@ class EnemyBullet:
     def __init__(self):
         self.image = pygame.image.load(enemies_bullet_img['common'])
         self.l_image = self.image.get_rect().width
-        self.x = 0
-        self.y = 480
         self.Δx = 0
         self.Δy = 0.2 * dt
-        self.ready = "ready"    # At this state we can't see bullet on screen
-        self.fire = "fire"      # At this state we can see bullet on screen
-        self.time_to_shoot = 1000   # Define time delay for enemies to shoot bullet: 4.0 sec
         self.sound = mixer.Sound('Sounds/laser.wav')
         self.col_sound = mixer.Sound('Sounds/explosion.wav')
 
@@ -182,7 +184,14 @@ class Score:
 
 
 # Initialize Classes:
-player = Player()
+# Player
+player = Player(
+    'Images/Player/player_img.png',    # Image Size: 64 x 64
+    [WIDTH/2 - C_64/2, 5/6 * HEIGHT],
+    [0, 0]
+)
+
+
 enemy = Enemy()
 p_bullet = PlayerBullet()
 e_bullet = EnemyBullet()

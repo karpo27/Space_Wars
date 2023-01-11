@@ -21,15 +21,15 @@ def run_level_1():
         background.show()
 
         # Enter Level Animation
-        if player.y < Player.y_enter - Player.Δd:
+        if player.pos[1] < Player.y_enter - Player.Δd:
             pygame.event.set_blocked([pygame.KEYDOWN, pygame.KEYUP])
-            player.show_image(player.x, Player.y_enter - Player.Δd)
+            player.show_image(player.pos[0], Player.y_enter - Player.Δd)
             Player.Δd += 1.9
         else:
             Player.y_enter = 0
             Player.Δd = 0
             pygame.event.set_allowed([pygame.KEYDOWN, pygame.KEYUP])
-            player.show_image(player.x, player.y)
+            player.show_image(player.pos[0], player.pos[1])
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,29 +39,27 @@ def run_level_1():
             if event.type == pygame.KEYDOWN:
                 # Player Keyboard Movement
                 if event.key == pygame.K_LEFT:
-                    player.Δx = -0.3 * dt
+                    player.Δpos[0] = -0.3 * dt
                 elif event.key == pygame.K_RIGHT:
-                    player.Δx = 0.3 * dt
+                    player.Δpos[0] = 0.3 * dt
                 elif event.key == pygame.K_UP:
-                    player.Δy = -0.3 * dt
+                    player.Δpos[1] = -0.3 * dt
                 elif event.key == pygame.K_DOWN:
-                    player.Δy = 0.3 * dt
+                    player.Δpos[1] = 0.3 * dt
                 # Player Bullet Keyboard
                 elif event.key == pygame.K_SPACE:
-                    if p_bullet.state == "ready":
-                        p_bullet.sound.play()
-                        p_bullet.sound.set_volume(speakers.initial_sound)
-                        # Get current (x, y) coordinate of Player
-                        p_bullet.x = player.x
-                        p_bullet.y = player.y
-                        p_bullet.fire_bullet(p_bullet.x, p_bullet.y)
+                    if PlayerBullet.Δt_p_bullet >= PlayerBullet.p_bullet_ref:
+                        PlayerBullet.Δt_p_bullet = 0
+                        #p_bullet.sound.play()
+                        #p_bullet.sound.set_volume(speakers.initial_sound)
+                        p_bullet.generate_bullet()
 
             # Release Keyboard
             if event.type == pygame.KEYUP:
                 if event.key in (pygame.K_LEFT, pygame.K_RIGHT):
-                    player.Δx = 0
+                    player.Δpos[0] = 0
                 elif event.key in (pygame.K_UP, pygame.K_DOWN):
-                    player.Δy = 0
+                    player.Δpos[1] = 0
 
             # Press Mouse
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
@@ -80,24 +78,31 @@ def run_level_1():
                     enemy.generate_enemies(1)
 
         # Player Movement Boundaries
-        player.x += player.Δx
-        player.y += player.Δy
+        player.pos[0] += player.Δpos[0]
+        player.pos[1] += player.Δpos[1]
 
-        if player.x <= 0:
-            player.x = 0
-        if player.y <= 0:
-            player.y = 0
-        if player.x >= WIDTH - player.l_image:
-            player.x = WIDTH - player.l_image
-        if player.y >= HEIGHT - player.l_image:
-            player.y = HEIGHT - player.l_image
+        if player.pos[0] <= 0:
+            player.pos[0] = 0
+        if player.pos[1] <= 0:
+            player.pos[1] = 0
+        if player.pos[0] >= WIDTH - player.l_image:
+            player.pos[0] = WIDTH - player.l_image
+        if player.pos[1] >= HEIGHT - player.l_image:
+            player.pos[1] = HEIGHT - player.l_image
 
         # Player Bullet Movement
-        if p_bullet.state == "fire":
-            p_bullet.fire_bullet(p_bullet.x, p_bullet.y)
-            p_bullet.y -= p_bullet.Δy
-        if p_bullet.y <= 0 - p_bullet.l_image:
-            p_bullet.state = "ready"
+        if PlayerBullet.Δt_p_bullet < PlayerBullet.p_bullet_ref:
+            PlayerBullet.Δt_p_bullet += 1
+
+        for bullet_pos in PlayerBullet.pos[:]:
+            bullet_pos[1] -= p_bullet.Δy
+
+            if bullet_pos[1] < 0:
+                PlayerBullet.image.pop()
+                PlayerBullet.pos.remove(bullet_pos)
+                PlayerBullet.Δpos.pop()
+
+        p_bullet.fire_bullet()
 
         # Enemies Movement
         for i in range(len(Enemy.enemy_list)):
