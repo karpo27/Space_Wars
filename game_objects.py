@@ -9,12 +9,6 @@ import pygame
 from pygame import mixer
 import random
 
-# Defines Number of max bullets on Screen per Type
-enemy_bullet_type = {
-    'common': 3
-}
-
-
 # Initialize Pygame
 pygame.init()
 
@@ -101,7 +95,7 @@ class Enemy:
     image = []
     pos = []
     Δpos = []
-    next_bullet = []
+    Δt_bullet = []
 
     # Define time delay between enemies to spawn: 8.0 sec
     time_to_spawn = 4000
@@ -123,19 +117,13 @@ class Enemy:
             Enemy.image.append(self.image)
             Enemy.pos.append([random.randint(0, WIDTH - self.l_image), random.randint(-100, 0 - self.l_image)])
             Enemy.Δpos.append([self.Δx, self.Δy])
-            Enemy.next_bullet.append(0)
+            Enemy.Δt_bullet.append(0)
 
 class EnemyBullet:
     # Define Bullet Variables
     image = []
     pos = []
     Δpos = []
-    Δt = 4000
-
-
-    #time_to_shoot = 2000
-    #enemy_bullet_shoot = pygame.USEREVENT + 1
-    #pygame.time.set_timer(enemy_bullet_shoot, time_to_shoot)
 
     def __init__(self):
         self.image = pygame.image.load(enemies_bullet_img['common'])
@@ -155,7 +143,6 @@ class EnemyBullet:
             SCREEN.blit(EnemyBullet.image[i], EnemyBullet.pos[i])
 
     def generate_bullet(self, i):
-
         EnemyBullet.image.append(self.image)
         EnemyBullet.pos.append([Enemy.pos[i][0], Enemy.pos[i][1]])
         EnemyBullet.Δpos.append((self.Δx, self.Δy))
@@ -202,7 +189,6 @@ e_bullet = EnemyBullet()
 speakers = Speakers()
 score = Score()
 background = Background()
-
 
 
 
