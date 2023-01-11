@@ -73,16 +73,11 @@ def run_level_1():
                         speakers.state = "off"
 
             # Define Number of Enemies to spawn in Level 1: 10
-            enemies_lvl_1 = ['common', 'common']
+            enemies_lvl_1 = ['common']
             n_enemies = len(enemies_lvl_1)
             if len(Enemy.enemy_list) < n_enemies:
                 if event.type == Enemy.spawn_enemy:
                     enemy.generate_enemies(1)
-
-            # After Enemies Appear Generate Enemy Bullet
-            if len(Enemy.enemy_list) > 0:
-                if event.type == EnemyBullet.enemy_bullet_shoot:
-                    e_bullet.generate_bullet()
 
         # Player Movement Boundaries
         player.x += player.Δx
@@ -127,6 +122,15 @@ def run_level_1():
                     p_bullet.state = "ready"
                     score.value += 1
                     p_bullet.col_sound.play()
+
+            # After Enemies Appear Generate Enemy Bullet every 80 cycles (fix for every enemy later)
+            if len(Enemy.enemy_list) > 0:
+                Enemy.next_bullet[i] += 1
+                print(Enemy.next_bullet)
+                # if Enemy.pos[i][1] >= 0 and
+                if Enemy.next_bullet[i] >= 80:
+                    Enemy.next_bullet[i] = 0
+                    e_bullet.generate_bullet(i)
 
             # Show Enemies Images
             enemy.show_image(Enemy.pos[i][0], Enemy.pos[i][1], i)
