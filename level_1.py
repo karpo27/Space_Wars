@@ -4,7 +4,7 @@ from game_objects import *
 # Modules
 import pygame
 from pygame import mixer
-import random
+import math
 
 # Initialize Pygame
 pygame.init()
@@ -37,21 +37,38 @@ def run_level_1():
 
             # Press Keyboard
             if event.type == pygame.KEYDOWN:
-                # Player Keyboard Movement
+                # Player Keyboard Movement - (LEFT, RIGHT, UP, DOWN)
                 if event.key == pygame.K_LEFT:
                     player.Δpos[0] = -0.3 * dt
-                elif event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT:
                     player.Δpos[0] = 0.3 * dt
-                elif event.key == pygame.K_UP:
+                if event.key == pygame.K_UP:
                     player.Δpos[1] = -0.3 * dt
-                elif event.key == pygame.K_DOWN:
+                if event.key == pygame.K_DOWN:
                     player.Δpos[1] = 0.3 * dt
+                # Player Keyboard Diagonal Movement - (UP-LEFT, UP-RIGHT, DOWN-LEFT, DOWN-RIGHT)
+                if player.Δpos[0] != 0 and player.Δpos[1] != 0:
+                    if player.Δpos[0] < 0:
+                        if player.Δpos[1] < 0:
+                            player.Δpos[0] = -0.21 * dt
+                            player.Δpos[1] = -0.21 * dt
+                        if player.Δpos[1] > 0:
+                            player.Δpos[0] = -0.21 * dt
+                            player.Δpos[1] = 0.21 * dt
+                    if player.Δpos[0] > 0:
+                        if player.Δpos[1] < 0:
+                            player.Δpos[0] = 0.21 * dt
+                            player.Δpos[1] = -0.21 * dt
+                        if player.Δpos[1] > 0:
+                            player.Δpos[0] = 0.21 * dt
+                            player.Δpos[1] = 0.21 * dt
+
                 # Player Bullet Keyboard
                 elif event.key == pygame.K_SPACE:
-                    if PlayerBullet.Δt_p_bullet >= PlayerBullet.p_bullet_ref:
-                        PlayerBullet.Δt_p_bullet = 0
-                        #p_bullet.sound.play()
-                        #p_bullet.sound.set_volume(speakers.initial_sound)
+                    if p_bullet.Δt_p_bullet >= PlayerBullet.p_bullet_ref:
+                        p_bullet.Δt_p_bullet = 0
+                        p_bullet.sound.play()
+                        p_bullet.sound.set_volume(speakers.initial_sound)
                         p_bullet.generate_bullet()
 
             # Release Keyboard
@@ -91,16 +108,17 @@ def run_level_1():
             player.pos[1] = HEIGHT - player.l_image
 
         # Player Bullet Movement
-        if PlayerBullet.Δt_p_bullet < PlayerBullet.p_bullet_ref:
-            PlayerBullet.Δt_p_bullet += 1
+
+        if p_bullet.Δt_p_bullet < PlayerBullet.p_bullet_ref:
+            p_bullet.Δt_p_bullet += 1
 
         for bullet_pos in PlayerBullet.pos[:]:
-            bullet_pos[1] -= p_bullet.Δy
+            bullet_pos[1] -= p_bullet.Δpos[1]
 
             if bullet_pos[1] < 0:
                 PlayerBullet.image.pop()
                 PlayerBullet.pos.remove(bullet_pos)
-                PlayerBullet.Δpos.pop()
+                #PlayerBullet.Δpos.pop()
 
         p_bullet.fire_bullet()
 
@@ -116,17 +134,19 @@ def run_level_1():
                 Enemy.pos[i][1] += Enemy.Δpos[i][1]
 
             # Collision Detection (fix problem at intersection of objects when pressing "spacebar")
-            collision = pygame.Rect.colliderect(
-                p_bullet.image.get_rect(x=p_bullet.x, y=p_bullet.y),
-                enemy.image.get_rect(x=Enemy.pos[i][0], y=Enemy.pos[i][1])
-            )
-            if collision:
-                # The collision will affect only if this:
-                if Enemy.pos[i][1] + enemy.l_image >= 0:
-                    p_bullet.y = player.y
-                    p_bullet.state = "ready"
-                    score.value += 1
-                    p_bullet.col_sound.play()
+            '''
+            if len(p_bullet.pos) > 0:
+                collision = pygame.Rect.colliderect(
+                    PlayerBullet.image[i].get_rect(x=PlayerBullet.pos[0], y=PlayerBullet.pos[1]),
+                    enemy.image.get_rect(x=Enemy.pos[i][0], y=Enemy.pos[i][1])
+                )
+
+                if collision:
+                    # The collision will affect only if this:
+                    if Enemy.pos[i][1] + enemy.l_image >= 0:
+                        p_bullet.pos[1] = player.pos[1]
+                        score.value += 1
+                        p_bullet.col_sound.play()'''
 
             # After Enemies Appear Generate Enemy Bullet every 80 cycles (fix for every enemy later)
             if len(Enemy.enemy_list) > 0:

@@ -20,8 +20,6 @@ class Player:
         self.image = pygame.image.load(image)
         self.l_image = self.image.get_rect().width
         self.pos = pos
-        #self.Δx = 0
-        #self.Δy = 0
         self.Δpos = Δpos
 
         # HP Bar
@@ -33,7 +31,6 @@ class Player:
         self.hp_bar_full_color = (15, 255, 80)     # Neon Green
         self.line_width = 2
         self.border_radius = 4
-
 
     def show_image(self, x, y):
         SCREEN.blit(self.image, (x, y))
@@ -74,16 +71,15 @@ class PlayerBullet:
     pos = []
     Δpos = []
     # Time Delay to Shoot Player Bullet
-    Δt_p_bullet = 30
     p_bullet_ref = 30   # Initial Reference
 
-    def __init__(self):
-        self.image = pygame.image.load(player_bullet_img['1'])
+    def __init__(self, image, Δpos, Δt_p_bullet):
+        self.image = pygame.image.load(image)
         self.l_image = self.image.get_rect().width
         self.x = 0
         self.y = 480
-        self.Δx = 0
-        self.Δy = 1.2 * dt
+        self.Δpos = Δpos
+        self.Δt_p_bullet = Δt_p_bullet
         self.sound = mixer.Sound('Sounds/laser.wav')
         self.col_sound = mixer.Sound('Sounds/explosion.wav')
 
@@ -94,7 +90,7 @@ class PlayerBullet:
     def generate_bullet(self):
         PlayerBullet.image.append(self.image)
         PlayerBullet.pos.append([player.pos[0] + 16, player.pos[1] + 10])
-        PlayerBullet.Δpos.append((self.Δx, self.Δy))
+        #PlayerBullet.Δpos.append((self.Δpos[0], self.Δpos[1]))
 
 
 class Enemy:
@@ -191,32 +187,18 @@ player = Player(
     [0, 0]
 )
 
+p_bullet = PlayerBullet(
+    'Images/Player_Bullet/bullets.png',     # ImageSize: 32 x 32
+    [0, 1.2 * dt],
+    30
+)
+
 
 enemy = Enemy()
-p_bullet = PlayerBullet()
 e_bullet = EnemyBullet()
 speakers = Speakers()
 score = Score()
 background = Background()
-
-
-
-class Game:
-    def __init__(self):
-        pass
-
-    def process_events(self):
-        pass
-
-    def run_logic(self):
-        pass
-
-    def display_frame(self):
-        pass
-
-
-def main():
-    pass
 
 
 if __name__ == '__main__':
