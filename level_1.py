@@ -39,29 +39,28 @@ def run_level_1():
             if event.type == pygame.KEYDOWN:
                 # Player Keyboard Movement - (LEFT, RIGHT, UP, DOWN)
                 if event.key == pygame.K_LEFT:
-                    player.Δpos[0] = -0.3 * dt
+                    player.Δpos[0] = -player.init_d
                 if event.key == pygame.K_RIGHT:
-                    player.Δpos[0] = 0.3 * dt
+                    player.Δpos[0] = player.init_d
                 if event.key == pygame.K_UP:
-                    player.Δpos[1] = -0.3 * dt
+                    player.Δpos[1] = -player.init_d
                 if event.key == pygame.K_DOWN:
-                    player.Δpos[1] = 0.3 * dt
-                # Player Keyboard Diagonal Movement - (UP-LEFT, UP-RIGHT, DOWN-LEFT, DOWN-RIGHT)
-                if player.Δpos[0] != 0 and player.Δpos[1] != 0:
-                    if player.Δpos[0] < 0:
-                        if player.Δpos[1] < 0:
-                            player.Δpos[0] = -0.21 * dt
-                            player.Δpos[1] = -0.21 * dt
-                        if player.Δpos[1] > 0:
-                            player.Δpos[0] = -0.21 * dt
-                            player.Δpos[1] = 0.21 * dt
-                    if player.Δpos[0] > 0:
-                        if player.Δpos[1] < 0:
-                            player.Δpos[0] = 0.21 * dt
-                            player.Δpos[1] = -0.21 * dt
-                        if player.Δpos[1] > 0:
-                            player.Δpos[0] = 0.21 * dt
-                            player.Δpos[1] = 0.21 * dt
+                    player.Δpos[1] = player.init_d
+                # Player Keyboard Diagonal Movement - (UP-LEFT, DOWN-LEFT, UP-RIGHT, DOWN-RIGHT)
+                if player.Δpos[0] < 0:
+                    if player.Δpos[1] < 0:
+                        player.Δpos[0] = - math.sqrt((player.init_d ** 2) / 2)
+                        player.Δpos[1] = - math.sqrt((player.init_d ** 2) / 2)
+                    if player.Δpos[1] > 0:
+                        player.Δpos[0] = - math.sqrt((player.init_d ** 2) / 2)
+                        player.Δpos[1] = math.sqrt((player.init_d ** 2) / 2)
+                if player.Δpos[0] > 0:
+                    if player.Δpos[1] < 0:
+                        player.Δpos[0] = math.sqrt((player.init_d ** 2) / 2)
+                        player.Δpos[1] = - math.sqrt((player.init_d ** 2) / 2)
+                    if player.Δpos[1] > 0:
+                        player.Δpos[0] = math.sqrt((player.init_d ** 2) / 2)
+                        player.Δpos[1] = math.sqrt((player.init_d ** 2) / 2)
 
                 # Player Bullet Keyboard
                 elif event.key == pygame.K_SPACE:

@@ -21,6 +21,7 @@ class Player:
         self.l_image = self.image.get_rect().width
         self.pos = pos
         self.Δpos = Δpos
+        self.init_d = 0.3 * dt
 
         # HP Bar
         self.hp_bar_pos = (1/43 * WIDTH, 16/17 * HEIGHT)
