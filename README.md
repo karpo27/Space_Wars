@@ -3,10 +3,10 @@ Space Ships Game coded in Python
 
 Genre: Shoot 'em up
 
-
-Common = Tier D
-Uncommon = Tier C
-Rare = Tier B
-Very Rare
+Verycommon = Tier F
+Common = Tier E
+Uncommon = Tier D
+Rare = Tier C
+Very Rare = Tier B
 Epic = Tier A
 Legendary = Tier S

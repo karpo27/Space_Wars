@@ -12,15 +12,15 @@ pygame.init()
 
 
 class Player:
-    hp = 3  # Player HP
     y_enter = 19/18 * HEIGHT
     Δd = 0
 
-    def __init__(self, image, pos, Δpos):
+    def __init__(self, image, pos, Δpos, hp):
         self.image = pygame.image.load(image)
         self.l_image = self.image.get_rect().width
         self.pos = pos
         self.Δpos = Δpos
+        self.hp = hp
         self.init_d = 0.3 * dt
 
         # HP Bar
@@ -91,7 +91,6 @@ class PlayerBullet:
     def generate_bullet(self):
         PlayerBullet.image.append(self.image)
         PlayerBullet.pos.append([player.pos[0] + 16, player.pos[1] + 10])
-        #PlayerBullet.Δpos.append((self.Δpos[0], self.Δpos[1]))
 
 
 class Enemy:
@@ -106,21 +105,19 @@ class Enemy:
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
-    def __init__(self):
-        self.image = pygame.image.load(enemies_img['common'])
-        self.l_image = self.image.get_rect().width
-        self.Δx = 0.25 * dt
-        self.Δy = 30
-
-    def show_image(self, x, y, i):
-        SCREEN.blit(Enemy.image[i], (x, y))
+    def __init__(self, image, pos, Δpos, Δt_bullet, hp):
+        self.image = pygame.image.load(image)
+        self.pos = pos
+        self.Δpos = Δpos
+        self.Δt_bullet = Δt_bullet
+        self.hp = hp
 
     def generate_enemies(self, n):
         for i in range(0, n):
             Enemy.enemy_list.append(i)
             Enemy.image.append(self.image)
-            Enemy.pos.append([random.randint(0, WIDTH - self.l_image), random.randint(-100, 0 - self.l_image)])
-            Enemy.Δpos.append([self.Δx, self.Δy])
+            Enemy.pos.append([self.pos[0], self.pos[1]])
+            Enemy.Δpos.append([self.Δpos[0], self.Δpos[1]])
             Enemy.Δt_bullet.append(0)
 
 class EnemyBullet:
@@ -183,19 +180,29 @@ class Score:
 # Initialize Classes:
 # Player
 player = Player(
-    'Images/Player/player_img.png',    # Image Size: 64 x 64
+    'Images/Player/player_img.png',      # Image Size: 64 x 64
     [WIDTH/2 - C_64/2, 5/6 * HEIGHT],
-    [0, 0]
+    [0, 0],
+    3
 )
 
+# Player Bullet
 p_bullet = PlayerBullet(
     'Images/Player_Bullet/bullets.png',     # ImageSize: 32 x 32
     [0, 1.2 * dt],
     30
 )
 
+# Enemy
+enemy_F = Enemy(
+    'Images/Enemies/enemy_common.png',      # Image Size: 64 x 64
+    [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
+    [0.25 * dt, 30],
+    100,
+    1
+)
 
-enemy = Enemy()
+
 e_bullet = EnemyBullet()
 speakers = Speakers()
 score = Score()

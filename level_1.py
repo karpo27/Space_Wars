@@ -63,7 +63,7 @@ def run_level_1():
                         player.Δpos[1] = math.sqrt((player.init_d ** 2) / 2)
 
                 # Player Bullet Keyboard
-                elif event.key == pygame.K_SPACE:
+                if event.key == pygame.K_SPACE:
                     if p_bullet.Δt_p_bullet >= PlayerBullet.p_bullet_ref:
                         p_bullet.Δt_p_bullet = 0
                         p_bullet.sound.play()
@@ -91,7 +91,7 @@ def run_level_1():
             n_enemies = len(enemies_lvl_1)
             if len(Enemy.enemy_list) < n_enemies:
                 if event.type == Enemy.spawn_enemy:
-                    enemy.generate_enemies(1)
+                    enemy_F.generate_enemies(1)
 
         # Player Movement Boundaries
         player.pos[0] += player.Δpos[0]
@@ -117,7 +117,6 @@ def run_level_1():
             if bullet_pos[1] < 0:
                 PlayerBullet.image.pop()
                 PlayerBullet.pos.remove(bullet_pos)
-                #PlayerBullet.Δpos.pop()
 
         p_bullet.fire_bullet()
 
@@ -126,11 +125,11 @@ def run_level_1():
             Enemy.pos[i][0] += Enemy.Δpos[i][0]
 
             if Enemy.pos[i][0] <= 0:
-                Enemy.Δpos[i][0] = 0.3 * dt
-                Enemy.pos[i][1] += Enemy.Δpos[i][1]
-            elif Enemy.pos[i][0] >= WIDTH - enemy.l_image:
-                Enemy.Δpos[i][0] = -0.3 * dt
-                Enemy.pos[i][1] += Enemy.Δpos[i][1]
+                Enemy.Δpos[i][0] = enemy_F.Δpos[0]
+                Enemy.pos[i][1] += enemy_F.Δpos[1]
+            elif Enemy.pos[i][0] >= WIDTH - Enemy.image[i].get_rect().width:
+                Enemy.Δpos[i][0] = - enemy_F.Δpos[0]
+                Enemy.pos[i][1] += enemy_F.Δpos[1]
 
             # Collision Detection (fix problem at intersection of objects when pressing "spacebar")
             '''
@@ -150,12 +149,12 @@ def run_level_1():
             # After Enemies Appear Generate Enemy Bullet every 80 cycles (fix for every enemy later)
             if len(Enemy.enemy_list) > 0:
                 Enemy.Δt_bullet[i] += 1
-                if Enemy.pos[i][1] >= 0 and Enemy.Δt_bullet[i] >= 80:
+                if Enemy.pos[i][1] >= 0 and Enemy.Δt_bullet[i] >= enemy_F.Δt_bullet:
                     Enemy.Δt_bullet[i] = 0
                     e_bullet.generate_bullet(i)
 
             # Show Enemies Images
-            enemy.show_image(Enemy.pos[i][0], Enemy.pos[i][1], i)
+            SCREEN.blit(Enemy.image[i], (Enemy.pos[i][0], Enemy.pos[i][1]))
 
         # Enemy Bullet Movement
         for bullet_pos in EnemyBullet.pos[:]:
@@ -168,7 +167,7 @@ def run_level_1():
 
         e_bullet.fire_bullet()
         # Call Functions
-        player.draw_hp_bar(Player.hp)
+        player.draw_hp_bar(player.hp)
         score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)
 
