@@ -29,4 +29,3 @@ enemies_bullet_img = {
     'common': 'Images/Enemies_Bullet/enemy_bullet.png'
 }
 
-# Sounds

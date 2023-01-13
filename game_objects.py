@@ -112,13 +112,7 @@ class Enemy:
         self.Δt_bullet = Δt_bullet
         self.hp = hp
 
-    def generate_enemies(self, n):
-        for i in range(0, n):
-            Enemy.enemy_list.append(i)
-            Enemy.image.append(self.image)
-            Enemy.pos.append([self.pos[0], self.pos[1]])
-            Enemy.Δpos.append([self.Δpos[0], self.Δpos[1]])
-            Enemy.Δt_bullet.append(0)
+
 
 class EnemyBullet:
     # Define Bullet Variables

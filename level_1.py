@@ -14,6 +14,9 @@ def run_level_1():
     # Game Loop
     run = True
     while run:
+        # Define Number of Enemies to spawn in Level 1: 10
+        enemies_lvl_1 = [enemy_F, enemy_F]
+
         # Set screen FPS
         clock.tick(FPS)
 
@@ -86,12 +89,17 @@ def run_level_1():
                     else:
                         speakers.state = "off"
 
-            # Define Number of Enemies to spawn in Level 1: 10
-            enemies_lvl_1 = ['common', 'common']
+            # Spawn Enemies According to Level
             n_enemies = len(enemies_lvl_1)
             if len(Enemy.enemy_list) < n_enemies:
                 if event.type == Enemy.spawn_enemy:
-                    enemy_F.generate_enemies(1)
+                    x = enemies_lvl_1[len(Enemy.enemy_list)]
+                    # Generate Enemies
+                    Enemy.enemy_list.append(1)  # fix this later
+                    Enemy.image.append(x.image)
+                    Enemy.pos.append([x.pos[0], x.pos[1]])
+                    Enemy.Δpos.append([x.Δpos[0], x.Δpos[1]])
+                    Enemy.Δt_bullet.append(0)
 
         # Player Movement Boundaries
         player.pos[0] += player.Δpos[0]
@@ -146,10 +154,10 @@ def run_level_1():
                         score.value += 1
                         p_bullet.col_sound.play()'''
 
-            # After Enemies Appear Generate Enemy Bullet every 80 cycles (fix for every enemy later)
+            # After Enemies Appear Generate Enemy Bullet every enemy_X.Δt_bullet cycles
             if len(Enemy.enemy_list) > 0:
                 Enemy.Δt_bullet[i] += 1
-                if Enemy.pos[i][1] >= 0 and Enemy.Δt_bullet[i] >= enemy_F.Δt_bullet:
+                if Enemy.pos[i][1] >= 0 and Enemy.Δt_bullet[i] >= enemies_lvl_1[i].Δt_bullet:
                     Enemy.Δt_bullet[i] = 0
                     e_bullet.generate_bullet(i)
 
