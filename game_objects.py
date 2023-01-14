@@ -143,11 +143,13 @@ class Speakers:
             mixer.music.set_volume(0.0)
             p_bullet.sound.set_volume(self.initial_sound)
             p_bullet.col_sound.set_volume(self.initial_sound)
+            e_bullet_F.col_sound.set_volume(self.initial_sound)
         elif state == "on":
             SCREEN.blit(self.on_image, (x, y))
             mixer.music.set_volume(0.08)
             p_bullet.sound.set_volume(0.08)
             p_bullet.col_sound.set_volume(0.08)
+            e_bullet_F.col_sound.set_volume(0.08)
 
 
 class Score:
