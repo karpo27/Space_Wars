@@ -157,7 +157,21 @@ def run_level_1():
                     Enemy.Δt_bullet[i] = 0
                     e_bullet_F.generate_bullet(i)
 
-            # Collision Detection for Player Bullet vs Enemy
+            # Collision Detection for Player with Enemy
+            col_player_with_enemy = pygame.Rect.colliderect(
+                player.image.get_rect(x=player.pos[0], y=player.pos[1]),
+                Enemy.image[i].get_rect(x=Enemy.pos[i][0], y=Enemy.pos[i][1])
+            )
+
+            '''
+            if col_player_with_enemy:
+                # The collision will affect only if this:
+                if Enemy.pos[i][1] + Enemy.image[i].get_rect().width >= 0:
+                    player.hp -= 1
+                    player.hp_animation = True
+                    score.value += 1'''
+
+            # Collision Detection for Player Bullet with Enemy
             for j in range(len(PlayerBullet.image)):
                 col_p_bul_with_enemy = pygame.Rect.colliderect(
                     PlayerBullet.image[j].get_rect(x=PlayerBullet.pos[j][0], y=PlayerBullet.pos[j][1]),
@@ -184,7 +198,7 @@ def run_level_1():
                 EnemyBullet.pos.remove(bullet_pos)
                 EnemyBullet.Δpos.pop()
 
-        # Collision Detection for Enemy Bullet vs Player
+        # Collision Detection for Enemy Bullet with Player
         for i in range(len(EnemyBullet.image)):
             col_e_bul_with_player = pygame.Rect.colliderect(
                 player.image.get_rect(x=player.pos[0], y=player.pos[1]),
