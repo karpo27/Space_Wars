@@ -19,13 +19,8 @@ C_32 = 32
 C_64 = 64
 
 # Images
-
 background_img = {
     'level_1': 'Images/Levels_Background/space_bg.jpg'
 }
 
-# Size: 32 x 32
-enemies_bullet_img = {
-    'common': 'Images/Enemies_Bullet/enemy_bullet.png'
-}
 

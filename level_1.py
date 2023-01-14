@@ -23,7 +23,7 @@ def run_level_1():
         # Draw Scrolling Background
         background.show()
 
-        # Enter Level Animation
+        # Enter Level Animation + Show Player Image Screen
         if player.pos[1] < Player.y_enter - Player.Δd:
             pygame.event.set_blocked([pygame.KEYDOWN, pygame.KEYUP])
             player.show_image(player.pos[0], Player.y_enter - Player.Δd)
@@ -115,7 +115,6 @@ def run_level_1():
             player.pos[1] = HEIGHT - player.l_image
 
         # Player Bullet Movement
-
         if p_bullet.Δt_p_bullet < PlayerBullet.p_bullet_ref:
             p_bullet.Δt_p_bullet += 1
 
@@ -126,12 +125,15 @@ def run_level_1():
                 PlayerBullet.image.pop()
                 PlayerBullet.pos.remove(bullet_pos)
 
-        p_bullet.fire_bullet()
+        # Show Player Bullet on Screen
+        for i in range(len(PlayerBullet.pos[:])):
+            SCREEN.blit(PlayerBullet.image[i], (PlayerBullet.pos[i], PlayerBullet.pos[i]))
 
         # Enemies Movement
         for i in range(len(Enemy.enemy_list)):
             Enemy.pos[i][0] += Enemy.Δpos[i][0]
 
+            # Fix movement according to enemy (later)
             if Enemy.pos[i][0] <= 0:
                 Enemy.Δpos[i][0] = enemy_F.Δpos[0]
                 Enemy.pos[i][1] += enemy_F.Δpos[1]
@@ -159,22 +161,25 @@ def run_level_1():
                 Enemy.Δt_bullet[i] += 1
                 if Enemy.pos[i][1] >= 0 and Enemy.Δt_bullet[i] >= enemies_lvl_1[i].Δt_bullet:
                     Enemy.Δt_bullet[i] = 0
-                    e_bullet.generate_bullet(i)
+                    e_bullet_F.generate_bullet(i)
 
-            # Show Enemies Images
+            # Show Enemies on Screen
             SCREEN.blit(Enemy.image[i], (Enemy.pos[i][0], Enemy.pos[i][1]))
 
-        # Enemy Bullet Movement
+        # Enemy Bullet Movement (fix later according to enemy)
         for bullet_pos in EnemyBullet.pos[:]:
-            bullet_pos[1] += e_bullet.Δy
+            bullet_pos[1] += e_bullet_F.Δpos[1]
 
             if bullet_pos[1] > HEIGHT:
                 EnemyBullet.image.pop()
                 EnemyBullet.pos.remove(bullet_pos)
                 EnemyBullet.Δpos.pop()
 
-        e_bullet.fire_bullet()
-        # Call Functions
+        # Show Enemies Bullets on Screen
+        for i in range(len(EnemyBullet.pos[:])):
+            SCREEN.blit(EnemyBullet.image[i], EnemyBullet.pos[i])
+
+        # Call other Functions
         player.draw_hp_bar(player.hp)
         score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)

@@ -74,19 +74,15 @@ class PlayerBullet:
     # Time Delay to Shoot Player Bullet
     p_bullet_ref = 30   # Initial Reference
 
-    def __init__(self, image, Δpos, Δt_p_bullet):
+    def __init__(self, image, Δpos, Δt_p_bullet, sound, col_sound):
         self.image = pygame.image.load(image)
         self.l_image = self.image.get_rect().width
         self.x = 0
         self.y = 480
         self.Δpos = Δpos
         self.Δt_p_bullet = Δt_p_bullet
-        self.sound = mixer.Sound('Sounds/laser.wav')
-        self.col_sound = mixer.Sound('Sounds/explosion.wav')
-
-    def fire_bullet(self):
-        for i in range(len(PlayerBullet.pos[:])):
-            SCREEN.blit(PlayerBullet.image[i], (PlayerBullet.pos[i], PlayerBullet.pos[i]))
+        self.sound = mixer.Sound(sound)
+        self.col_sound = mixer.Sound(col_sound)
 
     def generate_bullet(self):
         PlayerBullet.image.append(self.image)
@@ -113,29 +109,23 @@ class Enemy:
         self.hp = hp
 
 
-
 class EnemyBullet:
     # Define Bullet Variables
     image = []
     pos = []
     Δpos = []
 
-    def __init__(self):
-        self.image = pygame.image.load(enemies_bullet_img['common'])
+    def __init__(self, image, Δpos, sound, col_sound):
+        self.image = pygame.image.load(image)
         self.l_image = self.image.get_rect().width
-        self.Δx = 0
-        self.Δy = 0.2 * dt
-        self.sound = mixer.Sound('Sounds/laser.wav')
-        self.col_sound = mixer.Sound('Sounds/explosion.wav')
-
-    def fire_bullet(self):
-        for i in range(len(EnemyBullet.pos[:])):
-            SCREEN.blit(EnemyBullet.image[i], EnemyBullet.pos[i])
+        self.Δpos = Δpos
+        self.sound = mixer.Sound(sound)
+        self.col_sound = mixer.Sound(col_sound)
 
     def generate_bullet(self, i):
         EnemyBullet.image.append(self.image)
         EnemyBullet.pos.append([Enemy.pos[i][0], Enemy.pos[i][1]])
-        EnemyBullet.Δpos.append((self.Δx, self.Δy))
+        EnemyBullet.Δpos.append((self.Δpos[0], self.Δpos[1]))
 
 class Speakers:
     def __init__(self):
@@ -184,10 +174,12 @@ player = Player(
 p_bullet = PlayerBullet(
     'Images/Player_Bullet/bullets.png',     # ImageSize: 32 x 32
     [0, 1.2 * dt],
-    30
+    30,
+    'Sounds/laser.wav',
+    'Sounds/explosion.wav'
 )
 
-# Enemy
+# Enemies
 enemy_F = Enemy(
     'Images/Enemies/enemy_common.png',      # Image Size: 64 x 64
     [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
@@ -197,7 +189,14 @@ enemy_F = Enemy(
 )
 
 
-e_bullet = EnemyBullet()
+e_bullet_F = EnemyBullet(
+    'Images/Enemies_Bullet/enemy_bullet.png',   # Image Size: 32 x 32
+    [0, 0.2 * dt],
+    'Sounds/laser.wav',
+    'Sounds/explosion.wav'
+)
+
+
 speakers = Speakers()
 score = Score()
 background = Background()
