@@ -131,30 +131,15 @@ def run_level_1():
 
         # Enemies Movement
         for i in range(len(Enemy.enemy_list)):
+            # Fix movement according to enemy (later)
             Enemy.pos[i][0] += Enemy.Δpos[i][0]
 
-            # Fix movement according to enemy (later)
             if Enemy.pos[i][0] <= 0:
                 Enemy.Δpos[i][0] = enemy_F.Δpos[0]
                 Enemy.pos[i][1] += enemy_F.Δpos[1]
             elif Enemy.pos[i][0] >= WIDTH - Enemy.image[i].get_rect().width:
                 Enemy.Δpos[i][0] = - enemy_F.Δpos[0]
                 Enemy.pos[i][1] += enemy_F.Δpos[1]
-
-            # Collision Detection (fix problem at intersection of objects when pressing "spacebar")
-            '''
-            if len(p_bullet.pos) > 0:
-                collision = pygame.Rect.colliderect(
-                    PlayerBullet.image[i].get_rect(x=PlayerBullet.pos[0], y=PlayerBullet.pos[1]),
-                    enemy.image.get_rect(x=Enemy.pos[i][0], y=Enemy.pos[i][1])
-                )
-
-                if collision:
-                    # The collision will affect only if this:
-                    if Enemy.pos[i][1] + enemy.l_image >= 0:
-                        p_bullet.pos[1] = player.pos[1]
-                        score.value += 1
-                        p_bullet.col_sound.play()'''
 
             # After Enemies Appear Generate Enemy Bullet every enemy_X.Δt_bullet cycles
             if len(Enemy.enemy_list) > 0:
@@ -163,11 +148,26 @@ def run_level_1():
                     Enemy.Δt_bullet[i] = 0
                     e_bullet_F.generate_bullet(i)
 
+            # Collision Detection for Player Bullet vs Enemy
+            for j in range(len(PlayerBullet.image)):
+                col_p_bul_with_enemy = pygame.Rect.colliderect(
+                    PlayerBullet.image[j].get_rect(x=PlayerBullet.pos[j][0], y=PlayerBullet.pos[j][1]),
+                    Enemy.image[i].get_rect(x=Enemy.pos[i][0], y=Enemy.pos[i][1])
+                )
+
+                if col_p_bul_with_enemy:
+                    # The collision will affect only if this:
+                    if Enemy.pos[i][1] + Enemy.image[i].get_rect().width >= 0:
+                        PlayerBullet.image.pop()    # fix removal for bullet not last (later)
+                        PlayerBullet.pos.pop()
+                        score.value += 1
+                        p_bullet.col_sound.play()
+
             # Show Enemies on Screen
             SCREEN.blit(Enemy.image[i], (Enemy.pos[i][0], Enemy.pos[i][1]))
 
         # Enemy Bullet Movement (fix later according to enemy)
-        for bullet_pos in EnemyBullet.pos[:]:
+        for bullet_pos in EnemyBullet.pos:
             bullet_pos[1] += e_bullet_F.Δpos[1]
 
             if bullet_pos[1] > HEIGHT:
@@ -175,8 +175,24 @@ def run_level_1():
                 EnemyBullet.pos.remove(bullet_pos)
                 EnemyBullet.Δpos.pop()
 
+        # Collision Detection for Enemy Bullet vs Player
+        for i in range(len(EnemyBullet.image)):
+            col_e_bul_with_player = pygame.Rect.colliderect(
+                player.image.get_rect(x=player.pos[0], y=player.pos[1]),
+                EnemyBullet.image[i].get_rect(x=EnemyBullet.pos[i][0], y=EnemyBullet.pos[i][1])
+            )
+
+            if col_e_bul_with_player:
+                # The collision will affect only if this:
+                EnemyBullet.image.remove(EnemyBullet.image[i])
+                EnemyBullet.pos.remove(EnemyBullet.pos[i])
+                EnemyBullet.Δpos.remove(EnemyBullet.Δpos[i])
+                score.value += 1
+                e_bullet_F.col_sound.play()
+                break
+
         # Show Enemies Bullets on Screen
-        for i in range(len(EnemyBullet.pos[:])):
+        for i in range(len(EnemyBullet.pos)):
             SCREEN.blit(EnemyBullet.image[i], EnemyBullet.pos[i])
 
         # Call other Functions
