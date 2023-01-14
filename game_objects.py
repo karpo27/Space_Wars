@@ -15,12 +15,13 @@ class Player:
     y_enter = 19/18 * HEIGHT
     Δd = 0
 
-    def __init__(self, image, pos, Δpos, hp):
+    def __init__(self, image, pos, Δpos, hp, lives):
         self.image = pygame.image.load(image)
         self.l_image = self.image.get_rect().width
         self.pos = pos
         self.Δpos = Δpos
         self.hp = hp
+        self.lives = lives
         self.init_d = 0.3 * dt
 
         # HP Bar
@@ -32,11 +33,14 @@ class Player:
         self.hp_bar_full_color = (15, 255, 80)     # Neon Green
         self.line_width = 2
         self.border_radius = 4
+        self.hp_animation = False
+        self.hp_ref = 27.5
+        self.Δhp = 0.5
 
     def show_image(self, x, y):
         SCREEN.blit(self.image, (x, y))
 
-    def draw_hp_bar(self, hp):
+    def draw_hp_bar(self, hp, hp_animation):
         x_1, y_1 = (self.hp_bar_pos[0] + 1/3 * self.hp_bar_size[0], self.hp_bar_pos[1])
         x_2, y_2 = (x_1, y_1 + self.hp_bar_size[1] - 1)
 
@@ -61,10 +65,36 @@ class Player:
             pygame.draw.rect(SCREEN, self.hp_bar_full_color, (*inner_pos_2, *inner_size_2))
             pygame.draw.rect(SCREEN, self.hp_bar_full_color, (*inner_pos_3, *inner_size_3))
         elif hp == 2:
-            pygame.draw.rect(SCREEN, self.hp_bar_med_color, (*inner_pos_1, *inner_size_1))
-            pygame.draw.rect(SCREEN, self.hp_bar_med_color, (*inner_pos_2, *inner_size_2))
+            if hp_animation:
+                player.hp_ref -= player.Δhp
+                pygame.draw.rect(SCREEN, self.hp_bar_full_color, (*inner_pos_1, *inner_size_1))
+                pygame.draw.rect(SCREEN, self.hp_bar_full_color, (*inner_pos_2, *inner_size_2))
+                pygame.draw.rect(SCREEN, self.hp_bar_full_color, (*inner_pos_3, player.hp_ref, inner_size_3[1]))
+                if player.hp_ref == 0:
+                    player.hp_animation = False
+                    player.hp_ref = 27.5
+            else:
+                pygame.draw.rect(SCREEN, self.hp_bar_med_color, (*inner_pos_1, *inner_size_1))
+                pygame.draw.rect(SCREEN, self.hp_bar_med_color, (*inner_pos_2, *inner_size_2))
+
         elif hp == 1:
-            pygame.draw.rect(SCREEN, self.hp_bar_low_color, (*inner_pos_1, *inner_size_1))
+            if hp_animation:
+                player.hp_ref -= player.Δhp
+                pygame.draw.rect(SCREEN, self.hp_bar_med_color, (*inner_pos_1, *inner_size_1))
+                pygame.draw.rect(SCREEN, self.hp_bar_med_color, (*inner_pos_2, player.hp_ref, inner_size_2[1]))
+                if player.hp_ref == 0:
+                    player.hp_animation = False
+                    player.hp_ref = 27.5
+            else:
+                pygame.draw.rect(SCREEN, self.hp_bar_low_color, (*inner_pos_1, *inner_size_1))
+
+        elif hp == 0:
+            if hp_animation:
+                player.hp_ref -= player.Δhp
+                pygame.draw.rect(SCREEN, self.hp_bar_low_color, (*inner_pos_1, player.hp_ref, inner_size_1[1]))
+                if player.hp_ref == 0:
+                    player.hp_animation = False
+                    player.hp_ref = 27.5
 
 
 class PlayerBullet:
@@ -169,6 +199,7 @@ player = Player(
     'Images/Player/player_img.png',      # Image Size: 64 x 64
     [WIDTH/2 - C_64/2, 5/6 * HEIGHT],
     [0, 0],
+    3,
     3
 )
 

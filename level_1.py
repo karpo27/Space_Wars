@@ -34,6 +34,15 @@ def run_level_1():
             pygame.event.set_allowed([pygame.KEYDOWN, pygame.KEYUP])
             player.show_image(player.pos[0], player.pos[1])
 
+        # Go to Game Over / Continue Screen
+        if player.lives < 1:
+            pass
+
+        # Consume Life to Keep Playing
+        if player.hp == 0:
+            player.lives -= 1
+            pass
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -187,6 +196,8 @@ def run_level_1():
                 EnemyBullet.image.remove(EnemyBullet.image[i])
                 EnemyBullet.pos.remove(EnemyBullet.pos[i])
                 EnemyBullet.Δpos.remove(EnemyBullet.Δpos[i])
+                player.hp -= 1
+                player.hp_animation = True
                 score.value += 1
                 e_bullet_F.col_sound.play()
                 break
@@ -196,7 +207,7 @@ def run_level_1():
             SCREEN.blit(EnemyBullet.image[i], EnemyBullet.pos[i])
 
         # Call other Functions
-        player.draw_hp_bar(player.hp)
+        player.draw_hp_bar(player.hp, player.hp_animation)
         score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)
 
