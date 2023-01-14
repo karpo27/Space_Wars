@@ -125,18 +125,19 @@ class Enemy:
     pos = []
     Δpos = []
     Δt_bullet = []
+    hp = []
 
     # Define time delay between enemies to spawn: 8.0 sec
     time_to_spawn = 4000
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
-    def __init__(self, image, pos, Δpos, Δt_bullet, hp):
+    def __init__(self, image, pos, Δpos, hp, Δt_bullet):
         self.image = pygame.image.load(image)
         self.pos = pos
         self.Δpos = Δpos
-        self.Δt_bullet = Δt_bullet
         self.hp = hp
+        self.Δt_bullet = Δt_bullet
 
 
 class EnemyBullet:
@@ -217,8 +218,8 @@ enemy_F = Enemy(
     'Images/Enemies/enemy_common.png',      # Image Size: 64 x 64
     [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
     [0.25 * dt, 30],
-    100,
-    1
+    1,
+    100
 )
 
 

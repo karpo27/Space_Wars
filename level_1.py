@@ -108,6 +108,7 @@ def run_level_1():
                     Enemy.image.append(x.image)
                     Enemy.pos.append([x.pos[0], x.pos[1]])
                     Enemy.Δpos.append([x.Δpos[0], x.Δpos[1]])
+                    Enemy.hp.append(x.hp)
                     Enemy.Δt_bullet.append(0)
 
         # Player Movement Boundaries
@@ -183,8 +184,17 @@ def run_level_1():
                     if Enemy.pos[i][1] + Enemy.image[i].get_rect().width >= 0:
                         PlayerBullet.image.pop()    # fix removal for bullet not last (later)
                         PlayerBullet.pos.pop()
+                        enemy_F.hp -= 1     # fix removal of hp for generic enemy in enemy_list
                         score.value += 1
                         p_bullet.col_sound.play()
+
+            if Enemy.hp[i] == 0:
+                Enemy.enemy_list.pop(i)
+                Enemy.image.pop(i)
+                Enemy.pos.pop(i)
+                Enemy.Δpos.pop(i)
+                Enemy.Δt_bullet.pop(i)
+                break
 
             # Show Enemies on Screen
             SCREEN.blit(Enemy.image[i], (Enemy.pos[i][0], Enemy.pos[i][1]))
