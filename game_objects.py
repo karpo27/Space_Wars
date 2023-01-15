@@ -194,6 +194,34 @@ class Score:
         SCREEN.blit(score_screen, (x, y))
 
 
+class Explosion(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprites = []
+        for i in range(1, 6):
+            images = pygame.image.load(f'Images/Explosion/explosion_{i}.png')
+            self.sprites.append(images)
+
+        self.index = 0
+        self.image = self.sprites[self.index]
+        self.rect = self.image.get_rect(x=x, y=y)
+        self.counter = 0
+
+    def update(self):
+        explosion_delay = 8
+        # Update Explosion Animation
+        self.counter += 1
+
+        if self.counter >= explosion_delay and self.index < len(self.sprites) - 1:
+            self.counter = 0
+            self.index += 1
+            self.image = self.sprites[self.index]
+
+        # If the Animation is Complete, Reset the Index
+        if self.index >= len(self.sprites) - 1 and self.counter >= explosion_delay:
+            self.kill()
+
+
 # Initialize Classes:
 # Player
 player = Player(
@@ -206,7 +234,7 @@ player = Player(
 
 # Player Bullet
 p_bullet = PlayerBullet(
-    'Images/Player_Bullet/bullets.png',     # ImageSize: 32 x 32
+    'Images/Player_Bullet/bullets.png',     # Image Size: 32 x 32
     [0, 1.2 * dt],
     30,
     'Sounds/laser.wav',
@@ -233,6 +261,7 @@ e_bullet_F = EnemyBullet(
 
 speakers = Speakers()
 score = Score()
+explosion_group = pygame.sprite.Group()
 background = Background()
 
 

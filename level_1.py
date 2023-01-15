@@ -23,6 +23,9 @@ def run_level_1():
         # Draw Scrolling Background
         background.show()
 
+        explosion_group.draw(SCREEN)
+        explosion_group.update()
+
         # Enter Level Animation + Show Player Image Screen
         if player.pos[1] < Player.y_enter - Player.Δd:
             pygame.event.set_blocked([pygame.KEYDOWN, pygame.KEYUP])
@@ -131,7 +134,7 @@ def run_level_1():
         for bullet_pos in PlayerBullet.pos[:]:
             bullet_pos[1] -= p_bullet.Δpos[1]
 
-            if bullet_pos[1] < 0:
+            if bullet_pos[1] + p_bullet.l_image < 0:
                 PlayerBullet.image.pop()
                 PlayerBullet.pos.remove(bullet_pos)
 
@@ -184,15 +187,18 @@ def run_level_1():
                     if Enemy.pos[i][1] + Enemy.image[i].get_rect().width >= 0:
                         PlayerBullet.image.pop()    # fix removal for bullet not last (later)
                         PlayerBullet.pos.pop()
-                        enemy_F.hp -= 1     # fix removal of hp for generic enemy in enemy_list
+                        Enemy.hp[i] -= 1
                         score.value += 1
                         p_bullet.col_sound.play()
 
             if Enemy.hp[i] == 0:
+                explosion_enemy = Explosion(*Enemy.pos[i])
+                explosion_group.add(explosion_enemy)
                 Enemy.enemy_list.pop(i)
                 Enemy.image.pop(i)
                 Enemy.pos.pop(i)
                 Enemy.Δpos.pop(i)
+                Enemy.hp.pop(i)
                 Enemy.Δt_bullet.pop(i)
                 break
 
