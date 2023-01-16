@@ -128,7 +128,7 @@ class Enemy:
     hp = []
 
     # Define time delay between enemies to spawn: 8.0 sec
-    time_to_spawn = 4000
+    time_to_spawn = 2500
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
@@ -138,6 +138,27 @@ class Enemy:
         self.Δpos = Δpos
         self.hp = hp
         self.Δt_bullet = Δt_bullet
+
+    def movement(self, enemy_type, i):
+        if enemy_type == enemy_F:
+            Enemy.pos[i][0] += Enemy.Δpos[i][0]
+            Enemy.pos[i][1] += Enemy.Δpos[i][1]
+            if Enemy.pos[i][0] <= - 0.2 * WIDTH:
+                Enemy.Δpos[i][0] = self.Δpos[0]
+            if Enemy.pos[i][0] >= 1.2 * WIDTH - Enemy.image[i].get_rect().width:
+                Enemy.Δpos[i][0] = - self.Δpos[0]
+
+        elif enemy_type == enemy_E:
+            Enemy.pos[i][1] += Enemy.Δpos[i][1]
+
+        elif enemy_type == enemy_D:
+            Enemy.pos[i][0] += Enemy.Δpos[i][0]
+            Enemy.pos[i][1] += Enemy.Δpos[i][1]
+            if Enemy.pos[i][0] <= - 0.2 * WIDTH:
+                Enemy.Δpos[i][0] = self.Δpos[0]
+            if Enemy.pos[i][0] >= 1.2 * WIDTH - Enemy.image[i].get_rect().width:
+                Enemy.Δpos[i][0] = - self.Δpos[0]
+
 
 
 class EnemyBullet:
@@ -157,6 +178,7 @@ class EnemyBullet:
         EnemyBullet.image.append(self.image)
         EnemyBullet.pos.append([Enemy.pos[i][0], Enemy.pos[i][1]])
         EnemyBullet.Δpos.append((self.Δpos[0], self.Δpos[1]))
+
 
 class Speakers:
     def __init__(self):
@@ -243,20 +265,57 @@ p_bullet = PlayerBullet(
 
 # Enemies
 enemy_F = Enemy(
-    'Images/Enemies/enemy_common.png',      # Image Size: 64 x 64
+    'Images/Enemies/enemy_F.png',      # Image Size: 64 x 64
     [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
-    [0.25 * dt, 30],
+    [0.01 * dt, 0.5],
     1,
     100
 )
 
 
 e_bullet_F = EnemyBullet(
-    'Images/Enemies_Bullet/enemy_bullet.png',   # Image Size: 32 x 32
-    [0, 0.2 * dt],
+    'Images/Enemies_Bullet/enemy_bullet_F.png',   # Image Size: 32 x 32
+    [0, 0.15 * dt],
     'Sounds/laser.wav',
     'Sounds/explosion.wav'
 )
+
+enemy_E = Enemy(
+    'Images/Enemies/enemy_E.png',      # Image Size: 64 x 64
+    [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
+    [0, 1.6],
+    1,
+    180
+)
+
+
+e_bullet_E = EnemyBullet(
+    'Images/Enemies_Bullet/enemy_bullet_E.png',   # Image Size: 32 x 32
+    [0, 0.22 * dt],
+    'Sounds/laser.wav',
+    'Sounds/explosion.wav'
+)
+
+
+enemy_D = Enemy(
+    'Images/Enemies/enemy_D.png',      # Image Size: 64 x 64
+    [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
+    [0.04 * dt, 1.8],
+    1,
+    100
+)
+
+
+e_bullet_D = EnemyBullet(
+    'Images/Enemies_Bullet/enemy_bullet_F.png',   # Image Size: 32 x 32
+    [0, 0.22 * dt],
+    'Sounds/laser.wav',
+    'Sounds/explosion.wav'
+)
+
+
+
+
 
 
 speakers = Speakers()

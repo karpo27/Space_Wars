@@ -1,6 +1,7 @@
 # Scripts
 from game_objects import *
 
+
 # Modules
 import pygame
 from pygame import mixer
@@ -15,7 +16,7 @@ def run_level_1():
     run = True
     while run:
         # Define Number of Enemies to spawn in Level 1: 10
-        enemies_lvl_1 = [enemy_F, enemy_F]
+        enemies_lvl_1 = [enemy_E, enemy_D]
 
         # Set screen FPS
         clock.tick(FPS)
@@ -107,9 +108,9 @@ def run_level_1():
                 if event.type == Enemy.spawn_enemy:
                     x = enemies_lvl_1[len(Enemy.enemy_list)]
                     # Generate Enemies
-                    Enemy.enemy_list.append(1)  # fix this later
+                    Enemy.enemy_list.append(x)      # Fix this later for infinite enemies as last enemy_list
                     Enemy.image.append(x.image)
-                    Enemy.pos.append([x.pos[0], x.pos[1]])
+                    Enemy.pos.append([random.randint(-0.1 * WIDTH, 1.1 * WIDTH - C_64), random.randint(-80, 0 - C_64)])
                     Enemy.Δpos.append([x.Δpos[0], x.Δpos[1]])
                     Enemy.hp.append(x.hp)
                     Enemy.Δt_bullet.append(0)
@@ -144,22 +145,25 @@ def run_level_1():
 
         # Enemies Movement
         for i in range(len(Enemy.enemy_list)):
-            # Fix movement according to enemy (later)
-            Enemy.pos[i][0] += Enemy.Δpos[i][0]
+            # Call Movement Function for Each Enemy
+            Enemy.enemy_list[i].movement(Enemy.enemy_list[i], i)
 
-            if Enemy.pos[i][0] <= 0:
-                Enemy.Δpos[i][0] = enemy_F.Δpos[0]
-                Enemy.pos[i][1] += enemy_F.Δpos[1]
-            elif Enemy.pos[i][0] >= WIDTH - Enemy.image[i].get_rect().width:
-                Enemy.Δpos[i][0] = - enemy_F.Δpos[0]
-                Enemy.pos[i][1] += enemy_F.Δpos[1]
+            # Y Axis Movement Boundary for All Enemies
+            if Enemy.pos[i][1] - Enemy.image[i].get_rect().width > HEIGHT:
+                Enemy.enemy_list.pop(i)
+                Enemy.image.pop(i)
+                Enemy.pos.pop(i)
+                Enemy.Δpos.pop(i)
+                Enemy.hp.pop(i)
+                Enemy.Δt_bullet.pop(i)
+                break
 
             # After Enemies Appear Generate Enemy Bullet every enemy_X.Δt_bullet cycles
             if len(Enemy.enemy_list) > 0:
                 Enemy.Δt_bullet[i] += 1
-                if Enemy.pos[i][1] >= 0 and Enemy.Δt_bullet[i] >= enemies_lvl_1[i].Δt_bullet:
+                if Enemy.pos[i][1] >= 0 and Enemy.Δt_bullet[i] >= Enemy.enemy_list[i].Δt_bullet:
                     Enemy.Δt_bullet[i] = 0
-                    e_bullet_F.generate_bullet(i)
+                    e_bullet_E.generate_bullet(i)
 
             # Collision Detection for Player with Enemy
             col_player_with_enemy = pygame.Rect.colliderect(
