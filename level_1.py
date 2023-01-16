@@ -16,7 +16,10 @@ def run_level_1():
     run = True
     while run:
         # Define Number of Enemies to spawn in Level 1: 10
-        enemies_lvl_1 = [enemy_E, enemy_D]
+        enemies_lvl_1 = [(enemy_E, e_bullet_E),
+                         (enemy_D, e_bullet_D),
+                         (enemy_F, e_bullet_F)
+                         ]
 
         # Set screen FPS
         clock.tick(FPS)
@@ -106,13 +109,13 @@ def run_level_1():
             n_enemies = len(enemies_lvl_1)
             if len(Enemy.enemy_list) < n_enemies:
                 if event.type == Enemy.spawn_enemy:
-                    x = enemies_lvl_1[len(Enemy.enemy_list)]
+                    k = enemies_lvl_1[len(Enemy.enemy_list)]
                     # Generate Enemies
-                    Enemy.enemy_list.append(x)      # Fix this later for infinite enemies as last enemy_list
-                    Enemy.image.append(x.image)
+                    Enemy.enemy_list.append(k)      # Fix this later for infinite enemies as last enemy_list
+                    Enemy.image.append(k[0].image)
                     Enemy.pos.append([random.randint(-0.1 * WIDTH, 1.1 * WIDTH - C_64), random.randint(-80, 0 - C_64)])
-                    Enemy.Δpos.append([x.Δpos[0], x.Δpos[1]])
-                    Enemy.hp.append(x.hp)
+                    Enemy.Δpos.append([k[0].Δpos[0], k[0].Δpos[1]])
+                    Enemy.hp.append(k[0].hp)
                     Enemy.Δt_bullet.append(0)
 
         # Player Movement Boundaries
@@ -143,10 +146,10 @@ def run_level_1():
         for i in range(len(PlayerBullet.pos[:])):
             SCREEN.blit(PlayerBullet.image[i], (PlayerBullet.pos[i], PlayerBullet.pos[i]))
 
-        # Enemies Movement
+        # Enemies:
         for i in range(len(Enemy.enemy_list)):
             # Call Movement Function for Each Enemy
-            Enemy.enemy_list[i].movement(Enemy.enemy_list[i], i)
+            Enemy.enemy_list[i][0].movement(Enemy.enemy_list[i][0], i)
 
             # Y Axis Movement Boundary for All Enemies
             if Enemy.pos[i][1] - Enemy.image[i].get_rect().width > HEIGHT:
@@ -161,9 +164,9 @@ def run_level_1():
             # After Enemies Appear Generate Enemy Bullet every enemy_X.Δt_bullet cycles
             if len(Enemy.enemy_list) > 0:
                 Enemy.Δt_bullet[i] += 1
-                if Enemy.pos[i][1] >= 0 and Enemy.Δt_bullet[i] >= Enemy.enemy_list[i].Δt_bullet:
+                if Enemy.pos[i][1] >= 0 and Enemy.Δt_bullet[i] >= Enemy.enemy_list[i][0].Δt_bullet:
                     Enemy.Δt_bullet[i] = 0
-                    e_bullet_E.generate_bullet(i)
+                    Enemy.enemy_list[i][1].generate_bullet(i)
 
             # Collision Detection for Player with Enemy
             col_player_with_enemy = pygame.Rect.colliderect(
@@ -209,17 +212,18 @@ def run_level_1():
             # Show Enemies on Screen
             SCREEN.blit(Enemy.image[i], (Enemy.pos[i][0], Enemy.pos[i][1]))
 
-        # Enemy Bullet Movement (fix later according to enemy)
-        for bullet_pos in EnemyBullet.pos:
-            bullet_pos[1] += e_bullet_F.Δpos[1]
+        # Enemies Bullets:
+        for i in range(len(EnemyBullet.pos)):
+            # Enemy Bullet Movement (fix later according to enemy)
+            EnemyBullet.pos[i][1] += e_bullet_F.Δpos[1]
 
-            if bullet_pos[1] > HEIGHT:
-                EnemyBullet.image.pop()
-                EnemyBullet.pos.remove(bullet_pos)
-                EnemyBullet.Δpos.pop()
+            if EnemyBullet.pos[i][1] - EnemyBullet.image[i].get_rect().width > HEIGHT:
+                EnemyBullet.image.pop(i)
+                EnemyBullet.pos.pop(i)
+                EnemyBullet.Δpos.pop(i)
+                break
 
-        # Collision Detection for Enemy Bullet with Player
-        for i in range(len(EnemyBullet.image)):
+            # Collision Detection for Enemy Bullet with Player
             col_e_bul_with_player = pygame.Rect.colliderect(
                 player.image.get_rect(x=player.pos[0], y=player.pos[1]),
                 EnemyBullet.image[i].get_rect(x=EnemyBullet.pos[i][0], y=EnemyBullet.pos[i][1])
@@ -236,8 +240,7 @@ def run_level_1():
                 e_bullet_F.col_sound.play()
                 break
 
-        # Show Enemies Bullets on Screen
-        for i in range(len(EnemyBullet.pos)):
+            # Show Enemies Bullets on Screen
             SCREEN.blit(EnemyBullet.image[i], EnemyBullet.pos[i])
 
         # Call other Functions
