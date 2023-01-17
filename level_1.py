@@ -63,23 +63,7 @@ def run_level_1():
                     Enemy.hp.append(k[0].hp)
                     Enemy.Δt_bullet.append(0)'''
 
-        # Player Movement Boundaries
         '''
-        # Player Bullet Movement
-        if p_bullet.Δt_p_bullet < PlayerBullet.p_bullet_ref:
-            p_bullet.Δt_p_bullet += 1
-
-        for bullet_pos in PlayerBullet.pos[:]:
-            bullet_pos[1] -= p_bullet.Δpos[1]
-
-            if bullet_pos[1] + p_bullet.l_image < 0:
-                PlayerBullet.image.pop()
-                PlayerBullet.pos.remove(bullet_pos)
-
-        # Show Player Bullet on Screen
-        for i in range(len(PlayerBullet.pos[:])):
-            SCREEN.blit(PlayerBullet.image[i], (PlayerBullet.pos[i], PlayerBullet.pos[i]))
-
         # Enemies:
         for i in range(len(Enemy.enemy_list)):
             # Call Movement Function for Each Enemy
@@ -180,11 +164,15 @@ def run_level_1():
         # Update Sprites
         player.update()
 
+        # Update Sprites Group
+        player_bullet_group.update()
+
         explosion_group.update()
 
         # Draw Sprite Groups
         enemies_group.draw(SCREEN)
         player_group.draw(SCREEN)
+        player_bullet_group(SCREEN)
 
         explosion_group.draw(SCREEN)
 
