@@ -6,19 +6,21 @@ from background import *
 import pygame
 from pygame import mixer
 import random
+import math
 
 # Initialize Pygame
 pygame.init()
 
 
-class Player:
+class Player(pygame.sprite.Sprite):
     y_enter = 19/18 * HEIGHT
     Δd = 0
 
     def __init__(self, image, pos, Δpos, hp, lives):
+        super().__init__()
         self.image = pygame.image.load(image)
-        self.l_image = self.image.get_rect().width
-        self.pos = pos
+        self.rect = self.image.get_rect()
+        self.rect.center = pos
         self.Δpos = Δpos
         self.hp = hp
         self.lives = lives
@@ -37,8 +39,52 @@ class Player:
         self.hp_ref = 27.5
         self.Δhp = 0.5
 
-    def show_image(self, x, y):
-        SCREEN.blit(self.image, (x, y))
+    def update(self):
+        # Enter Level Animation
+        '''
+        if self.rect.y < Player.y_enter - Player.Δd:
+            pygame.event.set_blocked([pygame.KEYDOWN, pygame.KEYUP])
+            # player.show_image(player.pos[0], Player.y_enter - Player.Δd)
+            Player.Δd += 1.9
+        else:
+            Player.y_enter = 0
+            Player.Δd = 0
+            pygame.event.set_allowed([pygame.KEYDOWN, pygame.KEYUP])
+            #player.show_image(player.pos[0], player.pos[1])'''
+
+        # Press Keyboard
+        key = pygame.key.get_pressed()
+        # Player Keyboard Diagonal Movement - (UP-LEFT, DOWN-LEFT, UP-RIGHT, DOWN-RIGHT)
+        if key[pygame.K_LEFT] and key[pygame.K_UP] and self.rect.left > 0 and self.rect.top > 0:
+            self.rect.x -= math.sqrt((self.init_d ** 2) / 2)
+            self.rect.y -= math.sqrt((self.init_d ** 2) / 2)
+        elif key[pygame.K_LEFT] and key[pygame.K_DOWN] and self.rect.left > 0 and self.rect.bottom < HEIGHT:
+            self.rect.x -= math.sqrt((self.init_d ** 2) / 2)
+            self.rect.y += math.sqrt((self.init_d ** 2) / 2)
+        elif key[pygame.K_RIGHT] and key[pygame.K_UP] and self.rect.right < WIDTH and self.rect.top > 0:
+            self.rect.x += math.sqrt((self.init_d ** 2) / 2)
+            self.rect.y -= math.sqrt((self.init_d ** 2) / 2)
+        elif key[pygame.K_RIGHT] and key[pygame.K_DOWN] and self.rect.right < WIDTH and self.rect.bottom < HEIGHT:
+            self.rect.x += math.sqrt((self.init_d ** 2) / 2)
+            self.rect.y += math.sqrt((self.init_d ** 2) / 2)
+        # Player Keyboard Movement - (LEFT, RIGHT, UP, DOWN)
+        elif key[pygame.K_LEFT] and self.rect.left > 0:
+            self.rect.x -= self.init_d
+        elif key[pygame.K_RIGHT] and self.rect.right < WIDTH:
+            self.rect.x += self.init_d
+        elif key[pygame.K_UP] and self.rect.top > 0:
+            self.rect.y -= self.init_d
+        elif key[pygame.K_DOWN] and self.rect.bottom < HEIGHT:
+            self.rect.y += self.init_d
+
+        # Player Bullet Keyboard
+        '''
+        if key[pygame.K_SPACE]:
+            if p_bullet.Δt_p_bullet >= PlayerBullet.p_bullet_ref:
+                p_bullet.Δt_p_bullet = 0
+                p_bullet.sound.play()
+                p_bullet.sound.set_volume(speakers.initial_sound)
+                p_bullet.generate_bullet()'''
 
     def draw_hp_bar(self, hp, hp_animation):
         x_1, y_1 = (self.hp_bar_pos[0] + 1/3 * self.hp_bar_size[0], self.hp_bar_pos[1])
@@ -119,7 +165,7 @@ class PlayerBullet:
         PlayerBullet.pos.append([player.pos[0] + 16, player.pos[1] + 10])
 
 
-class Enemy:
+class Enemy(pygame.sprite.Sprite):
     enemy_list = []
     image = []
     pos = []
@@ -133,13 +179,15 @@ class Enemy:
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
     def __init__(self, image, pos, Δpos, hp, Δt_bullet):
+        super().__init__()
         self.image = pygame.image.load(image)
+        self.rect = self.image.get_rect()
         self.pos = pos
         self.Δpos = Δpos
         self.hp = hp
         self.Δt_bullet = Δt_bullet
 
-    def movement(self, enemy_type, i):
+    def update(self, enemy_type, i):
         if enemy_type == enemy_F:
             Enemy.pos[i][0] += Enemy.Δpos[i][0]
             Enemy.pos[i][1] += Enemy.Δpos[i][1]
@@ -314,14 +362,19 @@ e_bullet_D = EnemyBullet(
 )
 
 
-
-
-
-
 speakers = Speakers()
 score = Score()
 explosion_group = pygame.sprite.Group()
 background = Background()
+
+# Create Sprites Group:
+all_sprites = pygame.sprite.Group()
+
+player_group = pygame.sprite.Group()
+enemies_group = pygame.sprite.Group()
+
+# Add Some Sprites to group
+player_group.add(player)
 
 
 if __name__ == '__main__':
