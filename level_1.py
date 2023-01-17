@@ -16,15 +16,13 @@ def run_level_1():
     run = True
     while run:
         # Define Number of Enemies to spawn in Level 1: 10
-        enemies_lvl_1 = [enemy_E, enemy_D, enemy_F]
+        enemies_lvl_1 = [enemy_F, enemy_F, enemy_F]
 
         # Set screen FPS
         clock.tick(FPS)
 
         # Draw Scrolling Background
         background.show()
-
-
 
         # Go to Game Over / Continue Screen
         if player.lives < 1:
@@ -50,18 +48,11 @@ def run_level_1():
 
             # Spawn Enemies According to Level
             n_enemies = len(enemies_lvl_1)
-            if len(Enemy.enemy_list) < n_enemies:
+            if len(enemies_group) < n_enemies:
                 if event.type == Enemy.spawn_enemy:
                     k = enemies_lvl_1[len(Enemy.enemy_list)]
                     # Generate Enemies
                     enemies_group.add(k)
-                    '''
-                    Enemy.enemy_list.append(k)      # Fix this later for infinite enemies as last enemy_list
-                    Enemy.image.append(k[0].image)
-                    Enemy.pos.append([random.randint(-0.1 * WIDTH, 1.1 * WIDTH - C_64), random.randint(-80, 0 - C_64)])
-                    Enemy.Δpos.append([k[0].Δpos[0], k[0].Δpos[1]])
-                    Enemy.hp.append(k[0].hp)
-                    Enemy.Δt_bullet.append(0)'''
 
         '''
         # Enemies:
@@ -167,12 +158,15 @@ def run_level_1():
         # Update Sprites Group
         player_bullet_group.update()
 
+        for enemy in enemies_group.sprites():
+            enemies_group.update(enemy.type)
+
         explosion_group.update()
 
         # Draw Sprite Groups
         enemies_group.draw(SCREEN)
         player_group.draw(SCREEN)
-        player_bullet_group(SCREEN)
+        player_bullet_group.draw(SCREEN)
 
         explosion_group.draw(SCREEN)
 

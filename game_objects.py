@@ -27,6 +27,11 @@ class Player(pygame.sprite.Sprite):
         self.y_enter = 5/6 * HEIGHT
         self.Δd = 0.2
 
+        # Bullet
+        self.ref_time = 30
+        self.fire_rate = 30
+        self.reload_speed = 1
+
         # HP Bar
         self.hp_bar_pos = (1/43 * WIDTH, 16/17 * HEIGHT)
         self.hp_bar_size = (108, 30)
@@ -66,6 +71,7 @@ class Player(pygame.sprite.Sprite):
             elif key[pygame.K_RIGHT] and key[pygame.K_DOWN] and self.rect.right < WIDTH and self.rect.bottom < HEIGHT:
                 self.rect.x += math.sqrt((self.init_d ** 2) / 2)
                 self.rect.y += math.sqrt((self.init_d ** 2) / 2)
+
             # Player Keyboard Movement - (LEFT, RIGHT, UP, DOWN)
             elif key[pygame.K_LEFT] and self.rect.left > 0:
                 self.rect.x -= self.init_d
@@ -77,13 +83,25 @@ class Player(pygame.sprite.Sprite):
                 self.rect.y += self.init_d
 
             # Player Bullet Keyboard
-            '''
             if key[pygame.K_SPACE]:
-                if p_bullet.Δt_p_bullet >= PlayerBullet.p_bullet_ref:
-                    p_bullet.Δt_p_bullet = 0
-                    p_bullet.sound.play()
-                    p_bullet.sound.set_volume(speakers.initial_sound)
-                    p_bullet.generate_bullet()'''
+                # Create Player Bullet Object
+                if self.fire_rate >= 30:
+                    player_bullet = PlayerBullet(
+                        'Images/Player_Bullet/bullets.png',
+                        [self.rect.centerx, self.rect.top],
+                        [0, 0.8 * dt],
+                        'Sounds/laser.wav',
+                        'Sounds/explosion.wav'
+                    )
+
+                    player_bullet_group.add(player_bullet)
+                    self.fire_rate = 0
+                    player_bullet.sound.play()
+                    player_bullet.sound.set_volume(speakers.initial_sound)
+
+        # Reset Variables
+        if self.fire_rate < self.ref_time:
+            self.fire_rate += self.reload_speed
 
     def draw_hp_bar(self, hp, hp_animation):
         x_1, y_1 = (self.hp_bar_pos[0] + 1/3 * self.hp_bar_size[0], self.hp_bar_pos[1])
@@ -146,39 +164,22 @@ class PlayerBullet(pygame.sprite.Sprite):
     image = []
     pos = []
     Δpos = []
-    # Time Delay to Shoot Player Bullet
-    p_bullet_ref = 30   # Initial Reference
 
-    def __init__(self, image, Δpos, Δt_p_bullet, sound, col_sound):
+    def __init__(self, image, pos, Δpos, sound, col_sound):
         super().__init__()
         self.image = pygame.image.load(image)
         self.rect = self.image.get_rect()
-        #self.rect.center = pos
+        self.rect.center = pos
         self.Δpos = Δpos
-        self.Δt_bullet = Δt_p_bullet
         self.sound = mixer.Sound(sound)
         self.col_sound = mixer.Sound(col_sound)
 
     def update(self):
         # Player Bullet Movement
-        if self.Δt_bullet < PlayerBullet.p_bullet_ref:
-            self.Δt_bullet += 1
+        self.rect.y -= self.Δpos[1]
 
-        for bullet_pos in PlayerBullet.pos[:]:
-            bullet_pos[1] -= self.Δpos[1]
-
-            '''
-            if bullet_pos[1] + p_bullet.l_image < 0:
-                PlayerBullet.image.pop()
-                PlayerBullet.pos.remove(bullet_pos)'''
-
-        # Show Player Bullet on Screen
-        # for i in range(len(PlayerBullet.pos[:])):
-            # SCREEN.blit(PlayerBullet.image[i], (PlayerBullet.pos[i], PlayerBullet.pos[i]))
-
-    def generate_bullet(self):
-        PlayerBullet.image.append(self.image)
-        PlayerBullet.pos.append([player.pos[0] + 16, player.pos[1] + 10])
+        if self.rect.bottom < 0:
+            self.kill()
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -194,24 +195,28 @@ class Enemy(pygame.sprite.Sprite):
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
-    def __init__(self, image, pos, Δpos, hp, Δt_bullet):
+    def __init__(self, type, image, pos, Δpos, hp, Δt_bullet):
         super().__init__()
+        self.type = type
         self.image = pygame.image.load(image)
         self.rect = self.image.get_rect()
-        self.pos = pos
+        self.rect.center = pos
         self.Δpos = Δpos
         self.hp = hp
         self.Δt_bullet = Δt_bullet
 
-    def update(self, enemy_type, i):
-        if enemy_type == enemy_F:
-            Enemy.pos[i][0] += Enemy.Δpos[i][0]
-            Enemy.pos[i][1] += Enemy.Δpos[i][1]
+    def update(self, enemy_type):
+        if enemy_type == 'F':
+            self.rect.x += self.Δpos[0]
+            self.rect.y += self.Δpos[1]
+
+            '''
             if Enemy.pos[i][0] <= - 0.2 * WIDTH:
                 Enemy.Δpos[i][0] = self.Δpos[0]
             if Enemy.pos[i][0] >= 1.2 * WIDTH - Enemy.image[i].get_rect().width:
-                Enemy.Δpos[i][0] = - self.Δpos[0]
+                Enemy.Δpos[i][0] = - self.Δpos[0]'''
 
+        '''
         elif enemy_type == enemy_E:
             Enemy.pos[i][1] += Enemy.Δpos[i][1]
 
@@ -221,8 +226,7 @@ class Enemy(pygame.sprite.Sprite):
             if Enemy.pos[i][0] <= - 0.2 * WIDTH:
                 Enemy.Δpos[i][0] = self.Δpos[0]
             if Enemy.pos[i][0] >= 1.2 * WIDTH - Enemy.image[i].get_rect().width:
-                Enemy.Δpos[i][0] = - self.Δpos[0]
-
+                Enemy.Δpos[i][0] = - self.Δpos[0]'''
 
 
 class EnemyBullet:
@@ -258,14 +262,14 @@ class Speakers:
         if state == "off":
             SCREEN.blit(self.off_image, (x, y))
             mixer.music.set_volume(0.0)
-            player_bullet.sound.set_volume(self.initial_sound)
-            player_bullet.col_sound.set_volume(self.initial_sound)
+            #player_bullet.sound.set_volume(self.initial_sound)
+            #player_bullet.col_sound.set_volume(self.initial_sound)
             e_bullet_F.col_sound.set_volume(self.initial_sound)
         elif state == "on":
             SCREEN.blit(self.on_image, (x, y))
             mixer.music.set_volume(0.08)
-            player_bullet.sound.set_volume(0.08)
-            player_bullet.col_sound.set_volume(0.08)
+            #player_bullet.sound.set_volume(0.08)
+            #player_bullet.col_sound.set_volume(0.08)
             e_bullet_F.col_sound.set_volume(0.08)
 
 
@@ -282,7 +286,7 @@ class Score:
 
 class Explosion(pygame.sprite.Sprite):
     def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self)
+        super().__init__()
         self.sprites = []
         for i in range(1, 6):
             images = pygame.image.load(f'Images/Explosion/explosion_{i}.png')
@@ -318,20 +322,12 @@ player = Player(
     3
 )
 
-# Player Bullet
-player_bullet = PlayerBullet(
-    'Images/Player_Bullet/bullets.png',     # Image Size: 32 x 32
-    [0, 1.2 * dt],
-    30,
-    'Sounds/laser.wav',
-    'Sounds/explosion.wav'
-)
-
 # Enemies
 enemy_F = Enemy(
+    'F',
     'Images/Enemies/enemy_F.png',      # Image Size: 64 x 64
     [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
-    [0.01 * dt, 0.5],
+    [round(0.04 * dt), 1],
     1,
     100
 )
@@ -345,6 +341,7 @@ e_bullet_F = EnemyBullet(
 )
 
 enemy_E = Enemy(
+    'E',
     'Images/Enemies/enemy_E.png',      # Image Size: 64 x 64
     [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
     [0, 1.6],
@@ -362,6 +359,7 @@ e_bullet_E = EnemyBullet(
 
 
 enemy_D = Enemy(
+    'D',
     'Images/Enemies/enemy_D.png',      # Image Size: 64 x 64
     [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
     [0.04 * dt, 1.8],
@@ -392,7 +390,7 @@ enemies_group = pygame.sprite.Group()
 
 # Add Some Sprites to group
 player_group.add(player)
-player_bullet_group.add(player_bullet)
+
 
 
 if __name__ == '__main__':
