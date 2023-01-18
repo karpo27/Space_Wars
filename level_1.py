@@ -1,11 +1,11 @@
 # Scripts
 from game_objects import *
+from enemies import *
 
 
 # Modules
 import pygame
 from pygame import mixer
-import math
 
 # Initialize Pygame
 pygame.init()
@@ -15,11 +15,11 @@ def run_level_1():
     # Game Loop
     run = True
     while run:
-        # Define Number of Enemies to spawn in Level 1: 10
-        enemies_lvl_1 = [enemy_F, enemy_F, enemy_F]
-
         # Set screen FPS
         clock.tick(FPS)
+
+        # Define Number of Enemies to spawn in Level 1: 10
+        enemies_lvl_1 = [enemies['enemy_f'], enemies['enemy_e'], enemies['enemy_f']]
 
         # Draw Scrolling Background
         background.show()
@@ -47,28 +47,17 @@ def run_level_1():
                         speakers.state = "off"
 
             # Spawn Enemies According to Level
-            n_enemies = len(enemies_lvl_1)
-            if len(enemies_group) < n_enemies:
+            if len(enemies_group) < len(enemies_lvl_1):
                 if event.type == Enemy.spawn_enemy:
-                    k = enemies_lvl_1[len(Enemy.enemy_list)]
+                    k = enemies_lvl_1[len(enemies_group)]
                     # Generate Enemies
-                    enemies_group.add(k)
+                    print(len(enemies_group))
+                    new_enemy = Enemy(*k)
+                    enemies_group.add(new_enemy)
 
         '''
         # Enemies:
         for i in range(len(Enemy.enemy_list)):
-            # Call Movement Function for Each Enemy
-            Enemy.enemy_list[i][0].movement(Enemy.enemy_list[i][0], i)
-
-            # Y Axis Movement Boundary for All Enemies
-            if Enemy.pos[i][1] - Enemy.image[i].get_rect().width > HEIGHT:
-                Enemy.enemy_list.pop(i)
-                Enemy.image.pop(i)
-                Enemy.pos.pop(i)
-                Enemy.Δpos.pop(i)
-                Enemy.hp.pop(i)
-                Enemy.Δt_bullet.pop(i)
-                break
 
             # After Enemies Appear Generate Enemy Bullet every enemy_X.Δt_bullet cycles
             if len(Enemy.enemy_list) > 0:
@@ -157,9 +146,7 @@ def run_level_1():
 
         # Update Sprites Group
         player_bullet_group.update()
-
-        for enemy in enemies_group.sprites():
-            enemies_group.update(enemy.type)
+        enemies_group.update()
 
         explosion_group.update()
 

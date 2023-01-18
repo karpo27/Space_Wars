@@ -1,6 +1,8 @@
 # Scripts
 from constants import *
 from background import *
+from player import *
+from enemies import *
 
 # Modules
 import pygame
@@ -14,15 +16,14 @@ pygame.init()
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, image, pos, Δpos, hp, lives):
+    def __init__(self, image, pos, vel, hp, lives):
         super().__init__()
         self.image = pygame.image.load(image)
         self.rect = self.image.get_rect()
         self.rect.center = pos
-        self.Δpos = Δpos
+        self.vel = self.vel_x, self.vel_y = vel
         self.hp = hp
         self.lives = lives
-        self.init_d = 0.3 * dt
         self.enter_animation = True
         self.y_enter = 5/6 * HEIGHT
         self.Δd = 0.2
@@ -60,27 +61,27 @@ class Player(pygame.sprite.Sprite):
             key = pygame.key.get_pressed()
             # Player Keyboard Diagonal Movement - (UP-LEFT, DOWN-LEFT, UP-RIGHT, DOWN-RIGHT)
             if key[pygame.K_LEFT] and key[pygame.K_UP] and self.rect.left > 0 and self.rect.top > 0:
-                self.rect.x -= math.sqrt((self.init_d ** 2) / 2)
-                self.rect.y -= math.sqrt((self.init_d ** 2) / 2)
+                self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
+                self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)
             elif key[pygame.K_LEFT] and key[pygame.K_DOWN] and self.rect.left > 0 and self.rect.bottom < HEIGHT:
-                self.rect.x -= math.sqrt((self.init_d ** 2) / 2)
-                self.rect.y += math.sqrt((self.init_d ** 2) / 2)
+                self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
+                self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
             elif key[pygame.K_RIGHT] and key[pygame.K_UP] and self.rect.right < WIDTH and self.rect.top > 0:
-                self.rect.x += math.sqrt((self.init_d ** 2) / 2)
-                self.rect.y -= math.sqrt((self.init_d ** 2) / 2)
+                self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
+                self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)
             elif key[pygame.K_RIGHT] and key[pygame.K_DOWN] and self.rect.right < WIDTH and self.rect.bottom < HEIGHT:
-                self.rect.x += math.sqrt((self.init_d ** 2) / 2)
-                self.rect.y += math.sqrt((self.init_d ** 2) / 2)
+                self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
+                self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
 
             # Player Keyboard Movement - (LEFT, RIGHT, UP, DOWN)
             elif key[pygame.K_LEFT] and self.rect.left > 0:
-                self.rect.x -= self.init_d
+                self.rect.x -= self.vel_x
             elif key[pygame.K_RIGHT] and self.rect.right < WIDTH:
-                self.rect.x += self.init_d
+                self.rect.x += self.vel_x
             elif key[pygame.K_UP] and self.rect.top > 0:
-                self.rect.y -= self.init_d
+                self.rect.y -= self.vel_y
             elif key[pygame.K_DOWN] and self.rect.bottom < HEIGHT:
-                self.rect.y += self.init_d
+                self.rect.y += self.vel_y
 
             # Player Bullet Keyboard
             if key[pygame.K_SPACE]:
@@ -165,87 +166,60 @@ class PlayerBullet(pygame.sprite.Sprite):
     pos = []
     Δpos = []
 
-    def __init__(self, image, pos, Δpos, sound, col_sound):
+    def __init__(self, image, pos, vel, sound, col_sound):
         super().__init__()
         self.image = pygame.image.load(image)
         self.rect = self.image.get_rect()
         self.rect.center = pos
-        self.Δpos = Δpos
+        self.vel = self.vel_x, self.vel_y = vel
         self.sound = mixer.Sound(sound)
         self.col_sound = mixer.Sound(col_sound)
 
     def update(self):
         # Player Bullet Movement
-        self.rect.y -= self.Δpos[1]
+        self.rect.y -= self.vel_y
 
         if self.rect.bottom < 0:
             self.kill()
 
 
 class Enemy(pygame.sprite.Sprite):
-    enemy_list = []
-    image = []
-    pos = []
-    Δpos = []
-    Δt_bullet = []
-    hp = []
-
-    # Define time delay between enemies to spawn: 8.0 sec
-    time_to_spawn = 2500
+    # Define time delay between enemies to spawn
+    time_to_spawn = random.randint(2000, 4000)
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
-    def __init__(self, type, image, pos, Δpos, hp, Δt_bullet):
+    def __init__(self, cat, image, vel, hp, Δt_bullet):
         super().__init__()
-        self.type = type
+        self.cat = cat
         self.image = pygame.image.load(image)
         self.rect = self.image.get_rect()
-        self.rect.center = pos
-        self.Δpos = Δpos
+        self.rect.center = [random.randint(0, 3/4 * WIDTH), -80]
+        self.vel = self.vel_x, self.vel_y = vel
         self.hp = hp
         self.Δt_bullet = Δt_bullet
 
-    def update(self, enemy_type):
-        if enemy_type == 'F':
-            self.rect.x += self.Δpos[0]
-            self.rect.y += self.Δpos[1]
+    def update(self):
+        self.rect.x += self.vel_x
+        self.rect.y += self.vel_y
 
-            '''
-            if Enemy.pos[i][0] <= - 0.2 * WIDTH:
-                Enemy.Δpos[i][0] = self.Δpos[0]
-            if Enemy.pos[i][0] >= 1.2 * WIDTH - Enemy.image[i].get_rect().width:
-                Enemy.Δpos[i][0] = - self.Δpos[0]'''
+        if self.rect.left <= -0.1 * WIDTH:
+            self.rect.x += self.vel_x
+        if self.rect.right >= 1.1 * WIDTH:
+            self.rect.x -= self.vel_y
 
-        '''
-        elif enemy_type == enemy_E:
-            Enemy.pos[i][1] += Enemy.Δpos[i][1]
-
-        elif enemy_type == enemy_D:
-            Enemy.pos[i][0] += Enemy.Δpos[i][0]
-            Enemy.pos[i][1] += Enemy.Δpos[i][1]
-            if Enemy.pos[i][0] <= - 0.2 * WIDTH:
-                Enemy.Δpos[i][0] = self.Δpos[0]
-            if Enemy.pos[i][0] >= 1.2 * WIDTH - Enemy.image[i].get_rect().width:
-                Enemy.Δpos[i][0] = - self.Δpos[0]'''
+        if self.rect.top > HEIGHT:
+            self.kill()
 
 
 class EnemyBullet:
-    # Define Bullet Variables
-    image = []
-    pos = []
-    Δpos = []
 
-    def __init__(self, image, Δpos, sound, col_sound):
+    def __init__(self, image, vel, sound, col_sound):
         self.image = pygame.image.load(image)
         self.l_image = self.image.get_rect().width
-        self.Δpos = Δpos
+        self.vel = self.vel_x, self.vel_y = vel
         self.sound = mixer.Sound(sound)
         self.col_sound = mixer.Sound(col_sound)
-
-    def generate_bullet(self, i):
-        EnemyBullet.image.append(self.image)
-        EnemyBullet.pos.append([Enemy.pos[i][0], Enemy.pos[i][1]])
-        EnemyBullet.Δpos.append((self.Δpos[0], self.Δpos[1]))
 
 
 class Speakers:
@@ -264,13 +238,13 @@ class Speakers:
             mixer.music.set_volume(0.0)
             #player_bullet.sound.set_volume(self.initial_sound)
             #player_bullet.col_sound.set_volume(self.initial_sound)
-            e_bullet_F.col_sound.set_volume(self.initial_sound)
+            #e_bullet_F.col_sound.set_volume(self.initial_sound)
         elif state == "on":
             SCREEN.blit(self.on_image, (x, y))
             mixer.music.set_volume(0.08)
             #player_bullet.sound.set_volume(0.08)
             #player_bullet.col_sound.set_volume(0.08)
-            e_bullet_F.col_sound.set_volume(0.08)
+            #e_bullet_F.col_sound.set_volume(0.08)
 
 
 class Score:
@@ -314,67 +288,7 @@ class Explosion(pygame.sprite.Sprite):
 
 # Initialize Classes:
 # Player
-player = Player(
-    'Images/Player/player_img.png',      # Image Size: 64 x 64
-    [WIDTH/2 - C_64/2, 19/18 * HEIGHT],
-    [0, 0],
-    3,
-    3
-)
-
-# Enemies
-enemy_F = Enemy(
-    'F',
-    'Images/Enemies/enemy_F.png',      # Image Size: 64 x 64
-    [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
-    [round(0.04 * dt), 1],
-    1,
-    100
-)
-
-
-e_bullet_F = EnemyBullet(
-    'Images/Enemies_Bullet/enemy_bullet_F.png',   # Image Size: 32 x 32
-    [0, 0.15 * dt],
-    'Sounds/laser.wav',
-    'Sounds/explosion.wav'
-)
-
-enemy_E = Enemy(
-    'E',
-    'Images/Enemies/enemy_E.png',      # Image Size: 64 x 64
-    [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
-    [0, 1.6],
-    1,
-    180
-)
-
-
-e_bullet_E = EnemyBullet(
-    'Images/Enemies_Bullet/enemy_bullet_E.png',   # Image Size: 32 x 32
-    [0, 0.22 * dt],
-    'Sounds/laser.wav',
-    'Sounds/explosion.wav'
-)
-
-
-enemy_D = Enemy(
-    'D',
-    'Images/Enemies/enemy_D.png',      # Image Size: 64 x 64
-    [random.randint(0, WIDTH - C_64), random.randint(-100, 0 - C_64)],
-    [0.04 * dt, 1.8],
-    1,
-    100
-)
-
-
-e_bullet_D = EnemyBullet(
-    'Images/Enemies_Bullet/enemy_bullet_F.png',   # Image Size: 32 x 32
-    [0, 0.22 * dt],
-    'Sounds/laser.wav',
-    'Sounds/explosion.wav'
-)
-
+player = Player(*player_atr)
 
 speakers = Speakers()
 score = Score()
@@ -390,6 +304,8 @@ enemies_group = pygame.sprite.Group()
 
 # Add Some Sprites to group
 player_group.add(player)
+
+
 
 
 
