@@ -51,14 +51,12 @@ def run_level_1():
                 if event.type == Enemy.spawn_enemy:
                     k = enemies_lvl_1[len(enemies_group)]
                     # Generate Enemies
-                    print(len(enemies_group))
                     new_enemy = Enemy(*k)
                     enemies_group.add(new_enemy)
 
         '''
         # Enemies:
         for i in range(len(Enemy.enemy_list)):
-
             # After Enemies Appear Generate Enemy Bullet every enemy_X.Δt_bullet cycles
             if len(Enemy.enemy_list) > 0:
                 Enemy.Δt_bullet[i] += 1
@@ -107,20 +105,6 @@ def run_level_1():
                 Enemy.Δt_bullet.pop(i)
                 break
 
-            # Show Enemies on Screen
-            SCREEN.blit(Enemy.image[i], (Enemy.pos[i][0], Enemy.pos[i][1]))
-
-        # Enemies Bullets:
-        for i in range(len(EnemyBullet.pos)):
-            # Enemy Bullet Movement (fix later according to enemy)
-            EnemyBullet.pos[i][1] += e_bullet_F.Δpos[1]
-            
-            if EnemyBullet.pos[i][1] - EnemyBullet.image[i].get_rect().width > HEIGHT:
-                EnemyBullet.image.pop(i)
-                EnemyBullet.pos.pop(i)
-                EnemyBullet.Δpos.pop(i)
-                break
-
             # Collision Detection for Enemy Bullet with Player
             col_e_bul_with_player = pygame.Rect.colliderect(
                 player.image.get_rect(x=player.pos[0], y=player.pos[1]),
@@ -137,9 +121,7 @@ def run_level_1():
                 score.value += 1
                 e_bullet_F.col_sound.play()
                 break
-
-            # Show Enemies Bullets on Screen
-            SCREEN.blit(EnemyBullet.image[i], EnemyBullet.pos[i])'''
+                '''
 
         # Update Sprites
         player.update()
@@ -147,13 +129,16 @@ def run_level_1():
         # Update Sprites Group
         player_bullet_group.update()
         enemies_group.update()
+        enemies_bullet_group.update()
 
         explosion_group.update()
 
         # Draw Sprite Groups
+        enemies_bullet_group.draw(SCREEN)
         enemies_group.draw(SCREEN)
-        player_group.draw(SCREEN)
+
         player_bullet_group.draw(SCREEN)
+        player_group.draw(SCREEN)
 
         explosion_group.draw(SCREEN)
 

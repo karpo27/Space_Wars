@@ -27,14 +27,16 @@ enemies = {
 }
 
 
-'''
-e_bullet_F = EnemyBullet(
-    'Images/Enemies_Bullet/enemy_bullet_F.png',
-    [0, 0.15 * dt],
-    'Sounds/laser.wav',
-    'Sounds/explosion.wav'
-)
+enemies_bullets = {
+    'e_bullet_F': [
+        'Images/Enemies_Bullet/enemy_bullet_F.png',
+        [0, round(0.12 * dt)],
+        'Sounds/laser.wav',
+        'Sounds/explosion.wav'
+    ]
+}
 
+'''
 e_bullet_E = EnemyBullet(
     'Images/Enemies_Bullet/enemy_bullet_E.png',
     [0, 0.22 * dt],
