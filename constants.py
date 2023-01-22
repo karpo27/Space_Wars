@@ -1,6 +1,5 @@
 # Modules
 import pygame
-import random
 
 # Create the screen
 SIZE = WIDTH, HEIGHT = (1000, 800)
