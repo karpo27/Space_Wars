@@ -19,7 +19,7 @@ def run_level_1():
         clock.tick(FPS)
 
         # Define Number of Enemies to spawn in Level 1: 10
-        enemies_lvl_1 = [enemies['enemy_c'], enemies['enemy_c'], enemies['enemy_c']]
+        enemies_lvl_1 = [enemies['enemy_d'], enemies['enemy_d'], enemies['enemy_d']]
 
         # Draw Scrolling Background
         background.show()

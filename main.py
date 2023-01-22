@@ -100,7 +100,6 @@ class MainMenu:
             play_text_position[1] + self.Δy - rot_player_img_rect.height/2
         )
         SCREEN.blit(rot_player_img, rot_player_img_position)
-        pygame.display.flip()
         MainMenu.angle += 2.2
 
     def show_play(self):
