@@ -18,6 +18,7 @@ class Enemy(pygame.sprite.Sprite):
         self.category = category
         self.image = pygame.image.load(image).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale[0], self.image.get_height() * scale[1]))
+        self.image_copy = self.image
         self.rect = self.image.get_rect()
         self.rect.center = [random.randint(0, 3/4 * WIDTH), -80]
 
@@ -57,6 +58,12 @@ class Enemy(pygame.sprite.Sprite):
                 self.rect.x -= self.vel_x
                 self.counter += 1
 
+    def rotate(self, surface, angle, center):
+        rotated_surface = pygame.transform.rotozoom(surface, angle, 1)
+        rotated_rect = rotated_surface.get_rect(center=center)
+
+        return rotated_surface, rotated_rect
+
     def move_hor_vert_sin(self):
         if 1/15 * WIDTH < self.rect.x < 13/15 * WIDTH:
             if self.angle == 0:
@@ -80,7 +87,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.rect.x += self.vel_x
                 self.rect.y += self.vel_y
 
-        #self.image = pygame.transform.rotate(self.image, self.angle)
+        return self.rotate(self.image_copy, self.angle, self.rect.center)
 
     def update(self):
         if self.rect.top > HEIGHT:
@@ -91,7 +98,7 @@ class Enemy(pygame.sprite.Sprite):
             elif self.movement == 2:
                 self.move_hor_zigzag()
             elif self.movement == 3:
-                self.move_hor_vert_sin()
+                self.image, self.rect = self.move_hor_vert_sin()
 
         # Enemy Bullet
         if self.rect.top > 0:
