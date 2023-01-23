@@ -18,8 +18,6 @@ class Enemy(pygame.sprite.Sprite):
         self.category = category
         self.image = pygame.image.load(image).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale[0], self.image.get_height() * scale[1]))
-        self.angle = 0
-        self.image = pygame.transform.rotate(self.image, self.angle)
         self.rect = self.image.get_rect()
         self.rect.center = [random.randint(0, 3/4 * WIDTH), -80]
 
@@ -27,6 +25,7 @@ class Enemy(pygame.sprite.Sprite):
         self.movement = movement
         self.vel = self.vel_x, self.vel_y = vel
         self.counter = 0
+        self.angle = 0
 
         # HP
         self.hp = hp
@@ -68,7 +67,6 @@ class Enemy(pygame.sprite.Sprite):
             if self.angle < 180:
                 self.rect.x += self.vel_x
                 self.rect.y += self.vel_y
-                #self.image = pygame.transform.rotate(self.image, self.angle)
                 self.angle += 3
             elif self.angle == 180:
                 self.rect.x -= self.vel_x
@@ -77,22 +75,23 @@ class Enemy(pygame.sprite.Sprite):
             if self.angle > 0:
                 self.rect.x -= self.vel_x
                 self.rect.y += self.vel_y
-                #self.image = pygame.transform.rotate(self.image, self.angle)
                 self.angle -= 3
             elif self.angle == 0:
                 self.rect.x += self.vel_x
                 self.rect.y += self.vel_y
+
+        #self.image = pygame.transform.rotate(self.image, self.angle)
 
     def update(self):
         if self.rect.top > HEIGHT:
             self.kill()
         else:
             if self.movement == 1:
-                Enemy.move_hor_vert(self)
+                self.move_hor_vert()
             elif self.movement == 2:
-                Enemy.move_hor_zigzag(self)
+                self.move_hor_zigzag()
             elif self.movement == 3:
-                Enemy.move_hor_vert_sin(self)
+                self.move_hor_vert_sin()
 
         # Enemy Bullet
         if self.rect.top > 0:

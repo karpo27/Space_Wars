@@ -93,7 +93,7 @@ class MainMenu:
         SCREEN.blit(quit_text, quit_text_position)
 
         # Player Icon
-        rot_player_img = pygame.transform.rotate(self.player_img, self.angle)
+        rot_player_img = pygame.transform.rotozoom(self.player_img, self.angle, 1)
         rot_player_img_rect = rot_player_img.get_rect()
         rot_player_img_position = (
             play_text_position[0] - self.Δx - rot_player_img_rect.width/2,
