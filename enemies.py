@@ -13,7 +13,7 @@ class Enemy(pygame.sprite.Sprite):
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
-    def __init__(self, category, image, scale, movement, vel, hp, fire_rate):
+    def __init__(self, category, image, scale, movement, vel, hp, bullet, fire_rate):
         super().__init__()
         self.category = category
         self.image = pygame.image.load(image).convert_alpha()
@@ -32,6 +32,7 @@ class Enemy(pygame.sprite.Sprite):
         self.hp = hp
 
         # Bullet
+        self.bullet = bullet
         self.ref_time = fire_rate
         self.fire_rate = fire_rate
         self.reload_speed = 1
@@ -102,15 +103,16 @@ class Enemy(pygame.sprite.Sprite):
 
         # Enemy Bullet
         if self.rect.top > 0:
-            # Create Enemy Bullet Object (add later f' self.cat)
+            # Create Enemy Bullet Object
             if self.fire_rate >= self.ref_time:
-                enemy_bullet = EnemyBullet(
-                    [self.rect.centerx, self.rect.centery],
-                    *enemies_bullets['e_bullet_F']
-                )
+                for bullet_type in self.bullet:
+                    enemy_bullet = EnemyBullet(
+                        [self.rect.centerx, self.rect.centery],
+                        *enemies_bullets[f'e_bullet_{bullet_type}']
+                    )
 
-                enemies_bullet_group.add(enemy_bullet)
-                self.fire_rate = 0
+                    enemies_bullet_group.add(enemy_bullet)
+                    self.fire_rate = 0
 
         # Reset Variables
         if self.fire_rate < self.ref_time:
@@ -119,51 +121,70 @@ class Enemy(pygame.sprite.Sprite):
 
 class EnemyBullet(pygame.sprite.Sprite):
 
-    def __init__(self, pos, image, vel, sound, col_sound):
+    def __init__(self, pos, image, movement, vel, angle, sound, col_sound):
         super().__init__()
         self.image = pygame.image.load(image).convert_alpha()
+        self.image_copy = self.image
         self.rect = self.image.get_rect()
         self.rect.center = pos
+
+        # Movement
+        self.movement = movement
         self.vel = self.vel_x, self.vel_y = vel
+        self.angle = angle
+
+        # Sound
         self.sound = mixer.Sound(sound)
         self.col_sound = mixer.Sound(col_sound)
 
-    def update(self):
-        # Enemy Bullet Movement
+    def move_vertical(self):
+        self.rect.y += self.vel_y
+
+    def move_diagonal(self):
         self.rect.x += self.vel_x
         self.rect.y += self.vel_y
 
+    def rotate(self):
+        rotated_surface = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
+        rotated_rect = rotated_surface.get_rect(center=self.rect.center)
+
+        return rotated_surface, rotated_rect
+
+    def update(self):
         if self.rect.top > HEIGHT:
             self.kill()
+        else:
+            if self.movement == 1:
+                self.move_vertical()
+            elif self.movement == 2:
+                self.image, self.rect = self.rotate()
+                self.move_diagonal()
+            elif self.movement == 3:
+                pass
 
 
 # Create Sprites Group:
 enemies_group = pygame.sprite.Group()
 enemies_bullet_group = pygame.sprite.Group()
 
-# Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Fire Rate
+# Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Fire Rate
 enemies = {
-    'enemy_c': ['C', 'Images/Enemies/enemy_C.png', (0.8, 0.8), 2, [1, 2], 3, 200],
-    'enemy_d': ['D', 'Images/Enemies/enemy_D.png', (0.4, 0.4), 3, [2, 1], 1, 100],
-    'enemy_e': ['E', 'Images/Enemies/enemy_E.png', (0.8, 0.8), 1, [0, 4], 1, 180],
-    'enemy_f': ['F', 'Images/Enemies/enemy_F.png', (0.8, 0.8), 1, [2, 1], 1, 100]
+    'enemy_a': ['A', 'Images/Enemies/enemy_A.png', (0.6, 0.6), 2, [1, 2], 2, 'a', 200],
+    'enemy_b': ['B', 'Images/Enemies/enemy_B.png', (0.8, 0.8), 2, [1, 2], 6, ('b1', 'b2', 'b3'), 200],
+    'enemy_c': ['C', 'Images/Enemies/enemy_C.png', (0.8, 0.8), 2, [1, 2], 3, 'c', 200],
+    'enemy_d': ['D', 'Images/Enemies/enemy_D.png', (0.4, 0.4), 3, [2, 1], 1, 'd', 100],
+    'enemy_e': ['E', 'Images/Enemies/enemy_E.png', (0.8, 0.8), 1, [0, 4], 2, 'e', 180],
+    'enemy_f': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [2, 1], 3, 'f', 100]
 }
 
+# Enemies Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound
 enemies_bullets = {
-    'e_bullet_F': ['Images/Enemies_Bullet/enemy_bullet_F.png', [0, round(0.12 * dt)], 'Sounds/laser.wav', 'Sounds/explosion.wav']
+    'e_bullet_a': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_b1': ['Images/Enemies_Bullet/enemy_bullet_F.png', 2, [-6, 6], -45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_b2': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_b3': ['Images/Enemies_Bullet/enemy_bullet_F.png', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_c': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_d': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_e': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_f': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
-
-'''
-e_bullet_E = EnemyBullet(
-    'Images/Enemies_Bullet/enemy_bullet_E.png',
-    [0, 0.22 * dt],
-    'Sounds/laser.wav',
-    'Sounds/explosion.wav'
-)
-
-e_bullet_D = EnemyBullet(
-    'Images/Enemies_Bullet/enemy_bullet_F.png',
-    [0, 0.22 * dt],
-    'Sounds/laser.wav',
-    'Sounds/explosion.wav'
-)'''
