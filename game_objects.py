@@ -2,7 +2,7 @@
 from constants import *
 from background import *
 from player import *
-from enemies import *
+#from enemies import *
 
 # Modules
 import pygame
@@ -220,7 +220,7 @@ class Explosion(pygame.sprite.Sprite):
         super().__init__()
         self.sprites = []
         for i in range(1, 6):
-            images = pygame.image.load(f'Images/Explosion/explosion_{i}.png')
+            images = pygame.image.load(f'Images/Explosion/explosion_{i}.png').convert_alpha()
             self.sprites.append(images)
 
         self.index = 0
@@ -253,15 +253,11 @@ explosion_group = pygame.sprite.Group()
 background = Background()
 
 # Create Sprites Group:
-all_sprites = pygame.sprite.Group()
-
 player_group = pygame.sprite.Group()
 player_bullet_group = pygame.sprite.Group()
 
 # Add Some Sprites to group
 player_group.add(player)
-
-
 
 
 
