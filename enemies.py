@@ -58,36 +58,36 @@ class Enemy(pygame.sprite.Sprite):
                 self.rect.x -= self.vel_x
                 self.counter += 1
 
-    def rotate(self, surface, angle, center):
-        rotated_surface = pygame.transform.rotozoom(surface, angle, 1)
-        rotated_rect = rotated_surface.get_rect(center=center)
+    def rotate(self):
+        rotated_surface = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
+        rotated_rect = rotated_surface.get_rect(center=self.rect.center)
 
         return rotated_surface, rotated_rect
 
     def move_hor_vert_sin(self):
-        if 1/15 * WIDTH < self.rect.x < 13/15 * WIDTH:
+        if 1/5 * WIDTH < self.rect.x < 11/15 * WIDTH:
             if self.angle == 0:
                 self.rect.x += self.vel_x
-            elif self.angle == 180:
+            elif self.angle == -180:
                 self.rect.x -= self.vel_x
-        elif self.rect.x >= 13/15 * WIDTH:
-            if self.angle < 180:
+        elif self.rect.x >= 11/15 * WIDTH:
+            if self.angle > -180:
                 self.rect.x += self.vel_x
                 self.rect.y += self.vel_y
-                self.angle += 3
-            elif self.angle == 180:
+                self.angle -= 2
+            elif self.angle == -180:
                 self.rect.x -= self.vel_x
                 self.rect.y += self.vel_y
-        elif self.rect.x <= 1/15 * WIDTH:
-            if self.angle > 0:
+        elif self.rect.x <= 1/5 * WIDTH:
+            if self.angle < 0:
                 self.rect.x -= self.vel_x
                 self.rect.y += self.vel_y
-                self.angle -= 3
+                self.angle += 2
             elif self.angle == 0:
                 self.rect.x += self.vel_x
                 self.rect.y += self.vel_y
 
-        return self.rotate(self.image_copy, self.angle, self.rect.center)
+        return self.rotate()
 
     def update(self):
         if self.rect.top > HEIGHT:
@@ -143,52 +143,14 @@ enemies_bullet_group = pygame.sprite.Group()
 
 # Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Fire Rate
 enemies = {
-    'enemy_f': [
-        'F',
-        'Images/Enemies/enemy_F.png',
-        (0.8, 0.8),
-        1,
-        [round(0.04 * dt), 1],
-        1,
-        100
-    ],
-    'enemy_e': [
-        'E',
-        'Images/Enemies/enemy_E.png',
-        (0.8, 0.8),
-        1,
-        [0, 4],
-        1,
-        180
-    ],
-    'enemy_d': [
-        'D',
-        'Images/Enemies/enemy_D.png',
-        (0.4, 0.4),
-        3,
-        [1, 1],
-        1,
-        100
-    ],
-    'enemy_c': [
-        'C',
-        'Images/Enemies/enemy_C.png',
-        (0.8, 0.8),
-        2,
-        [1, 2],
-        3,
-        200
-    ]
+    'enemy_c': ['C', 'Images/Enemies/enemy_C.png', (0.8, 0.8), 2, [1, 2], 3, 200],
+    'enemy_d': ['D', 'Images/Enemies/enemy_D.png', (0.4, 0.4), 3, [2, 1], 1, 100],
+    'enemy_e': ['E', 'Images/Enemies/enemy_E.png', (0.8, 0.8), 1, [0, 4], 1, 180],
+    'enemy_f': ['F', 'Images/Enemies/enemy_F.png', (0.8, 0.8), 1, [2, 1], 1, 100]
 }
 
-
 enemies_bullets = {
-    'e_bullet_F': [
-        'Images/Enemies_Bullet/enemy_bullet_F.png',
-        [0, round(0.12 * dt)],
-        'Sounds/laser.wav',
-        'Sounds/explosion.wav'
-    ]
+    'e_bullet_F': ['Images/Enemies_Bullet/enemy_bullet_F.png', [0, round(0.12 * dt)], 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 
 '''
