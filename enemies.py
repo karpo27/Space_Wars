@@ -14,7 +14,7 @@ class Enemy(pygame.sprite.Sprite):
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
-    def __init__(self, category, image, scale, movement, vel, hp, bullet, fire_rate):
+    def __init__(self, category, image, scale, movement, vel, hp, bullet, fire_rate, explosion_scale):
         super().__init__()
         self.category = category
         self.image = pygame.image.load(image).convert_alpha()
@@ -38,6 +38,9 @@ class Enemy(pygame.sprite.Sprite):
         self.ref_time = fire_rate
         self.fire_rate = fire_rate
         self.reload_speed = 1
+
+        # Explosion
+        self.explosion_scale = explosion_scale
 
     def move_hor_vert(self):
         self.rect.x += self.vel_x
@@ -100,7 +103,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def destroy(self):
         self.kill()
-        explosion = Explosion(self.rect.x, self.rect.y)
+        explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
         explosion_group.add(explosion)
 
     def update(self):
@@ -180,14 +183,14 @@ class EnemyBullet(pygame.sprite.Sprite):
 enemies_group = pygame.sprite.Group()
 enemies_bullet_group = pygame.sprite.Group()
 
-# Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Fire Rate
+# Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Fire Rate, Explosion Scale
 enemies = {
-    'enemy_a': ['A', 'Images/Enemies/enemy_A.png', (0.6, 0.6), 2, [1, 2], 2, ('a1', 'a2'), 200],
-    'enemy_b': ['B', 'Images/Enemies/enemy_B.png', (0.8, 0.8), 2, [1, 2], 6, ('b1', 'b2', 'b3'), 200],
-    'enemy_c': ['C', 'Images/Enemies/enemy_C.png', (0.8, 0.8), 2, [1, 2], 3, ('c1', 'c2'), 200],
-    'enemy_d': ['D', 'Images/Enemies/enemy_D.png', (0.4, 0.4), 3, [2, 1], 1, 'd', 100],
-    'enemy_e': ['E', 'Images/Enemies/enemy_E.png', (0.8, 0.8), 1, [0, 4], 2, 'e', 180],
-    'enemy_f': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [2, 1], 3, 'f', 100]
+    'enemy_a': ['A', 'Images/Enemies/enemy_A.png', (0.6, 0.6), 2, [1, 2], 2, ('a1', 'a2'), 200, (0.8, 0.8)],
+    'enemy_b': ['B', 'Images/Enemies/enemy_B.png', (0.8, 0.8), 2, [1, 2], 6, ('b1', 'b2', 'b3'), 200, (1.5, 1.5)],
+    'enemy_c': ['C', 'Images/Enemies/enemy_C.png', (0.8, 0.8), 2, [1, 2], 3, ('c1', 'c2'), 200, (0.9, 0.9)],
+    'enemy_d': ['D', 'Images/Enemies/enemy_D.png', (0.4, 0.4), 3, [2, 1], 1, 'd', 100, (0.6, 0.6)],
+    'enemy_e': ['E', 'Images/Enemies/enemy_E.png', (0.8, 0.8), 1, [0, 4], 2, 'e', 180, (1.4, 1.4)],
+    'enemy_f': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [1, 2], 3, 'f', 100, (1.1, 1.1)]
 }
 
 # Enemies Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound

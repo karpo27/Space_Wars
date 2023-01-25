@@ -21,7 +21,7 @@ def run_level_1():
         clock.tick(FPS)
 
         # Define Number of Enemies to spawn in Level 1: 10
-        enemies_lvl_1 = [enemies['enemy_b'], enemies['enemy_b']]
+        enemies_lvl_1 = [enemies['enemy_f'], enemies['enemy_f']]
 
         # Draw Scrolling Background
         background.show()
@@ -66,7 +66,7 @@ def run_level_1():
 
         # Check Collisions
         check_collision_1(player_bullet_group, enemies_group)
-        #check_collision_2(enemies_bullet_group, player_group)
+        check_collision_2(enemies_bullet_group, player_group)
         check_collision_3(player_group, enemies_group)
         check_collision_4(enemies_group, player_group)
 
