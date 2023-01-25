@@ -178,10 +178,10 @@ class BossBullet(pygame.sprite.Sprite):
 bosses_group = pygame.sprite.Group()
 bosses_bullet_group = pygame.sprite.Group()
 
-# Bosses - Category, Image, Scale, Movement Type, Velocity, HP, Shoots, Bullet Type, Fire Rate, Explosion Scale
+# Bosses - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Fire Rate, Explosion Scale
 bosses = {
     'boss_a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 2, [1, 2], 2, ('a1', 'a2'), 200, (0.8, 0.8)],
-    'boss_b': ['Images/Bosses/General_Bugfix.png', (0.8, 0.8), 2, [1, 2], 6, ('b1', 'b2', 'b3'), 200, (1.5, 1.5)],
+    'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1), 2, [1, 2], 6, ('b1', 'b2', 'b3'), 200, (1.5, 1.5)],
     'boss_c': ['Images/Bosses/Crimson_Emperor_Ship.png', (0.8, 0.8), 2, [1, 2], 3, ('c1', 'c2'), 200, (0.9, 0.9)],
 }
 
@@ -194,6 +194,6 @@ bosses_bullets = {
     'b_bullet_b3': ['Images/Enemies_Bullet/enemy_bullet_F.png', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'b_bullet_c1': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'b_bullet_c2': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_d': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_f': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
+    'b_bullet_c3': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_c4': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }

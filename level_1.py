@@ -22,7 +22,8 @@ def run_level_1():
         clock.tick(FPS)
 
         # Define Number of Enemies to spawn in Level 1: 10
-        enemies_lvl_1 = [enemies['enemy_d'], enemies['enemy_e']]
+        enemies_lvl_1 = []
+        bosses_lvl_1 = [bosses['boss_b']]
 
         # Draw Scrolling Background
         background.show()
@@ -34,7 +35,7 @@ def run_level_1():
         # Consume Life to Keep Playing
         if player.hp == 0:
             player.lives -= 1
-            pass
+            player.hp = 3
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -56,6 +57,14 @@ def run_level_1():
                     # Generate Enemies
                     new_enemy = Enemy(*k)
                     enemies_group.add(new_enemy)
+
+            # Spawn Boss According to Level
+            if len(bosses_group) < len(bosses_lvl_1):
+                if event.type == Enemy.spawn_enemy:
+                    k = bosses_lvl_1[len(bosses_group)]
+                    # Generate Enemies
+                    new_boss = Boss(*k)
+                    bosses_group.add(new_boss)
 
         # Update Sprites Group
         player_group.update()
