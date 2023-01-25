@@ -2,6 +2,7 @@
 from game_objects import *
 from player import *
 from enemies import *
+from bosses import *
 from collisions import *
 
 
@@ -21,7 +22,7 @@ def run_level_1():
         clock.tick(FPS)
 
         # Define Number of Enemies to spawn in Level 1: 10
-        enemies_lvl_1 = [enemies['enemy_f'], enemies['enemy_f']]
+        enemies_lvl_1 = [enemies['enemy_d'], enemies['enemy_e']]
 
         # Draw Scrolling Background
         background.show()
@@ -73,6 +74,8 @@ def run_level_1():
         # Draw Sprite Groups
         enemies_bullet_group.draw(SCREEN)
         enemies_group.draw(SCREEN)
+        bosses_bullet_group.draw(SCREEN)
+        bosses_group.draw(SCREEN)
 
         player_bullet_group.draw(SCREEN)
         player_group.draw(SCREEN)
