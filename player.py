@@ -22,7 +22,7 @@ class Player(pygame.sprite.Sprite):
         # Initial Movement Animation
         self.enter_animation = True
         self.y_enter = 5/6 * HEIGHT
-        self.Δd = 0.2
+        self.vel_enter_y = 0.2
 
         # Bullet
         self.ref_time = 30
@@ -116,11 +116,9 @@ class Player(pygame.sprite.Sprite):
         # Enter Level Animation
         if self.enter_animation:
             if self.rect.y > self.y_enter:
-                self.rect.y -= self.Δd
+                self.rect.y -= self.vel_enter_y
             else:
                 self.enter_animation = False
-                self.y_enter = 0
-                self.Δd = 0
 
         # Press Keyboard
         else:
@@ -196,7 +194,7 @@ player_bullet_group = pygame.sprite.Group()
 
 # Player - Image, Pos, Velocity, HP, Fire Rate
 player_atr = [
-    'Images/Player/player_img.png', [WIDTH/2 - C_64/2, 19/18 * HEIGHT], [round(0.3 * dt), round(0.3 * dt)], 3, 3
+    'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 3
 ]
 
 # Player Bullet - Image, Velocity, Bullet Sound, Explosion Sound

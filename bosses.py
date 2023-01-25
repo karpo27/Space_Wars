@@ -16,7 +16,12 @@ class Boss(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale[0], self.image.get_height() * scale[1]))
         self.image_copy = self.image
         self.rect = self.image.get_rect()
-        self.rect.center = [WIDTH/2, 1/3 * HEIGHT]
+        self.rect.center = [WIDTH/2, -1/4 * HEIGHT]
+
+        # Initial Movement Animation
+        self.enter_animation = True
+        self.y_enter = 1/25 * HEIGHT
+        self.vel_enter_y = 1
 
         # Movement
         self.movement = movement
@@ -102,8 +107,13 @@ class Boss(pygame.sprite.Sprite):
         explosion_group.add(explosion)
 
     def update(self):
-        if self.rect.top > HEIGHT:
-            self.kill()
+        # Enter Level Animation
+        if self.enter_animation:
+            if self.rect.y <= self.y_enter:
+                self.rect.y += self.vel_enter_y
+            else:
+                self.enter_animation = False
+
         else:
             if self.movement == 1:
                 self.move_hor_vert()
@@ -112,18 +122,18 @@ class Boss(pygame.sprite.Sprite):
             elif self.movement == 3:
                 self.image, self.rect = self.move_hor_vert_sin()
 
-        # Enemy Bullet
-        if self.rect.top > 0:
-            # Create Enemy Bullet Object (fix later side of the bullet)
-            if self.fire_rate >= self.ref_time:
-                for bullet_type in self.bullet:
-                    boss_bullet = BossBullet(
-                        [self.rect.centerx, self.rect.centery],
-                        *bosses_bullets[f'e_bullet_{bullet_type}']
-                    )
+            # Boss Bullet
+            if self.rect.top > 0:
+                # Create Boss Bullet Object (fix later side of the bullet)
+                if self.fire_rate >= self.ref_time:
+                    for bullet_type in self.bullet:
+                        boss_bullet = BossBullet(
+                            [self.rect.centerx, self.rect.centery],
+                            *bosses_bullets[f'b_bullet_{bullet_type}']
+                        )
 
-                    bosses_bullet_group.add(boss_bullet)
-                    self.fire_rate = 0
+                        bosses_bullet_group.add(boss_bullet)
+                        self.fire_rate = 0
 
         # Reset Variables
         if self.fire_rate < self.ref_time:
@@ -180,20 +190,20 @@ bosses_bullet_group = pygame.sprite.Group()
 
 # Bosses - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Fire Rate, Explosion Scale
 bosses = {
-    'boss_a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 2, [1, 2], 2, ('a1', 'a2'), 200, (0.8, 0.8)],
-    'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1), 2, [1, 2], 6, ('b1', 'b2', 'b3'), 200, (1.5, 1.5)],
-    'boss_c': ['Images/Bosses/Crimson_Emperor_Ship.png', (0.8, 0.8), 2, [1, 2], 3, ('c1', 'c2'), 200, (0.9, 0.9)],
+    'boss_a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 1, [0, 0], 100, ('a1', 'a2'), 200, (0.8, 0.8)],
+    'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1), 1, [0, 0], 125, ('b1', 'b2', 'b3'), 150, (2.0, 2.0)],
+    'boss_c': ['Images/Bosses/Crimson_Emperor_Ship.png', (0.8, 0.8), 1, [0, 0], 150, ('c1', 'c2'), 200, (0.9, 0.9)],
 }
 
 # Bosses Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound
 bosses_bullets = {
-    'b_bullet_a1': ['Images/Enemies_Bullet/enemy_bullet_F.png', 2, [-1, 5], -10, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_a2': ['Images/Enemies_Bullet/enemy_bullet_F.png', 2, [1, 5], 10, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b1': ['Images/Enemies_Bullet/enemy_bullet_F.png', 2, [-6, 6], -45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b2': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b3': ['Images/Enemies_Bullet/enemy_bullet_F.png', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_c1': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_c2': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_c3': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_c4': ['Images/Enemies_Bullet/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
+    'b_bullet_a1': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [-1, 5], -10, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_a2': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [1, 5], 10, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b1': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [-6, 6], -45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b2': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b3': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_c1': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_c2': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_c3': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_c4': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }

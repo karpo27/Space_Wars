@@ -71,6 +71,8 @@ def run_level_1():
         player_bullet_group.update()
         enemies_group.update()
         enemies_bullet_group.update()
+        bosses_group.update()
+        bosses_bullet_group.update()
 
         explosion_group.update()
 
@@ -79,6 +81,8 @@ def run_level_1():
         check_collision_2(enemies_bullet_group, player_group)
         check_collision_3(player_group, enemies_group)
         check_collision_4(enemies_group, player_group)
+        check_collision_5(player_bullet_group, bosses_group)
+        check_collision_6(bosses_bullet_group, player_group)
 
         # Draw Sprite Groups
         enemies_bullet_group.draw(SCREEN)
@@ -91,6 +95,7 @@ def run_level_1():
 
         explosion_group.draw(SCREEN)
 
+        # Extras
         score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)
 
