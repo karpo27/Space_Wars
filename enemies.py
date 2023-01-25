@@ -180,7 +180,7 @@ class EnemyBullet(pygame.sprite.Sprite):
 enemies_group = pygame.sprite.Group()
 enemies_bullet_group = pygame.sprite.Group()
 
-# Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Bullet Position, Fire Rate
+# Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Fire Rate
 enemies = {
     'enemy_a': ['A', 'Images/Enemies/enemy_A.png', (0.6, 0.6), 2, [1, 2], 2, ('a1', 'a2'), 200],
     'enemy_b': ['B', 'Images/Enemies/enemy_B.png', (0.8, 0.8), 2, [1, 2], 6, ('b1', 'b2', 'b3'), 200],
