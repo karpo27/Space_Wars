@@ -35,7 +35,7 @@ def run_level_1():
         # Consume Life to Keep Playing
         if player.hp == 0:
             player.lives -= 1
-            player.hp = 3
+            #player.hp = 3
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

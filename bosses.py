@@ -10,7 +10,7 @@ import random
 
 class Boss(pygame.sprite.Sprite):
 
-    def __init__(self, image, scale, movement, vel, hp, bullet, fire_rate, explosion_scale):
+    def __init__(self, image, scale, movement, vel, hp, bullet, fire_delay, fire_cycles, explosion_scale):
         super().__init__()
         self.image = pygame.image.load(image).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale[0], self.image.get_height() * scale[1]))
@@ -34,9 +34,12 @@ class Boss(pygame.sprite.Sprite):
 
         # Bullet
         self.bullet = bullet
+        self.bullet_index = 0
+        self.fire_delay = fire_delay
+        self.ref_time = fire_delay
+        self.fire_cycles = fire_cycles
+        self.fire_cycles_counter = 0
         #self.bullet_pos = bullet_pos
-        self.ref_time = fire_rate
-        self.fire_rate = fire_rate
         self.reload_speed = 1
 
         # Explosion
@@ -122,22 +125,27 @@ class Boss(pygame.sprite.Sprite):
             elif self.movement == 3:
                 self.image, self.rect = self.move_hor_vert_sin()
 
-            # Boss Bullet
-            if self.rect.top > 0:
-                # Create Boss Bullet Object (fix later side of the bullet)
-                if self.fire_rate >= self.ref_time:
-                    for bullet_type in self.bullet:
+            # Create Boss Bullet Object (fix later side of the bullet)
+            if self.fire_delay >= self.ref_time:
+                if self.fire_cycles_counter >= self.fire_cycles[self.bullet_index]:
+                    for bullet_type in self.bullet[self.bullet_index]:
                         boss_bullet = BossBullet(
                             [self.rect.centerx, self.rect.centery],
                             *bosses_bullets[f'b_bullet_{bullet_type}']
                         )
 
                         bosses_bullet_group.add(boss_bullet)
-                        self.fire_rate = 0
+                    self.bullet_index += 1
+                else:
+                    self.fire_cycles_counter += self.reload_speed
+            # Reset Variables
+            else:
+                self.fire_delay += self.reload_speed
 
-        # Reset Variables
-        if self.fire_rate < self.ref_time:
-            self.fire_rate += self.reload_speed
+        if self.bullet_index == len(self.fire_cycles):
+            self.bullet_index = 0
+            self.fire_cycles_counter = 0
+            self.fire_delay = 0
 
 
 class BossBullet(pygame.sprite.Sprite):
@@ -188,10 +196,10 @@ class BossBullet(pygame.sprite.Sprite):
 bosses_group = pygame.sprite.Group()
 bosses_bullet_group = pygame.sprite.Group()
 
-# Bosses - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Fire Rate, Explosion Scale
+# Bosses - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Fire Delay, Fire Cycles, Explosion Scale
 bosses = {
     'boss_a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 1, [0, 0], 100, ('a1', 'a2'), 200, (0.8, 0.8)],
-    'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1), 1, [0, 0], 125, ('b1', 'b2', 'b3'), 150, (2.0, 2.0)],
+    'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1), 1, [0, 0], 125, [('b1', 'b2', 'b3'), ('a1', 'a2')], 500, [0, 200], (2.0, 2.0)],
     'boss_c': ['Images/Bosses/Crimson_Emperor_Ship.png', (0.8, 0.8), 1, [0, 0], 150, ('c1', 'c2'), 200, (0.9, 0.9)],
 }
 

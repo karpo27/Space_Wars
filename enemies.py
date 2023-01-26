@@ -130,10 +130,9 @@ class Enemy(pygame.sprite.Sprite):
 
                     enemies_bullet_group.add(enemy_bullet)
                     self.fire_rate = 0
-
-        # Reset Variables
-        if self.fire_rate < self.ref_time:
-            self.fire_rate += self.reload_speed
+            # Reset Variables
+            elif self.fire_rate < self.ref_time:
+                self.fire_rate += self.reload_speed
 
 
 class EnemyBullet(pygame.sprite.Sprite):
