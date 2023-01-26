@@ -22,7 +22,7 @@ def run_level_1():
         clock.tick(FPS)
 
         # Define Number of Enemies to spawn in Level 1: 10
-        enemies_lvl_1 = []
+        enemies_lvl_1 = [enemies['enemy_a']]
         bosses_lvl_1 = [bosses['boss_b']]
 
         # Draw Scrolling Background
@@ -62,7 +62,7 @@ def run_level_1():
             if len(bosses_group) < len(bosses_lvl_1):
                 if event.type == Enemy.spawn_enemy:
                     k = bosses_lvl_1[len(bosses_group)]
-                    # Generate Enemies
+                    # Generate Boss
                     new_boss = Boss(*k)
                     bosses_group.add(new_boss)
 
@@ -77,12 +77,15 @@ def run_level_1():
         explosion_group.update()
 
         # Check Collisions
-        check_collision_1(player_bullet_group, enemies_group)
-        check_collision_2(enemies_bullet_group, player_group)
-        check_collision_3(player_group, enemies_group)
-        check_collision_4(enemies_group, player_group)
-        check_collision_5(player_bullet_group, bosses_group)
-        check_collision_6(bosses_bullet_group, player_group)
+        check_collision(player_bullet_group, enemies_group, True, False)    # Check Collisions Player Bullets vs Enemies
+        check_collision(player_bullet_group, bosses_group, True, False)     # Check Collisions Player Bullet vs Bosses
+        check_collision(player_group, enemies_group, False, False)          # Check Collisions Player Body vs Enemy Body
+        check_collision(player_group, bosses_group, False, False)           # Check Collisions Player Body vs Boss Body
+
+        check_collision(enemies_bullet_group, player_group, True, False)    # Check Collisions Enemy Bullet vs Player
+        check_collision(bosses_bullet_group, player_group, True, False)     # Check Collisions Boss Bullet vs Player
+        check_collision(enemies_group, player_group, False, False)          # Check Collisions Enemy Body vs Player Body
+        check_collision(bosses_group, player_group, False, False)           # Check Collisions Boss Body vs Player Body
 
         # Draw Sprite Groups
         enemies_bullet_group.draw(SCREEN)
