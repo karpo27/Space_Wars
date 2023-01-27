@@ -51,10 +51,8 @@ class Boss(pygame.sprite.Sprite):
         self.rect.x += self.vel_x
         self.rect.y += self.vel_y
 
-        if self.rect.left <= -0.1 * WIDTH:
-            self.rect.x += self.vel_x
-        if self.rect.right >= 1.1 * WIDTH:
-            self.rect.x -= self.vel_x
+        if self.rect.left == 2/5 * WIDTH:
+            self.vel_x = 0
 
     def move_hor_zigzag(self):
         if self.rect.y < 1/8 * HEIGHT:
@@ -100,6 +98,37 @@ class Boss(pygame.sprite.Sprite):
 
         return self.rotate()
 
+    def spawn_bullet(self):
+        if self.bullet_pattern_counter >= self.ref_time:
+            if self.fire_cycles_counter >= self.fire_cycles[self.bullet_index][0]:
+                if self.fire_cycles[self.bullet_index][1] >= self.bullet_type_qty:
+                    if self.bullet_type_counter >= 20:
+                        for bullet_type in self.bullet[self.bullet_index]:
+                            boss_bullet = BossBullet(
+                                [self.rect.centerx, self.rect.centery],
+                                *bosses_bullets[f'b_bullet_{bullet_type}']
+                            )
+
+                            bosses_bullet_group.add(boss_bullet)
+                        self.bullet_type_counter = 0
+                        self.bullet_type_qty += 1
+
+                    else:
+                        self.bullet_type_counter += 1
+                else:
+                    self.bullet_type_qty = 1
+                    self.bullet_index += 1
+            else:
+                self.fire_cycles_counter += self.reload_speed
+        # Reset Variables
+        else:
+            self.bullet_pattern_counter += self.reload_speed
+
+        if self.bullet_index == len(self.fire_cycles):
+            self.bullet_index = 0
+            self.fire_cycles_counter = 0
+            self.bullet_pattern_counter = 0
+
     def get_hit(self):
         self.hp -= 1
 
@@ -128,35 +157,7 @@ class Boss(pygame.sprite.Sprite):
                 self.image, self.rect = self.move_hor_vert_sin()
 
             # Create Boss Bullet Object (fix later side of the bullet)
-            if self.bullet_pattern_counter >= self.ref_time:
-                if self.fire_cycles_counter >= self.fire_cycles[self.bullet_index][0]:
-                    if self.fire_cycles[self.bullet_index][1] >= self.bullet_type_qty:
-                        if self.bullet_type_counter >= 20:
-                            for bullet_type in self.bullet[self.bullet_index]:
-                                boss_bullet = BossBullet(
-                                    [self.rect.centerx, self.rect.centery],
-                                    *bosses_bullets[f'b_bullet_{bullet_type}']
-                                )
-
-                                bosses_bullet_group.add(boss_bullet)
-                            self.bullet_type_counter = 0
-                            self.bullet_type_qty += 1
-
-                        else:
-                            self.bullet_type_counter += 1
-                    else:
-                        self.bullet_type_qty = 1
-                        self.bullet_index += 1
-                else:
-                    self.fire_cycles_counter += self.reload_speed
-            # Reset Variables
-            else:
-                self.bullet_pattern_counter += self.reload_speed
-
-        if self.bullet_index == len(self.fire_cycles):
-            self.bullet_index = 0
-            self.fire_cycles_counter = 0
-            self.bullet_pattern_counter = 0
+            self.spawn_bullet()
 
         # Reset Animation when leaving Screen
         if self.rect.top > HEIGHT or self.rect.left > WIDTH or self.rect.right < 0:
@@ -215,7 +216,7 @@ bosses_bullet_group = pygame.sprite.Group()
 # Bosses - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Bullet Pattern Counter, Fire Cycles, Explosion Scale
 bosses = {
     'boss_a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 1, [0, 0], 100, ('a3', 'a2'), 200, (0.8, 0.8)],
-    'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1), 1, [-1, 0], 125,
+    'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1), 1, [-2, 0], 125,
                [['a2', 'b0', 'b2'], ['a1', 'b1'], ['b0'], ['b1'], ['b2'], ['b3'], ['b4'], ['b5'], ['b6'], ['b0'], ['a1'], ['a2'], ['a3'], ['a4'], ['a5'], ['a6'], ['b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']], 200,
                [(0, 5), (100, 4), (200, 2), (205, 2), (210, 2), (215, 2), (220, 2), (225, 2), (230, 2), (240, 2), (245, 2), (250, 2), (255, 2), (260, 2), (265, 2), (270, 2), (280, 3)],
                (2.0, 2.0)],

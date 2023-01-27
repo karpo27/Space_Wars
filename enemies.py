@@ -96,6 +96,22 @@ class Enemy(pygame.sprite.Sprite):
 
         return self.rotate()
 
+    def spawn_bullet(self):
+        if self.rect.top > 0:
+            # Create Enemy Bullet Object (fix later side of the bullet)
+            if self.shoots and self.fire_rate >= self.ref_time:
+                for bullet_type in self.bullet:
+                    enemy_bullet = EnemyBullet(
+                        [self.rect.centerx, self.rect.centery],
+                        *enemies_bullets[f'e_bullet_{bullet_type}']
+                    )
+
+                    enemies_bullet_group.add(enemy_bullet)
+                    self.fire_rate = 0
+            # Reset Variables
+            elif self.fire_rate < self.ref_time:
+                self.fire_rate += self.reload_speed
+
     def get_hit(self):
         self.hp -= 1
 
@@ -119,20 +135,7 @@ class Enemy(pygame.sprite.Sprite):
                 self.image, self.rect = self.move_hor_vert_sin()
 
         # Enemy Bullet
-        if self.rect.top > 0:
-            # Create Enemy Bullet Object (fix later side of the bullet)
-            if self.shoots and self.fire_rate >= self.ref_time:
-                for bullet_type in self.bullet:
-                    enemy_bullet = EnemyBullet(
-                        [self.rect.centerx, self.rect.centery],
-                        *enemies_bullets[f'e_bullet_{bullet_type}']
-                    )
-
-                    enemies_bullet_group.add(enemy_bullet)
-                    self.fire_rate = 0
-            # Reset Variables
-            elif self.fire_rate < self.ref_time:
-                self.fire_rate += self.reload_speed
+        self.spawn_bullet()
 
 
 class EnemyBullet(pygame.sprite.Sprite):
