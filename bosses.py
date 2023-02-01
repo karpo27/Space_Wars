@@ -5,7 +5,7 @@ from game_objects import Explosion, explosion_group
 # Modules
 import pygame
 from pygame import mixer
-import random
+import secrets
 
 
 class Boss(pygame.sprite.Sprite):
@@ -28,6 +28,8 @@ class Boss(pygame.sprite.Sprite):
         self.vel = self.vel_x, self.vel_y = vel
         self.counter = 0
         self.angle = 0
+        self.movement_action = None
+        self.next_action = True
 
         # HP
         self.hp = hp
@@ -47,12 +49,18 @@ class Boss(pygame.sprite.Sprite):
         # Explosion
         self.explosion_scale = explosion_scale
 
-    def move_hor_vert(self):
-        self.rect.x += self.vel_x
-        self.rect.y += self.vel_y
-
-        if self.rect.left == 2/5 * WIDTH:
-            self.vel_x = 0
+    def move_hor(self, direction):
+        if self.rect.x == 1/20 * WIDTH:
+            '''
+            (check)
+            if self.rect.x == WIDTH/2:
+                self.next_action = True
+                self.vel_x = 0
+            else:
+                self.vel_x = -self.vel_x
+                self.rect.x += self.vel_x * direction'''
+        else:
+            self.rect.x += self.vel_x * direction
 
     def move_hor_zigzag(self):
         if self.rect.y < 1/8 * HEIGHT:
@@ -149,11 +157,16 @@ class Boss(pygame.sprite.Sprite):
                 self.enter_animation = False
 
         else:
-            if self.movement == 1:
-                self.move_hor_vert()
-            elif self.movement == 2:
-                self.move_hor_zigzag()
-            elif self.movement == 3:
+            if self.next_action:
+                self.movement_action = secrets.choice(self.movement)
+            if self.movement_action == 1:
+                print(self.movement_action)
+                self.next_action = False
+                self.move_hor(1)
+            elif self.movement_action == 2:
+                self.next_action = False
+                self.move_hor(-1)
+            elif self.movement_action == 3:
                 self.image, self.rect = self.move_hor_vert_sin()
 
             # Create Boss Bullet Object (fix later side of the bullet)
@@ -213,10 +226,12 @@ class BossBullet(pygame.sprite.Sprite):
 bosses_group = pygame.sprite.Group()
 bosses_bullet_group = pygame.sprite.Group()
 
-# Bosses - Category, Image, Scale, Movement Type, Velocity, HP, Bullet Type, Bullet Pattern Counter, Fire Cycles, Explosion Scale
+# Bosses - Category, Image, Scale, Movement Actions, Velocity, HP, Bullet Type, Bullet Pattern Counter, Fire Cycles, Explosion Scale
 bosses = {
     'boss_a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 1, [0, 0], 100, ('a3', 'a2'), 200, (0.8, 0.8)],
-    'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1), 1, [-2, 0], 125,
+    'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1),
+               [1, 2],
+               [-1, 0], 125,
                [['a2', 'b0', 'b2'], ['a1', 'b1'], ['b0'], ['b1'], ['b2'], ['b3'], ['b4'], ['b5'], ['b6'], ['b0'], ['a1'], ['a2'], ['a3'], ['a4'], ['a5'], ['a6'], ['b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']], 200,
                [(0, 5), (100, 4), (200, 2), (205, 2), (210, 2), (215, 2), (220, 2), (225, 2), (230, 2), (240, 2), (245, 2), (250, 2), (255, 2), (260, 2), (265, 2), (270, 2), (280, 3)],
                (2.0, 2.0)],
