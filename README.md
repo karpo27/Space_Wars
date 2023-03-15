@@ -1,6 +1,9 @@
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/julian-giudice-940771a1/)
 
 # Game_Project
+
+![Badge en Desarollo](https://img.shields.io/badge/STATUS-%20DEVELOPMENT-green)
+
 Space Ships Game coded in Python
 
 Genre: Shoot 'em up
