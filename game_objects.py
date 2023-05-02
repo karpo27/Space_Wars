@@ -24,15 +24,9 @@ class Speakers:
         if state == "off":
             SCREEN.blit(self.off_image, (x, y))
             mixer.music.set_volume(0.0)
-            #player_bullet.sound.set_volume(self.initial_sound)
-            #player_bullet.col_sound.set_volume(self.initial_sound)
-            #e_bullet_F.col_sound.set_volume(self.initial_sound)
         elif state == "on":
             SCREEN.blit(self.on_image, (x, y))
             mixer.music.set_volume(0.08)
-            #player_bullet.sound.set_volume(0.08)
-            #player_bullet.col_sound.set_volume(0.08)
-            #e_bullet_F.col_sound.set_volume(0.08)
 
 
 class Score:
@@ -44,6 +38,7 @@ class Score:
     def show(self, x, y):
         score_screen = self.font.render("Score: " + str(self.value), True, (255, 255, 255))
         SCREEN.blit(score_screen, (x, y))
+
 
 
 class Explosion(pygame.sprite.Sprite):

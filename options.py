@@ -77,9 +77,11 @@ class Options(pygame.sprite.Sprite):
             if self.pos_y == self.init_pos_y:  # Position: Audio
                 pass
                 # self.indicator = "audio"
+                self.movement_rate = 0
             elif self.pos_y == self.init_pos_y + self.margin:  # Position: Keybindings
                 pass
                 # self.indicator = "keybindings"
+                self.movement_rate = 0
             elif self.pos_y == self.init_pos_y + 2 * self.margin:  # Position: Back
                 main_menu.indicator = "main menu"
                 self.movement_rate = 0
@@ -106,6 +108,3 @@ class Options(pygame.sprite.Sprite):
 
 # Initialize Classes:
 options = Options()
-
-# Create Sprites Group:
-options_group = pygame.sprite.Group()
