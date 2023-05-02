@@ -1,6 +1,5 @@
 # Scripts:
 import sys
-from constants import *
 from text_creator import *
 import level_1
 
@@ -36,7 +35,7 @@ class MainMenu(pygame.sprite.Sprite):
         self.margin = 70
 
         # Movement:
-        self.indicator = "menu"
+        self.indicator = "main menu"
         self.ref_time = 16
         self.movement_rate = 16
         self.allow_movement_speed = 1
@@ -78,13 +77,16 @@ class MainMenu(pygame.sprite.Sprite):
             self.pos_y -= self.margin
             self.movement_rate = 0
         # Main Menu Selection:
-        elif key[pygame.K_RETURN]:
+        elif key[pygame.K_RETURN] and self.movement_rate >= self.ref_time:
             if self.pos_y == self.init_pos_y:  # Position: Play
                 level_1.run_level_1()
+                self.movement_rate = 0
             elif self.pos_y == self.init_pos_y + self.margin:  # Position: Options
                 self.indicator = "options"
+                self.movement_rate = 0
             elif self.pos_y == self.init_pos_y + 2 * self.margin:  # Position: Credits
                 self.indicator = "credits"
+                self.movement_rate = 0
             elif self.pos_y == self.init_pos_y + 3 * self.margin:  # Position: Quit
                 pygame.quit()
                 sys.exit()
@@ -94,7 +96,7 @@ class MainMenu(pygame.sprite.Sprite):
             self.movement_rate += self.allow_movement_speed
 
         # Player Icon Movement Boundaries:
-        if self.pos_y > 4 * self.margin:
+        if self.pos_y > self.init_pos_y + 3 * self.margin:
             self.pos_y = self.init_pos_y
 
         if self.pos_y < self.init_pos_y:
@@ -110,49 +112,10 @@ class MainMenu(pygame.sprite.Sprite):
         if self.pos_y == self.init_pos_y + 3 * self.margin:
             self.change_hover_text(main_menu_list, ["", "", "", "hover"])
 
-    def show_play(self):
-        run = True
-        while run:
-            # Set screen FPS
-            clock.tick(FPS)
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-
-            pygame.display.update()
-
-    def show_credits(self):
-        run = True
-        while run:
-            # Set screen FPS
-            clock.tick(FPS)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-
-            pygame.display.update()
-
-    def show_options(self):
-        run = True
-        while run:
-            # Set screen FPS
-            clock.tick(FPS)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-
-            pygame.display.update()
-
-    
 # Initialize Classes:
 main_menu = MainMenu()
 
 # Create Sprites Group:
-main_menu_group = pygame.sprite.Group()
-
-# Add Main Menu Sprites to group:
-main_menu_group.add(main_menu)
+main_menu_group = pygame.sprite.GroupSingle()
 

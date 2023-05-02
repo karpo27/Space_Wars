@@ -1,6 +1,6 @@
 # Scripts:
-from constants import *
 from text_creator import *
+from main_menu import *
 
 # Modules:
 import pygame
@@ -48,7 +48,7 @@ class Options(pygame.sprite.Sprite):
                 text.color = self.color
 
     def update(self) -> None:
-        # Render Main Menu Text:
+        # Render Options Text:
         audio_text.show()
         keybindings_text.show()
         back_text.show()
@@ -73,24 +73,27 @@ class Options(pygame.sprite.Sprite):
             self.pos_y -= self.margin
             self.movement_rate = 0
         # Main Menu Selection:
-        elif key[pygame.K_RETURN]:
-            if self.pos_y == self.init_pos_y + self.margin:  # Position: Options
-                self.show_options()
-            elif self.pos_y == self.init_pos_y + 2 * self.margin:  # Position: Credits
-                self.show_credits()
-            elif self.pos_y == self.init_pos_y + 3 * self.margin:  # Position: Quit
-                pygame.quit()
+        elif key[pygame.K_RETURN] and self.movement_rate >= self.ref_time:
+            if self.pos_y == self.init_pos_y:  # Position: Audio
+                pass
+                # self.indicator = "audio"
+            elif self.pos_y == self.init_pos_y + self.margin:  # Position: Keybindings
+                pass
+                # self.indicator = "keybindings"
+            elif self.pos_y == self.init_pos_y + 2 * self.margin:  # Position: Back
+                main_menu.indicator = "main menu"
+                self.movement_rate = 0
 
         # Reset Variables:
         if self.movement_rate < self.ref_time:
             self.movement_rate += self.allow_movement_speed
 
         # Player Icon Movement Boundaries:
-        if self.pos_y > 4 * self.margin:
+        if self.pos_y > self.init_pos_y + 2 * self.margin:
             self.pos_y = self.init_pos_y
 
         if self.pos_y < self.init_pos_y:
-            self.pos_y = self.init_pos_y + 3 * self.margin
+            self.pos_y = self.init_pos_y + 2 * self.margin
 
         # Change Text Color when Hover:
         if self.pos_y == self.init_pos_y:
@@ -100,24 +103,9 @@ class Options(pygame.sprite.Sprite):
         if self.pos_y == self.init_pos_y + 2 * self.margin:
             self.change_hover_text(options_list, ["", "", "hover"])
 
-    def show_play(self):
-        run = True
-        while run:
-            # Set screen FPS
-            clock.tick(FPS)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-
-            pygame.display.update()
-
 
 # Initialize Classes:
 options = Options()
 
 # Create Sprites Group:
 options_group = pygame.sprite.Group()
-
-# Add Main Menu Sprites to group:
-options_group.add(options)
