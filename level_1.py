@@ -107,4 +107,4 @@ def run_level_1():
         pygame.display.update()
 
 
-run_level_1()
+#run_level_1()

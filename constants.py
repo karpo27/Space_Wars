@@ -5,6 +5,9 @@ import pygame
 SIZE = WIDTH, HEIGHT = (1000, 800)
 SCREEN = pygame.display.set_mode(SIZE)
 
+# Icon Window
+ICON = 'Images/Screen/icon.png'
+
 # Define Clock for Screen FPS
 clock = pygame.time.Clock()
 FPS = 60

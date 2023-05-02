@@ -1,8 +1,6 @@
 # Scripts:
-import sys
 from constants import *
 from text_creator import *
-import level_1
 
 # Modules:
 import pygame
@@ -11,18 +9,18 @@ import pygame
 pygame.font.init()
 
 
-class MainMenu(pygame.sprite.Sprite):
+class Options(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         # Title and Icon:
-        pygame.display.set_caption("Main Menu")
+        pygame.display.set_caption("Options")
         icon = pygame.image.load(ICON)
         pygame.display.set_icon(icon)
 
         # Player Icon:
         self.image = pygame.image.load('Images/Player/player_img.png').convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.center = self.pos_x, self.pos_y = 70, 30
+        self.rect.center = self.pos_x, self.pos_y = 85, 30
         self.angle = 0
         self.init_pos_y = 30
 
@@ -36,7 +34,6 @@ class MainMenu(pygame.sprite.Sprite):
         self.margin = 70
 
         # Movement:
-        self.indicator = "menu"
         self.ref_time = 16
         self.movement_rate = 16
         self.allow_movement_speed = 1
@@ -52,18 +49,16 @@ class MainMenu(pygame.sprite.Sprite):
 
     def update(self) -> None:
         # Render Main Menu Text:
-        title_text.show()
-        play_text.show()
-        options_text.show()
-        credits_text.show()
-        quit_text.show()
+        audio_text.show()
+        keybindings_text.show()
+        back_text.show()
 
         # Player Icon Rotation Animation:
         rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
         rot_player_img_rect = rot_player_img.get_rect()
         rot_player_img_position = (
-            play_text.text_position[0] - self.rect.x - rot_player_img_rect.width/2,
-            play_text.text_position[1] + self.pos_y - rot_player_img_rect.height/2
+            play_text.text_position[0] - self.rect.x - rot_player_img_rect.width / 2,
+            play_text.text_position[1] + self.pos_y - rot_player_img_rect.height / 2
         )
         SCREEN.blit(rot_player_img, rot_player_img_position)
         self.angle += 2.2
@@ -79,15 +74,12 @@ class MainMenu(pygame.sprite.Sprite):
             self.movement_rate = 0
         # Main Menu Selection:
         elif key[pygame.K_RETURN]:
-            if self.pos_y == self.init_pos_y:  # Position: Play
-                level_1.run_level_1()
-            elif self.pos_y == self.init_pos_y + self.margin:  # Position: Options
-                self.indicator = "options"
+            if self.pos_y == self.init_pos_y + self.margin:  # Position: Options
+                self.show_options()
             elif self.pos_y == self.init_pos_y + 2 * self.margin:  # Position: Credits
-                self.indicator = "credits"
+                self.show_credits()
             elif self.pos_y == self.init_pos_y + 3 * self.margin:  # Position: Quit
                 pygame.quit()
-                sys.exit()
 
         # Reset Variables:
         if self.movement_rate < self.ref_time:
@@ -102,13 +94,11 @@ class MainMenu(pygame.sprite.Sprite):
 
         # Change Text Color when Hover:
         if self.pos_y == self.init_pos_y:
-            self.change_hover_text(main_menu_list, ["hover", "", "", ""])
+            self.change_hover_text(options_list, ["hover", "", ""])
         if self.pos_y == self.init_pos_y + self.margin:
-            self.change_hover_text(main_menu_list, ["", "hover", "", ""])
+            self.change_hover_text(options_list, ["", "hover", ""])
         if self.pos_y == self.init_pos_y + 2 * self.margin:
-            self.change_hover_text(main_menu_list, ["", "", "hover", ""])
-        if self.pos_y == self.init_pos_y + 3 * self.margin:
-            self.change_hover_text(main_menu_list, ["", "", "", "hover"])
+            self.change_hover_text(options_list, ["", "", "hover"])
 
     def show_play(self):
         run = True
@@ -122,37 +112,12 @@ class MainMenu(pygame.sprite.Sprite):
 
             pygame.display.update()
 
-    def show_credits(self):
-        run = True
-        while run:
-            # Set screen FPS
-            clock.tick(FPS)
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-
-            pygame.display.update()
-
-    def show_options(self):
-        run = True
-        while run:
-            # Set screen FPS
-            clock.tick(FPS)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-
-            pygame.display.update()
-
-    
 # Initialize Classes:
-main_menu = MainMenu()
+options = Options()
 
 # Create Sprites Group:
-main_menu_group = pygame.sprite.Group()
+options_group = pygame.sprite.Group()
 
 # Add Main Menu Sprites to group:
-main_menu_group.add(main_menu)
-
+options_group.add(options)
