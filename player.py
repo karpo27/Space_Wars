@@ -9,7 +9,6 @@ import math
 
 
 class Player(pygame.sprite.Sprite):
-
     def __init__(self, image, pos, vel, hp, lives):
         super().__init__()
         self.image = pygame.image.load(image).convert_alpha()
@@ -150,7 +149,7 @@ class Player(pygame.sprite.Sprite):
             # Player Bullet Keyboard
             if key[pygame.K_SPACE]:
                 # Create Player Bullet Object
-                if self.fire_rate >= 30:
+                if self.fire_rate >= self.ref_time:
                     player_bullet = PlayerBullet(
                         [self.rect.centerx, self.rect.centery],
                         *player_bullets['player_bullet_d']
@@ -170,7 +169,6 @@ class Player(pygame.sprite.Sprite):
 
 
 class PlayerBullet(pygame.sprite.Sprite):
-
     def __init__(self, pos, image, vel, sound, col_sound):
         super().__init__()
         self.image = pygame.image.load(image).convert_alpha()
@@ -206,5 +204,5 @@ player_bullets = {
 # Player
 player = Player(*player_atr)
 
-# Add Some Sprites to group
+# Add Player Sprites to group
 player_group.add(player)

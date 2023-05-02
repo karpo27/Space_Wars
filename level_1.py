@@ -1,5 +1,6 @@
 # Scripts
 from game_objects import *
+from background_creator import *
 from player import *
 from enemies import *
 from bosses import *
@@ -26,7 +27,7 @@ def run_level_1():
         bosses_lvl_1 = [bosses['boss_b']]
 
         # Draw Scrolling Background
-        background.show()
+        background_lvl_1.show()
 
         # Go to Game Over / Continue Screen
         if player.lives < 1:

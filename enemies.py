@@ -139,7 +139,6 @@ class Enemy(pygame.sprite.Sprite):
 
 
 class EnemyBullet(pygame.sprite.Sprite):
-
     def __init__(self, pos, image, movement, vel, angle, sound, col_sound):
         super().__init__()
         self.image = pygame.image.load(image).convert_alpha()

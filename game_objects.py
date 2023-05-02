@@ -1,11 +1,10 @@
 # Scripts
 from constants import *
-from background import *
+from background_creator import *
 
 # Modules
 import pygame
 from pygame import mixer
-import math
 
 # Initialize Pygame
 pygame.init()
@@ -80,7 +79,6 @@ class Explosion(pygame.sprite.Sprite):
 speakers = Speakers()
 score = Score()
 explosion_group = pygame.sprite.Group()
-background = Background()
 
 # Create Sprites Group:
 

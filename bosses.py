@@ -52,7 +52,6 @@ class Boss(pygame.sprite.Sprite):
     def move_hor(self, direction):
         if self.rect.x == 1/20 * WIDTH:
             '''
-            (check)
             if self.rect.x == WIDTH/2:
                 self.next_action = True
                 self.vel_x = 0

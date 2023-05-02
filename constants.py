@@ -18,10 +18,3 @@ RIGHT = 3
 C_32 = 32
 C_64 = 64
 
-# Images
-background_img = {
-    'level_1': 'Images/Levels_Background/space_bg.jpg'
-}
-
-
-
