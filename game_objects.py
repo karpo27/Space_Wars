@@ -23,22 +23,10 @@ class Speakers:
     def action(self, x, y, state):
         if state == "off":
             SCREEN.blit(self.off_image, (x, y))
-            mixer.music.set_volume(0.0)
+            #mixer.music.set_volume(0.0)
         elif state == "on":
             SCREEN.blit(self.on_image, (x, y))
-            mixer.music.set_volume(0.08)
-
-
-class Score:
-    def __init__(self):
-        self.value = 0
-        self.font = pygame.font.Font('freesansbold.ttf', 32)
-        self.position = self.x, self.y = (10, 10)
-
-    def show(self, x, y):
-        score_screen = self.font.render("Score: " + str(self.value), True, (255, 255, 255))
-        SCREEN.blit(score_screen, (x, y))
-
+            #mixer.music.set_volume(0.06)
 
 
 class Explosion(pygame.sprite.Sprite):
@@ -72,7 +60,6 @@ class Explosion(pygame.sprite.Sprite):
 
 # Initialize Classes:
 speakers = Speakers()
-score = Score()
 explosion_group = pygame.sprite.Group()
 
 # Create Sprites Group:

@@ -1,5 +1,6 @@
 # Scripts:
 import sys
+from sounds import *
 from text_creator import *
 import level_1
 
@@ -26,12 +27,6 @@ class MainMenu(pygame.sprite.Sprite):
         self.init_pos_y = 30
 
         # Text:
-        self.font_size = 48
-        self.color = (193, 225, 193)  # Pastel Green
-
-        self.hover_font_size = 52
-        self.hover_color = (255, 255, 255)  # White
-
         self.margin = 70
 
         # Movement:
@@ -40,22 +35,16 @@ class MainMenu(pygame.sprite.Sprite):
         self.movement_rate = 16
         self.allow_movement_speed = 1
 
-    def change_hover_text(self, text_list, state_list):
-        for text, state in zip(text_list, state_list):
-            if state == "hover":
-                text.font_size = self.hover_font_size
-                text.color = self.hover_color
-            else:
-                text.font_size = self.font_size
-                text.color = self.color
-
     def update(self) -> None:
         # Render Main Menu Text:
-        title_text.show()
-        play_text.show()
-        options_text.show()
-        credits_text.show()
-        quit_text.show()
+        title_text.update()
+        play_text.update()
+        options_text.update()
+        credits_text.update()
+        quit_text.update()
+
+        for text in [play_text, options_text, credits_text, quit_text]:
+            text.change_color(self.pos_y)
 
         # Player Icon Rotation Animation:
         rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
@@ -73,12 +62,15 @@ class MainMenu(pygame.sprite.Sprite):
         if key[pygame.K_DOWN] and self.movement_rate >= self.ref_time:
             self.pos_y += self.margin
             self.movement_rate = 0
+            #channel2.play(sounds['main_menu'][1])
         elif key[pygame.K_UP] and self.movement_rate >= self.ref_time:
             self.pos_y -= self.margin
             self.movement_rate = 0
+            #channel2.play(sounds['main_menu'][1])
         # Main Menu Selection:
         elif key[pygame.K_RETURN] and self.movement_rate >= self.ref_time:
             if self.pos_y == self.init_pos_y:  # Position: Play
+                self.indicator = "play"
                 level_1.run_level_1()
                 self.movement_rate = 0
             elif self.pos_y == self.init_pos_y + self.margin:  # Position: Options
@@ -98,19 +90,8 @@ class MainMenu(pygame.sprite.Sprite):
         # Player Icon Movement Boundaries:
         if self.pos_y > self.init_pos_y + 3 * self.margin:
             self.pos_y = self.init_pos_y
-
         if self.pos_y < self.init_pos_y:
             self.pos_y = self.init_pos_y + 3 * self.margin
-
-        # Change Text Color when Hover:
-        if self.pos_y == self.init_pos_y:
-            self.change_hover_text(main_menu_list, ["hover", "", "", ""])
-        if self.pos_y == self.init_pos_y + self.margin:
-            self.change_hover_text(main_menu_list, ["", "hover", "", ""])
-        if self.pos_y == self.init_pos_y + 2 * self.margin:
-            self.change_hover_text(main_menu_list, ["", "", "hover", ""])
-        if self.pos_y == self.init_pos_y + 3 * self.margin:
-            self.change_hover_text(main_menu_list, ["", "", "", "hover"])
 
 
 # Initialize Classes:

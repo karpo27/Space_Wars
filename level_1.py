@@ -27,7 +27,7 @@ def run_level_1():
         bosses_lvl_1 = [bosses['boss_b']]
 
         # Draw Scrolling Background
-        background_lvl_1.show()
+        background_lvl_1.update()
 
         # Go to Game Over / Continue Screen
         if player.lives < 1:
@@ -100,7 +100,6 @@ def run_level_1():
         explosion_group.draw(SCREEN)
 
         # Extras
-        score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)
 
         # Apply changes

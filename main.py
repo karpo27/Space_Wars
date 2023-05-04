@@ -6,7 +6,7 @@ from game_objects import *
 from background_creator import *
 
 # Modules:
-from pygame import *
+import pygame
 
 # Initialize Pygame:
 pygame.init()
@@ -19,8 +19,8 @@ def run_main_menu():
         # Set screen FPS:
         clock.tick(FPS)
 
-        # Draw Scrolling Background
-        background_main_menu.show()
+        # Draw Scrolling Background:
+        background_main_menu.update()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,12 +39,13 @@ def run_main_menu():
         if main_menu.indicator == "main menu":
             main_menu_group.add(main_menu)
             main_menu_group.update()
+        elif main_menu.indicator == "play":
+            pass
         elif main_menu.indicator == "options":
             main_menu_group.add(options)
             main_menu_group.update()
 
         # Extras
-        score.show(score.x, score.y)
         speakers.action(speakers.x, speakers.y, speakers.state)
 
         # Apply Changes:

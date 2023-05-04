@@ -2,7 +2,8 @@
 from constants import *
 
 # Modules
-from pygame import *
+import pygame
+from pygame import mixer
 
 
 class BackgroundCreator:
@@ -15,13 +16,12 @@ class BackgroundCreator:
 
         # Music:
         mixer.init()
-        mixer.music.load(music)
-        mixer.music.set_volume(0.4)
+        self.music = pygame.mixer.Sound(music)
 
-    def show(self):
-        # Start Music if it's not already playing:
-        if not mixer.music.get_busy():
-            mixer.music.play(-1)  # (-1) for playing on loop
+    def update(self):
+        # Start Music:
+        self.music.play(-1)
+        self.music.set_volume(0.01)
 
         # Show Background:
         SCREEN.blit(self.background, (0, -self.bg_height + self.scroll))  # Position 2
@@ -34,13 +34,13 @@ class BackgroundCreator:
             self.scroll = 0
 
 
-# Background Images
-background_img = {
-    'main_menu': 'Images/Main_Menu/main_menu_img.png',
-    'level_1': 'Images/Levels_Background/space_bg.jpg'
+# Background Assets: Image, Scroll, Music
+background_assets = {
+    'main_menu': ['Images/Main_Menu/main_menu_img.png', 0.45, 'Sounds/main_menu_music.mp3'],
+    'level_1': ['Images/Levels_Background/space_bg.jpg', 0.8, 'Sounds/background.wav']
 }
 
 # Initialize Classes:
-background_lvl_1 = BackgroundCreator(background_img['level_1'], 0.8, 'Sounds/background.wav')
-background_main_menu = BackgroundCreator(background_img['main_menu'], 0.45, 'Sounds/main_menu_music.mp3')
+background_main_menu = BackgroundCreator(*background_assets['main_menu'])
+background_lvl_1 = BackgroundCreator(*background_assets['level_1'])
 

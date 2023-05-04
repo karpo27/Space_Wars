@@ -25,12 +25,6 @@ class Options(pygame.sprite.Sprite):
         self.init_pos_y = 30
 
         # Text:
-        self.font_size = 48
-        self.color = (193, 225, 193)  # Pastel Green
-
-        self.hover_font_size = 52
-        self.hover_color = (255, 255, 255)  # White
-
         self.margin = 70
 
         # Movement:
@@ -38,20 +32,14 @@ class Options(pygame.sprite.Sprite):
         self.movement_rate = 16
         self.allow_movement_speed = 1
 
-    def change_hover_text(self, text_list, state_list):
-        for text, state in zip(text_list, state_list):
-            if state == "hover":
-                text.font_size = self.hover_font_size
-                text.color = self.hover_color
-            else:
-                text.font_size = self.font_size
-                text.color = self.color
-
     def update(self) -> None:
         # Render Options Text:
-        audio_text.show()
-        keybindings_text.show()
-        back_text.show()
+        audio_text.update()
+        keybindings_text.update()
+        back_text.update()
+
+        for text in [audio_text, keybindings_text, back_text]:
+            text.change_color(self.pos_y)
 
         # Player Icon Rotation Animation:
         rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
@@ -96,14 +84,6 @@ class Options(pygame.sprite.Sprite):
 
         if self.pos_y < self.init_pos_y:
             self.pos_y = self.init_pos_y + 2 * self.margin
-
-        # Change Text Color when Hover:
-        if self.pos_y == self.init_pos_y:
-            self.change_hover_text(options_list, ["hover", "", ""])
-        if self.pos_y == self.init_pos_y + self.margin:
-            self.change_hover_text(options_list, ["", "hover", ""])
-        if self.pos_y == self.init_pos_y + 2 * self.margin:
-            self.change_hover_text(options_list, ["", "", "hover"])
 
 
 # Initialize Classes:
