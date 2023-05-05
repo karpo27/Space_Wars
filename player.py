@@ -114,17 +114,6 @@ class Player(pygame.sprite.Sprite):
                     self.hp_animation = False
                     self.hp_ref = 27.5
 
-    def rotate(self, text_position, pos_y):
-        # Player Icon Rotation Animation:
-        rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
-        rot_player_img_rect = rot_player_img.get_rect()
-        rot_player_img_position = (
-            text_position[0] - self.rect.x - rot_player_img_rect.width/2,
-            text_position[1] + pos_y - rot_player_img_rect.height/2
-        )
-        SCREEN.blit(rot_player_img, rot_player_img_position)
-        self.angle += 2.2
-
     def update(self):
         # Enter Level Animation:
         if self.enter_animation:
