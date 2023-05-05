@@ -1,4 +1,4 @@
-# Scripts
+# Scripts:
 from game_objects import *
 from background_creator import *
 from player import *
@@ -6,13 +6,15 @@ from enemies import *
 from bosses import *
 from collisions import *
 
-
-# Modules
+# Modules:
 import pygame
 from pygame import mixer
 
-# Initialize Pygame
+# Initialize Pygame:
 pygame.init()
+
+# Game State:
+game_state = "play"
 
 
 def run_level_1():
@@ -66,6 +68,11 @@ def run_level_1():
                     # Generate Boss
                     new_boss = Boss(*k)
                     bosses_group.add(new_boss)
+
+        # Pause Menu Selection:
+        key = pygame.key.get_pressed()
+        if key[pygame.K_ESCAPE]:
+            game_state = "paused"
 
         # Update Sprites Group
         player_group.update()

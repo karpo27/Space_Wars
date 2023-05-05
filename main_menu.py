@@ -3,7 +3,6 @@ import sys
 from sounds import *
 from background_creator import *
 from text_creator import *
-from options import *
 import level_1
 from player import *
 
@@ -74,7 +73,10 @@ class MainMenu(pygame.sprite.Sprite):
             if self.pos_y == self.init_pos_y:  # Position 1
                 if self.indicator == "main menu":
                     self.indicator = "play"
-                    level_1.run_level_1()
+                    if level_1.game_state == "play":
+                        level_1.run_level_1()
+                    elif level_1.game_state == "paused":
+                        pass
                 elif self.indicator == "options":
                     self.indicator = "audio"
                 self.movement_rate = 0
