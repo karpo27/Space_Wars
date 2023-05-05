@@ -41,6 +41,9 @@ class Player(pygame.sprite.Sprite):
         self.hp_ref = 27.5
         self.Δhp = 0.5
 
+        # Rotation
+        self.angle = 0
+
     def get_hit(self):
         self.hp_animation = True
         self.hp -= 1
@@ -111,8 +114,19 @@ class Player(pygame.sprite.Sprite):
                     self.hp_animation = False
                     self.hp_ref = 27.5
 
+    def rotate(self, text_position, pos_y):
+        # Player Icon Rotation Animation:
+        rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
+        rot_player_img_rect = rot_player_img.get_rect()
+        rot_player_img_position = (
+            text_position[0] - self.rect.x - rot_player_img_rect.width/2,
+            text_position[1] + pos_y - rot_player_img_rect.height/2
+        )
+        SCREEN.blit(rot_player_img, rot_player_img_position)
+        self.angle += 2.2
+
     def update(self):
-        # Enter Level Animation
+        # Enter Level Animation:
         if self.enter_animation:
             if self.rect.y > self.y_enter:
                 self.rect.y -= self.vel_enter_y
@@ -122,7 +136,7 @@ class Player(pygame.sprite.Sprite):
         # Press Keyboard
         else:
             key = pygame.key.get_pressed()
-            # Player Keyboard Diagonal Movement - (UP-LEFT, DOWN-LEFT, UP-RIGHT, DOWN-RIGHT)
+            # Player Keyboard Diagonal Movement - (UP-LEFT, DOWN-LEFT, UP-RIGHT, DOWN-RIGHT):
             if key[pygame.K_LEFT] and key[pygame.K_UP] and self.rect.left > 0 and self.rect.top > 0:
                 self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
                 self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)

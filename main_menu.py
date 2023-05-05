@@ -3,6 +3,7 @@ import sys
 from sounds import *
 from text_creator import *
 import level_1
+from player import *
 
 # Modules:
 import pygame
@@ -47,6 +48,9 @@ class MainMenu(pygame.sprite.Sprite):
             text.change_color(self.pos_y)
 
         # Player Icon Rotation Animation:
+        player.rotate(play_text.text_position, self.pos_y)
+
+        '''
         rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
         rot_player_img_rect = rot_player_img.get_rect()
         rot_player_img_position = (
@@ -55,6 +59,7 @@ class MainMenu(pygame.sprite.Sprite):
         )
         SCREEN.blit(rot_player_img, rot_player_img_position)
         self.angle += 2.2
+        '''
 
         # Keyboard Actions:
         key = pygame.key.get_pressed()
