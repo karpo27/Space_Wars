@@ -22,10 +22,14 @@ class TextCreator:
         self.text_rect = self.text_and_color.get_rect()
 
         # Text Align and Position
-        self.text_width, self.text_height = self.font_and_size.size(align_text)
         self.pos = pos
         self.margin = margin
         self.k = k
+        if align_text:
+            self.text_width, self.text_height = self.font_and_size.size(align_text)
+        else:
+            self.text_width, self.text_height = self.font_and_size.size(text)
+
         self.text_position = [self.pos[0] - self.text_width/2, self.pos[1] - self.text_height/2 + self.margin * self.k]
 
     def update(self):
@@ -50,4 +54,8 @@ quit_game = TextCreator("QUIT", 'freesansbold.ttf', 48, (255, 255, 255), (193, 2
 audio = TextCreator("AUDIO", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 0, 0)
 keybindings = TextCreator("KEYBINDINGS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70, 1)
 back = TextCreator("BACK", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70, 2)
+
+#pause_resume = TextCreator("RESUME", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 0, 0)
+#pause_options = TextCreator("OPTIONS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 70, 1)
+#pause_quit = TextCreator("QUIT", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 70, 2)
 
