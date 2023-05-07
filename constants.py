@@ -17,7 +17,10 @@ dt = clock.tick(FPS)
 LEFT = 1
 RIGHT = 3
 
+# Game State:
+game_screen = "main menu"
+
 # Constants for Images:
-C_32 = 32
-C_64 = 64
+#C_32 = 32
+#C_64 = 64
 

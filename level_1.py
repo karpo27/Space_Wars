@@ -1,5 +1,7 @@
 # Scripts:
+import constants
 from game_objects import *
+from pause_menu import *
 from background_creator import *
 from player import *
 from enemies import *
@@ -13,9 +15,6 @@ from pygame import mixer
 # Initialize Pygame:
 pygame.init()
 
-# Game State:
-game_state = "play"
-
 
 def run_level_1():
     # Game Loop
@@ -27,9 +26,6 @@ def run_level_1():
         # Define Number of Enemies to spawn in Level 1: 10
         enemies_lvl_1 = []
         bosses_lvl_1 = [bosses['boss_b']]
-
-        # Draw Scrolling Background
-        background_lvl_1.update()
 
         # Go to Game Over / Continue Screen
         if player.lives < 1:
@@ -53,6 +49,14 @@ def run_level_1():
                     else:
                         speakers.state = "off"
 
+            if event.type == pygame.KEYDOWN:
+                # Pause Menu Selection:
+                if event.key == pygame.K_ESCAPE:
+                    if constants.game_screen == "play":
+                        constants.game_screen = "pause menu"
+                    elif constants.game_screen == "pause menu":
+                        constants.game_screen = "play"
+
             # Spawn Enemies According to Level
             if len(enemies_group) < len(enemies_lvl_1):
                 if event.type == Enemy.spawn_enemy:
@@ -69,21 +73,6 @@ def run_level_1():
                     new_boss = Boss(*k)
                     bosses_group.add(new_boss)
 
-        # Pause Menu Selection:
-        key = pygame.key.get_pressed()
-        if key[pygame.K_ESCAPE]:
-            game_state = "paused"
-
-        # Update Sprites Group
-        player_group.update()
-        player_bullet_group.update()
-        enemies_group.update()
-        enemies_bullet_group.update()
-        bosses_group.update()
-        bosses_bullet_group.update()
-
-        explosion_group.update()
-
         # Check Collisions
         check_collision(player_bullet_group, enemies_group, True, False)    # Check Collisions Player Bullets vs Enemies
         check_collision(player_bullet_group, bosses_group, True, False)     # Check Collisions Player Bullet vs Bosses
@@ -95,16 +84,31 @@ def run_level_1():
         check_collision(enemies_group, player_group, False, False)          # Check Collisions Enemy Body vs Player Body
         check_collision(bosses_group, player_group, False, False)           # Check Collisions Boss Body vs Player Body
 
-        # Draw Sprite Groups
-        enemies_bullet_group.draw(SCREEN)
-        enemies_group.draw(SCREEN)
-        bosses_bullet_group.draw(SCREEN)
-        bosses_group.draw(SCREEN)
+        if constants.game_screen == "play":
+            # Draw Scrolling Background
+            background_lvl_1.update()
+            # Update Sprites Group
+            player_group.update()
+            player_bullet_group.update()
+            enemies_group.update()
+            enemies_bullet_group.update()
+            bosses_group.update()
+            bosses_bullet_group.update()
 
-        player_bullet_group.draw(SCREEN)
-        player_group.draw(SCREEN)
+            # Draw Sprite Groups
+            enemies_bullet_group.draw(SCREEN)
+            enemies_group.draw(SCREEN)
+            bosses_bullet_group.draw(SCREEN)
+            bosses_group.draw(SCREEN)
 
-        explosion_group.draw(SCREEN)
+            player_bullet_group.draw(SCREEN)
+            player_group.draw(SCREEN)
+
+            explosion_group.draw(SCREEN)
+
+            explosion_group.update()
+        elif constants.game_screen == "pause menu":
+            pause_menu.update()
 
         # Extras
         speakers.action(speakers.x, speakers.y, speakers.state)

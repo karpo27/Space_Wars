@@ -41,13 +41,13 @@ class TextCreator:
 
 
 # Initialize Classes:
-title_text = TextCreator("GAME PROJECT", 'freesansbold.ttf', 94, (255, 255, 255), (193, 225, 193), (WIDTH/2, 1/3 * HEIGHT), "GAME PROJECT", 0, 0)
-play_text = TextCreator("PLAY", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "PLAY", 0, 0)
-options_text = TextCreator("OPTIONS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "PLAY", 70, 1)
-credits_text = TextCreator("CREDITS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "PLAY", 70, 2)
-quit_text = TextCreator("QUIT", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "PLAY", 70, 3)
+title = TextCreator("GAME PROJECT", 'freesansbold.ttf', 94, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 1 / 3 * HEIGHT), "GAME PROJECT", 0, 0)
+play = TextCreator("PLAY", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 0, 0)
+options = TextCreator("OPTIONS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70, 1)
+credits_game = TextCreator("CREDITS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70, 2)
+quit_game = TextCreator("QUIT", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70, 3)
 
-audio_text = TextCreator("AUDIO", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "AUDIO", 0, 0)
-keybindings_text = TextCreator("KEYBINDINGS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "AUDIO", 70, 1)
-back_text = TextCreator("BACK", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "AUDIO", 70, 2)
+audio = TextCreator("AUDIO", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 0, 0)
+keybindings = TextCreator("KEYBINDINGS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70, 1)
+back = TextCreator("BACK", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70, 2)
 

@@ -1,5 +1,6 @@
 # Scripts:
 import sys
+import constants
 from sounds import *
 from background_creator import *
 from text_creator import *
@@ -34,7 +35,6 @@ class MainMenu(pygame.sprite.Sprite):
         self.menu_qty = 3
 
         # Movement:
-        self.indicator = "main menu"
         self.ref_time = 16
         self.movement_rate = 16
         self.allow_movement_speed = 1
@@ -50,27 +50,29 @@ class MainMenu(pygame.sprite.Sprite):
             background_main_menu.update()
 
             # Render Main Menu Text:
-            if self.indicator == "main menu":
-                title_text.update()
-                play_text.update()
-                options_text.update()
-                credits_text.update()
-                quit_text.update()
-                for text in [play_text, options_text, credits_text, quit_text]:
+            if constants.game_screen == "main menu":
+                title.update()
+                play.update()
+                options.update()
+                credits_game.update()
+                quit_game.update()
+                for text in [play, options, credits_game, quit_game]:
                     text.change_color(self.pos_y)
-            elif self.indicator == "options":
-                audio_text.update()
-                keybindings_text.update()
-                back_text.update()
-                for text in [audio_text, keybindings_text, back_text]:
+            elif constants.game_screen == "options":
+                audio.update()
+                keybindings.update()
+                back.update()
+                for text in [audio, keybindings, back]:
                     text.change_color(self.pos_y)
+            elif constants.game_screen == "credits":
+                pass
 
             # Player Icon Rotation Animation:
             rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
             rot_player_img_rect = rot_player_img.get_rect()
             rot_player_img_position = (
-                play_text.text_position[0] - self.rect.x - rot_player_img_rect.width / 2,
-                play_text.text_position[1] + self.pos_y - rot_player_img_rect.height / 2
+                play.text_position[0] - self.rect.x - rot_player_img_rect.width / 2,
+                play.text_position[1] + self.pos_y - rot_player_img_rect.height / 2
             )
             SCREEN.blit(rot_player_img, rot_player_img_position)
             self.angle += 2.2
@@ -94,31 +96,27 @@ class MainMenu(pygame.sprite.Sprite):
             # Main Menu Selection:
             elif key[pygame.K_RETURN] and self.movement_rate >= self.ref_time:
                 if self.pos_y == self.init_pos_y:  # Position 1
-                    if self.indicator == "main menu":
-                        self.indicator = "play"
-                        run = False
-                        if level_1.game_state == "play":
-                            level_1.run_level_1()
-                        elif level_1.game_state == "paused":
-                            pass
-                    elif self.indicator == "options":
-                        self.indicator = "audio"
+                    if constants.game_screen == "main menu":
+                        constants.game_screen = "play"
+                        level_1.run_level_1()
+                    elif constants.game_screen == "options":
+                        constants.game_screen = "audio"
                 elif self.pos_y == self.init_pos_y + self.margin:  # Position 2
-                    if self.indicator == "main menu":
-                        self.indicator = "options"
+                    if constants.game_screen == "main menu":
+                        constants.game_screen = "options"
                         self.rect.center = self.pos_x, self.pos_y = 85, 30
                         self.menu_qty = 2
-                    elif self.indicator == "options":
-                        self.indicator = "keybindings"
+                    elif constants.game_screen == "options":
+                        constants.game_screen = "keybindings"
                 elif self.pos_y == self.init_pos_y + 2 * self.margin:  # Position 3
-                    if self.indicator == "main menu":
-                        self.indicator = "credits"
-                    elif self.indicator == "options":
-                        self.indicator = "main menu"
+                    if constants.game_screen == "main menu":
+                        constants.game_screen = "credits"
+                    elif constants.game_screen == "options":
+                        constants.game_screen = "main menu"
                         self.rect.center = self.pos_x, self.pos_y = 70, 30
                         self.menu_qty = 3
                 elif self.pos_y == self.init_pos_y + 3 * self.margin:  # Position 4
-                    if self.indicator == "main menu":
+                    if constants.game_screen == "main menu":
                         pygame.quit()
                         sys.exit()
                 self.movement_rate = 0
