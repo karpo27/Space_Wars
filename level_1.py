@@ -100,22 +100,24 @@ def run_level_1():
             bosses_bullet_group.update()
 
             # Draw Sprite Groups
-            enemies_bullet_group.draw(SCREEN)
-            enemies_group.draw(SCREEN)
-            bosses_bullet_group.draw(SCREEN)
-            bosses_group.draw(SCREEN)
+            enemies_bullet_group.draw(SCREEN_2)
+            enemies_group.draw(SCREEN_2)
+            bosses_bullet_group.draw(SCREEN_2)
+            bosses_group.draw(SCREEN_2)
 
-            player_bullet_group.draw(SCREEN)
-            player_group.draw(SCREEN)
+            player_bullet_group.draw(SCREEN_2)
+            player_group.draw(SCREEN_2)
 
-            explosion_group.draw(SCREEN)
+            explosion_group.draw(SCREEN_2)
 
             explosion_group.update()
         elif constants.game_screen == "pause menu":
             pause_menu.update()
         elif constants.game_screen == "main menu":
-            pygame.quit()
-            #sys.exit()
+            if pygame.display.get_surface() == SCREEN_2:
+                pygame.display.quit()
+                #pygame.quit()
+                #sys.exit()
 
         # Extras
         speakers.action(speakers.x, speakers.y, speakers.state)
