@@ -57,6 +57,10 @@ def run_level_1():
                     elif constants.game_screen == "pause menu":
                         constants.game_screen = "play"
 
+                if event.key == pygame.K_DOWN and constants.game_screen == "pause menu":
+                    pass
+
+
             # Spawn Enemies According to Level
             if len(enemies_group) < len(enemies_lvl_1):
                 if event.type == Enemy.spawn_enemy:
@@ -109,6 +113,9 @@ def run_level_1():
             explosion_group.update()
         elif constants.game_screen == "pause menu":
             pause_menu.update()
+        elif constants.game_screen == "main menu":
+            pygame.quit()
+            #sys.exit()
 
         # Extras
         speakers.action(speakers.x, speakers.y, speakers.state)
