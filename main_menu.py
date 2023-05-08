@@ -1,6 +1,7 @@
 # Scripts:
 import sys
 import constants
+from base_state import BaseState
 from sounds import *
 from background_creator import *
 from text_creator import *
@@ -15,9 +16,30 @@ pygame.init()
 pygame.font.init()
 
 
-class MainMenu(pygame.sprite.Sprite):
+class Menu(BaseState):
     def __init__(self):
         super().__init__()
+        # Next State:
+        self.next_state = "GAMEPLAY"
+
+        # Screen and Options:
+        self.menu_qty = 3
+        self.index = 0
+        self.screen = "MENU"
+        self.menu_options = [
+            TextCreator(0, "PLAY", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70),
+            TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70),
+            TextCreator(2, "CREDITS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70),
+            TextCreator(3, "QUIT", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70)
+        ]
+
+        title = TextCreator(0, "GAME PROJECT", 'freesansbold.ttf', 94, 94, (255, 255, 255), (193, 225, 193),
+                            (WIDTH / 2, 1 / 3 * HEIGHT), "GAME PROJECT", 70)
+
         # Title and Icon:
         pygame.display.set_caption("Main Menu")
         icon = pygame.image.load(ICON)
@@ -30,114 +52,91 @@ class MainMenu(pygame.sprite.Sprite):
         self.angle = 0
         self.init_pos_y = 30
 
-        # Text:
-        self.margin = 70
-        self.menu_qty = 3
-
         # Movement:
         self.ref_time = 16
         self.movement_rate = 16
         self.allow_movement_speed = 1
 
-    def run(self):
-        # Game Loop:
-        run = True
-        while run:
-            # Set screen FPS:
-            clock.tick(FPS)
+    def handle_action(self):
+        if self.screen == "MENU":
+            if self.index == 0:
+                self.screen_done = True
+            elif self.index == 1:
+                self.screen = "OPTIONS"
+                self.rect.center = self.pos_x, self.pos_y = 85, 30
+                self.menu_qty = 2
+            elif self.index == 2:
+                self.screen = "CREDITS"
+            elif self.index == 3:
+                self.quit = True
+        elif self.screen == "OPTIONS":
+            if self.index == 0:
+                self.rect.center = self.pos_x, self.pos_y = 85, 30
+                self.menu_qty = 2
+            elif self.index == 1:
+                self.screen = "KEYBINDINGS"
+            elif self.index == 2:
+                self.screen = "MENU"
+                self.rect.center = self.pos_x, self.pos_y = 70, 30
+                self.menu_qty = 3
 
-            # Draw Scrolling Background:
-            background_main_menu.update()
+    def get_event(self, event):
+        # Keyboard Actions:
+        key = pygame.key.get_pressed()
+        # Main Menu Movement:
+        if event.type == pygame.QUIT:
+            self.quit = True
+        elif key[pygame.K_DOWN] and self.movement_rate >= self.ref_time:
+            self.index += 1
+            self.movement_rate = 0
+            # channel2.play(sounds['main_menu'][1])
+        elif key[pygame.K_UP] and self.movement_rate >= self.ref_time:
+            self.index -= 1
+            self.movement_rate = 0
+            # channel2.play(sounds['main_menu'][1])
+        # Main Menu Selection:
+        if event.type == pygame.KEYUP:
+            if key[pygame.K_RETURN]:
+                self.handle_action()
 
-            # Render Main Menu Text:
-            if constants.game_screen == "main menu":
-                title.update()
-                play.update()
-                options.update()
-                credits_game.update()
-                quit_game.update()
-                for text in [play, options, credits_game, quit_game]:
-                    text.change_color(self.pos_y)
-            elif constants.game_screen == "options":
-                audio.update()
-                keybindings.update()
-                back.update()
-                for text in [audio, keybindings, back]:
-                    text.change_color(self.pos_y)
-            elif constants.game_screen == "credits":
-                pass
+        # Reset Variables:
+        if self.movement_rate < self.ref_time:
+            self.movement_rate += self.allow_movement_speed
 
-            # Player Icon Rotation Animation:
-            rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
-            rot_player_img_rect = rot_player_img.get_rect()
-            rot_player_img_position = (
-                play.text_position[0] - self.rect.x - rot_player_img_rect.width / 2,
-                play.text_position[1] + self.pos_y - rot_player_img_rect.height / 2
-            )
-            SCREEN.blit(rot_player_img, rot_player_img_position)
-            self.angle += 2.2
+        # Player Icon Movement Boundaries:
+        if self.index > 3:
+            self.index = 0
+        elif self.index < 0:
+            self.index = 3
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
+        '''
+        if self.pos_y > self.init_pos_y + self.menu_qty * self.margin:
+            self.pos_y = self.init_pos_y
+        if self.pos_y < self.init_pos_y:
+            self.pos_y = self.init_pos_y + self.menu_qty * self.margin
+        '''
 
-            # Keyboard Actions:
-            key = pygame.key.get_pressed()
-            # Main Menu Movement:
-            if key[pygame.K_DOWN] and self.movement_rate >= self.ref_time:
-                self.pos_y += self.margin
-                self.movement_rate = 0
-                # channel2.play(sounds['main_menu'][1])
-            elif key[pygame.K_UP] and self.movement_rate >= self.ref_time:
-                self.pos_y -= self.margin
-                self.movement_rate = 0
-                # channel2.play(sounds['main_menu'][1])
+    def draw(self, surface):
+        # Draw Scrolling Background:
+        background_main_menu.update()
 
-            # Main Menu Selection:
-            elif key[pygame.K_RETURN] and self.movement_rate >= self.ref_time:
-                if self.pos_y == self.init_pos_y:  # Position 1
-                    if constants.game_screen == "main menu":
-                        constants.game_screen = "play"
-                        level_1.run_level_1()
-                    elif constants.game_screen == "options":
-                        constants.game_screen = "audio"
-                elif self.pos_y == self.init_pos_y + self.margin:  # Position 2
-                    if constants.game_screen == "main menu":
-                        constants.game_screen = "options"
-                        self.rect.center = self.pos_x, self.pos_y = 85, 30
-                        self.menu_qty = 2
-                    elif constants.game_screen == "options":
-                        constants.game_screen = "keybindings"
-                elif self.pos_y == self.init_pos_y + 2 * self.margin:  # Position 3
-                    if constants.game_screen == "main menu":
-                        constants.game_screen = "credits"
-                    elif constants.game_screen == "options":
-                        constants.game_screen = "main menu"
-                        self.rect.center = self.pos_x, self.pos_y = 70, 30
-                        self.menu_qty = 3
-                elif self.pos_y == self.init_pos_y + 3 * self.margin:  # Position 4
-                    if constants.game_screen == "main menu":
-                        pygame.quit()
-                        sys.exit()
-                self.movement_rate = 0
+        # Render Main Menu Text:
+        if self.screen == "MENU":
+            for text in self.menu_options:
+                text.render_text(self.index)
+        elif self.screen == "OPTIONS":
+            for index, option in enumerate([audio, keybindings, back]):
+                option.render_text(self.pos_y)
+        elif self.screen == "CREDITS":
+            pass
 
-            # Reset Variables:
-            if self.movement_rate < self.ref_time:
-                self.movement_rate += self.allow_movement_speed
-
-            # Player Icon Movement Boundaries:
-            if self.pos_y > self.init_pos_y + self.menu_qty * self.margin:
-                self.pos_y = self.init_pos_y
-            if self.pos_y < self.init_pos_y:
-                self.pos_y = self.init_pos_y + self.menu_qty * self.margin
-
-            # Apply Changes:
-            pygame.display.update()
-
-
-# Initialize Classes:
-main_menu = MainMenu()
-
-# Run Main Menu:
-main_menu.run()
+        # Render Player Icon Rotation Animation:
+        rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
+        rot_player_img_rect = rot_player_img.get_rect()
+        rot_player_img_position = (
+            self.menu_options[self.index].text_position[0] - self.rect.x - rot_player_img_rect.width / 2,
+            self.menu_options[self.index].text_position[1] + self.init_pos_y - rot_player_img_rect.height / 2
+        )
+        SCREEN.blit(rot_player_img, rot_player_img_position)
+        self.angle += 2.2
 

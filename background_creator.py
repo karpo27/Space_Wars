@@ -7,7 +7,7 @@ from pygame import mixer
 
 
 class BackgroundCreator:
-    def __init__(self, screen, background, vel_y, music):
+    def __init__(self, background, vel_y, music):
         # Image
         self.scroll = 0
         self.background = pygame.image.load(background)
@@ -18,10 +18,13 @@ class BackgroundCreator:
         mixer.init()
         self.music = pygame.mixer.Sound(music)
 
+
     def update(self):
+        '''
         # Start Music:
         self.music.play(-1)
         self.music.set_volume(0.01)
+        '''
 
         # Show Background:
         SCREEN.blit(self.background, (0, -self.bg_height + self.scroll))  # Position 2

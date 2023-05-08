@@ -19,7 +19,7 @@ class Game(object):
         # Search for actual Game State in states dict:
         self.state = self.states[self.state_name]
 
-    def event_loop(self):
+    def loop_events(self):
         for event in pygame.event.get():
             # Brings every event from Current Game State:
             self.state.get_event(event)
@@ -48,7 +48,7 @@ class Game(object):
     def run(self):
         while not self.screen_done:
             dt = self.clock.tick(self.fps)
-            self.event_loop()
+            self.loop_events()
             self.update(dt)
             self.draw()
             pygame.display.update()

@@ -32,12 +32,12 @@ class PauseMenu:
         self.padding_x, self.padding_y = 0, 50
         self.init_pos_y = 30
         self.pos_y = 30
-        self.pause_resume = TextCreator("RESUME", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                                   (self.rect_x + self.width/2 + self.padding_x, self.rect_y + self.padding_y), "", 70, 0)
-        self.pause_options = TextCreator("OPTIONS", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                                    (self.rect_x + + self.width/2 + self.padding_x, self.rect_y + self.padding_y), "", 70, 1)
-        self.pause_quit = TextCreator("QUIT", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                                 (self.rect_x + self.width/2 + self.padding_x, self.rect_y + self.padding_y), "", 70, 2)
+        self.pause_resume = TextCreator(0, "RESUME", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
+                                   (self.rect_x + self.width/2 + self.padding_x, self.rect_y + self.padding_y), "", 70)
+        self.pause_options = TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
+                                    (self.rect_x + + self.width/2 + self.padding_x, self.rect_y + self.padding_y), "", 70)
+        self.pause_quit = TextCreator(2, "QUIT", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
+                                 (self.rect_x + self.width/2 + self.padding_x, self.rect_y + self.padding_y), "", 70)
 
     def update(self):
         # Draw the Rectangle Screen and Border:
@@ -49,7 +49,7 @@ class PauseMenu:
         self.pause_options.update()
         self.pause_quit.update()
         for text in [self.pause_resume, self.pause_options, self.pause_quit]:
-            text.change_color(self.pos_y)
+            text.render_text(self.pos_y)
 
         # Keyboard Actions:
         key = pygame.key.get_pressed()

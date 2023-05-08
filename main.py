@@ -1,9 +1,9 @@
 # Scripts:
-from menu import Menu
 from gameplay import Gameplay
 from game_over import GameOver
 from splash import Splash
 from game import Game
+from main_menu import Menu
 
 # Modules:
 import sys
@@ -21,8 +21,8 @@ ICON = 'Images/Screen/icon.png'
 
 # Set Game States and Initialize Objects:
 states = {
-    "MENU": Menu(),
     "SPLASH": Splash(),
+    "MENU": Menu(),
     "GAMEPLAY": Gameplay(),
     "GAME_OVER": GameOver(),
 }

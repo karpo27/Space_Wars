@@ -8,9 +8,11 @@ import pygame
 class Splash(BaseState):
     def __init__(self):
         super().__init__()
+        # Next State:
+        self.next_state = "MENU"
+
         self.title = self.font.render("Karpo27 Game", True, pygame.Color("blue"))
         self.title_rect = self.title.get_rect(center=self.screen_rect.center)
-        self.next_state = "MENU"
         self.time_active = 0
 
     def update(self, dt):

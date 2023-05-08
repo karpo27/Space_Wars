@@ -9,7 +9,7 @@ pygame.font.init()
 
 
 class TextCreator:
-    def __init__(self, text, font, font_size, hover_font_size, base_color, hover_color, pos, align_text, margin, k):
+    def __init__(self, index, text, font, font_size, hover_font_size, base_color, hover_color, pos, align_text, margin):
         # Text Font, Size and Color
         self.text = text
         self.font = font
@@ -25,36 +25,31 @@ class TextCreator:
         # Text Align and Position
         self.pos = pos
         self.margin = margin
-        self.k = k
+        self.index = index
         if align_text:
             self.text_width, self.text_height = self.font_and_size.size(align_text)
         else:
             self.text_width, self.text_height = self.font_and_size.size(text)
 
-        self.text_position = [self.pos[0] - self.text_width/2, self.pos[1] - self.text_height/2 + self.margin * self.k]
+        self.text_position = [self.pos[0] - self.text_width / 2, self.pos[1] - self.text_height / 2 + self.margin * self.index]
 
-    def update(self):
-        SCREEN.blit(self.text_and_color, self.text_position)
-
-    def change_color(self, position):
-        if 30 + self.margin * self.k == position:
+    def render_text(self, index):
+        if index == self.index:
             self.font_and_size = pygame.font.Font(self.font, self.hover_font_size)
             self.text_and_color = self.font_and_size.render(self.text, True, self.hover_color)
+            SCREEN.blit(self.text_and_color, self.text_position)
         else:
             self.font_and_size = pygame.font.Font(self.font, self.font_size)
             self.text_and_color = self.font_and_size.render(self.text, True, self.base_color)
+            SCREEN.blit(self.text_and_color, self.text_position)
 
 
 # Initialize Classes:
-title = TextCreator("GAME PROJECT", 'freesansbold.ttf', 94, 94, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 1 / 3 * HEIGHT), "GAME PROJECT", 70, 0)
-play = TextCreator("PLAY", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70, 0)
-options = TextCreator("OPTIONS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70, 1)
-credits_game = TextCreator("CREDITS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70, 2)
-quit_game = TextCreator("QUIT", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70, 3)
 
-audio = TextCreator("AUDIO", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70, 0)
-keybindings = TextCreator("KEYBINDINGS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70, 1)
-back = TextCreator("BACK", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70, 2)
+
+audio = TextCreator(0, "AUDIO", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70)
+keybindings = TextCreator(1, "KEYBINDINGS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70)
+back = TextCreator(2, "BACK", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193), (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70)
 
 #pause_resume = TextCreator("RESUME", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 0, 0)
 #pause_options = TextCreator("OPTIONS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 70, 1)
