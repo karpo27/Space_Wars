@@ -4,7 +4,6 @@ import pygame
 # Create the screen:
 SIZE = WIDTH, HEIGHT = (1000, 800)
 SCREEN = pygame.display.set_mode(SIZE)
-SCREEN_2 = pygame.display.set_mode(SIZE)
 
 # Icon Window:
 ICON = 'Images/Screen/icon.png'

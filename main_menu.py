@@ -8,16 +8,12 @@ from text_creator import *
 # Modules:
 import pygame
 
-# Initialize Fonts:
-pygame.init()
-pygame.font.init()
-
 
 class Menu(BaseState):
     def __init__(self):
         super().__init__()
         # Next State:
-        self.next_state = "GAMEPLAY"
+        self.next_state = "LEVEL_1"
 
         # Screen and Options:
         self.options_qty = 3

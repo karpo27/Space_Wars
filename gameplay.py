@@ -7,7 +7,7 @@ import pygame
 
 class Gameplay(BaseState):
     def __init__(self):
-        super(Gameplay, self).__init__()
+        super().__init__()
         self.rect = pygame.Rect((0, 0), (80, 80))
         self.rect.center = self.screen_rect.center
         self.next_state = "GAME_OVER"

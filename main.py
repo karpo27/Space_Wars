@@ -4,6 +4,7 @@ from game_over import GameOver
 from splash import Splash
 from game import Game
 from main_menu import Menu
+from level_1 import Level1
 
 # Modules:
 import sys
@@ -23,7 +24,7 @@ ICON = 'Images/Screen/icon.png'
 states = {
     "SPLASH": Splash(),
     "MENU": Menu(),
-    "GAMEPLAY": Gameplay(),
+    "LEVEL_1": Level1(),
     "GAME_OVER": GameOver(),
 }
 
