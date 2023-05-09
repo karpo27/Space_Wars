@@ -17,12 +17,12 @@ class GameOver(BaseState):
     def get_event(self, event):
         if event.type == pygame.QUIT:
             self.quit = True
-        elif event.type == pygame.KEYUP:
+        elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 self.next_state = "MENU"
                 self.screen_done = True
             elif event.key == pygame.K_SPACE:
-                self.next_state = "GAMEPLAY"
+                self.next_state = "LEVEL_1"
                 self.screen_done = True
             elif event.key == pygame.K_ESCAPE:
                 self.quit = True
