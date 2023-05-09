@@ -1,12 +1,9 @@
 # Scripts:
-import sys
 import constants
 from base_state import BaseState
 from sounds import *
 from background_creator import *
 from text_creator import *
-import level_1
-from player import *
 
 # Modules:
 import pygame
@@ -46,6 +43,27 @@ class Menu(BaseState):
             TextCreator(2, "BACK", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
                         (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70)
         ]
+        self.credits = [
+            TextCreator(0, "May 2023", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 70),
+            TextCreator(1,
+                        "Game Project is a Python game developed by me: Julian Giudice (github.com/karpo27). ",
+                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 70),
+            TextCreator(2, "It's my first game since I started learning Python 6 months ago. "
+                           "I want to thank Pygame for allowing me to use this module and allow so many users to code their games."
+                           "I'll keep coding and trying myself harder to incorporate to the IT world. ",
+                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 70),
+            TextCreator(3,
+                        "I want to thank Pygame for allowing me to use this module and allow so many users to code their games."
+                        "I'll keep coding and trying myself harder to incorporate to the IT world. ",
+                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 70),
+            TextCreator(4, "I'll keep coding and trying myself harder to incorporate to the IT world. ",
+                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 70),
+        ]
 
         # Title and Icon:
         pygame.display.set_caption("Main Menu")
@@ -64,10 +82,12 @@ class Menu(BaseState):
             if self.index == 0:
                 self.screen_done = True
             elif self.index == 1:
+                self.index = 0
                 self.screen = "OPTIONS"
                 self.rect.center = self.pos_x, self.pos_y = 85, 30
                 self.options_qty = 2
             elif self.index == 2:
+                self.index = 0
                 self.screen = "CREDITS"
             elif self.index == 3:
                 self.quit = True
@@ -78,6 +98,7 @@ class Menu(BaseState):
             elif self.index == 1:
                 self.screen = "KEYBINDINGS"
             elif self.index == 2:
+                self.index = 0
                 self.screen = "MENU"
                 self.rect.center = self.pos_x, self.pos_y = 70, 30
                 self.options_qty = 3
@@ -115,7 +136,8 @@ class Menu(BaseState):
             for text in self.options_options:
                 text.render_text(self.index)
         elif self.screen == "CREDITS":
-            pass
+            for text in self.credits:
+                text.render_text(-1)
 
         # Render Player Icon Rotation Animation:
         rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)

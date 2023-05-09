@@ -45,8 +45,6 @@ class TextCreator:
 
 
 # Initialize Classes:
-
-
 #pause_resume = TextCreator("RESUME", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 0, 0)
 #pause_options = TextCreator("OPTIONS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 70, 1)
 #pause_quit = TextCreator("QUIT", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 70, 2)
