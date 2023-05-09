@@ -23,11 +23,6 @@ class Level1(BaseState):
         # Next State:
         self.next_state = "GAME_OVER"
 
-        # Screen and Options:
-        self.options_qty = 3
-        self.index = 0
-        self.screen = "LEVEL"
-
         # Define Number of Enemies to spawn in Level 1:
         self.enemies_lvl_1 = []
         self.bosses_lvl_1 = [bosses['boss_b']]
@@ -51,7 +46,6 @@ class Level1(BaseState):
             # Pause Menu Selection:
             if event.key == pygame.K_ESCAPE:
                 self.handle_action()
-
 
         # Spawn Enemies According to Level
         if len(enemies_group) < len(self.enemies_lvl_1):
@@ -89,29 +83,28 @@ class Level1(BaseState):
             # player.hp = 3
 
     def draw(self, surface):
-        if self.screen == "LEVEL":
-            # Draw Scrolling Background
-            background_lvl_1.update()
-            # Update Sprites Group
-            player_group.update()
-            player_bullet_group.update()
-            enemies_group.update()
-            enemies_bullet_group.update()
-            bosses_group.update()
-            bosses_bullet_group.update()
+        # Draw Scrolling Background
+        background_lvl_1.update()
+        # Update Sprites Group
+        player_group.update()
+        player_bullet_group.update()
+        enemies_group.update()
+        enemies_bullet_group.update()
+        bosses_group.update()
+        bosses_bullet_group.update()
 
-            # Draw Sprite Groups
-            enemies_bullet_group.draw(SCREEN)
-            enemies_group.draw(SCREEN)
-            bosses_bullet_group.draw(SCREEN)
-            bosses_group.draw(SCREEN)
+        # Draw Sprite Groups
+        enemies_bullet_group.draw(SCREEN)
+        enemies_group.draw(SCREEN)
+        bosses_bullet_group.draw(SCREEN)
+        bosses_group.draw(SCREEN)
 
-            player_bullet_group.draw(SCREEN)
-            player_group.draw(SCREEN)
+        player_bullet_group.draw(SCREEN)
+        player_group.draw(SCREEN)
 
-            explosion_group.draw(SCREEN)
+        explosion_group.draw(SCREEN)
 
-            explosion_group.update()
+        explosion_group.update()
 
         # Extras
         speakers.action(speakers.x, speakers.y, speakers.state)

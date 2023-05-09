@@ -26,8 +26,6 @@ class Pause(BaseState):
         self.screen = "PAUSE"
         self.margin = 70
         self.padding_x, self.padding_y = 0, 50
-        self.init_pos_y = 30
-        self.pos_y = 30
         self.pause_options = [
             TextCreator(0, "RESUME", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
                         (self.rect_x + self.width / 2 + self.padding_x, self.rect_y + self.padding_y), "", 70),
@@ -66,8 +64,7 @@ class Pause(BaseState):
     def draw(self, surface):
         # Draw the Rectangle Screen and Border:
         pygame.draw.rect(SCREEN, self.fill_color, (self.rect_x, self.rect_y, self.width, self.height))
-        pygame.draw.rect(SCREEN, self.border_color, (self.rect_x, self.rect_y, self.width, self.height),
-                         self.border_width)
+        pygame.draw.rect(SCREEN, self.border_color, (self.rect_x, self.rect_y, self.width, self.height), self.border_width)
 
         # Render Pause Menu Text:
         for text in self.pause_options:
