@@ -15,7 +15,7 @@ class Menu(BaseState):
         # Next State:
         self.next_state = "LEVEL_1"
 
-        # Screen and Options:
+        # Screen Text and Options:
         self.options_qty = 3
         self.index = 0
         self.screen = "MENU"

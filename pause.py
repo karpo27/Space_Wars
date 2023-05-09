@@ -19,7 +19,7 @@ class Pause(BaseState):
         self.fill_color = "black"
         self.border_color = "white"
 
-        # Screen and Options:
+        # Screen Text and Options:
         self.options_qty = 2
         self.index = 0
         self.margin = 70
@@ -36,12 +36,11 @@ class Pause(BaseState):
     def handle_action(self):
         if self.index == 0:
             self.next_state = "LEVEL_1"
-            self.screen_done = True
         elif self.index == 1:
-            pass
+            self.next_state = "CONTROLS"
         elif self.index == 2:
             self.next_state = "MENU"
-            self.screen_done = True
+        self.screen_done = True
 
     def get_event(self, event):
         # Pause Menu Movement:

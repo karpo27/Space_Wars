@@ -18,45 +18,53 @@ class Controls(BaseState):
         self.fill_color = "black"
         self.border_color = "white"
 
-        # Screen and Options:
-        self.options_qty = 2
+        # Screen Text and Options:
         self.index = 0
-        self.margin = 70
+        self.margin = 30
         self.padding_x, self.padding_y = 0, 50
         self.controls_options = [
-            TextCreator(0, "RESUME", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                        (self.rect_x + self.width / 2 + self.padding_x, self.rect_y + self.padding_y), "", self.margin),
-            TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                        (self.rect_x + self.width / 2 + self.padding_x, self.rect_y + self.padding_y), "", self.margin),
-            TextCreator(2, "QUIT", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                        (self.rect_x + self.width / 2 + self.padding_x, self.rect_y + self.padding_y), "", self.margin)
+            TextCreator(0, "BACK",
+                        'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 5 / 6 * HEIGHT), "", 50),
+            TextCreator(1, "Forward", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "Forward", self.margin),
+            TextCreator(2, "Back", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "Forward", self.margin),
+            TextCreator(3, "Left", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "Forward", self.margin),
+            TextCreator(4, "Right", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "Forward", self.margin),
+            TextCreator(5, "Fire", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "Forward", self.margin),
+            TextCreator(6, "Switch Weapon",
+                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", self.margin),
+            TextCreator(1, "W",
+                        'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 5 / 6 * HEIGHT), "", self.margin),
+            TextCreator(2, "S", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", self.margin),
+            TextCreator(3, "A", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", self.margin),
+            TextCreator(4, "R", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", self.margin),
+            TextCreator(5, "SPACE", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", self.margin),
+            TextCreator(6, "ENTER", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", self.margin),
+            TextCreator(7, "",
+                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", self.margin),
         ]
 
     def handle_action(self):
-        if self.index == 0:
-            self.next_state = "LEVEL_1"
-            self.screen_done = True
-        elif self.index == 1:
-            pass
-        elif self.index == 2:
-            self.next_state = "MENU"
-            self.screen_done = True
+        self.next_state = "PAUSE"
+        self.screen_done = True
 
     def get_event(self, event):
-        # Pause Menu Movement:
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_DOWN:
-                self.index += 1
-            elif event.key == pygame.K_UP:
-                self.index -= 1
-            elif event.key == pygame.K_RETURN:
+            if event.key == pygame.K_RETURN:
                 self.handle_action()
-
-        # Player Icon Movement Boundaries:
-        if self.index > self.options_qty:
-            self.index = 0
-        elif self.index < 0:
-            self.index = self.options_qty
 
     def draw(self, surface):
         # Draw the Rectangle Screen and Border:
