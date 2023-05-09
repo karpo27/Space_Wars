@@ -1,14 +1,13 @@
 # Scripts:
 from constants import *
 from base_state import BaseState
-import constants
 
 # Modules:
 import pygame
 from text_creator import TextCreator
 
 
-class Pause(BaseState):
+class Controls(BaseState):
     def __init__(self):
         super().__init__()
         # Set up rectangle dimensions
@@ -24,7 +23,7 @@ class Pause(BaseState):
         self.index = 0
         self.margin = 70
         self.padding_x, self.padding_y = 0, 50
-        self.pause_options = [
+        self.controls_options = [
             TextCreator(0, "RESUME", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
                         (self.rect_x + self.width / 2 + self.padding_x, self.rect_y + self.padding_y), "", self.margin),
             TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
@@ -65,5 +64,5 @@ class Pause(BaseState):
         pygame.draw.rect(SCREEN, self.border_color, (self.rect_x, self.rect_y, self.width, self.height), self.border_width)
 
         # Render Pause Menu Text:
-        for text in self.pause_options:
+        for text in self.controls_options:
             text.render_text(self.index)

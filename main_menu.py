@@ -34,7 +34,7 @@ class Menu(BaseState):
         self.options_options = [
             TextCreator(0, "AUDIO", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
                         (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70),
-            TextCreator(1, "KEYBINDINGS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
+            TextCreator(1, "CONTROLS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
                         (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70),
             TextCreator(2, "BACK", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
                         (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70)
@@ -97,7 +97,7 @@ class Menu(BaseState):
                 self.rect.center = self.pos_x, self.pos_y = 85, 30
                 self.options_qty = 2
             elif self.index == 1:
-                self.screen = "KEYBINDINGS"
+                self.screen = "CONTROLS"
             elif self.index == 2:
                 self.index = 0
                 self.screen = "MENU"

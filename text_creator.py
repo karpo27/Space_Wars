@@ -37,15 +37,7 @@ class TextCreator:
         if index == self.index:
             self.font_and_size = pygame.font.Font(self.font, self.hover_font_size)
             self.text_and_color = self.font_and_size.render(self.text, True, self.hover_color)
-            SCREEN.blit(self.text_and_color, self.text_position)
         else:
             self.font_and_size = pygame.font.Font(self.font, self.font_size)
             self.text_and_color = self.font_and_size.render(self.text, True, self.base_color)
-            SCREEN.blit(self.text_and_color, self.text_position)
-
-
-# Initialize Classes:
-#pause_resume = TextCreator("RESUME", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 0, 0)
-#pause_options = TextCreator("OPTIONS", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 70, 1)
-#pause_quit = TextCreator("QUIT", 'freesansbold.ttf', 48, (255, 255, 255), (193, 225, 193), (WIDTH/2, 3/5 * HEIGHT), "", 70, 2)
-
+        SCREEN.blit(self.text_and_color, self.text_position)
