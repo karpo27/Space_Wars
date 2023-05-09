@@ -44,25 +44,25 @@ class Menu(BaseState):
                         (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70)
         ]
         self.credits = [
-            TextCreator(0, "May 2023", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 70),
-            TextCreator(1,
-                        "Game Project is a Python game developed by me: Julian Giudice (github.com/karpo27). ",
+            TextCreator(0, "BACK",
+                        'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 50),
+            TextCreator(1, "May 2023", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 50),
+            TextCreator(2,
+                        "Game Project is a Python game developed by me: Julian Giudice (github.com/karpo27).",
                         'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 70),
-            TextCreator(2, "It's my first game since I started learning Python 6 months ago. "
-                           "I want to thank Pygame for allowing me to use this module and allow so many users to code their games."
-                           "I'll keep coding and trying myself harder to incorporate to the IT world. ",
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 50),
+            TextCreator(3, "It's my first game since I started learning Python 6 months ago.",
                         'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 70),
-            TextCreator(3,
-                        "I want to thank Pygame for allowing me to use this module and allow so many users to code their games."
-                        "I'll keep coding and trying myself harder to incorporate to the IT world. ",
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 50),
+            TextCreator(4,
+                        "I want to thank Pygame for allowing me to use this module and allow so many users to code their games.",
                         'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 70),
-            TextCreator(4, "I'll keep coding and trying myself harder to incorporate to the IT world. ",
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 50),
+            TextCreator(5, "I'll keep coding and trying myself harder to incorporate to the IT world. ",
                         'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 70),
+                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 50),
         ]
 
         # Title and Icon:
@@ -87,8 +87,9 @@ class Menu(BaseState):
                 self.rect.center = self.pos_x, self.pos_y = 85, 30
                 self.options_qty = 2
             elif self.index == 2:
-                self.index = 0
+                self.options_qty = 0
                 self.screen = "CREDITS"
+                self.rect.center = self.pos_x, self.pos_y = 70, 30
             elif self.index == 3:
                 self.quit = True
         elif self.screen == "OPTIONS":
@@ -102,6 +103,11 @@ class Menu(BaseState):
                 self.screen = "MENU"
                 self.rect.center = self.pos_x, self.pos_y = 70, 30
                 self.options_qty = 3
+        elif self.screen == "CREDITS":
+            self.index = 0
+            self.screen = "MENU"
+            self.rect.center = self.pos_x, self.pos_y = 70, 30
+            self.options_qty = 3
 
     def get_event(self, event):
         # Main Menu Movement:
@@ -137,7 +143,7 @@ class Menu(BaseState):
                 text.render_text(self.index)
         elif self.screen == "CREDITS":
             for text in self.credits:
-                text.render_text(-1)
+                text.render_text(0)
 
         # Render Player Icon Rotation Animation:
         rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
