@@ -5,6 +5,7 @@ from options import Options
 from audio import Audio
 from controls import Controls
 from credits import Credits
+from pointer import Pointer
 from background_creator import *
 from text_creator import *
 from sounds import *
@@ -41,18 +42,12 @@ class Menu(BaseState):
         self.audio = Audio()
         self.controls = Controls()
         self.credits = Credits()
+        self.pointer = Pointer()
 
         # Title and Icon:
         pygame.display.set_caption("Main Menu")
         icon = pygame.image.load(ICON)
         pygame.display.set_icon(icon)
-
-        # Player Icon:
-        self.image = pygame.image.load('Images/Player/player_img.png').convert_alpha()
-        self.rect = self.image.get_rect()
-        self.rect.center = self.pos_x, self.pos_y = 70, 30
-        self.angle = 0
-        self.init_pos_y = 30
 
     def handle_action(self):
         if self.screen == "MENU":
@@ -61,17 +56,14 @@ class Menu(BaseState):
             elif self.index == 1:
                 self.index = 0
                 self.screen = "OPTIONS"
-                self.rect.center = self.pos_x, self.pos_y = 85, 30
                 self.options_qty = 2
             elif self.index == 2:
                 self.options_qty = 0
                 self.screen = "CREDITS"
-                self.rect.center = self.pos_x, self.pos_y = 70, 30
             elif self.index == 3:
                 self.quit = True
         elif self.screen == "OPTIONS":
             if self.index == 0:
-                self.rect.center = self.pos_x, self.pos_y = 85, 30
                 self.options_qty = 2
             elif self.index == 1:
                 self.screen = "CONTROLS"
@@ -79,17 +71,14 @@ class Menu(BaseState):
             elif self.index == 2:
                 self.index = 1
                 self.screen = "MENU"
-                self.rect.center = self.pos_x, self.pos_y = 70, 30
                 self.options_qty = 3
         elif self.screen == "CREDITS":
             self.index = 2
             self.screen = "MENU"
-            self.rect.center = self.pos_x, self.pos_y = 70, 30
             self.options_qty = 3
         elif self.screen == "CONTROLS":
             self.index = 1
             self.screen = "OPTIONS"
-            self.rect.center = self.pos_x, self.pos_y = 85, 30
             self.options_qty = 2
 
     def get_event(self, event):
@@ -112,17 +101,6 @@ class Menu(BaseState):
         elif self.index < 0:
             self.index = self.options_qty
 
-    def rotate_pointer(self, position):
-        # Render Player Icon Rotation:
-        rot_player_img = pygame.transform.rotozoom(self.image, self.angle, 1)
-        rot_player_img_rect = rot_player_img.get_rect()
-        rot_player_img_position = (
-            position.text_position[0] - self.rect.x - rot_player_img_rect.width / 2,
-            position.text_position[1] + self.init_pos_y - rot_player_img_rect.height / 2
-        )
-        SCREEN.blit(rot_player_img, rot_player_img_position)
-        self.angle += 2.2
-
     def draw(self, surface):
         # Draw Scrolling Background:
         background_main_menu.update()
@@ -132,17 +110,17 @@ class Menu(BaseState):
             self.title.render_text(-1)
             for text in self.menu:
                 text.render_text(self.index)
-            self.rotate_pointer(self.menu[self.index])
+            self.pointer.draw_rotated(self.menu[self.index].text_position, self.screen)
         elif self.screen == "OPTIONS":
             for text in self.options.options:
                 text.render_text(self.index)
-            self.rotate_pointer(self.menu[self.index])
+            self.pointer.draw_rotated(self.options.options[self.index].text_position, self.screen)
         elif self.screen == "CREDITS":
             for text in self.credits.credits:
                 text.render_text(self.index)
-            self.rotate_pointer(self.credits.credits[self.index])
+            self.pointer.draw_rotated(self.credits.credits[self.index].text_position, self.screen)
         elif self.screen == "CONTROLS":
             for text in self.controls.controls:
                 text.render_text(self.index)
-            self.rotate_pointer(self.controls.controls[self.index])
+            self.pointer.draw_rotated(self.controls.controls[self.index].text_position, self.screen)
 

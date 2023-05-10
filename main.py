@@ -2,7 +2,6 @@
 from splash import Splash
 from game import Game
 from main_menu import Menu
-from controls import Controls
 from level_1 import Level1
 from pause import Pause
 from game_over import GameOver
