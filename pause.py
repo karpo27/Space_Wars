@@ -15,19 +15,19 @@ class Pause(BaseState):
     def __init__(self):
         super().__init__()
         # Screen Text and Options:
-        self.rect_x, self.rect_y = WIDTH / 2, HEIGHT / 2 - 160
+        self.pos_x, self.pos_y = WIDTH/2, 3/5 * HEIGHT
         self.border_width = 5
         self.screen = "PAUSE"
         self.options_qty = 2
         self.index = 0
         self.margin = 70
         self.pause_options = [
-            TextCreator(0, "RESUME", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                        (self.rect_x, self.rect_y), "", self.margin),
-            TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                        (self.rect_x, self.rect_y), "", self.margin),
-            TextCreator(2, "QUIT", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                        (self.rect_x, self.rect_y), "", self.margin)
+            TextCreator(0, "RESUME", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
+                        (self.pos_x, self.pos_y), "RESUME", self.margin),
+            TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
+                        (self.pos_x, self.pos_y), "RESUME", self.margin),
+            TextCreator(2, "BACK TO MENU", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
+                        (self.pos_x, self.pos_y), "RESUME", self.margin)
         ]
 
         # Initialize Classes:
@@ -54,10 +54,10 @@ class Pause(BaseState):
                 self.index = 0
             elif self.index == 2:
                 self.index = 1
-                self.screen = "OPTIONS"
+                self.screen = "PAUSE"
         elif self.screen == "CONTROLS":
             self.index = 1
-            self.screen = "PAUSE"
+            self.screen = "OPTIONS"
 
     def get_event(self, event):
         # Pause Menu Movement:

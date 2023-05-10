@@ -9,6 +9,7 @@ class Options:
     def __init__(self):
         # Screen Text and Options:
         self.index = 0
+        self.pos_x, self.pos_y = WIDTH/2, 3/5 * HEIGHT
         self.font_size = 48
         self.margin = 70
         self.options = [

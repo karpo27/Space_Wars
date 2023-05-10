@@ -2,7 +2,9 @@
 import constants
 from base_state import BaseState
 from options import Options
+from audio import Audio
 from controls import Controls
+from credits import Credits
 from sounds import *
 from background_creator import *
 from text_creator import *
@@ -23,7 +25,7 @@ class Menu(BaseState):
         self.screen = "MENU"
         self.title = TextCreator(0, "GAME PROJECT", 'freesansbold.ttf', 94, 94, (255, 255, 255), (193, 225, 193),
                                  (WIDTH / 2, 1 / 3 * HEIGHT), "GAME PROJECT", 70)
-        self.menu_options = [
+        self.menu = [
             TextCreator(0, "PLAY", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
                         (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70),
             TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
@@ -33,43 +35,12 @@ class Menu(BaseState):
             TextCreator(3, "QUIT", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
                         (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70)
         ]
-        self.options_options = [
-            TextCreator(0, "AUDIO", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70),
-            TextCreator(1, "CONTROLS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70),
-            TextCreator(2, "BACK", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 3 / 5 * HEIGHT), "AUDIO", 70)
-        ]
-        self.credits = [
-            TextCreator(0, "BACK",
-                        'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 5/6 * HEIGHT), "", 50),
-            TextCreator(1, "May 2023", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 40),
-            TextCreator(2,
-                        "Game Project is a Python game developed by me: Julian Giudice (github.com/karpo27).",
-                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 40),
-            TextCreator(3, "It's my first game since I started learning Python 6 months ago.",
-                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 40),
-            TextCreator(4,
-                        "I want to thank Pygame for allowing me to use this module,",
-                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 40),
-            TextCreator(5,
-                        "and allow so many users to code their games.",
-                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 40),
-            TextCreator(6, "I'll keep coding and trying myself harder to incorporate to the IT world. ",
-                        'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 1 / 3 * HEIGHT), "", 40),
-        ]
 
         # Initialize Classes:
         self.options = Options()
+        self.audio = Audio()
         self.controls = Controls()
+        self.credits = Credits()
 
         # Title and Icon:
         pygame.display.set_caption("Main Menu")
@@ -159,17 +130,17 @@ class Menu(BaseState):
         # Render Main Menu Text:
         if self.screen == "MENU":
             self.title.render_text(-1)
-            for text in self.menu_options:
+            for text in self.menu:
                 text.render_text(self.index)
-            self.rotate_pointer(self.menu_options[self.index])
+            self.rotate_pointer(self.menu[self.index])
         elif self.screen == "OPTIONS":
             for text in self.options.options:
                 text.render_text(self.index)
-            self.rotate_pointer(self.menu_options[self.index])
+            self.rotate_pointer(self.menu[self.index])
         elif self.screen == "CREDITS":
-            for text in self.credits:
+            for text in self.credits.credits:
                 text.render_text(self.index)
-            self.rotate_pointer(self.credits[self.index])
+            self.rotate_pointer(self.credits.credits[self.index])
         elif self.screen == "CONTROLS":
             self.controls.draw()
 
