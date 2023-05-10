@@ -21,22 +21,23 @@ class Menu(BaseState):
         self.next_state = "LEVEL_1"
 
         # Screen Text and Options:
+        self.screen = "MENU"
         self.options_qty = 3
         self.index = 0
-        self.screen = "MENU"
+        self.pos_x, self.pos_y = WIDTH/2, 3/5 * HEIGHT
+        self.margin = 70
         self.title = TextCreator(0, "GAME PROJECT", 'freesansbold.ttf', 94, 94, (255, 255, 255), (193, 225, 193),
-                                 (WIDTH / 2, 1 / 3 * HEIGHT), "GAME PROJECT", 70)
+                                 (WIDTH/2, HEIGHT/3), "GAME PROJECT", self.margin)
         self.menu = [
             TextCreator(0, "PLAY", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70),
+                        (self.pos_x, self.pos_y), "PLAY", self.margin),
             TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70),
+                        (self.pos_x, self.pos_y), "PLAY", self.margin),
             TextCreator(2, "CREDITS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70),
+                        (self.pos_x, self.pos_y), "PLAY", self.margin),
             TextCreator(3, "QUIT", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 3 / 5 * HEIGHT), "PLAY", 70)
+                        (self.pos_x, self.pos_y), "PLAY", self.margin)
         ]
-
         # Initialize Classes:
         self.options = Options()
         self.audio = Audio()
@@ -45,7 +46,7 @@ class Menu(BaseState):
         self.pointer = Pointer()
 
         # Title and Icon:
-        pygame.display.set_caption("Main Menu")
+        pygame.display.set_caption("Menu")
         icon = pygame.image.load(ICON)
         pygame.display.set_icon(icon)
 
@@ -102,10 +103,10 @@ class Menu(BaseState):
             self.index = self.options_qty
 
     def draw(self, surface):
-        # Draw Scrolling Background:
+        # Draw Background:
         background_main_menu.update()
 
-        # Render Main Menu Text:
+        # Render Main Menu:
         if self.screen == "MENU":
             self.title.render_text(-1)
             for text in self.menu:

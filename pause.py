@@ -79,9 +79,10 @@ class Pause(BaseState):
             self.index = self.options_qty
 
     def draw(self, surface):
-        # Draw Scrolling Background
+        # Draw Background
         background_lvl_1.update()
 
+        # Render Pause Menu:
         if self.screen == "PAUSE":
             for text in self.pause:
                 text.render_text(self.index)

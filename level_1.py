@@ -83,7 +83,7 @@ class Level1(BaseState):
             # player.hp = 3
 
     def draw(self, surface):
-        # Draw Scrolling Background
+        # Draw Background
         background_lvl_1.update()
         # Update Sprites Group
         player_group.update()
