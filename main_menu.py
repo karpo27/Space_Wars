@@ -1,6 +1,7 @@
 # Scripts:
 import constants
 from base_state import BaseState
+from controls import Controls
 from sounds import *
 from background_creator import *
 from text_creator import *
@@ -65,6 +66,9 @@ class Menu(BaseState):
                         (WIDTH / 2, 1 / 3 * HEIGHT), "", 40),
         ]
 
+        # Initialize Classes:
+        self.controls = Controls()
+
         # Title and Icon:
         pygame.display.set_caption("Main Menu")
         icon = pygame.image.load(ICON)
@@ -98,16 +102,22 @@ class Menu(BaseState):
                 self.options_qty = 2
             elif self.index == 1:
                 self.screen = "CONTROLS"
-            elif self.index == 2:
                 self.index = 0
+            elif self.index == 2:
+                self.index = 1
                 self.screen = "MENU"
                 self.rect.center = self.pos_x, self.pos_y = 70, 30
                 self.options_qty = 3
         elif self.screen == "CREDITS":
-            self.index = 0
+            self.index = 2
             self.screen = "MENU"
             self.rect.center = self.pos_x, self.pos_y = 70, 30
             self.options_qty = 3
+        elif self.screen == "CONTROLS":
+            self.index = 1
+            self.screen = "OPTIONS"
+            self.rect.center = self.pos_x, self.pos_y = 85, 30
+            self.options_qty = 2
 
     def get_event(self, event):
         # Main Menu Movement:
@@ -158,4 +168,6 @@ class Menu(BaseState):
             for text in self.credits:
                 text.render_text(self.index)
             self.rotate_pointer(self.credits[self.index])
+        elif self.screen == "CONTROLS":
+            self.controls.draw()
 

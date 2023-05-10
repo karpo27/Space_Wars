@@ -9,19 +9,11 @@ from text_creator import TextCreator
 
 class Controls:
     def __init__(self):
-        #self.width, self.height = [520, 530]
-        #self.rect_x, self.rect_y = WIDTH / 2 - self.width / 2, HEIGHT / 2 - 200
-        self.border_width = 5
-        # Set up colors
-        self.fill_color = "black"
-        self.border_color = "white"
-
         # Screen Text and Options:
-        self.screen = "CONTROLS"
         self.index = 0
-        self.font_size = 22
-        self.margin = 30
-        self.left_x, self.left_y = WIDTH/3, HEIGHT/3
+        self.font_size = 26
+        self.margin = 40
+        self.left_x, self.left_y = WIDTH/3, HEIGHT/3 - 80
         self.right_x = self.left_x + 300
         self.padding_x, self.padding_y = 0, 50
         self.controls_options = [
@@ -55,15 +47,6 @@ class Controls:
             TextCreator(7, "", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
                         (WIDTH / 2, 1 / 3 * HEIGHT), "W / ARROW UP", self.margin)
         ]
-
-    def handle_action(self):
-        self.screen = "PAUSE"
-        #self.screen_done = True
-
-    def get_event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
-                self.handle_action()
 
     def draw(self):
         # Render Pause Menu Text:

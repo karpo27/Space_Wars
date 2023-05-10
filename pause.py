@@ -16,7 +16,6 @@ class Pause(BaseState):
         # Screen Text and Options:
         self.rect_x, self.rect_y = WIDTH / 2, HEIGHT / 2 - 160
         self.border_width = 5
-        self.controls = Controls()
         self.screen = "PAUSE"
         self.options_qty = 2
         self.index = 0
@@ -30,20 +29,24 @@ class Pause(BaseState):
                         (self.rect_x, self.rect_y), "", self.margin)
         ]
 
+        # Initialize Classes:
+        self.controls = Controls()
+
     def handle_action(self):
         if self.screen == "PAUSE":
             if self.index == 0:
                 self.next_state = "LEVEL_1"
                 self.screen_done = True
             elif self.index == 1:
-                self.screen = "CONTROLS"
                 self.index = 0
+                self.screen = "CONTROLS"
             elif self.index == 2:
+                self.index = 0
                 self.next_state = "MENU"
                 self.screen_done = True
         elif self.screen == "CONTROLS":
+            self.index = 1
             self.screen = "PAUSE"
-            self.index = 0
 
     def get_event(self, event):
         # Pause Menu Movement:
