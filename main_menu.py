@@ -5,9 +5,9 @@ from options import Options
 from audio import Audio
 from controls import Controls
 from credits import Credits
-from sounds import *
 from background_creator import *
 from text_creator import *
+from sounds import *
 
 # Modules:
 import pygame
@@ -142,5 +142,7 @@ class Menu(BaseState):
                 text.render_text(self.index)
             self.rotate_pointer(self.credits.credits[self.index])
         elif self.screen == "CONTROLS":
-            self.controls.draw()
+            for text in self.controls.controls:
+                text.render_text(self.index)
+            self.rotate_pointer(self.controls.controls[self.index])
 

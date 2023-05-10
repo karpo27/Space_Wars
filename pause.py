@@ -2,6 +2,7 @@
 from constants import *
 from base_state import BaseState
 from options import Options
+from audio import Audio
 from controls import Controls
 from background_creator import *
 import constants
@@ -32,6 +33,7 @@ class Pause(BaseState):
 
         # Initialize Classes:
         self.options = Options()
+        self.audio = Audio()
         self.controls = Controls()
 
     def handle_action(self):
@@ -82,8 +84,10 @@ class Pause(BaseState):
         if self.screen == "PAUSE":
             for text in self.pause_options:
                 text.render_text(self.index)
-        if self.screen == "OPTIONS":
+        elif self.screen == "OPTIONS":
             for text in self.options.options:
                 text.render_text(self.index)
         elif self.screen == "CONTROLS":
-            self.controls.draw()
+            for text in self.controls.controls:
+                text.render_text(self.index)
+

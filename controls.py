@@ -13,7 +13,7 @@ class Controls:
         self.margin = 40
         self.left_x, self.left_y = WIDTH/3, HEIGHT/3 - 80
         self.right_x = self.left_x + 300
-        self.controls_options = [
+        self.controls = [
             TextCreator(0, "BACK",
                         'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
                         (WIDTH / 2, 5 / 6 * HEIGHT), "", 50),
@@ -44,8 +44,3 @@ class Controls:
             TextCreator(7, "", 'freesansbold.ttf', 22, 94, (255, 255, 255), (193, 225, 193),
                         (WIDTH / 2, 1 / 3 * HEIGHT), "W / ARROW UP", self.margin)
         ]
-
-    def draw(self):
-        # Render Pause Menu Text:
-        for text in self.controls_options:
-            text.render_text(self.index)
