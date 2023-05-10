@@ -4,8 +4,8 @@ from base_state import BaseState
 from options import Options
 from audio import Audio
 from controls import Controls
+from pointer import Pointer
 from background_creator import *
-import constants
 
 # Modules:
 import pygame
@@ -22,7 +22,7 @@ class Pause(BaseState):
         self.options_qty = 2
         self.index = 0
         self.margin = 70
-        self.pause_options = [
+        self.pause = [
             TextCreator(0, "RESUME", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
                         (self.pos_x, self.pos_y), "RESUME", self.margin),
             TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
@@ -35,6 +35,7 @@ class Pause(BaseState):
         self.options = Options()
         self.audio = Audio()
         self.controls = Controls()
+        self.pointer = Pointer()
 
     def handle_action(self):
         if self.screen == "PAUSE":
@@ -82,12 +83,15 @@ class Pause(BaseState):
         background_lvl_1.update()
 
         if self.screen == "PAUSE":
-            for text in self.pause_options:
+            for text in self.pause:
                 text.render_text(self.index)
+            self.pointer.draw_rotated(self.pause[self.index].text_position, self.screen)
         elif self.screen == "OPTIONS":
             for text in self.options.options:
                 text.render_text(self.index)
+            self.pointer.draw_rotated(self.options.options[self.index].text_position, self.screen)
         elif self.screen == "CONTROLS":
             for text in self.controls.controls:
                 text.render_text(self.index)
+            self.pointer.draw_rotated(self.controls.controls[self.index].text_position, self.screen)
 

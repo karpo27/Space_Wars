@@ -123,4 +123,3 @@ class Menu(BaseState):
             for text in self.controls.controls:
                 text.render_text(self.index)
             self.pointer.draw_rotated(self.controls.controls[self.index].text_position, self.screen)
-

@@ -18,7 +18,7 @@ class Pointer:
         if menu in ["MENU", "CREDITS"]:
             self.pos_x = 70
         else:
-            self.pos_x = 80
+            self.pos_x = 85
 
         rotated_surface = pygame.transform.rotozoom(self.image, self.angle, 1)
         rotated_rect = rotated_surface.get_rect()
