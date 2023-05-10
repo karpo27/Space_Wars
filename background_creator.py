@@ -18,7 +18,6 @@ class BackgroundCreator:
         mixer.init()
         self.music = pygame.mixer.Sound(music)
 
-
     def update(self):
         '''
         # Start Music:

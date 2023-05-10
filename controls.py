@@ -7,18 +7,17 @@ import pygame
 from text_creator import TextCreator
 
 
-class Controls(BaseState):
+class Controls:
     def __init__(self):
-        super().__init__()
-        # Set up rectangle dimensions
-        self.width, self.height = [520, 530]
-        self.rect_x, self.rect_y = WIDTH / 2 - self.width / 2, HEIGHT / 2 - 200
+        #self.width, self.height = [520, 530]
+        #self.rect_x, self.rect_y = WIDTH / 2 - self.width / 2, HEIGHT / 2 - 200
         self.border_width = 5
         # Set up colors
         self.fill_color = "black"
         self.border_color = "white"
 
         # Screen Text and Options:
+        self.screen = "CONTROLS"
         self.index = 0
         self.font_size = 22
         self.margin = 30
@@ -58,19 +57,15 @@ class Controls(BaseState):
         ]
 
     def handle_action(self):
-        self.next_state = "PAUSE"
-        self.screen_done = True
+        self.screen = "PAUSE"
+        #self.screen_done = True
 
     def get_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
                 self.handle_action()
 
-    def draw(self, surface):
-        # Draw the Rectangle Screen and Border:
-        pygame.draw.rect(SCREEN, self.fill_color, (self.rect_x, self.rect_y, self.width, self.height))
-        pygame.draw.rect(SCREEN, self.border_color, (self.rect_x, self.rect_y, self.width, self.height), self.border_width)
-
+    def draw(self):
         # Render Pause Menu Text:
         for text in self.controls_options:
             text.render_text(self.index)

@@ -25,7 +25,6 @@ ICON = 'Images/Screen/icon.png'
 states = {
     "SPLASH": Splash(),
     "MENU": Menu(),
-    "CONTROLS": Controls(),
     "LEVEL_1": Level1(),
     "PAUSE": Pause(),
     "GAME_OVER": GameOver(),
