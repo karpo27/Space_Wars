@@ -1,6 +1,7 @@
 # Scripts:
 from constants import *
 from base_state import BaseState
+from options import Options
 from controls import Controls
 from background_creator import *
 import constants
@@ -30,6 +31,7 @@ class Pause(BaseState):
         ]
 
         # Initialize Classes:
+        self.options = Options()
         self.controls = Controls()
 
     def handle_action(self):
@@ -39,11 +41,20 @@ class Pause(BaseState):
                 self.screen_done = True
             elif self.index == 1:
                 self.index = 0
-                self.screen = "CONTROLS"
+                self.screen = "OPTIONS"
             elif self.index == 2:
                 self.index = 0
                 self.next_state = "MENU"
                 self.screen_done = True
+        elif self.screen == "OPTIONS":
+            if self.index == 0:
+                pass
+            elif self.index == 1:
+                self.screen = "CONTROLS"
+                self.index = 0
+            elif self.index == 2:
+                self.index = 1
+                self.screen = "OPTIONS"
         elif self.screen == "CONTROLS":
             self.index = 1
             self.screen = "PAUSE"
@@ -70,6 +81,9 @@ class Pause(BaseState):
 
         if self.screen == "PAUSE":
             for text in self.pause_options:
+                text.render_text(self.index)
+        if self.screen == "OPTIONS":
+            for text in self.options.options:
                 text.render_text(self.index)
         elif self.screen == "CONTROLS":
             self.controls.draw()

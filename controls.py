@@ -1,9 +1,7 @@
 # Scripts:
 from constants import *
-from base_state import BaseState
 
 # Modules:
-import pygame
 from text_creator import TextCreator
 
 
@@ -15,7 +13,6 @@ class Controls:
         self.margin = 40
         self.left_x, self.left_y = WIDTH/3, HEIGHT/3 - 80
         self.right_x = self.left_x + 300
-        self.padding_x, self.padding_y = 0, 50
         self.controls_options = [
             TextCreator(0, "BACK",
                         'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),

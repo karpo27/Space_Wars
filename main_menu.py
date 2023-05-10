@@ -1,6 +1,7 @@
 # Scripts:
 import constants
 from base_state import BaseState
+from options import Options
 from controls import Controls
 from sounds import *
 from background_creator import *
@@ -67,6 +68,7 @@ class Menu(BaseState):
         ]
 
         # Initialize Classes:
+        self.options = Options()
         self.controls = Controls()
 
         # Title and Icon:
@@ -161,7 +163,7 @@ class Menu(BaseState):
                 text.render_text(self.index)
             self.rotate_pointer(self.menu_options[self.index])
         elif self.screen == "OPTIONS":
-            for text in self.options_options:
+            for text in self.options.options:
                 text.render_text(self.index)
             self.rotate_pointer(self.menu_options[self.index])
         elif self.screen == "CREDITS":
