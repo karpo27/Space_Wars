@@ -73,9 +73,9 @@ class Level1(BaseState):
         check_collision(enemies_group, player_group, False, False)  # Check Collisions Enemy Body vs Player Body
         check_collision(bosses_group, player_group, False, False)  # Check Collisions Boss Body vs Player Body
 
-        # Go to Game Over / Continue Screen
-        if player.lives < 1:
-            pass
+        # Go to Game Over Screen:
+        if player.lives < 0:
+            self.screen_done = True
 
         # Consume Life to Keep Playing
         if player.hp == 0:

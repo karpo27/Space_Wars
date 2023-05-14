@@ -1,5 +1,8 @@
 # Scripts:
+from constants import *
 from base_state import BaseState
+from text_creator import TextCreator
+from pointer import Pointer
 
 # Modules:
 import pygame
@@ -7,12 +10,26 @@ import pygame
 
 class GameOver(BaseState):
     def __init__(self):
-        super(GameOver, self).__init__()
-        self.title = self.font.render("Game Over", True, pygame.Color("white"))
-        self.title_rect = self.title.get_rect(center=self.screen_rect.center)
-        self.instructions = self.font.render("Press space to start again, or enter to go to the menu", True, pygame.Color("white"))
-        instructions_center = (self.screen_rect.center[0], self.screen_rect.center[1] + 50)
-        self.instructions_rect = self.instructions.get_rect(center=instructions_center)
+        super().__init__()
+        # Screen Text and Options:
+        self.index = 1
+        self.pos_x, self.pos_y = WIDTH/2, 3/5 * HEIGHT
+        self.font_size = 48
+        self.margin = 70
+        self.game_over = [
+            TextCreator(0, "GAME OVER", 'freesansbold.ttf', 94, 94, (255, 255, 255), (193, 225, 193),
+                        (self.pos_x, self.pos_y), "", self.margin),
+            TextCreator(1, "GO TO MENU", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
+                        (self.pos_x, self.pos_y), "", self.margin)
+        ]
+
+        # Initialize Classes:
+        self.pointer = Pointer()
+
+    def handle_action(self):
+        if self.index == 0:
+            self.next_state = "LEVEL_1"
+            self.screen_done = True
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
@@ -21,13 +38,12 @@ class GameOver(BaseState):
             if event.key == pygame.K_RETURN:
                 self.next_state = "MENU"
                 self.screen_done = True
-            elif event.key == pygame.K_SPACE:
-                self.next_state = "LEVEL_1"
-                self.screen_done = True
-            elif event.key == pygame.K_ESCAPE:
-                self.quit = True
 
     def draw(self, surface):
+        # Draw Background:
         surface.fill(pygame.Color("black"))
-        surface.blit(self.title, self.title_rect)
-        surface.blit(self.instructions, self.instructions_rect)
+
+        # Render Game Over:
+        for text in self.game_over:
+            text.render_text(self.index)
+        self.pointer.draw_rotated(self.game_over[self.index].text_position, "GAME OVER")

@@ -1,4 +1,5 @@
 # Scripts:
+from constants import *
 from splash import Splash
 from game import Game
 from main_menu import Menu
@@ -9,16 +10,6 @@ from game_over import GameOver
 # Modules:
 import sys
 import pygame
-
-# Initialize Pygame:
-pygame.init()
-
-# Create the Screen:
-SIZE = WIDTH, HEIGHT = (1000, 800)
-SCREEN = pygame.display.set_mode(SIZE)
-
-# Icon Window:
-ICON = 'Images/Screen/icon.png'
 
 # Set Game States and Initialize Objects:
 states = {

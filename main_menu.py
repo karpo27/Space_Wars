@@ -120,6 +120,8 @@ class Menu(BaseState):
             for text in self.credits.credits:
                 text.render_text(self.index)
             self.pointer.draw_rotated(self.credits.credits[self.index].text_position, self.screen)
+        elif self.screen == "AUDIO":
+            pass
         elif self.screen == "CONTROLS":
             for text in self.controls.controls:
                 text.render_text(self.index)

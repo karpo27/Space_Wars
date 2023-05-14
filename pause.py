@@ -91,6 +91,8 @@ class Pause(BaseState):
             for text in self.options.options:
                 text.render_text(self.index)
             self.pointer.draw_rotated(self.options.options[self.index].text_position, self.screen)
+        elif self.screen == "AUDIO":
+            pass
         elif self.screen == "CONTROLS":
             for text in self.controls.controls:
                 text.render_text(self.index)

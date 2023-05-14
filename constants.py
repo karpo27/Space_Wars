@@ -17,7 +17,5 @@ dt = clock.tick(FPS)
 LEFT = 1
 RIGHT = 3
 
-# Constants for Images:
-#C_32 = 32
-#C_64 = 64
+
 
