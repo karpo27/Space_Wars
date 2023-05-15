@@ -14,20 +14,14 @@ class Pause(BaseState):
     def __init__(self):
         super().__init__()
         # Screen Text and Options:
-        self.pos_x, self.pos_y = WIDTH/2, 3/5 * HEIGHT
-        self.border_width = 5
         self.screen = "PAUSE"
         self.options_qty = 2
-        self.index = 0
-        self.margin = 70
-        self.pause = [
-            TextCreator(0, "RESUME", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (self.pos_x, self.pos_y), "RESUME", self.margin),
-            TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (self.pos_x, self.pos_y), "RESUME", self.margin),
-            TextCreator(2, "BACK TO MENU", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (self.pos_x, self.pos_y), "RESUME", self.margin)
-        ]
+        self.text = ["RESUME", "OPTIONS", "BACK TO MENU"]
+        self.pause = []
+        for index, text in enumerate(self.text):
+            self.pause.append(
+                TextCreator(index, text, self.font_type, 48, 52, self.base_color, self.hover_color, self.pos,
+                            self.text[0], 70))
 
         # Initialize Classes:
         self.options = Options()
