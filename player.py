@@ -97,7 +97,7 @@ class Player(pygame.sprite.Sprite):
                 self.hp_ref -= self.Δhp
                 pygame.draw.rect(SCREEN, self.hp_bar_full_color, (*inner_pos_1, *inner_size_1))
                 pygame.draw.rect(SCREEN, self.hp_bar_full_color, (*inner_pos_2, *inner_size_2))
-                pygame.draw.rect(SCREEN, self.hp_bar_full_color, (*inner_pos_3, player.hp_ref, inner_size_3[1]))
+                pygame.draw.rect(SCREEN, self.hp_bar_full_color, (*inner_pos_3, self.hp_ref, inner_size_3[1]))
                 if self.hp_ref == 0:
                     self.hp_animation = False
                     self.hp_ref = 27.5
@@ -109,7 +109,7 @@ class Player(pygame.sprite.Sprite):
             if self.hp_animation:
                 self.hp_ref -= self.Δhp
                 pygame.draw.rect(SCREEN, self.hp_bar_med_color, (*inner_pos_1, *inner_size_1))
-                pygame.draw.rect(SCREEN, self.hp_bar_med_color, (*inner_pos_2, player.hp_ref, inner_size_2[1]))
+                pygame.draw.rect(SCREEN, self.hp_bar_med_color, (*inner_pos_2, self.hp_ref, inner_size_2[1]))
                 if self.hp_ref == 0:
                     self.hp_animation = False
                     self.hp_ref = 27.5
@@ -119,7 +119,7 @@ class Player(pygame.sprite.Sprite):
         elif self.hp == 0:
             if self.hp_animation:
                 self.hp_ref -= self.Δhp
-                pygame.draw.rect(SCREEN, self.hp_bar_low_color, (*inner_pos_1, player.hp_ref, inner_size_1[1]))
+                pygame.draw.rect(SCREEN, self.hp_bar_low_color, (*inner_pos_1, self.hp_ref, inner_size_1[1]))
                 if self.hp_ref == 0:
                     self.hp_animation = False
                     self.hp_ref = 27.5
@@ -165,13 +165,13 @@ class Player(pygame.sprite.Sprite):
                 if self.fire_rate >= self.ref_time:
                     player_bullet = PlayerBullet(
                         [self.rect.centerx, self.rect.centery],
-                        *player_bullets['player_bullet_d']
+                        *PLAYER_BULLETS['player_bullet_d']
                     )
 
-                    player_bullet_group.add(player_bullet)
+                    PLAYER_BULLETS_GROUP.add(player_bullet)
                     self.fire_rate = 0
-                    player_bullet.sound.play()
-                    player_bullet.sound.set_volume(speakers.initial_sound)
+                    #player_bullet.sound.play()
+                    #player_bullet.sound.set_volume(speakers.initial_sound)
 
         # Reset Variables
         if self.fire_rate < self.ref_time:
@@ -199,23 +199,4 @@ class PlayerBullet(pygame.sprite.Sprite):
             self.kill()
 
 
-# Create Sprites Group:
-player_group = pygame.sprite.Group()
-player_bullet_group = pygame.sprite.Group()
 
-# Player - Image, Pos, Velocity, HP, Fire Rate
-player_atributes = [
-    'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 3, (0.8, 0.8)
-]
-
-# Player Bullet - Image, Velocity, Bullet Sound, Explosion Sound
-player_bullets = {
-    'player_bullet_d': ['Images/Player_Bullet/bullets.png', [0, 0.8 * dt], 'Sounds/laser.wav', 'Sounds/explosion.wav']
-}
-
-# Initialize Classes:
-# Player
-player = Player(*player_atributes)
-
-# Add Player Sprites to group
-player_group.add(player)

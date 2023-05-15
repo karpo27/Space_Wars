@@ -23,7 +23,7 @@ class Splash(BaseState):
 
     def update(self, dt):
         self.time_active += dt
-        if self.time_active >= 1000:
+        if self.time_active >= 800:
             self.screen_done = True
 
     def draw(self, surface):
