@@ -1,10 +1,7 @@
 # Scripts:
 import constants
 from base_state import BaseState
-from submenus import Options
-from audio import Audio
-from controls import Controls
-from credits import Credits
+from submenus import Options, Controls, Credits
 from pointer import Pointer
 from background_creator import *
 from text_creator import *
@@ -32,7 +29,6 @@ class Menu(BaseState):
                                  (WIDTH/2, HEIGHT/3), "GAME PROJECT", 70)
         # Initialize Classes:
         self.options = Options()
-        self.audio = Audio()
         self.controls = Controls()
         self.credits = Credits()
         self.pointer = Pointer()

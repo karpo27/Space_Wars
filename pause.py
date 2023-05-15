@@ -1,9 +1,7 @@
 # Scripts:
 from constants import *
 from base_state import BaseState
-from submenus import Options
-from audio import Audio
-from controls import Controls
+from submenus import Options, Controls
 from pointer import Pointer
 from background_creator import *
 
@@ -33,7 +31,6 @@ class Pause(BaseState):
 
         # Initialize Classes:
         self.options = Options()
-        self.audio = Audio()
         self.controls = Controls()
         self.pointer = Pointer()
 
@@ -55,12 +52,14 @@ class Pause(BaseState):
             elif self.index == 1:
                 self.screen = "CONTROLS"
                 self.index = 0
+                self.options_qty = 0
             elif self.index == 2:
                 self.index = 1
                 self.screen = "PAUSE"
         elif self.screen == "CONTROLS":
             self.index = 1
             self.screen = "OPTIONS"
+            self.options_qty = 2
 
     def get_event(self, event):
         # Pause Menu Movement:

@@ -22,14 +22,12 @@ class Controls(BaseState):
     def __init__(self):
         # Screen Text and Options:
         super().__init__()
-        # self.font_size = 26
-        # self.margin = 40
         self.pos_left = self.left_x, self.left_y = WIDTH / 3, HEIGHT / 3 - 80
         self.pos_right = self.left_x + 300, self.left_y
         self.text_left = ["Forward", "Back", "Left", "Right", "Fire", "Switch Weapon"]
         self.text_right = ["W / ARROW UP", "S / ARROW DOWN", "A / ARROW LEFT", "D / ARROW RIGHT", "SPACE", "ENTER"]
         self.controls = []
-        self.controls.append(TextCreator(self.index, "BACK", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
+        self.controls.append(TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
                                          (WIDTH / 2, 5 / 6 * HEIGHT), "", 50), )
         for index, text in enumerate(self.text_left):
             self.controls.append(
@@ -40,34 +38,23 @@ class Controls(BaseState):
                 TextCreator(index + 1, text, self.font_type, 26, 52, self.base_color, self.hover_color, self.pos_right,
                             self.text_right[0], 40))
 
-        '''
-        self.controls = [
-            TextCreator(0, "BACK",
-                        'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                        (WIDTH / 2, 5 / 6 * HEIGHT), "", 50),
-            TextCreator(1, "Forward", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.left_x, self.left_y), "Forward", self.margin),
-            TextCreator(2, "Back", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.left_x, self.left_y), "Forward", self.margin),
-            TextCreator(3, "Left", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.left_x, self.left_y), "Forward", self.margin),
-            TextCreator(4, "Right", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.left_x, self.left_y), "Forward", self.margin),
-            TextCreator(5, "Fire", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.left_x, self.left_y), "Forward", self.margin),
-            TextCreator(6, "Switch Weapon", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.left_x, self.left_y), "Forward", self.margin),
-            TextCreator(1, "W / ARROW UP", 'freesansbold.ttf', self.font_size, 48, (255, 255, 255), (193, 225, 193),
-                        (self.right_x, self.left_y), "W / ARROW UP", self.margin),
-            TextCreator(2, "S / ARROW DOWN", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.right_x, self.left_y), "W / ARROW UP", self.margin),
-            TextCreator(3, "A / ARROW LEFT", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.right_x, self.left_y), "W / ARROW UP", self.margin),
-            TextCreator(4, "D / ARROW RIGHT", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.right_x, self.left_y), "W / ARROW UP", self.margin),
-            TextCreator(5, "SPACE", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.right_x, self.left_y), "W / ARROW UP", self.margin),
-            TextCreator(6, "ENTER", 'freesansbold.ttf', self.font_size, 94, (255, 255, 255), (193, 225, 193),
-                        (self.right_x, self.left_y), "W / ARROW UP", self.margin),
-        ]
-        '''
+
+class Credits(BaseState):
+    def __init__(self):
+        # Screen Text and Options:
+        super().__init__()
+        self.pos = self.pos_x, self.pos_y = WIDTH / 2, HEIGHT / 3
+        self.text = ["May 2023", "Game Project is a Python game developed by me: Julian Giudice (github.com/karpo27).",
+                     "It's my first game since I started learning Python 6 months ago.",
+                     "I want to thank Pygame for allowing me to use this module,",
+                     "and allow so many users to code their games.",
+                     "I'll keep coding and trying myself harder to incorporate to the IT world."]
+        self.credits = []
+        self.credits.append(TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
+                                        (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
+        for index, text in enumerate(self.text):
+            self.credits.append(
+                TextCreator(index + 1, text, self.font_type, 22, 52, self.base_color, self.hover_color, self.pos,
+                            "", 40))
+
+
