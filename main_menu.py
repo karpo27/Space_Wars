@@ -25,7 +25,7 @@ class Menu(BaseState):
         for index, text in enumerate(self.text):
             self.menu.append(TextCreator(index, text, self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 70))
 
-        self.title = TextCreator(0, "GAME PROJECT", 'freesansbold.ttf', 94, 94, (255, 255, 255), (193, 225, 193),
+        self.title = TextCreator(0, "GAME PROJECT", 'freesansbold.ttf', 94, 94, self.base_color, self.hover_color,
                                  (WIDTH/2, HEIGHT/3), "GAME PROJECT", 70)
         # Initialize Classes:
         self.options = Options()

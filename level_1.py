@@ -104,3 +104,4 @@ class Level1(BaseState):
         # Extras
         speakers.action(speakers.x, speakers.y, speakers.state)
 
+        pygame.display.update()
