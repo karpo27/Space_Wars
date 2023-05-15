@@ -43,7 +43,7 @@ class Credits(BaseState):
     def __init__(self):
         # Screen Text and Options:
         super().__init__()
-        self.pos = self.pos_x, self.pos_y = WIDTH / 2, HEIGHT / 3
+        self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/3
         self.text = ["May 2023", "Game Project is a Python game developed by me: Julian Giudice (github.com/karpo27).",
                      "It's my first game since I started learning Python 6 months ago.",
                      "I want to thank Pygame for allowing me to use this module,",
@@ -51,7 +51,7 @@ class Credits(BaseState):
                      "I'll keep coding and trying myself harder to incorporate to the IT world."]
         self.credits = []
         self.credits.append(TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
-                                        (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
+                                        (WIDTH/2, 5/6 * HEIGHT), "", 50))
         for index, text in enumerate(self.text):
             self.credits.append(
                 TextCreator(index + 1, text, self.font_type, 22, 52, self.base_color, self.hover_color, self.pos,
