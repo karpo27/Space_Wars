@@ -1,7 +1,7 @@
 # Scripts:
 import constants
 from base_state import BaseState
-from options import Options
+from submenus import Options
 from audio import Audio
 from controls import Controls
 from credits import Credits
@@ -23,21 +23,13 @@ class Menu(BaseState):
         # Screen Text and Options:
         self.screen = "MENU"
         self.options_qty = 3
-        self.index = 0
-        self.pos_x, self.pos_y = WIDTH/2, 3/5 * HEIGHT
-        self.margin = 70
+        self.text = ["PLAY", "OPTIONS", "CREDITS", "QUIT"]
+        self.menu = []
+        for index, text in enumerate(self.text):
+            self.menu.append(TextCreator(index, text, self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 70))
+
         self.title = TextCreator(0, "GAME PROJECT", 'freesansbold.ttf', 94, 94, (255, 255, 255), (193, 225, 193),
-                                 (WIDTH/2, HEIGHT/3), "GAME PROJECT", self.margin)
-        self.menu = [
-            TextCreator(0, "PLAY", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (self.pos_x, self.pos_y), "PLAY", self.margin),
-            TextCreator(1, "OPTIONS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (self.pos_x, self.pos_y), "PLAY", self.margin),
-            TextCreator(2, "CREDITS", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (self.pos_x, self.pos_y), "PLAY", self.margin),
-            TextCreator(3, "QUIT", 'freesansbold.ttf', 48, 52, (255, 255, 255), (193, 225, 193),
-                        (self.pos_x, self.pos_y), "PLAY", self.margin)
-        ]
+                                 (WIDTH/2, HEIGHT/3), "GAME PROJECT", 70)
         # Initialize Classes:
         self.options = Options()
         self.audio = Audio()
@@ -69,6 +61,7 @@ class Menu(BaseState):
             elif self.index == 1:
                 self.screen = "CONTROLS"
                 self.index = 0
+                self.options_qty = 0
             elif self.index == 2:
                 self.index = 1
                 self.screen = "MENU"

@@ -1,7 +1,7 @@
 # Scripts:
 from constants import *
 from base_state import BaseState
-from options import Options
+from submenus import Options
 from audio import Audio
 from controls import Controls
 from pointer import Pointer

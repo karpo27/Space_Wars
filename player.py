@@ -1,6 +1,6 @@
 # Scripts
 from constants import *
-from game_objects import speakers
+from game_effects import *
 
 # Modules
 import pygame
@@ -9,26 +9,32 @@ import math
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, image, pos, vel, hp, lives):
+    def __init__(self, image, pos, vel, hp, lives, explosion_scale):
         super().__init__()
         self.image = pygame.image.load(image).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = pos
         self.vel = self.vel_x, self.vel_y = vel
+
+        # State:
+        self.state = "alive"
         self.hp = hp
         self.lives = lives
 
-        # Initial Movement Animation
+        # Initial Movement Animation:
         self.enter_animation = True
         self.y_enter = 5/6 * HEIGHT
         self.vel_enter_y = 0.2
 
-        # Bullet
+        # Bullet:
         self.ref_time = 30
         self.fire_rate = 30
         self.reload_speed = 1
 
-        # HP Bar
+        # Explosion:
+        self.explosion_scale = explosion_scale
+
+        # HP Bar:
         self.hp_bar_pos = (1/43 * WIDTH, 16/17 * HEIGHT)
         self.hp_bar_size = (108, 30)
         self.hp_bar_border_color = (255, 255, 255)    # White
@@ -41,7 +47,7 @@ class Player(pygame.sprite.Sprite):
         self.hp_ref = 27.5
         self.Δhp = 0.5
 
-        # Rotation
+        # Rotation:
         self.angle = 0
 
     def get_hit(self):
@@ -52,11 +58,15 @@ class Player(pygame.sprite.Sprite):
             self.destroy()
 
     def destroy(self):
-        pass
-        '''
+
         self.kill()
-        explosion = Explosion(self.rect.x, self.rect.y)
-        explosion_group.add(explosion)'''
+        explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
+        explosion_group.add(explosion)
+        if self.lives > 0:
+            self.lives -= 1
+            self.hp = 3
+        else:
+            self.state = "dead"
 
     def draw_hp_bar(self):
         x_1, y_1 = (self.hp_bar_pos[0] + 1/3 * self.hp_bar_size[0], self.hp_bar_pos[1])
@@ -194,8 +204,8 @@ player_group = pygame.sprite.Group()
 player_bullet_group = pygame.sprite.Group()
 
 # Player - Image, Pos, Velocity, HP, Fire Rate
-player_atr = [
-    'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 3
+player_atributes = [
+    'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 3, (0.8, 0.8)
 ]
 
 # Player Bullet - Image, Velocity, Bullet Sound, Explosion Sound
@@ -205,7 +215,7 @@ player_bullets = {
 
 # Initialize Classes:
 # Player
-player = Player(*player_atr)
+player = Player(*player_atributes)
 
 # Add Player Sprites to group
 player_group.add(player)

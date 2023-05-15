@@ -1,6 +1,6 @@
 # Scripts
 from constants import *
-from game_objects import Explosion, explosion_group
+from game_effects import Explosion, explosion_group
 
 # Modules
 import pygame

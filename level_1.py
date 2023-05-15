@@ -1,12 +1,12 @@
 # Scripts:
 import constants
-from game_objects import *
+from game_effects import *
 from base_state import BaseState
 from pause import *
 from background_creator import *
 from player import *
 from enemies import *
-from bosses import *
+from boss import *
 from collisions import *
 
 # Modules:
@@ -24,8 +24,8 @@ class Level1(BaseState):
         self.next_state = "GAME_OVER"
 
         # Define Number of Enemies to spawn in Level 1:
-        self.enemies_lvl_1 = []
-        self.bosses_lvl_1 = [bosses['boss_b']]
+        self.enemies = []
+        self.boss = [bosses['boss_b']]
 
     def handle_action(self):
         self.next_state = "PAUSE"
@@ -48,39 +48,34 @@ class Level1(BaseState):
                 self.handle_action()
 
         # Spawn Enemies According to Level
-        if len(enemies_group) < len(self.enemies_lvl_1):
+        if len(enemies_group) < len(self.enemies):
             if event.type == Enemy.spawn_enemy:
-                k = self.enemies_lvl_1[len(enemies_group)]
+                k = self.enemies[len(enemies_group)]
                 # Generate Enemies
                 new_enemy = Enemy(*k)
                 enemies_group.add(new_enemy)
 
         # Spawn Boss According to Level
-        if len(bosses_group) < len(self.bosses_lvl_1):
+        if len(bosses_group) < len(self.boss):
             if event.type == Enemy.spawn_enemy:
-                k = self.bosses_lvl_1[len(bosses_group)]
+                k = self.boss[len(bosses_group)]
                 # Generate Boss
                 new_boss = Boss(*k)
                 bosses_group.add(new_boss)
 
         # Check Collisions
-        check_collision(player_bullet_group, enemies_group, True, False)  # Check Collisions Player Bullets vs Enemies
-        check_collision(player_bullet_group, bosses_group, True, False)  # Check Collisions Player Bullet vs Bosses
-        check_collision(player_group, enemies_group, False, False)  # Check Collisions Player Body vs Enemy Body
-        check_collision(player_group, bosses_group, False, False)  # Check Collisions Player Body vs Boss Body
-        check_collision(enemies_bullet_group, player_group, True, False)  # Check Collisions Enemy Bullet vs Player
-        check_collision(bosses_bullet_group, player_group, True, False)  # Check Collisions Boss Bullet vs Player
-        check_collision(enemies_group, player_group, False, False)  # Check Collisions Enemy Body vs Player Body
-        check_collision(bosses_group, player_group, False, False)  # Check Collisions Boss Body vs Player Body
+        check_collision(player_bullet_group, enemies_group, True, False)  # Player Bullet vs Enemy
+        check_collision(player_bullet_group, bosses_group, True, False)  # Player Bullet vs Boss
+        check_collision(player_group, enemies_group, False, False)  # Player Body vs Enemy Body
+        check_collision(player_group, bosses_group, False, False)  # Player Body vs Boss Body
+        check_collision(enemies_bullet_group, player_group, True, False)  # Enemy Bullet vs Player
+        check_collision(bosses_bullet_group, player_group, True, False)  # Boss Bullet vs Player
+        check_collision(enemies_group, player_group, False, False)  # Enemy Body vs Player Body
+        check_collision(bosses_group, player_group, False, False)  # Boss Body vs Player Body
 
         # Go to Game Over Screen:
-        if player.lives < 0:
+        if player.state == "dead":
             self.screen_done = True
-
-        # Consume Life to Keep Playing
-        if player.hp == 0:
-            player.lives -= 1
-            # player.hp = 3
 
     def draw(self, surface):
         # Draw Background

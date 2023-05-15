@@ -34,7 +34,7 @@ class Game(object):
         #self.state.startup(persistent)
 
     def update(self, dt):
-        # Check state to next action:
+        # Check State to Next Action:
         if self.state.quit:
             self.screen_done = True
         elif self.state.screen_done:

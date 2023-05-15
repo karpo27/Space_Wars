@@ -1,5 +1,7 @@
 # Scripts:
+from constants import *
 from base_state import BaseState
+from text_creator import TextCreator
 
 # Modules:
 import pygame
@@ -11,8 +13,13 @@ class Splash(BaseState):
         # Next State:
         self.next_state = "MENU"
 
-        self.title = self.font.render("Karpo27 Game", True, pygame.Color("blue"))
-        self.title_rect = self.title.get_rect(center=self.screen_rect.center)
+        # Screen Text:
+        self.pos_y = 2/5 * HEIGHT
+        self.splash = [TextCreator(0, "Karpo27 Game", self.font_type, 48, 48, "white", "blue",
+                                   (self.pos_x, self.pos_y), "", 70)
+                       ]
+
+        # Time Parameters:
         self.time_active = 0
 
     def update(self, dt):
@@ -21,5 +28,10 @@ class Splash(BaseState):
             self.screen_done = True
 
     def draw(self, surface):
+        # Draw Background:
         surface.fill(pygame.Color("black"))
-        surface.blit(self.title, self.title_rect)
+
+        # Render Splash Text:
+        for text in self.splash:
+            text.render_text(self.index)
+
