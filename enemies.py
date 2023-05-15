@@ -101,12 +101,7 @@ class Enemy(pygame.sprite.Sprite):
             # Create Enemy Bullet Object (fix later side of the bullet)
             if self.shoots and self.fire_rate >= self.ref_time:
                 for bullet_type in self.bullet:
-                    enemy_bullet = EnemyBullet(
-                        [self.rect.centerx, self.rect.centery],
-                        *ENEMIES_BULLETS[f'e_bullet_{bullet_type}']
-                    )
-
-                    ENEMIES_BULLETS_GROUP.add(enemy_bullet)
+                    EnemyBullet(self.rect.center, *ENEMIES_BULLETS[f'e_bullet_{bullet_type}'])
                     self.fire_rate = 0
             # Reset Variables
             elif self.fire_rate < self.ref_time:
@@ -154,6 +149,9 @@ class EnemyBullet(pygame.sprite.Sprite):
         # Sound
         self.sound = mixer.Sound(sound)
         self.col_sound = mixer.Sound(col_sound)
+
+        # Groups:
+        ENEMIES_BULLETS_GROUP.add(self)
 
     def move_vertical(self):
         self.rect.y += self.vel_y

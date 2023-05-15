@@ -163,15 +163,8 @@ class Player(pygame.sprite.Sprite):
             if key[pygame.K_SPACE]:
                 # Create Player Bullet Object
                 if self.fire_rate >= self.ref_time:
-                    player_bullet = PlayerBullet(
-                        [self.rect.centerx, self.rect.centery],
-                        *PLAYER_BULLETS['player_bullet_d']
-                    )
-
-                    PLAYER_BULLETS_GROUP.add(player_bullet)
+                    PlayerBullet(self.rect.center, *PLAYER_BULLETS['player_bullet_d'])
                     self.fire_rate = 0
-                    #player_bullet.sound.play()
-                    #player_bullet.sound.set_volume(speakers.initial_sound)
 
         # Reset Variables
         if self.fire_rate < self.ref_time:
@@ -187,9 +180,16 @@ class PlayerBullet(pygame.sprite.Sprite):
         self.image = pygame.image.load(image).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = pos
+
+        # Movement:
         self.vel = self.vel_x, self.vel_y = vel
+
+        # Sound.
         self.sound = mixer.Sound(sound)
         self.col_sound = mixer.Sound(col_sound)
+
+        # Groups:
+        PLAYER_BULLETS_GROUP.add(self)
 
     def update(self):
         # Player Bullet Movement

@@ -33,7 +33,7 @@ class Level1(BaseState):
 
         # Define Number of Enemies to spawn in Level 1:
         self.enemies = []
-        self.boss = [bosses['boss_b']]
+        self.boss = [BOSSES['boss_b']]
 
 
     def check_collision(self, group_1, group_2, do_kill_1, do_kill_2):
@@ -70,12 +70,12 @@ class Level1(BaseState):
                 ENEMIES_GROUP.add(new_enemy)
 
         # Spawn Boss According to Level
-        if len(bosses_group) < len(self.boss):
+        if len(BOSSES_GROUP) < len(self.boss):
             if event.type == Enemy.spawn_enemy:
-                k = self.boss[len(bosses_group)]
+                k = self.boss[len(BOSSES_GROUP)]
                 # Generate Boss
                 new_boss = Boss(*k)
-                bosses_group.add(new_boss)
+                BOSSES_GROUP.add(new_boss)
 
         # Go to Game Over Screen:
         if self.player.state == "dead":
@@ -84,13 +84,13 @@ class Level1(BaseState):
     def draw(self, surface):
         # Check Collisions
         self.check_collision(PLAYER_BULLETS_GROUP, ENEMIES_GROUP, True, False)  # Player Bullet vs Enemy
-        self.check_collision(PLAYER_BULLETS_GROUP, bosses_group, True, False)  # Player Bullet vs Boss
+        self.check_collision(PLAYER_BULLETS_GROUP, BOSSES_GROUP, True, False)  # Player Bullet vs Boss
         self.check_collision(self.player_group, ENEMIES_GROUP, False, False)  # Player Body vs Enemy Body
-        self.check_collision(self.player_group, bosses_group, False, False)  # Player Body vs Boss Body
+        self.check_collision(self.player_group, BOSSES_GROUP, False, False)  # Player Body vs Boss Body
         self.check_collision(ENEMIES_BULLETS_GROUP, self.player_group, True, False)  # Enemy Bullet vs Player
-        self.check_collision(bosses_bullet_group, self.player_group, True, False)  # Boss Bullet vs Player
+        self.check_collision(BOSSES_BULLETS_GROUP, self.player_group, True, False)  # Boss Bullet vs Player
         self.check_collision(ENEMIES_GROUP, self.player_group, False, False)  # Enemy Body vs Player Body
-        self.check_collision(bosses_group, self.player_group, False, False)  # Boss Body vs Player Body
+        self.check_collision(BOSSES_GROUP, self.player_group, False, False)  # Boss Body vs Player Body
 
         # Draw Background
         background_lvl_1.update()
@@ -99,14 +99,14 @@ class Level1(BaseState):
         PLAYER_BULLETS_GROUP.update()
         ENEMIES_GROUP.update()
         ENEMIES_BULLETS_GROUP.update()
-        bosses_group.update()
-        bosses_bullet_group.update()
+        BOSSES_GROUP.update()
+        BOSSES_BULLETS_GROUP.update()
 
         # Draw Sprite Groups
         ENEMIES_BULLETS_GROUP.draw(SCREEN)
         ENEMIES_GROUP.draw(SCREEN)
-        bosses_bullet_group.draw(SCREEN)
-        bosses_group.draw(SCREEN)
+        BOSSES_BULLETS_GROUP.draw(SCREEN)
+        BOSSES_GROUP.draw(SCREEN)
 
         PLAYER_BULLETS_GROUP.draw(SCREEN)
         self.player_group.draw(SCREEN)
