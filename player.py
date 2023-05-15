@@ -184,7 +184,7 @@ class PlayerBullet(pygame.sprite.Sprite):
         # Movement:
         self.vel = self.vel_x, self.vel_y = vel
 
-        # Sound.
+        # Sound:
         self.sound = mixer.Sound(sound)
         self.col_sound = mixer.Sound(col_sound)
 
@@ -192,7 +192,7 @@ class PlayerBullet(pygame.sprite.Sprite):
         PLAYER_BULLETS_GROUP.add(self)
 
     def update(self):
-        # Player Bullet Movement
+        # Player Bullet Movement:
         self.rect.y -= self.vel_y
 
         if self.rect.bottom < 0:

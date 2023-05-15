@@ -9,7 +9,7 @@ import random
 
 
 class Enemy(pygame.sprite.Sprite):
-    # Define time delay between enemies to spawn
+    # Define time delay between enemies to spawn:
     time_to_spawn = random.randint(2000, 5000)
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
@@ -23,16 +23,16 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = [random.randint(0, 3/4 * WIDTH), -80]
 
-        # Movement
+        # Movement:
         self.movement = movement
         self.vel = self.vel_x, self.vel_y = vel
         self.counter = 0
         self.angle = 0
 
-        # HP
+        # HP:
         self.hp = hp
 
-        # Bullet
+        # Bullet:
         self.shoots = shoots
         self.bullet = bullet
         #self.bullet_pos = bullet_pos
@@ -129,7 +129,7 @@ class Enemy(pygame.sprite.Sprite):
             elif self.movement == 3:
                 self.image, self.rect = self.move_hor_vert_sin()
 
-        # Enemy Bullet
+        # Enemy Bullet:
         self.spawn_bullet()
 
 

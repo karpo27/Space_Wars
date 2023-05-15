@@ -18,12 +18,12 @@ class Boss(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = [WIDTH/2, -1/4 * HEIGHT]
 
-        # Initial Movement Animation
+        # Initial Movement Animation:
         self.enter_animation = True
         self.y_enter = 1/25 * HEIGHT
         self.vel_enter_y = 1
 
-        # Movement
+        # Movement:
         self.movement = movement
         self.vel = self.vel_x, self.vel_y = vel
         self.counter = 0
@@ -31,10 +31,10 @@ class Boss(pygame.sprite.Sprite):
         self.movement_action = None
         self.next_action = True
 
-        # HP
+        # HP:
         self.hp = hp
 
-        # Bullet
+        # Bullet:
         self.bullet = bullet
         self.bullet_index = 0
         self.bullet_pattern_counter = bullet_pattern_counter
@@ -46,7 +46,7 @@ class Boss(pygame.sprite.Sprite):
         #self.bullet_pos = bullet_pos
         self.reload_speed = 1
 
-        # Explosion
+        # Explosion:
         self.explosion_scale = explosion_scale
 
     def move_hor(self, direction):
@@ -163,7 +163,7 @@ class Boss(pygame.sprite.Sprite):
             elif self.movement_action == 3:
                 self.image, self.rect = self.move_hor_vert_sin()
 
-            # Create Boss Bullet Object (fix later side of the bullet)
+            # Create Boss Bullet Object (fix later side of the bullet):
             self.spawn_bullet()
 
         # Reset Animation when leaving Screen
