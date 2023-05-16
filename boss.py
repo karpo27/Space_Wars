@@ -1,6 +1,6 @@
 # Scripts
 from constants import *
-from game_effects import Explosion, explosion_group
+from game_effects import Explosion, Particle
 
 # Modules
 import pygame
@@ -140,7 +140,7 @@ class Boss(pygame.sprite.Sprite):
     def destroy(self):
         self.kill()
         explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
-        explosion_group.add(explosion)
+        EXPLOSION_GROUP.add(explosion)
 
     def update(self):
         # Enter Level Animation

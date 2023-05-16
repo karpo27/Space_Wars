@@ -1,6 +1,6 @@
 # Scripts
 from constants import *
-from game_effects import Explosion, explosion_group
+from game_effects import Explosion, Particle
 
 # Modules
 import pygame
@@ -116,7 +116,10 @@ class Enemy(pygame.sprite.Sprite):
     def destroy(self):
         self.kill()
         explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
-        explosion_group.add(explosion)
+        EXPLOSION_GROUP.add(explosion)
+        for num_particles in range(random.randrange(5, 30)):
+            new_particle = Particle(self.rect.center)
+            #PARTICLES_GROUP.add(new_particle)
 
     def update(self):
         if self.rect.top > HEIGHT:

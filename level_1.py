@@ -36,8 +36,10 @@ class Level1(BaseState):
         self.player_group.add(self.player)
 
         # Define Number of Enemies to spawn in Level 1:
-        self.enemies = []
-        self.boss = [BOSSES['boss_b']]
+        self.enemies = [ENEMIES['enemy_f1'], ENEMIES['enemy_c'], ENEMIES['enemy_d'], ENEMIES['enemy_e']]
+        #self.enemies = []
+        #self.boss = [BOSSES['boss_b']]
+        self.boss = []
 
     def handle_action(self):
         self.next_state = "PAUSE"
@@ -90,7 +92,7 @@ class Level1(BaseState):
         check_collision(ENEMIES_GROUP, self.player_group, False, False)  # Enemy Body vs Player Body
         check_collision(BOSSES_GROUP, self.player_group, False, False)  # Boss Body vs Player Body
 
-        # Draw Background
+        # Draw Background:
         background_lvl_1.update()
 
         # Draw UI:
@@ -113,9 +115,10 @@ class Level1(BaseState):
         PLAYER_BULLETS_GROUP.draw(SCREEN)
         self.player_group.draw(SCREEN)
 
-        explosion_group.draw(SCREEN)
-
-        explosion_group.update()
+        EXPLOSION_GROUP.draw(SCREEN)
+        PARTICLES_GROUP.draw(SCREEN)
+        EXPLOSION_GROUP.update()
+        PARTICLES_GROUP.update()
 
         # Extras
         speakers.action(speakers.x, speakers.y, speakers.state)

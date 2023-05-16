@@ -48,7 +48,7 @@ class Player(pygame.sprite.Sprite):
     def destroy(self):
         self.kill()
         explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
-        explosion_group.add(explosion)
+        EXPLOSION_GROUP.add(explosion)
         if self.lives > 0:
             self.lives -= 1
             self.hp = 3

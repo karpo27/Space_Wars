@@ -23,6 +23,8 @@ ENEMIES_GROUP = pygame.sprite.Group()
 ENEMIES_BULLETS_GROUP = pygame.sprite.Group()
 BOSSES_GROUP = pygame.sprite.Group()
 BOSSES_BULLETS_GROUP = pygame.sprite.Group()
+EXPLOSION_GROUP = pygame.sprite.Group()
+PARTICLES_GROUP = pygame.sprite.Group()
 
 # Player - Image, Pos, Velocity, HP, Fire Rate:
 PLAYER_ATTRIBUTES = [
