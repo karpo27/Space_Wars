@@ -5,6 +5,7 @@ from base_state import BaseState
 from pause import *
 from background_creator import *
 from player import *
+from ui import UI
 from enemies import *
 from boss import *
 from collisions import *
@@ -12,6 +13,7 @@ from collisions import *
 # Modules:
 import pygame
 from pygame import mixer
+
 
 # Initialize Pygame:
 pygame.init()
@@ -25,6 +27,7 @@ class Level1(BaseState):
 
         # Initialize Classes:
         self.player = Player(*PLAYER_ATTRIBUTES)
+        self.ui = UI(self.player)
 
         # Create Sprites Group:
         self.player_group = pygame.sprite.Group()
@@ -89,6 +92,10 @@ class Level1(BaseState):
 
         # Draw Background
         background_lvl_1.update()
+
+        # Draw UI:
+        self.ui.draw()
+
         # Update Sprites Group
         self.player_group.update()
         PLAYER_BULLETS_GROUP.update()
