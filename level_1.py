@@ -94,7 +94,7 @@ class Level1(BaseState):
         background_lvl_1.update()
 
         # Draw UI:
-        self.ui.draw()
+        self.ui.draw(SCREEN)
 
         # Update Sprites Group
         self.player_group.update()
