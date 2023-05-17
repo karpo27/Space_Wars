@@ -32,10 +32,12 @@ class Enemy(pygame.sprite.Sprite):
         # HP:
         self.hp = hp
 
+        # State:
+        self.invincible = False
+
         # Bullet:
         self.shoots = shoots
         self.bullet = bullet
-        #self.bullet_pos = bullet_pos
         self.ref_time = fire_rate
         self.fire_rate = fire_rate
         self.reload_speed = 1

@@ -32,7 +32,7 @@ class Level1(BaseState):
         # Create Sprites Group:
         self.player_group = pygame.sprite.Group()
 
-        # Add Player Sprites to group
+        # Add Player Sprites to group:
         self.player_group.add(self.player)
 
         # Define Number of Enemies to spawn in Level 1:
@@ -48,7 +48,7 @@ class Level1(BaseState):
     def get_event(self, event):
         if event.type == pygame.QUIT:
             self.quit = True
-        # Press Mouse
+        # Press Mouse:
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
             mouse_pos = pygame.mouse.get_pos()
             if speakers.off_rect.collidepoint(mouse_pos):
@@ -61,7 +61,7 @@ class Level1(BaseState):
             if event.key == pygame.K_ESCAPE:
                 self.handle_action()
 
-        # Spawn Enemies According to Level
+        # Spawn Enemies According to Level:
         if len(ENEMIES_GROUP) < len(self.enemies):
             if event.type == Enemy.spawn_enemy:
                 k = self.enemies[len(ENEMIES_GROUP)]
@@ -69,7 +69,7 @@ class Level1(BaseState):
                 new_enemy = Enemy(*k)
                 ENEMIES_GROUP.add(new_enemy)
 
-        # Spawn Boss According to Level
+        # Spawn Boss According to Level:
         if len(BOSSES_GROUP) < len(self.boss):
             if event.type == Enemy.spawn_enemy:
                 k = self.boss[len(BOSSES_GROUP)]
@@ -82,11 +82,9 @@ class Level1(BaseState):
             self.screen_done = True
 
     def draw(self, surface):
-        # Check Collisions
+        # Check Collisions:
         check_collision(PLAYER_BULLETS_GROUP, ENEMIES_GROUP, True, False)  # Player Bullet vs Enemy
         check_collision(PLAYER_BULLETS_GROUP, BOSSES_GROUP, True, False)  # Player Bullet vs Boss
-        check_collision(self.player_group, ENEMIES_GROUP, False, False)  # Player Body vs Enemy Body
-        check_collision(self.player_group, BOSSES_GROUP, False, False)  # Player Body vs Boss Body
         check_collision(ENEMIES_BULLETS_GROUP, self.player_group, True, False)  # Enemy Bullet vs Player
         check_collision(BOSSES_BULLETS_GROUP, self.player_group, True, False)  # Boss Bullet vs Player
         check_collision(ENEMIES_GROUP, self.player_group, False, False)  # Enemy Body vs Player Body
@@ -98,7 +96,7 @@ class Level1(BaseState):
         # Draw UI:
         self.ui.draw(SCREEN)
 
-        # Update Sprites Group
+        # Update Sprites Group:
         self.player_group.update()
         PLAYER_BULLETS_GROUP.update()
         ENEMIES_GROUP.update()
@@ -106,7 +104,7 @@ class Level1(BaseState):
         BOSSES_GROUP.update()
         BOSSES_BULLETS_GROUP.update()
 
-        # Draw Sprite Groups
+        # Draw Sprite Groups:
         ENEMIES_BULLETS_GROUP.draw(SCREEN)
         ENEMIES_GROUP.draw(SCREEN)
         BOSSES_BULLETS_GROUP.draw(SCREEN)
@@ -120,6 +118,6 @@ class Level1(BaseState):
         EXPLOSION_GROUP.update()
         PARTICLES_GROUP.update()
 
-        # Extras
+        # Extras:
         speakers.action(speakers.x, speakers.y, speakers.state)
 

@@ -16,15 +16,20 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = pos
         self.vel = self.vel_x, self.vel_y = vel
 
-        # State:
-        self.state = "alive"
+        # HP:
         self.hp = hp
         self.lives = lives
         self.hp_animation = False
 
+        # State:
+        self.state = "alive"
+        self.invulnerable = False
+        self.invulnerable_ref_time = 120
+        self.invulnerable_rate = 120
+
         # Initial Movement Animation:
         self.enter_animation = True
-        self.y_enter = 5/6 * HEIGHT
+        self.y_enter = 5 / 6 * HEIGHT
         self.vel_enter_y = 0.2
 
         # Bullet:
@@ -39,11 +44,16 @@ class Player(pygame.sprite.Sprite):
         self.angle = 0
 
     def get_hit(self):
-        self.hp_animation = True
-        self.hp -= 1
+        print(self.invulnerable)
+        print(self.invulnerable_rate)
+        if not self.invulnerable:
+            self.hp_animation = True
+            self.hp -= 1
+            self.invulnerable = True
+            self.invulnerable_rate = 0
 
-        if self.hp < 0:
-            self.destroy()
+            if self.hp < 0:
+                self.destroy()
 
     def destroy(self):
         self.kill()
@@ -62,8 +72,7 @@ class Player(pygame.sprite.Sprite):
                 self.rect.y -= self.vel_enter_y
             else:
                 self.enter_animation = False
-
-        # Press Keyboard
+        # Press Keyboard:
         else:
             key = pygame.key.get_pressed()
             # Player Keyboard Diagonal Movement - (UP-LEFT, DOWN-LEFT, UP-RIGHT, DOWN-RIGHT):
@@ -97,7 +106,14 @@ class Player(pygame.sprite.Sprite):
                     PlayerBullet(self.rect.center, *PLAYER_BULLETS['player_bullet_d'])
                     self.fire_rate = 0
 
-        # Reset Variables
+        # Invulnerability:
+        if self.invulnerable:
+            if self.invulnerable_rate >= self.invulnerable_ref_time:
+                self.invulnerable = False
+            else:
+                self.invulnerable_rate += 1
+
+        # Reset Fire Bullet Variables:
         if self.fire_rate < self.ref_time:
             self.fire_rate += self.reload_speed
 
@@ -125,6 +141,3 @@ class PlayerBullet(pygame.sprite.Sprite):
 
         if self.rect.bottom < 0:
             self.kill()
-
-
-
