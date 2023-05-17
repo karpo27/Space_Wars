@@ -14,10 +14,10 @@ class Enemy(pygame.sprite.Sprite):
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
-    def __init__(self, category, image, scale, movement, vel, hp, shoots, bullet, fire_rate, explosion_scale):
+    def __init__(self, category, img_path, scale, movement, vel, hp, shoots, bullet, fire_rate, explosion_scale):
         super().__init__()
         self.category = category
-        self.image = pygame.image.load(image).convert_alpha()
+        self.image = pygame.image.load(img_path).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale[0], self.image.get_height() * scale[1]))
         self.image_copy = self.image
         self.rect = self.image.get_rect()
@@ -31,9 +31,6 @@ class Enemy(pygame.sprite.Sprite):
 
         # HP:
         self.hp = hp
-
-        # State:
-        self.invincible = False
 
         # Bullet:
         self.shoots = shoots
@@ -120,8 +117,7 @@ class Enemy(pygame.sprite.Sprite):
         explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
         EXPLOSION_GROUP.add(explosion)
         for num_particles in range(random.randrange(5, 30)):
-            new_particle = Particle(self.rect.center)
-            #PARTICLES_GROUP.add(new_particle)
+            Particle(self.rect.center)
 
     def update(self):
         if self.rect.top > HEIGHT:

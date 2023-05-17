@@ -9,9 +9,10 @@ import math
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, image, pos, vel, hp, lives, explosion_scale):
+    def __init__(self, img_path, pos, vel, hp, lives, explosion_scale):
         super().__init__()
-        self.image = pygame.image.load(image).convert_alpha()
+        self.img_path = img_path
+        self.image = pygame.image.load(self.img_path).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = pos
         self.vel = self.vel_x, self.vel_y = vel
@@ -26,6 +27,11 @@ class Player(pygame.sprite.Sprite):
         self.invulnerable = False
         self.invulnerable_ref_time = 120
         self.invulnerable_rate = 120
+
+        # Blink:
+        self.empty_surface = pygame.Surface(self.image.get_size(), pygame.SRCALPHA)
+        self.blink_ref_time = self.invulnerable_ref_time/20
+        self.blink_rate = 0
 
         # Initial Movement Animation:
         self.enter_animation = True
@@ -44,13 +50,12 @@ class Player(pygame.sprite.Sprite):
         self.angle = 0
 
     def get_hit(self):
-        print(self.invulnerable)
-        print(self.invulnerable_rate)
         if not self.invulnerable:
             self.hp_animation = True
             self.hp -= 1
             self.invulnerable = True
             self.invulnerable_rate = 0
+            self.blink_rate = 0
 
             if self.hp < 0:
                 self.destroy()
@@ -64,6 +69,14 @@ class Player(pygame.sprite.Sprite):
             self.hp = 3
         else:
             self.state = "dead"
+
+    def blink_image(self):
+        if self.blink_rate < self.blink_ref_time:
+            self.image = self.empty_surface
+        elif self.blink_ref_time <= self.blink_rate < 2 * self.blink_ref_time:
+            self.image = pygame.image.load(self.img_path).convert_alpha()
+        else:
+            self.blink_rate = 0
 
     def update(self):
         # Enter Level Animation:
@@ -110,8 +123,11 @@ class Player(pygame.sprite.Sprite):
         if self.invulnerable:
             if self.invulnerable_rate >= self.invulnerable_ref_time:
                 self.invulnerable = False
+                self.image = pygame.image.load(self.img_path).convert_alpha()
             else:
                 self.invulnerable_rate += 1
+                self.blink_rate += 1
+                self.blink_image()
 
         # Reset Fire Bullet Variables:
         if self.fire_rate < self.ref_time:
