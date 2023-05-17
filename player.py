@@ -14,12 +14,13 @@ class Player(pygame.sprite.Sprite):
         self.img_path = img_path
         self.image = pygame.image.load(self.img_path).convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.center = pos
+        self.pos = pos
+        self.rect.center = self.pos
         self.vel = self.vel_x, self.vel_y = vel
 
         # HP:
         self.hp = hp
-        self.lives = lives
+        self.lives = 0
         self.hp_animation = False
 
         # State:
@@ -61,13 +62,15 @@ class Player(pygame.sprite.Sprite):
                 self.destroy()
 
     def destroy(self):
-        self.kill()
+        self.rect.center = self.pos
+        self.enter_animation = True
         explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
         EXPLOSION_GROUP.add(explosion)
         if self.lives > 0:
             self.lives -= 1
             self.hp = 3
         else:
+            self.kill()
             self.state = "dead"
 
     def blink_image(self):
