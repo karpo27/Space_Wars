@@ -12,16 +12,14 @@ class GameOver(BaseState):
     def __init__(self):
         super().__init__()
         # Screen Text and Options:
-        self.index = 1
-        self.pos_x, self.pos_y = WIDTH/2, 3/5 * HEIGHT
-        self.font_size = 48
-        self.margin = 70
-        self.game_over = [
-            TextCreator(0, "GAME OVER", 'freesansbold.ttf', 94, 94, (255, 255, 255), (193, 225, 193),
-                        (self.pos_x, self.pos_y), "", self.margin),
-            TextCreator(1, "GO TO MENU", 'freesansbold.ttf', 48, 48, (255, 255, 255), (193, 225, 193),
-                        (self.pos_x, self.pos_y), "", self.margin)
-        ]
+        self.pos = self.pos_x, self.pos_y = WIDTH / 2, HEIGHT / 3
+        self.text = ["GAME OVER"]
+        self.game_over = []
+        self.game_over.append(TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
+                                          (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
+        self.game_over.append(
+            TextCreator(self.index + 1, self.text[0], self.font_type, 90, 90, self.base_color, self.hover_color, self.pos,
+                        "", 40))
 
         # Initialize Classes:
         self.pointer = Pointer()

@@ -28,7 +28,7 @@ class Controls(BaseState):
         self.text_right = ["W / ARROW UP", "S / ARROW DOWN", "A / ARROW LEFT", "D / ARROW RIGHT", "SPACE", "ENTER"]
         self.controls = []
         self.controls.append(TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
-                                         (WIDTH / 2, 5 / 6 * HEIGHT), "", 50), )
+                                         (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
         for index, text in enumerate(self.text_left):
             self.controls.append(
                 TextCreator(index + 1, text, self.font_type, 26, 52, self.base_color, self.hover_color, self.pos_left,
