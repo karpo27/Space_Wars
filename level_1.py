@@ -79,6 +79,7 @@ class Level1(BaseState):
 
         # Go to Game Over Screen:
         if self.player.state == "dead":
+            self.next_state = "GAME_OVER"
             self.screen_done = True
 
     def draw(self, surface):
