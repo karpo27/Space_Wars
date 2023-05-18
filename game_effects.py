@@ -92,5 +92,3 @@ class Particle(pygame.sprite.Sprite):
 # Initialize Classes:
 speakers = Speakers()
 
-if __name__ == '__main__':
-    pass

@@ -21,9 +21,7 @@ states = {
 }
 
 # Initialize game Object and run Game:
-game = Game(SCREEN, states, 'SPLASH')
-game.run()
-
-pygame.quit()
-sys.exit()
+if __name__ == '__main__':
+    game = Game(SCREEN, states, 'SPLASH')
+    game.run()
 
