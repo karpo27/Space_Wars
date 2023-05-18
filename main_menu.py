@@ -28,6 +28,7 @@ class Menu(BaseState):
         self.title = TextCreator(0, "GAME PROJECT", self.font_type, 94, 94, self.base_color, self.hover_color,
                                  (WIDTH/2, HEIGHT/3), "GAME PROJECT", 70)
         # Initialize Classes:
+        self.background = BackgroundCreator(*BACKGROUNDS['main_menu'])
         self.options = Options()
         self.controls = Controls()
         self.credits = Credits()
@@ -93,7 +94,7 @@ class Menu(BaseState):
 
     def draw(self, surface):
         # Draw Background:
-        background_main_menu.update()
+        self.background.update()
 
         # Render Main Menu:
         if self.screen == "MENU":

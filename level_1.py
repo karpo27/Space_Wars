@@ -1,9 +1,8 @@
 # Scripts:
-import constants
 from game_effects import *
 from base_state import BaseState
 from pause import *
-from background_creator import *
+from background_creator import BackgroundCreator
 from player import *
 from ui import UI
 from enemies import *
@@ -26,6 +25,7 @@ class Level1(BaseState):
         self.next_state = "GAME_OVER"
 
         # Initialize Classes:
+        self.background = BackgroundCreator(*BACKGROUNDS['level_1'])
         self.player = Player(*PLAYER_ATTRIBUTES)
         self.ui = UI(self.player)
 
@@ -81,6 +81,10 @@ class Level1(BaseState):
         if self.player.state == "dead":
             self.next_state = "GAME_OVER"
             self.screen_done = True
+            ENEMIES_GROUP.empty()
+            BOSSES_GROUP.empty()
+            ENEMIES_BULLETS_GROUP.empty()
+            BOSSES_BULLETS_GROUP.empty()
 
     def draw(self, surface):
         # Check Collisions:
@@ -92,7 +96,7 @@ class Level1(BaseState):
         check_collision(BOSSES_GROUP, self.player_group, False, False)  # Boss Body vs Player Body
 
         # Draw Background:
-        background_lvl_1.update()
+        self.background.update()
 
         # Draw UI:
         self.ui.draw(SCREEN)

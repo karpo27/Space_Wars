@@ -24,6 +24,7 @@ class Pause(BaseState):
                             self.text[0], 70))
 
         # Initialize Classes:
+        self.background = BackgroundCreator(*BACKGROUNDS['level_1'])
         self.options = Options()
         self.controls = Controls()
         self.pointer = Pointer()
@@ -73,7 +74,7 @@ class Pause(BaseState):
 
     def draw(self, surface):
         # Draw Background
-        background_lvl_1.update()
+        self.background.update()
 
         # Render Pause Menu:
         if self.screen == "PAUSE":

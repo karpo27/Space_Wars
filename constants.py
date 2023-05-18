@@ -9,9 +9,9 @@ SCREEN = pygame.display.set_mode(SIZE)
 ICON = 'Images/Screen/icon.png'
 
 # Define Clock for Screen FPS:
-clock = pygame.time.Clock()
-FPS = 60
-dt = clock.tick(FPS)
+#clock = pygame.time.Clock()
+#FPS = 60
+#dt = clock.tick(FPS)
 
 # Mouse Button Constants:
 LEFT = 1
@@ -28,15 +28,13 @@ PARTICLES_GROUP = pygame.sprite.Group()
 
 # Player - Image, Pos, Velocity, HP, Fire Rate:
 PLAYER_ATTRIBUTES = [
-    'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 3, (0.8, 0.8)
+    'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 3, "alive", (0.8, 0.8)
 ]
-
 # Player Bullet - Image, Velocity, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
-    'player_bullet_d': ['Images/Player_Bullet/bullets.png', [0, 0.8 * dt], 'Sounds/laser.wav', 'Sounds/explosion.wav']
+    'player_bullet_d': ['Images/Player_Bullet/bullets.png', [0, 13], 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
-
-# Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Shoots, Bullet Type, Fire Rate, Explosion Scale
+# Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Shoots, Bullet Type, Fire Rate, Explosion Scale:
 ENEMIES = {
     'enemy_a': ['A', 'Images/Enemies/enemy_A.png', (0.6, 0.6), 2, [1, 2], 2, True, ('a1', 'a2'), 200, (0.8, 0.8)],
     'enemy_b': ['B', 'Images/Enemies/enemy_B.png', (0.8, 0.8), 2, [1, 2], 6, True, ('b1', 'b2', 'b3'), 200, (1.5, 1.5)],
@@ -46,8 +44,7 @@ ENEMIES = {
     'enemy_f1': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [1, 2], 3, True, 'f', 100, (1.1, 1.1)],
     'enemy_f2': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [-1, 2], 3, True, 'f', 100, (1.1, 1.1)]
 }
-
-# Enemies Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound
+# Enemies Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 ENEMIES_BULLETS = {
     'e_bullet_a1': ['Images/Enemies_Bullets/enemy_bullet_F.png', 2, [-1, 5], -10, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'e_bullet_a2': ['Images/Enemies_Bullets/enemy_bullet_F.png', 2, [1, 5], 10, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
@@ -59,9 +56,7 @@ ENEMIES_BULLETS = {
     'e_bullet_d': ['Images/Enemies_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'e_bullet_f': ['Images/Enemies_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
-
-
-# Bosses - Category, Image, Scale, Movement Actions, Velocity, HP, Bullet Type, Bullet Pattern Counter, Fire Cycles, Explosion Scale
+# Bosses - Category, Image, Scale, Movement Actions, Velocity, HP, Bullet Type, Bullet Pattern Counter, Fire Cycles, Explosion Scale:
 BOSSES = {
     'boss_a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 1, [0, 0], 100, ('a3', 'a2'), 200, (0.8, 0.8)],
     'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1),
@@ -72,8 +67,7 @@ BOSSES = {
                (2.0, 2.0)],
     'boss_c': ['Images/Bosses/Crimson_Emperor_Ship.png', (0.8, 0.8), 1, [0, 0], 150, ('c1', 'c2'), 200, (0.9, 0.9)],
 }
-
-# Bosses Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound
+# Bosses Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {
     'b_bullet_a1': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [1, 5], 15, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'b_bullet_a2': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [3, 5], 30, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
@@ -96,4 +90,9 @@ BOSSES_BULLETS = {
     'b_bullet_c2': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'b_bullet_c3': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'b_bullet_c4': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
+}
+# Background Assets - Image, Scroll, Music:
+BACKGROUNDS = {
+    'main_menu': ['Images/Main_Menu/main_menu_img.png', 0.45, 'Sounds/main_menu_music.mp3'],
+    'level_1': ['Images/Levels_Background/space_bg.jpg', 0.8, 'Sounds/background.wav']
 }
