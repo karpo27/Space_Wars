@@ -1,5 +1,5 @@
 # Scripts:
-from game_effects import *
+from game_effects import Explosion, Particle, Speakers
 from base_state import BaseState
 from pause import *
 from background_creator import BackgroundCreator
@@ -41,14 +41,29 @@ class Level1(BaseState):
         self.player_group.add(self.player)
 
         # Define Number of Enemies to spawn in Level 1:
-        self.enemies = [ENEMIES['enemy_f1'], ENEMIES['enemy_c'], ENEMIES['enemy_d'], ENEMIES['enemy_e']]
-        #self.enemies = []
-        #self.boss = [BOSSES['boss_b']]
-        self.boss = []
+        self.enemies = []
+        self.enemy_index = 0
+        for enemy_type in ENEMIES_LVL1:
+            self.enemies.append(ENEMIES[f'enemy_{enemy_type}'])
+        self.boss = [BOSSES['boss_b']]
+        self.boss_to_spawn = True
+        #self.boss = []
 
-    def handle_action(self):
+    def handle_pause(self):
         self.next_state = "PAUSE"
         self.screen_done = True
+
+    def spawn_enemy(self):
+        k = self.enemies[self.index]
+        new_enemy = Enemy(*k, self.enemies_bullets_group, self.effects_group)
+        self.enemies_group.add(new_enemy)
+        self.index += 1
+
+    def spawn_boss(self):
+        k = self.boss[0]
+        new_enemy = Boss(*k, self.enemies_bullets_group, self.effects_group)
+        self.enemies_group.add(new_enemy)
+        self.boss_to_spawn = False
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
@@ -64,23 +79,16 @@ class Level1(BaseState):
         elif event.type == pygame.KEYDOWN:
             # Pause Menu Selection:
             if event.key == pygame.K_ESCAPE:
-                self.handle_action()
+                self.handle_pause()
 
         # Spawn Enemies According to Level:
-        if len(self.enemies_group) < len(self.enemies):
+        if self.index <= len(self.enemies) - 1:
             if event.type == Enemy.spawn_enemy:
-                k = self.enemies[len(self.enemies_group)]
-                # Generate Enemies
-                new_enemy = Enemy(*k, self.enemies_bullets_group, self.effects_group)
-                self.enemies_group.add(new_enemy)
-
-        # Spawn Boss According to Level:
-        if len(self.bosses_group) < len(self.boss):
-            if event.type == Enemy.spawn_enemy:
-                k = self.boss[len(self.bosses_group)]
-                # Generate Boss
-                new_boss = Boss(*k, self.enemies_bullets_group, self.effects_group)
-                self.enemies_group.add(new_boss)
+                self.spawn_enemy()
+        else:
+            if len(self.enemies_group) == 0:
+                if self.boss_to_spawn:
+                    self.spawn_boss()
 
         # Go to Game Over Screen:
         if self.player.state == "dead":

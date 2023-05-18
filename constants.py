@@ -19,7 +19,7 @@ RIGHT = 3
 
 # Player - Image, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
 PLAYER_ATTRIBUTES = [
-    'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 3, "alive", (0.85, 0.85), (22, 38)
+    'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 2, "alive", (0.85, 0.85), (22, 38)
 ]
 # Player Bullet - Image, Velocity, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
@@ -87,3 +87,5 @@ BACKGROUNDS = {
     'main_menu': ['Images/Main_Menu/main_menu_img.png', 0.45, 'Sounds/main_menu_music.mp3'],
     'level_1': ['Images/Levels_Background/space_bg.jpg', 0.8, 'Sounds/background.wav']
 }
+# List of Enemies per Level:
+ENEMIES_LVL1 = ['f1', 'c', 'd', 'e', 'a']
