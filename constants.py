@@ -17,9 +17,6 @@ ICON = 'Images/Screen/icon.png'
 LEFT = 1
 RIGHT = 3
 
-# Create Sprites Group:
-PARTICLES_GROUP = pygame.sprite.Group()
-
 # Player - Image, Pos, Velocity, HP, Fire Rate:
 PLAYER_ATTRIBUTES = [
     'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 3, "alive", (0.8, 0.8)

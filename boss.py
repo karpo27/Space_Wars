@@ -5,12 +5,13 @@ from game_effects import Explosion, Particle
 # Modules
 import pygame
 from pygame import mixer
+import random
 import secrets
 
 
 class Boss(pygame.sprite.Sprite):
 
-    def __init__(self, img_path, scale, movement, vel, hp, bullet, bullet_pattern_counter, fire_cycles, explo_scale, bullet_group, explo_group):
+    def __init__(self, img_path, scale, movement, vel, hp, bullet, bullet_pattern_counter, fire_cycles, explo_scale, bullet_group, effects_group):
         super().__init__()
         self.image = pygame.image.load(img_path).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale[0], self.image.get_height() * scale[1]))
@@ -48,7 +49,7 @@ class Boss(pygame.sprite.Sprite):
         self.reload_speed = 1
 
         # Explosion:
-        self.explo_group = explo_group
+        self.effects_group = effects_group
         self.explosion_scale = explo_scale
 
     def move_hor(self, direction):
@@ -142,7 +143,9 @@ class Boss(pygame.sprite.Sprite):
     def destroy(self):
         self.kill()
         explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
-        self.explo_group.add(explosion)
+        self.effects_group.add(explosion)
+        for num_particles in range(random.randrange(5, 30)):
+            Particle(self.rect.center, self.effects_group)
 
     def update(self):
         # Enter Level Animation

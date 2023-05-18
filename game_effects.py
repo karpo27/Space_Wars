@@ -59,7 +59,7 @@ class Explosion(pygame.sprite.Sprite):
 
 
 class Particle(pygame.sprite.Sprite):
-    def __init__(self, pos):
+    def __init__(self, pos, group):
         super().__init__()
         # Size, Color, Speed, Timer:
         self.width = random.randrange(1, 6)
@@ -75,7 +75,7 @@ class Particle(pygame.sprite.Sprite):
         self.kill_timer = 60
 
         # Groups:
-        PARTICLES_GROUP.add(self)
+        group.add(self)
 
     def update(self):
         # Movement:

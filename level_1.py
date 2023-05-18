@@ -30,11 +30,11 @@ class Level1(BaseState):
         self.enemies_group = pygame.sprite.Group()
         self.bosses_group = pygame.sprite.Group()
         self.enemies_bullets_group = pygame.sprite.Group()
-        self.explosions_group = pygame.sprite.Group()
+        self.effects_group = pygame.sprite.Group()
 
         # Initialize Classes:
         self.background = BackgroundCreator(*BACKGROUNDS['level_1'])
-        self.player = Player(*PLAYER_ATTRIBUTES, self.player_bullets_group, self.explosions_group)
+        self.player = Player(*PLAYER_ATTRIBUTES, self.player_bullets_group, self.effects_group)
         self.ui = UI(self.player)
 
         # Add Player Sprites to group:
@@ -71,7 +71,7 @@ class Level1(BaseState):
             if event.type == Enemy.spawn_enemy:
                 k = self.enemies[len(self.enemies_group)]
                 # Generate Enemies
-                new_enemy = Enemy(*k, self.enemies_bullets_group, self.explosions_group)
+                new_enemy = Enemy(*k, self.enemies_bullets_group, self.effects_group)
                 self.enemies_group.add(new_enemy)
 
         # Spawn Boss According to Level:
@@ -79,7 +79,7 @@ class Level1(BaseState):
             if event.type == Enemy.spawn_enemy:
                 k = self.boss[len(self.bosses_group)]
                 # Generate Boss
-                new_boss = Boss(*k, self.enemies_bullets_group, self.explosions_group)
+                new_boss = Boss(*k, self.enemies_bullets_group, self.effects_group)
                 self.enemies_group.add(new_boss)
 
         # Go to Game Over Screen:
@@ -104,17 +104,14 @@ class Level1(BaseState):
         self.player_bullets_group.update()
         self.enemies_group.update()
         self.enemies_bullets_group.update()
-        self.explosions_group.update()
+        self.effects_group.update()
 
         # Draw Sprite Groups:
         self.enemies_bullets_group.draw(SCREEN)
         self.enemies_group.draw(SCREEN)
         self.player_bullets_group.draw(SCREEN)
         self.player_group.draw(SCREEN)
-        self.explosions_group.draw(SCREEN)
-
-        PARTICLES_GROUP.draw(SCREEN)
-        PARTICLES_GROUP.update()
+        self.effects_group.draw(SCREEN)
 
         # Extras:
         speakers.action(speakers.x, speakers.y, speakers.state)

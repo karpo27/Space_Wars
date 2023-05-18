@@ -9,7 +9,7 @@ import math
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, img_path, pos, vel, hp, lives, state, explo_scale, bullet_group, explo_group):
+    def __init__(self, img_path, pos, vel, hp, lives, state, explo_scale, bullet_group, effects_group):
         super().__init__()
         self.img_path = img_path
         self.image = pygame.image.load(self.img_path).convert_alpha()
@@ -46,7 +46,7 @@ class Player(pygame.sprite.Sprite):
         self.reload_speed = 1
 
         # Explosion:
-        self.explo_group = explo_group
+        self.effects_group = effects_group
         self.explosion_scale = explo_scale
 
         # Rotation:
@@ -65,9 +65,9 @@ class Player(pygame.sprite.Sprite):
 
     def destroy(self):
         explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
-        self.explo_group.add(explosion)
+        self.effects_group.add(explosion)
         for num_particles in range(random.randrange(20, 38)):
-            Particle(self.rect.center)
+            Particle(self.rect.center, self.effects_group)
         if self.lives > 0:
             self.lives -= 1
             self.hp = 3
