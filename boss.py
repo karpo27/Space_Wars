@@ -10,7 +10,7 @@ import secrets
 
 class Boss(pygame.sprite.Sprite):
 
-    def __init__(self, group, img_path, scale, movement, vel, hp, bullet, bullet_pattern_counter, fire_cycles, explosion_scale):
+    def __init__(self, img_path, scale, movement, vel, hp, bullet, bullet_pattern_counter, fire_cycles, explo_scale, bullet_group, explo_group):
         super().__init__()
         self.image = pygame.image.load(img_path).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale[0], self.image.get_height() * scale[1]))
@@ -35,7 +35,7 @@ class Boss(pygame.sprite.Sprite):
         self.hp = hp
 
         # Bullet:
-        self.group = group
+        self.bullet_group = bullet_group
         self.bullet = bullet
         self.bullet_index = 0
         self.bullet_pattern_counter = bullet_pattern_counter
@@ -48,7 +48,8 @@ class Boss(pygame.sprite.Sprite):
         self.reload_speed = 1
 
         # Explosion:
-        self.explosion_scale = explosion_scale
+        self.explo_group = explo_group
+        self.explosion_scale = explo_scale
 
     def move_hor(self, direction):
         if self.rect.x == 1/20 * WIDTH:
@@ -112,7 +113,7 @@ class Boss(pygame.sprite.Sprite):
                 if self.fire_cycles[self.bullet_index][1] >= self.bullet_type_qty:
                     if self.bullet_type_counter >= 20:
                         for bullet_type in self.bullet[self.bullet_index]:
-                            BossBullet(self.rect.center, self.group, *BOSSES_BULLETS[f'b_bullet_{bullet_type}'])
+                            BossBullet(self.rect.center, *BOSSES_BULLETS[f'b_bullet_{bullet_type}'], self.bullet_group)
                         self.bullet_type_counter = 0
                         self.bullet_type_qty += 1
 
@@ -141,7 +142,7 @@ class Boss(pygame.sprite.Sprite):
     def destroy(self):
         self.kill()
         explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
-        EXPLOSION_GROUP.add(explosion)
+        self.explo_group.add(explosion)
 
     def update(self):
         # Enter Level Animation
@@ -175,7 +176,7 @@ class Boss(pygame.sprite.Sprite):
 
 class BossBullet(pygame.sprite.Sprite):
 
-    def __init__(self, pos, group, image, movement, vel, angle, sound, col_sound):
+    def __init__(self, pos, image, movement, vel, angle, sound, col_sound, group):
         super().__init__()
         self.image = pygame.image.load(image).convert_alpha()
         self.image_copy = self.image

@@ -9,7 +9,7 @@ import math
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, img_path, pos, vel, hp, lives, state, explosion_scale):
+    def __init__(self, img_path, pos, vel, hp, lives, state, explo_scale, bullet_group, explo_group):
         super().__init__()
         self.img_path = img_path
         self.image = pygame.image.load(self.img_path).convert_alpha()
@@ -36,16 +36,18 @@ class Player(pygame.sprite.Sprite):
 
         # Initial Movement Animation:
         self.enter_animation = True
-        self.y_enter = 5 / 6 * HEIGHT
+        self.y_enter = 5/6 * HEIGHT
         self.vel_enter_y = 0.2
 
         # Bullet:
+        self.bullet_group = bullet_group
         self.ref_time = 30
         self.fire_rate = 30
         self.reload_speed = 1
 
         # Explosion:
-        self.explosion_scale = explosion_scale
+        self.explo_group = explo_group
+        self.explosion_scale = explo_scale
 
         # Rotation:
         self.angle = 0
@@ -63,7 +65,7 @@ class Player(pygame.sprite.Sprite):
 
     def destroy(self):
         explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
-        EXPLOSION_GROUP.add(explosion)
+        self.explo_group.add(explosion)
         for num_particles in range(random.randrange(20, 38)):
             Particle(self.rect.center)
         if self.lives > 0:
@@ -121,7 +123,7 @@ class Player(pygame.sprite.Sprite):
             if key[pygame.K_SPACE]:
                 # Create Player Bullet Object
                 if self.fire_rate >= self.ref_time:
-                    PlayerBullet(self.rect.center, *PLAYER_BULLETS['player_bullet_d'])
+                    PlayerBullet(self.rect.center, *PLAYER_BULLETS['player_bullet_d'], self.bullet_group)
                     self.fire_rate = 0
 
         # Invulnerability:
@@ -140,7 +142,7 @@ class Player(pygame.sprite.Sprite):
 
 
 class PlayerBullet(pygame.sprite.Sprite):
-    def __init__(self, pos, image, vel, sound, col_sound):
+    def __init__(self, pos, image, vel, sound, col_sound, group):
         super().__init__()
         self.image = pygame.image.load(image).convert_alpha()
         self.rect = self.image.get_rect()
@@ -154,7 +156,7 @@ class PlayerBullet(pygame.sprite.Sprite):
         self.col_sound = mixer.Sound(col_sound)
 
         # Groups:
-        PLAYER_BULLETS_GROUP.add(self)
+        group.add(self)
 
     def update(self):
         # Player Bullet Movement:

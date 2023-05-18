@@ -92,12 +92,5 @@ class Particle(pygame.sprite.Sprite):
 # Initialize Classes:
 speakers = Speakers()
 
-
-# Create Sprites Group:
-
-
-# Add Some Sprites to group
-
-
 if __name__ == '__main__':
     pass
