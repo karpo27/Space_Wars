@@ -43,8 +43,8 @@ class Level1(BaseState):
         # Define Number of Enemies to spawn in Level 1:
         self.enemies = [ENEMIES['enemy_f1'], ENEMIES['enemy_c'], ENEMIES['enemy_d'], ENEMIES['enemy_e']]
         #self.enemies = []
-        self.boss = [BOSSES['boss_b']]
-        #self.boss = []
+        #self.boss = [BOSSES['boss_b']]
+        self.boss = []
 
     def handle_action(self):
         self.next_state = "PAUSE"
