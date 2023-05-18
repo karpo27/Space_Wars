@@ -117,8 +117,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def destroy(self):
         self.kill()
-        explosion = Explosion(self.rect.x, self.rect.y, self.explosion_scale)
-        self.effects_group.add(explosion)
+        self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
             Particle(self.rect.center, self.effects_group)
 

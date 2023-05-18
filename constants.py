@@ -17,6 +17,11 @@ ICON = 'Images/Screen/icon.png'
 LEFT = 1
 RIGHT = 3
 
+# Background Assets - Image, Scroll, Music:
+BACKGROUNDS = {
+    'main_menu': ['Images/Main_Menu/main_menu_img.png', 0.45, 'Sounds/main_menu_music.mp3'],
+    'level_1': ['Images/Levels_Background/space_bg.jpg', 0.8, 'Sounds/background.wav']
+}
 # Player - Image, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
 PLAYER_ATTRIBUTES = [
     'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 2, "alive", (0.85, 0.85), (22, 38)
@@ -49,14 +54,15 @@ ENEMIES_BULLETS = {
 }
 # Bosses - Category, Image, Scale, Movement Actions, Velocity, HP, Bullet Type, Bullet Pattern Counter, Fire Cycles, Explosion Scale:
 BOSSES = {
-    'boss_a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 1, [0, 0], 100, ('a3', 'a2'), 200, (0.8, 0.8)],
+    'boss_a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 1, [0, 0], 100, ('a3', 'a2'), 200, (0.8, 0.8), (60, 80)],
     'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1),
                [1, 2],
                [-1, 0], 125,
                [['a2', 'b0', 'b2'], ['a1', 'b1'], ['b0'], ['b1'], ['b2'], ['b3'], ['b4'], ['b5'], ['b6'], ['b0'], ['a1'], ['a2'], ['a3'], ['a4'], ['a5'], ['a6'], ['b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']], 200,
                [(0, 5), (100, 4), (200, 2), (205, 2), (210, 2), (215, 2), (220, 2), (225, 2), (230, 2), (240, 2), (245, 2), (250, 2), (255, 2), (260, 2), (265, 2), (270, 2), (280, 3)],
-               (2.0, 2.0)],
-    'boss_c': ['Images/Bosses/Crimson_Emperor_Ship.png', (0.8, 0.8), 1, [0, 0], 150, ('c1', 'c2'), 200, (0.9, 0.9)],
+               (2.0, 2.0),
+               (60, 80)],
+    'boss_c': ['Images/Bosses/Crimson_Emperor_Ship.png', (0.8, 0.8), 1, [0, 0], 150, ('c1', 'c2'), 200, (0.9, 0.9), (60, 80)],
 }
 # Bosses Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {
@@ -82,10 +88,6 @@ BOSSES_BULLETS = {
     'b_bullet_c3': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'b_bullet_c4': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
-# Background Assets - Image, Scroll, Music:
-BACKGROUNDS = {
-    'main_menu': ['Images/Main_Menu/main_menu_img.png', 0.45, 'Sounds/main_menu_music.mp3'],
-    'level_1': ['Images/Levels_Background/space_bg.jpg', 0.8, 'Sounds/background.wav']
-}
 # List of Enemies per Level:
 ENEMIES_LVL1 = ['f1', 'c', 'd', 'e', 'a']
+#ENEMIES_LVL1 = []
