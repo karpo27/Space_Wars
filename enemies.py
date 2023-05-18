@@ -14,7 +14,7 @@ class Enemy(pygame.sprite.Sprite):
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
-    def __init__(self, category, img_path, scale, movement, vel, hp, shoots, bullet, fire_rate, explosion_scale):
+    def __init__(self, group, category, img_path, scale, movement, vel, hp, shoots, bullet, fire_rate, explosion_scale):
         super().__init__()
         self.category = category
         self.image = pygame.image.load(img_path).convert_alpha()
@@ -33,6 +33,7 @@ class Enemy(pygame.sprite.Sprite):
         self.hp = hp
 
         # Bullet:
+        self.group = group
         self.shoots = shoots
         self.bullet = bullet
         self.ref_time = fire_rate
@@ -100,7 +101,7 @@ class Enemy(pygame.sprite.Sprite):
             # Create Enemy Bullet Object (fix later side of the bullet)
             if self.shoots and self.fire_rate >= self.ref_time:
                 for bullet_type in self.bullet:
-                    EnemyBullet(self.rect.center, *ENEMIES_BULLETS[f'e_bullet_{bullet_type}'])
+                    EnemyBullet(self.rect.center, self.group, *ENEMIES_BULLETS[f'e_bullet_{bullet_type}'])
                     self.fire_rate = 0
             # Reset Variables
             elif self.fire_rate < self.ref_time:
@@ -135,7 +136,7 @@ class Enemy(pygame.sprite.Sprite):
 
 
 class EnemyBullet(pygame.sprite.Sprite):
-    def __init__(self, pos, image, movement, vel, angle, sound, col_sound):
+    def __init__(self, pos, group, image, movement, vel, angle, sound, col_sound):
         super().__init__()
         self.image = pygame.image.load(image).convert_alpha()
         self.image_copy = self.image
@@ -152,7 +153,7 @@ class EnemyBullet(pygame.sprite.Sprite):
         self.col_sound = mixer.Sound(col_sound)
 
         # Groups:
-        ENEMIES_BULLETS_GROUP.add(self)
+        group.add(self)
 
     def move_vertical(self):
         self.rect.y += self.vel_y

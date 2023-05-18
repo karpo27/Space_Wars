@@ -19,10 +19,6 @@ RIGHT = 3
 
 # Create Sprites Group:
 PLAYER_BULLETS_GROUP = pygame.sprite.Group()
-ENEMIES_GROUP = pygame.sprite.Group()
-ENEMIES_BULLETS_GROUP = pygame.sprite.Group()
-BOSSES_GROUP = pygame.sprite.Group()
-BOSSES_BULLETS_GROUP = pygame.sprite.Group()
 EXPLOSION_GROUP = pygame.sprite.Group()
 PARTICLES_GROUP = pygame.sprite.Group()
 
@@ -61,7 +57,7 @@ BOSSES = {
     'boss_a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 1, [0, 0], 100, ('a3', 'a2'), 200, (0.8, 0.8)],
     'boss_b': ['Images/Bosses/General_Bugfix_Ship.png', (1.1, 1.1),
                [1, 2],
-               [-1, 0], 125,
+               [-1, 0], 3,
                [['a2', 'b0', 'b2'], ['a1', 'b1'], ['b0'], ['b1'], ['b2'], ['b3'], ['b4'], ['b5'], ['b6'], ['b0'], ['a1'], ['a2'], ['a3'], ['a4'], ['a5'], ['a6'], ['b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']], 200,
                [(0, 5), (100, 4), (200, 2), (205, 2), (210, 2), (215, 2), (220, 2), (225, 2), (230, 2), (240, 2), (245, 2), (250, 2), (255, 2), (260, 2), (265, 2), (270, 2), (280, 3)],
                (2.0, 2.0)],

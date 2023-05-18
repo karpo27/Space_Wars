@@ -38,7 +38,6 @@ class Game(object):
         if self.state_name == "GAME_OVER" or self.states['PAUSE'].next_state == "MENU":
             self.reset_game()
         self.state = self.states[self.state_name]
-        print(self.state)
 
     def reset_game(self):
         del self.states['LEVEL_1']

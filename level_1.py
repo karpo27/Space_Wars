@@ -31,6 +31,9 @@ class Level1(BaseState):
 
         # Create Sprites Group:
         self.player_group = pygame.sprite.Group()
+        self.enemies_group = pygame.sprite.Group()
+        self.bosses_group = pygame.sprite.Group()
+        self.enemies_bullets_group = pygame.sprite.Group()
 
         # Add Player Sprites to group:
         self.player_group.add(self.player)
@@ -38,8 +41,8 @@ class Level1(BaseState):
         # Define Number of Enemies to spawn in Level 1:
         self.enemies = [ENEMIES['enemy_f1'], ENEMIES['enemy_c'], ENEMIES['enemy_d'], ENEMIES['enemy_e']]
         #self.enemies = []
-        #self.boss = [BOSSES['boss_b']]
-        self.boss = []
+        self.boss = [BOSSES['boss_b']]
+        #self.boss = []
 
     def handle_action(self):
         self.next_state = "PAUSE"
@@ -62,38 +65,31 @@ class Level1(BaseState):
                 self.handle_action()
 
         # Spawn Enemies According to Level:
-        if len(ENEMIES_GROUP) < len(self.enemies):
+        if len(self.enemies_group) < len(self.enemies):
             if event.type == Enemy.spawn_enemy:
-                k = self.enemies[len(ENEMIES_GROUP)]
+                k = self.enemies[len(self.enemies_group)]
                 # Generate Enemies
-                new_enemy = Enemy(*k)
-                ENEMIES_GROUP.add(new_enemy)
+                new_enemy = Enemy(self.enemies_bullets_group, *k)
+                self.enemies_group.add(new_enemy)
 
         # Spawn Boss According to Level:
-        if len(BOSSES_GROUP) < len(self.boss):
+        if len(self.bosses_group) < len(self.boss):
             if event.type == Enemy.spawn_enemy:
-                k = self.boss[len(BOSSES_GROUP)]
+                k = self.boss[len(self.bosses_group)]
                 # Generate Boss
-                new_boss = Boss(*k)
-                BOSSES_GROUP.add(new_boss)
+                new_boss = Boss(self.enemies_bullets_group, *k)
+                self.enemies_group.add(new_boss)
 
         # Go to Game Over Screen:
         if self.player.state == "dead":
             self.next_state = "GAME_OVER"
             self.screen_done = True
-            ENEMIES_GROUP.empty()
-            BOSSES_GROUP.empty()
-            ENEMIES_BULLETS_GROUP.empty()
-            BOSSES_BULLETS_GROUP.empty()
 
     def draw(self, surface):
         # Check Collisions:
-        check_collision(PLAYER_BULLETS_GROUP, ENEMIES_GROUP, True, False)  # Player Bullet vs Enemy
-        check_collision(PLAYER_BULLETS_GROUP, BOSSES_GROUP, True, False)  # Player Bullet vs Boss
-        check_collision(ENEMIES_BULLETS_GROUP, self.player_group, True, False)  # Enemy Bullet vs Player
-        check_collision(BOSSES_BULLETS_GROUP, self.player_group, True, False)  # Boss Bullet vs Player
-        check_collision(ENEMIES_GROUP, self.player_group, False, False)  # Enemy Body vs Player Body
-        check_collision(BOSSES_GROUP, self.player_group, False, False)  # Boss Body vs Player Body
+        check_collision(PLAYER_BULLETS_GROUP, self.enemies_group, True, False)  # Player Bullet vs Enemy
+        check_collision(self.enemies_bullets_group, self.player_group, True, False)  # Enemy Bullet vs Player
+        check_collision(self.enemies_group, self.player_group, False, False)  # Enemy Body vs Player Body
 
         # Draw Background:
         self.background.update()
@@ -104,16 +100,12 @@ class Level1(BaseState):
         # Update Sprites Group:
         self.player_group.update()
         PLAYER_BULLETS_GROUP.update()
-        ENEMIES_GROUP.update()
-        ENEMIES_BULLETS_GROUP.update()
-        BOSSES_GROUP.update()
-        BOSSES_BULLETS_GROUP.update()
+        self.enemies_group.update()
+        self.enemies_bullets_group.update()
 
         # Draw Sprite Groups:
-        ENEMIES_BULLETS_GROUP.draw(SCREEN)
-        ENEMIES_GROUP.draw(SCREEN)
-        BOSSES_BULLETS_GROUP.draw(SCREEN)
-        BOSSES_GROUP.draw(SCREEN)
+        self.enemies_bullets_group.draw(SCREEN)
+        self.enemies_group.draw(SCREEN)
 
         PLAYER_BULLETS_GROUP.draw(SCREEN)
         self.player_group.draw(SCREEN)
