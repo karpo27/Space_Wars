@@ -35,10 +35,10 @@ class Game(object):
         next_state = self.state.next_state
         self.state.screen_done = False
         self.state_name = next_state
-        if self.state_name == "GAME_OVER":
+        if self.state_name == "GAME_OVER" or self.states['PAUSE'].next_state == "MENU":
             self.reset_game()
         self.state = self.states[self.state_name]
-        print(self.state_name)
+        print(self.state)
 
     def reset_game(self):
         del self.states['LEVEL_1']
