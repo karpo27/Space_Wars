@@ -27,9 +27,9 @@ BACKGROUNDS = {
 PLAYER_ATTRIBUTES = [
     'Images/Player/player_img.png', [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 2, "alive", (0.85, 0.85), (22, 38)
 ]
-# Player Bullet - Image, Velocity, Bullet Sound, Explosion Sound:
+# Player Bullet - Path, Velocity, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
-    'player_bullet_d': ['Images/Player_Bullet/bullets.png', [0, 13], 'Sounds/laser.wav', 'Sounds/explosion.wav']
+    'player_bullet_d': ['Images/Player_Bullet/', [0, 13], 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 # Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Shoots, Bullet Type, Fire Rate, Explosion Scale, Particles Range:
 ENEMIES = {
@@ -91,5 +91,5 @@ BOSSES_BULLETS = {
     'b_bullet_c4': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 # List of Enemies per Level:
-ENEMIES_LVL1 = ['f1', 'c', 'd', 'e', 'a']
+ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1', 'f2']
 #ENEMIES_LVL1 = []
