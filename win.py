@@ -15,14 +15,17 @@ class Win(BaseState):
     def __init__(self):
         super().__init__()
         # Screen Text and Options:
-        self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/7
+        self.pos = self.pos_x, self.pos_y = WIDTH / 2, HEIGHT / 7
         self.text = ["CONGRATULATIONS"]
         self.win = []
-        self.win.append(TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
-                                    (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
         self.win.append(
-            TextCreator(self.index + 1, self.text[0], self.font_type, 84, 84, self.base_color, self.hover_color, self.pos,
+            TextCreator(self.index + 1, self.text[0], self.font_type, 84, 84, self.base_color, self.hover_color,
+                        self.pos,
                         "", 40))
+        self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
+                                (WIDTH/2, 9/10 * HEIGHT), "", 50)
+        self.back_ref_time = 600
+        self.back_time = 0
 
         # Create Sprites Group:
         self.effects_group = pygame.sprite.Group()
@@ -55,7 +58,8 @@ class Win(BaseState):
             self.quit = True
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
-                self.handle_action()
+                if self.back_time >= self.back_ref_time:
+                    self.handle_action()
 
     def draw(self, surface):
         # Draw Background:
@@ -65,7 +69,13 @@ class Win(BaseState):
         # Render Win:
         for text in self.win:
             text.render_text(self.index)
-        self.pointer.draw_rotated(self.win[self.index].text_position, "CONGRATULATIONS")
+
+        # Render Back Text:
+        if self.back_time >= self.back_ref_time:
+            self.back.render_text(self.index)
+            self.pointer.draw_rotated(self.back.text_position, "CONGRATULATIONS")
+        else:
+            self.back_time += 1
 
         # Update Sprites Group:
         self.effects_group.update()
