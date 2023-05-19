@@ -170,9 +170,6 @@ class PlayerBullet(pygame.sprite.Sprite):
         group.add(self)
 
     def update(self):
-        # Player Bullet Movement:
-        self.rect.y -= self.vel_y
-
         # Animation
         animation_delay = 6
         self.counter += 1
@@ -182,5 +179,8 @@ class PlayerBullet(pygame.sprite.Sprite):
             self.index += 1
             self.image = self.sprites[self.index]
 
+        # Movement:
         if self.rect.bottom < 0:
             self.kill()
+        else:
+            self.rect.y -= self.vel_y

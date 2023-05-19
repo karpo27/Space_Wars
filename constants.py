@@ -41,17 +41,17 @@ ENEMIES = {
     'enemy_f1': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [1, 2], 3, True, 'f', 100, (1.1, 1.1), (12, 30)],
     'enemy_f2': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [-1, 2], 3, True, 'f', 100, (1.1, 1.1), (12, 30)]
 }
-# Enemies Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound:
+# Enemies Bullets - Path, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 ENEMIES_BULLETS = {
-    'e_bullet_a1': ['Images/Enemies_Bullets/enemy_bullet_F.png', 2, [-1, 5], -10, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'e_bullet_a2': ['Images/Enemies_Bullets/enemy_bullet_F.png', 2, [1, 5], 10, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'e_bullet_b1': ['Images/Enemies_Bullets/enemy_bullet_F.png', 2, [-6, 6], -45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'e_bullet_b2': ['Images/Enemies_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'e_bullet_b3': ['Images/Enemies_Bullets/enemy_bullet_F.png', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'e_bullet_c1': ['Images/Enemies_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'e_bullet_c2': ['Images/Enemies_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'e_bullet_d': ['Images/Enemies_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'e_bullet_f': ['Images/Enemies_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
+    'e_bullet_a1': ['Images/Enemies_Bullets/', 2, [-1, 5], -10, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_a2': ['Images/Enemies_Bullets/', 2, [1, 5], 10, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_b1': ['Images/Enemies_Bullets/', 2, [-6, 6], -45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_b2': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_b3': ['Images/Enemies_Bullets/', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_c1': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_c2': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_d': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_f': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 # Bosses - Category, Image, Scale, Movement Actions, Velocity, HP, Bullet Type, Bullet Pattern Counter, Fire Cycles, Explosion Scale, Particles Range:
 BOSSES = {
