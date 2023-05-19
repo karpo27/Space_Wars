@@ -91,5 +91,5 @@ BOSSES_BULLETS = {
     'b_bullet_c4': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 # List of Enemies per Level:
-ENEMIES_LVL1 = ['f1', 'c', 'd', 'e', 'a']
-#ENEMIES_LVL1 = []
+#ENEMIES_LVL1 = ['f1', 'c', 'd', 'e', 'a']
+ENEMIES_LVL1 = []

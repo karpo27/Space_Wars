@@ -32,12 +32,23 @@ class Win(BaseState):
         self.pointer = Pointer()
 
         # Effects:
-        self.ref_time = 30
-        self.fire_rate = 30
+        self.ref_time = 70
+        self.fire_rate = 70
 
     def handle_action(self):
         self.next_state = "MENU"
         self.screen_done = True
+
+    def create_fireworks(self):
+        if self.fire_rate >= self.ref_time:
+            self.fire_rate = 0
+            pos = random.randrange(50, WIDTH - 50), random.randrange(50, HEIGHT - 50)
+            for num_particles in range(random.randrange(65, 95)):
+                Particle(pos, self.effects_group)
+
+        # Reset Fire Bullet Variables:
+        if self.fire_rate < self.ref_time:
+            self.fire_rate += 1
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
@@ -46,19 +57,12 @@ class Win(BaseState):
             if event.key == pygame.K_RETURN:
                 self.handle_action()
 
-        # Create Player Bullet Object
-        if self.fire_rate >= self.ref_time:
-            for num_particles in range(random.randrange(60, 80)):
-                Particle(self.rect.center, self.effects_group)
-        # Reset Fire Bullet Variables:
-        if self.fire_rate < self.ref_time:
-            self.fire_rate += 1
-
     def draw(self, surface):
         # Draw Background:
         self.background.update()
+        self.create_fireworks()
 
-        # Render Game Over:
+        # Render Win:
         for text in self.win:
             text.render_text(self.index)
         self.pointer.draw_rotated(self.win[self.index].text_position, "CONGRATULATIONS")
