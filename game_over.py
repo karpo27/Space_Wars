@@ -25,17 +25,15 @@ class GameOver(BaseState):
         self.pointer = Pointer()
 
     def handle_action(self):
-        if self.index == 0:
-            self.next_state = "LEVEL_1"
-            self.screen_done = True
+        self.next_state = "MENU"
+        self.screen_done = True
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
             self.quit = True
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
-                self.next_state = "MENU"
-                self.screen_done = True
+                self.handle_action()
 
     def draw(self, surface):
         # Draw Background:

@@ -5,6 +5,7 @@ from game import Game
 from main_menu import Menu
 from level_1 import Level1
 from pause import Pause
+from win import Win
 from game_over import GameOver
 
 # Modules:
@@ -17,7 +18,8 @@ states = {
     'MENU': Menu(),
     'LEVEL_1': Level1(),
     'PAUSE': Pause(),
-    'GAME_OVER': GameOver(),
+    'WIN': Win(),
+    'GAME_OVER': GameOver()
 }
 
 # Initialize game Object and run Game:

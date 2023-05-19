@@ -24,7 +24,6 @@ class BackgroundCreator:
         self.music.play(-1)
         self.music.set_volume(0.01)
         '''
-
         # Show Background:
         SCREEN.blit(self.background, (0, -self.bg_height + self.scroll))  # Position 2
         SCREEN.blit(self.background, (0, self.scroll))  # Position 1

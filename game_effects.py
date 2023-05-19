@@ -70,8 +70,8 @@ class Particle(pygame.sprite.Sprite):
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
         self.rect.center = pos
-        self.vel_x = random.randrange(-16, 16)
-        self.vel_y = random.randrange(-16, 16)
+        self.vel_x = random.randrange(-14, 14)
+        self.vel_y = random.randrange(-14, 14)
         self.kill_timer = 60
 
         # Groups:

@@ -20,7 +20,8 @@ RIGHT = 3
 # Background Assets - Image, Scroll, Music:
 BACKGROUNDS = {
     'main_menu': ['Images/Main_Menu/main_menu_img.png', 0.45, 'Sounds/main_menu_music.mp3'],
-    'level_1': ['Images/Levels_Background/space_bg.jpg', 0.8, 'Sounds/background.wav']
+    'level_1': ['Images/Levels_Background/level_1.jpg', 0.8, 'Sounds/background.wav'],
+    'win': ['Images/Levels_Background/win.jpg', 0, 'Sounds/background.wav']
 }
 # Player - Image, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
 PLAYER_ATTRIBUTES = [

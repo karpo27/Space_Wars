@@ -35,7 +35,7 @@ class Game(object):
         next_state = self.state.next_state
         self.state.screen_done = False
         self.state_name = next_state
-        if self.state_name == "GAME_OVER" or self.states['PAUSE'].next_state == "MENU":
+        if self.state_name in ["GAME_OVER", "WIN"] or self.states['PAUSE'].next_state == "MENU":
             self.reset_game()
         self.state = self.states[self.state_name]
 

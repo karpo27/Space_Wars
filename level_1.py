@@ -54,15 +54,13 @@ class Level1(BaseState):
         self.screen_done = True
 
     def spawn_enemy(self):
-        k = self.enemies[self.index]
-        new_enemy = Enemy(*k, self.enemies_bullets_group, self.effects_group)
-        self.enemies_group.add(new_enemy)
-        self.index += 1
+        k = self.enemies[self.enemy_index]
+        self.enemies_group.add(Enemy(*k, self.enemies_bullets_group, self.effects_group))
+        self.enemy_index += 1
 
     def spawn_boss(self):
         k = self.boss[0]
-        new_enemy = Boss(*k, self.enemies_bullets_group, self.effects_group)
-        self.enemies_group.add(new_enemy)
+        self.enemies_group.add(Boss(*k, self.enemies_bullets_group, self.effects_group))
         self.boss_to_spawn = False
 
     def get_event(self, event):
@@ -82,7 +80,7 @@ class Level1(BaseState):
                 self.handle_pause()
 
         # Spawn Enemies According to Level:
-        if self.index <= len(self.enemies) - 1:
+        if self.enemy_index <= len(self.enemies) - 1:
             if event.type == Enemy.spawn_enemy:
                 self.spawn_enemy()
         else:
@@ -90,8 +88,12 @@ class Level1(BaseState):
                 if self.boss_to_spawn:
                     self.spawn_boss()
 
+        # Go to Win Screen:
+        if self.player.state == "alive" and self.boss_to_spawn == False and len(self.enemies_group) == 0:
+            self.next_state = "WIN"
+            self.screen_done = True
         # Go to Game Over Screen:
-        if self.player.state == "dead":
+        elif self.player.state == "dead":
             self.next_state = "GAME_OVER"
             self.screen_done = True
 
