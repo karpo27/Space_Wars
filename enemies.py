@@ -1,6 +1,6 @@
 # Scripts
 from constants import *
-from game_effects import Explosion, Particle
+from game_effects import Explosion, Particle, HitParticle
 
 # Modules
 import pygame
@@ -114,8 +114,12 @@ class Enemy(pygame.sprite.Sprite):
                 self.fire_rate += self.reload_speed
 
     def get_hit(self):
+        # Hit Particles:
+        if self.hp > 1:
+            for num_particles in range(random.randrange(6, 18)):
+                HitParticle(self.rect.center, (0, 0, 255), (135, 206, 250), -1, self.effects_group)
+        # HP:
         self.hp -= 1
-
         if self.hp <= 0:
             self.destroy()
 

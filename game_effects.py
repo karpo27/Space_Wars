@@ -70,9 +70,9 @@ class Particle(pygame.sprite.Sprite):
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
         self.rect.center = pos
-        self.vel_x = random.randrange(-14, 14)
-        self.vel_y = random.randrange(-14, 14)
-        self.kill_timer = 60
+        self.vel_x = random.randrange(-12, 12)
+        self.vel_y = random.randrange(-12, 12)
+        self.kill_timer = 55
 
         # Groups:
         group.add(self)
@@ -81,7 +81,36 @@ class Particle(pygame.sprite.Sprite):
         # Movement:
         self.rect.x += self.vel_x
         self.rect.y += self.vel_y
+        # Timer
+        if self.kill_timer == 0:
+            self.kill()
+        else:
+            self.kill_timer -= 1
 
+
+class HitParticle(pygame.sprite.Sprite):
+    def __init__(self, pos, color_1, color_2, factor, group):
+        super().__init__()
+        # Size, Color, Speed, Timer:
+        self.width = random.randrange(1, 5)
+        self.height = self.width
+        self.size = self.width, self.height
+        self.image = pygame.Surface(self.size)
+        self.color = random.choices([color_1, color_2])[0]
+        self.image.fill(self.color)
+        self.rect = self.image.get_rect()
+        self.rect.center = pos
+        self.vel_x = random.randrange(-5, 5)
+        self.vel_y = random.randrange(1, 5) * factor
+        self.kill_timer = 20
+
+        # Groups:
+        group.add(self)
+
+    def update(self):
+        # Movement:
+        self.rect.x += self.vel_x
+        self.rect.y += self.vel_y
         # Timer
         if self.kill_timer == 0:
             self.kill()
