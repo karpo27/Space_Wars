@@ -100,9 +100,9 @@ class HitParticle(pygame.sprite.Sprite):
         self.image.fill(self.color)
         self.rect = self.image.get_rect()
         self.rect.center = pos
-        self.vel_x = random.randrange(-5, 5)
-        self.vel_y = random.randrange(1, 5) * factor
-        self.kill_timer = 20
+        self.vel_x = random.randrange(-4, 4)
+        self.vel_y = random.randrange(1, 4) * factor
+        self.kill_timer = 18
 
         # Groups:
         group.add(self)

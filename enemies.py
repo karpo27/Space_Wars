@@ -113,7 +113,7 @@ class Enemy(pygame.sprite.Sprite):
             elif self.fire_rate < self.ref_time:
                 self.fire_rate += self.reload_speed
 
-    def get_hit(self):
+    def get_hit(self, col_type):
         # Hit Particles:
         if self.hp > 1:
             for num_particles in range(random.randrange(6, 18)):

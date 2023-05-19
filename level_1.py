@@ -98,9 +98,9 @@ class Level1(BaseState):
 
     def draw(self, surface):
         # Check Collisions:
-        check_collision(self.player_bullets_group, self.enemies_group, True, False)  # Player Bullet vs Enemy
-        check_collision(self.enemies_bullets_group, self.player_group, True, False)  # Enemy Bullet vs Player
-        check_collision(self.enemies_group, self.player_group, False, False)  # Enemy Body vs Player Body
+        check_collision(self.player_bullets_group, self.enemies_group, True, False, "bullet")  # Player Bullet vs Enemy
+        check_collision(self.enemies_bullets_group, self.player_group, True, False, "bullet")  # Enemy Bullet vs Player
+        check_collision(self.enemies_group, self.player_group, False, False, "body")  # Enemy Body vs Player Body
 
         # Draw Background:
         self.background.update()

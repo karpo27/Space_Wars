@@ -53,8 +53,14 @@ class Player(pygame.sprite.Sprite):
         self.explosion_scale = explo_scale
         self.part_min, self.part_max = part_range
 
-    def get_hit(self):
+    def get_hit(self, col_type):
         if not self.invulnerable:
+            # Hit Particles:
+            if self.hp > 1 and col_type == "bullet":
+                for num_particles in range(random.randrange(6, 16)):
+                    HitParticle(self.rect.center, (0, 255, 0), (134, 238, 144), 1, self.effects_group)
+
+            # HP:
             self.hp_animation = True
             self.hp -= 1
             self.invulnerable = True

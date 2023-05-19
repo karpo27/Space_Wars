@@ -139,7 +139,7 @@ class Boss(pygame.sprite.Sprite):
             self.fire_cycles_counter = 0
             self.bullet_pattern_counter = 0
 
-    def get_hit(self):
+    def get_hit(self, col_type):
         # Hit Particles:
         if self.hp > 1:
             for num_particles in range(random.randrange(6, 18)):
