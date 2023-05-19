@@ -11,7 +11,7 @@ import secrets
 
 class Boss(pygame.sprite.Sprite):
 
-    def __init__(self, img_path, scale, movement, vel, hp, bullet, bullet_pattern_counter, fire_cycles, explo_scale, part_range, bullet_group, effects_group):
+    def __init__(self, img_path, scale, movement, vel, hp, bullet, bullet_pattern_counter, fire_cycles, explo_scale, part_range, ui, bullet_group, effects_group):
         super().__init__()
         self.image = pygame.image.load(img_path).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale[0], self.image.get_height() * scale[1]))
@@ -52,6 +52,10 @@ class Boss(pygame.sprite.Sprite):
         self.effects_group = effects_group
         self.explosion_scale = explo_scale
         self.part_min, self.part_max = part_range
+
+        # Score:
+        self.ui = ui
+        self.score = hp * 10
 
     def move_hor(self, direction):
         if self.rect.x == 1/20 * WIDTH:
@@ -143,9 +147,13 @@ class Boss(pygame.sprite.Sprite):
 
     def destroy(self):
         self.kill()
+        # Explosion:
         self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
+        # Particles:
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
             Particle(self.rect.center, self.effects_group)
+        # Score:
+        self.ui.update_score(self.score)
 
     def update(self):
         # Enter Level Animation
@@ -208,7 +216,6 @@ class BossBullet(pygame.sprite.Sprite):
     def rotate(self):
         rotated_surface = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
         rotated_rect = rotated_surface.get_rect(center=self.rect.center)
-
         return rotated_surface, rotated_rect
 
     def update(self):

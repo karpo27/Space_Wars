@@ -13,7 +13,6 @@ from collisions import *
 import pygame
 from pygame import mixer
 
-
 # Initialize Pygame:
 pygame.init()
 
@@ -47,7 +46,7 @@ class Level1(BaseState):
             self.enemies.append(ENEMIES[f'enemy_{enemy_type}'])
         self.boss = [BOSSES['boss_b']]
         self.boss_to_spawn = True
-        #self.boss = []
+        # self.boss = []
 
     def handle_pause(self):
         self.next_state = "PAUSE"
@@ -55,12 +54,12 @@ class Level1(BaseState):
 
     def spawn_enemy(self):
         k = self.enemies[self.enemy_index]
-        self.enemies_group.add(Enemy(*k, self.enemies_bullets_group, self.effects_group))
+        self.enemies_group.add(Enemy(*k, self.ui, self.enemies_bullets_group, self.effects_group))
         self.enemy_index += 1
 
     def spawn_boss(self):
         k = self.boss[0]
-        self.enemies_group.add(Boss(*k, self.enemies_bullets_group, self.effects_group))
+        self.enemies_group.add(Boss(*k, self.ui, self.enemies_bullets_group, self.effects_group))
         self.boss_to_spawn = False
 
     def get_event(self, event):
@@ -89,7 +88,7 @@ class Level1(BaseState):
                     self.spawn_boss()
 
         # Go to Win Screen:
-        if self.player.state == "alive" and self.boss_to_spawn == False and len(self.enemies_group) == 0:
+        if self.player.state == "alive" and not self.boss_to_spawn and len(self.enemies_group) == 0:
             self.next_state = "WIN"
             self.screen_done = True
         # Go to Game Over Screen:
@@ -125,4 +124,3 @@ class Level1(BaseState):
 
         # Extras:
         speakers.action(speakers.x, speakers.y, speakers.state)
-

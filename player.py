@@ -65,9 +65,12 @@ class Player(pygame.sprite.Sprite):
                 self.destroy()
 
     def destroy(self):
+        # Explosion:
         self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
+        # Particles:
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
             Particle(self.rect.center, self.effects_group)
+        # Lives and State:
         if self.lives > 0:
             self.lives -= 1
             self.hp = 3

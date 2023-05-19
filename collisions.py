@@ -1,6 +1,6 @@
 # Scripts
 
-# Modules
+# Modules:
 import pygame
 
 

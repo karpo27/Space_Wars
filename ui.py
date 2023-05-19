@@ -1,9 +1,9 @@
-# Scripts
-from base_state import BaseState
+# Scripts:
 from constants import *
+from base_state import BaseState
 from text_creator import TextCreator
 
-# Modules
+# Modules:
 import pygame
 
 
@@ -12,12 +12,16 @@ class UI(BaseState):
         super().__init__()
         self.player = player
 
+        # Score:
+        self.score = 0
+        self.score_pos = 1 / 43 * WIDTH + 55, 14 / 17 * HEIGHT + 22
+
         # Lives:
         self.image = player.image
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * 0.6, self.image.get_height() * 0.6))
         self.rect = self.image.get_rect()
         self.rect.center = 1 / 43 * WIDTH, 15 / 17 * HEIGHT
-        self.text_pos = 1 / 43 * WIDTH + 58, 15 / 17 * HEIGHT + 22
+        self.lives_pos = 1 / 43 * WIDTH + 58, 15 / 17 * HEIGHT + 22
 
         # HP Bar:
         self.pos = (1 / 43 * WIDTH, 16 / 17 * HEIGHT)
@@ -31,9 +35,17 @@ class UI(BaseState):
         self.ref = 27.5
         self.dhp = 0.5
 
+    def update_score(self, value):
+        self.score += value
+
+    def show_score(self):
+        text_score = TextCreator(0, f'Score: {str(self.score)}', self.font_type, 26, 26, self.base_color, None,
+                                 self.score_pos, "", 0)
+        text_score.render_text(-1)
+
     def show_lives(self):
         text_lives = TextCreator(0, f'x {str(self.player.lives)}', self.font_type, 26, 26, self.base_color, None,
-                                 self.text_pos, "", 0)
+                                 self.lives_pos, "", 0)
         text_lives.render_text(-1)
         SCREEN.blit(self.image, self.rect.center)
 
@@ -92,5 +104,6 @@ class UI(BaseState):
                         self.ref = 27.5
 
     def draw(self, surface):
+        self.show_score()
         self.show_bar()
         self.show_lives()

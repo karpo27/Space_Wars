@@ -18,10 +18,9 @@ class Win(BaseState):
         self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/10
         self.text = ["CONGRATULATIONS", "You have saved our Galaxy!"]
         self.win = []
-        self.win.append(
-            TextCreator(self.index + 1, self.text[0], self.font_type, 78, 78, self.base_color, self.hover_color,
+        self.win.append(TextCreator(self.index + 1, self.text[0], self.font_type, 78, 78, self.base_color, None,
                         self.pos, "", 74))
-        self.win.append(TextCreator(self.index + 2, self.text[1], self.font_type, 38, 38, self.base_color, self.hover_color,
+        self.win.append(TextCreator(self.index + 2, self.text[1], self.font_type, 38, 38, self.base_color, None,
                         self.pos, "", 74))
         self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
                                 (WIDTH/2, 9/10 * HEIGHT), "", 50)
@@ -47,7 +46,7 @@ class Win(BaseState):
         if self.fire_rate >= self.ref_time:
             self.fire_rate = 0
             pos = random.randrange(50, WIDTH - 50), random.randrange(50, HEIGHT - 50)
-            for num_particles in range(random.randrange(65, 95)):
+            for num_particles in range(random.randrange(65, 110)):
                 Particle(pos, self.effects_group)
 
         # Reset Fire Bullet Variables:

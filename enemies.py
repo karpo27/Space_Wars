@@ -14,7 +14,7 @@ class Enemy(pygame.sprite.Sprite):
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
-    def __init__(self, category, img_path, scale, movement, vel, hp, shoots, bullet, fire_rate, explo_scale, part_range, bullet_group, effects_group):
+    def __init__(self, category, img_path, scale, movement, vel, hp, shoots, bullet, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
         super().__init__()
         self.category = category
         self.image = pygame.image.load(img_path).convert_alpha()
@@ -40,10 +40,14 @@ class Enemy(pygame.sprite.Sprite):
         self.fire_rate = fire_rate
         self.reload_speed = 1
 
-        # Explosion
+        # Explosion:
         self.effects_group = effects_group
         self.explosion_scale = explo_scale
         self.part_min, self.part_max = part_range
+
+        # Score:
+        self.ui = ui
+        self.score = hp * 10
 
     def move_hor_vert(self):
         self.rect.x += self.vel_x
@@ -117,9 +121,13 @@ class Enemy(pygame.sprite.Sprite):
 
     def destroy(self):
         self.kill()
+        # Explosion:
         self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
+        # Particles:
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
             Particle(self.rect.center, self.effects_group)
+        # Score:
+        self.ui.update_score(self.score)
 
     def update(self):
         if self.rect.top > HEIGHT:
@@ -166,7 +174,6 @@ class EnemyBullet(pygame.sprite.Sprite):
     def rotate(self):
         rotated_surface = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
         rotated_rect = rotated_surface.get_rect(center=self.rect.center)
-
         return rotated_surface, rotated_rect
 
     def update(self):
