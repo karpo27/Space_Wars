@@ -189,7 +189,7 @@ class EnemyBullet(pygame.sprite.Sprite):
         return rotated_surface, rotated_rect
 
     def update(self):
-        # Animation
+        # Animation:
         animation_delay = 7
         self.counter += 1
 

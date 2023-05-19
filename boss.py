@@ -1,6 +1,6 @@
 # Scripts
 from constants import *
-from game_effects import Explosion, Particle
+from game_effects import Explosion, Particle, HitParticle
 
 # Modules
 import pygame
@@ -140,8 +140,13 @@ class Boss(pygame.sprite.Sprite):
             self.bullet_pattern_counter = 0
 
     def get_hit(self):
-        self.hp -= 1
+        # Hit Particles:
+        if self.hp > 1:
+            for num_particles in range(random.randrange(6, 18)):
+                HitParticle(self.rect.center, (0, 0, 255), (135, 206, 250), -1, self.effects_group)
 
+        # HP:
+        self.hp -= 1
         if self.hp <= 0:
             self.destroy()
 
@@ -187,12 +192,20 @@ class Boss(pygame.sprite.Sprite):
 
 class BossBullet(pygame.sprite.Sprite):
 
-    def __init__(self, pos, image, movement, vel, angle, sound, col_sound, group):
+    def __init__(self, pos, path, movement, vel, angle, sound, col_sound, group):
         super().__init__()
-        self.image = pygame.image.load(image).convert_alpha()
-        self.image_copy = self.image
+        self.sprites = []
+        for i in range(1, 5):
+            images = pygame.image.load(path + f'{i}.png').convert_alpha()
+            images = pygame.transform.scale(images, (images.get_width() * 0.2, images.get_height() * 0.2))
+            self.sprites.append(images)
+
+        self.index = 0
+        self.image = self.sprites[self.index]
         self.rect = self.image.get_rect()
         self.rect.center = pos
+        self.counter = 0
+        self.image_copy = self.image
 
         # Movement:
         self.movement = movement
@@ -219,6 +232,17 @@ class BossBullet(pygame.sprite.Sprite):
         return rotated_surface, rotated_rect
 
     def update(self):
+        # Animation:
+        animation_delay = 7
+        self.counter += 1
+
+        if self.counter >= animation_delay and self.index < len(self.sprites) - 1:
+            self.counter = 0
+            self.index += 1
+            self.image = self.sprites[self.index]
+            self.image_copy = self.image
+
+        # Movement:
         if self.rect.top > HEIGHT:
             self.kill()
         else:

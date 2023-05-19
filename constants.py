@@ -68,27 +68,27 @@ BOSSES = {
 }
 # Bosses Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {
-    'b_bullet_a1': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [1, 5], 15, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_a2': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [3, 5], 30, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_a3': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [5, 5], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_a4': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [5, 3], 60, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_a5': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [5, 1], 75, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_a6': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [5, 0], 90, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_a1': ['Images/Bosses_Bullets/', 2, [1, 5], 15, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_a2': ['Images/Bosses_Bullets/', 2, [3, 5], 30, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_a3': ['Images/Bosses_Bullets/', 2, [5, 5], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_a4': ['Images/Bosses_Bullets/', 2, [5, 3], 60, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_a5': ['Images/Bosses_Bullets/', 2, [5, 1], 75, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_a6': ['Images/Bosses_Bullets/', 2, [5, 0], 90, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
 
-    'b_bullet_b0': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 5], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b1': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [-1, 5], -15, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b2': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [-3, 5], -30, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b3': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [-5, 5], -45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b4': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [-5, 3], -60, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b5': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [-5, 1], -75, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b6': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [-5, 0], -90, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b7': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_b8': ['Images/Bosses_Bullets/enemy_bullet_F.png', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b0': ['Images/Bosses_Bullets/', 1, [0, 5], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b1': ['Images/Bosses_Bullets/', 2, [-1, 5], -15, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b2': ['Images/Bosses_Bullets/', 2, [-3, 5], -30, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b3': ['Images/Bosses_Bullets/', 2, [-5, 5], -45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b4': ['Images/Bosses_Bullets/', 2, [-5, 3], -60, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b5': ['Images/Bosses_Bullets/', 2, [-5, 1], -75, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b6': ['Images/Bosses_Bullets/', 2, [-5, 0], -90, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b7': ['Images/Bosses_Bullets/', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_b8': ['Images/Bosses_Bullets/', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
 
-    'b_bullet_c1': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_c2': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_c3': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'b_bullet_c4': ['Images/Bosses_Bullets/enemy_bullet_F.png', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
+    'b_bullet_c1': ['Images/Bosses_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_c2': ['Images/Bosses_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_c3': ['Images/Bosses_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'b_bullet_c4': ['Images/Bosses_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 # List of Enemies per Level:
 ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1', 'f2']
