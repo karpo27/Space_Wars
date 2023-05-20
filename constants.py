@@ -33,13 +33,13 @@ PLAYER_BULLETS = {
 }
 # Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Shoots, Bullet Type, Fire Rate, Explosion Scale, Particles Range:
 ENEMIES = {
-    'enemy_a': ['A', 'Images/Enemies/enemy_A.png', (0.6, 0.6), 2, [1, 2], 2, True, ('a1', 'a2'), 200, (0.8, 0.8), (6, 24)],
-    'enemy_b': ['B', 'Images/Enemies/enemy_B.png', (0.8, 0.8), 2, [1, 2], 6, True, ('b1', 'b2', 'b3'), 200, (1.5, 1.5), (16, 30)],
-    'enemy_c': ['C', 'Images/Enemies/enemy_C.png', (0.8, 0.8), 2, [1, 2], 3, True, ('c1', 'c2'), 200, (0.9, 0.9), (9, 26)],
-    'enemy_d': ['D', 'Images/Enemies/enemy_D.png', (0.4, 0.4), 3, [2, 1], 1, True, 'd', 100, (0.6, 0.6), (6, 24)],
-    'enemy_e': ['E', 'Images/Enemies/enemy_E.png', (0.8, 0.8), 1, [0, 4], 2, False, None, 0, (1.4, 1.4), (5, 22)],
-    'enemy_f1': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [1, 2], 3, True, 'f', 100, (1.1, 1.1), (9, 26)],
-    'enemy_f2': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [-1, 2], 3, True, 'f', 100, (1.1, 1.1), (9, 26)]
+    'enemy_a': ['A', 'Images/Enemies/enemy_A.png', (0.6, 0.6), 4, [1, 2], 2, True, ('a1', 'a2'), 200, (0.8, 0.8), (6, 24)],
+    'enemy_b': ['B', 'Images/Enemies/enemy_B.png', (0.8, 0.8), 2, [1, 2], 6, True, ('b1', 'b2', 'b3', 'b4', 'b5', 'b6'), 200, (1.5, 1.5), (16, 30)],
+    'enemy_c': ['C', 'Images/Enemies/enemy_C.png', (0.8, 0.8), 5, [2, 2], 3, True, ('c1', 'c2'), 200, (0.9, 0.9), (9, 26)],
+    'enemy_d': ['D', 'Images/Enemies/enemy_D.png', (0.4, 0.4), 3, [3, 1], 1, True, 'd', 100, (0.6, 0.6), (6, 24)],
+    'enemy_e': ['E', 'Images/Enemies/enemy_E.png', (0.8, 0.8), 1, [0, 5], 2, False, None, 0, (1.4, 1.4), (5, 22)],
+    'enemy_f1': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [1, 2], 3, True, ('f', 'd'), 100, (1.1, 1.1), (9, 26)],
+    'enemy_f2': ['F', 'Images/Enemies/enemy_F.png', (0.7, 0.7), 1, [-1, 2], 3, True, ('f', 'd'), 100, (1.1, 1.1), (9, 26)]
 }
 # Enemies Bullets - Path, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 ENEMIES_BULLETS = {
@@ -48,9 +48,12 @@ ENEMIES_BULLETS = {
     'e_bullet_b1': ['Images/Enemies_Bullets/', 2, [-6, 6], -45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'e_bullet_b2': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'e_bullet_b3': ['Images/Enemies_Bullets/', 2, [6, 6], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'e_bullet_c1': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_b4': ['Images/Enemies_Bullets/', 2, [-7, 7], -45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_b5': ['Images/Enemies_Bullets/', 1, [0, 7], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_b6': ['Images/Enemies_Bullets/', 2, [7, 7], 45, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_c1': ['Images/Enemies_Bullets/', 1, [0, 8], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'e_bullet_c2': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
-    'e_bullet_d': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
+    'e_bullet_d': ['Images/Enemies_Bullets/', 1, [0, 8], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'e_bullet_f': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 # Bosses - Category, Image, Scale, Movement Actions, Velocity, HP, Bullet Type, Bullet Pattern Counter, Fire Cycles, Explosion Scale, Particles Range:
@@ -91,5 +94,5 @@ BOSSES_BULLETS = {
     'b_bullet_c4': ['Images/Bosses_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 # List of Enemies per Level:
-ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1', 'f2']
+ENEMIES_LVL1 = ['b', 'b', 'c', 'c']
 #ENEMIES_LVL1 = []

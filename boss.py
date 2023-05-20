@@ -195,7 +195,7 @@ class BossBullet(pygame.sprite.Sprite):
     def __init__(self, pos, path, movement, vel, angle, sound, col_sound, group):
         super().__init__()
         self.sprites = []
-        for i in range(1, 5):
+        for i in range(1, 4):
             images = pygame.image.load(path + f'{i}.png').convert_alpha()
             images = pygame.transform.scale(images, (images.get_width() * 0.2, images.get_height() * 0.2))
             self.sprites.append(images)
@@ -233,7 +233,7 @@ class BossBullet(pygame.sprite.Sprite):
 
     def update(self):
         # Animation:
-        animation_delay = 7
+        animation_delay = 8
         self.counter += 1
 
         if self.counter >= animation_delay and self.index < len(self.sprites) - 1:

@@ -52,14 +52,13 @@ class Enemy(pygame.sprite.Sprite):
     def move_hor_vert(self):
         self.rect.x += self.vel_x
         self.rect.y += self.vel_y
-
-        if self.rect.left <= -0.1 * WIDTH:
-            self.rect.x += self.vel_x
-        if self.rect.right >= 1.1 * WIDTH:
-            self.rect.x -= self.vel_x
+        if self.rect.left <= 0:
+            self.vel_x = self.vel_x * -1
+        elif self.rect.right >= WIDTH:
+            self.vel_x = self.vel_x * -1
 
     def move_hor_zigzag(self):
-        if self.rect.y < 1/8 * HEIGHT:
+        if self.rect.y < HEIGHT/8:
             self.rect.y += self.vel_y
         else:
             if self.counter == 121:
@@ -70,6 +69,29 @@ class Enemy(pygame.sprite.Sprite):
             else:
                 self.rect.x -= self.vel_x
                 self.counter += 1
+
+    def move_hor_zigzag_2(self):
+        if self.rect.y < HEIGHT/3:
+            self.rect.y += self.vel_y
+        else:
+            if self.counter == 121:
+                self.counter = 0
+            if 60 < self.counter < 121:
+                self.rect.x += self.vel_x
+                self.counter += 1
+            else:
+                self.rect.x -= self.vel_x
+                self.counter += 1
+
+    def move_hor_zigzag_3(self):
+        if self.rect.y < HEIGHT/4:
+            self.rect.y += self.vel_y
+        else:
+            self.rect.x += self.vel_x
+            if self.rect.left <= 0:
+                self.vel_x = self.vel_x * -1
+            elif self.rect.right >= WIDTH:
+                self.vel_x = self.vel_x * -1
 
     def rotate(self):
         rotated_surface = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
@@ -143,6 +165,10 @@ class Enemy(pygame.sprite.Sprite):
                 self.move_hor_zigzag()
             elif self.movement == 3:
                 self.image, self.rect = self.move_hor_vert_sin()
+            elif self.movement == 4:
+                self.move_hor_zigzag_2()
+            elif self.movement == 5:
+                self.move_hor_zigzag_3()
 
         # Enemy Bullet:
         self.spawn_bullet()
@@ -152,7 +178,7 @@ class EnemyBullet(pygame.sprite.Sprite):
     def __init__(self, pos, path, movement, vel, angle, sound, col_sound, group):
         super().__init__()
         self.sprites = []
-        for i in range(1, 5):
+        for i in range(1, 4):
             images = pygame.image.load(path + f'{i}.png').convert_alpha()
             images = pygame.transform.scale(images, (images.get_width() * 0.2, images.get_height() * 0.2))
             self.sprites.append(images)
@@ -190,7 +216,7 @@ class EnemyBullet(pygame.sprite.Sprite):
 
     def update(self):
         # Animation:
-        animation_delay = 7
+        animation_delay = 8
         self.counter += 1
 
         if self.counter >= animation_delay and self.index < len(self.sprites) - 1:
