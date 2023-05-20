@@ -17,7 +17,7 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self, category, img_path, scale, movement, vel, hp, shoots, bullet, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
         super().__init__()
         self.category = category
-        self.image = pygame.image.load(img_path).convert_alpha()
+        self.image = pygame.image.load(f'{img_path}{self.category}.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale[0], self.image.get_height() * scale[1]))
         self.image_copy = self.image
         self.rect = self.image.get_rect()
@@ -96,7 +96,6 @@ class Enemy(pygame.sprite.Sprite):
     def rotate(self):
         rotated_surface = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
         rotated_rect = rotated_surface.get_rect(center=self.rect.center)
-
         return rotated_surface, rotated_rect
 
     def move_hor_vert_sin(self):
@@ -129,7 +128,7 @@ class Enemy(pygame.sprite.Sprite):
             # Create Enemy Bullet Object (fix later side of the bullet)
             if self.shoots and self.fire_rate >= self.ref_time:
                 for bullet_type in self.bullet:
-                    EnemyBullet(self.rect.center, *ENEMIES_BULLETS[f'e_bullet_{bullet_type}'], self.bullet_group)
+                    EnemyBullet(self.rect.center, *ENEMIES_BULLETS[f'{bullet_type}'], self.bullet_group)
                     self.fire_rate = 0
             # Reset Variables
             elif self.fire_rate < self.ref_time:

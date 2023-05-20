@@ -43,8 +43,8 @@ class Level1(BaseState):
         self.enemies = []
         self.enemy_index = 0
         for enemy_type in ENEMIES_LVL1:
-            self.enemies.append(ENEMIES[f'enemy_{enemy_type}'])
-        self.boss = [BOSSES['boss_b']]
+            self.enemies.append(ENEMIES[f'{enemy_type}'])
+        self.boss = [BOSSES['b']]
         self.boss_to_spawn = True
         # self.boss = []
 

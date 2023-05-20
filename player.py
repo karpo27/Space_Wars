@@ -117,7 +117,6 @@ class Player(pygame.sprite.Sprite):
             elif key[pygame.K_RIGHT] and key[pygame.K_DOWN] and self.rect.right < WIDTH and self.rect.bottom < HEIGHT:
                 self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
                 self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
-
             # Player Keyboard Movement - (LEFT, RIGHT, UP, DOWN)
             elif key[pygame.K_LEFT] and self.rect.left > 0:
                 self.rect.x -= self.vel_x

@@ -119,7 +119,7 @@ class Boss(pygame.sprite.Sprite):
                 if self.fire_cycles[self.bullet_index][1] >= self.bullet_type_qty:
                     if self.bullet_type_counter >= 20:
                         for bullet_type in self.bullet[self.bullet_index]:
-                            BossBullet(self.rect.center, *BOSSES_BULLETS[f'b_bullet_{bullet_type}'], self.bullet_group)
+                            BossBullet(self.rect.center, *BOSSES_BULLETS[f'{bullet_type}'], self.bullet_group)
                         self.bullet_type_counter = 0
                         self.bullet_type_qty += 1
 
