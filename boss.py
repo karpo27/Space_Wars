@@ -172,7 +172,7 @@ class Boss(pygame.sprite.Sprite):
             if self.next_action:
                 self.movement_action = secrets.choice(self.movement)
             if self.movement_action == 1:
-                print(self.movement_action)
+                #print(self.movement_action)
                 self.next_action = False
                 self.move_hor(1)
             elif self.movement_action == 2:
@@ -181,13 +181,13 @@ class Boss(pygame.sprite.Sprite):
             elif self.movement_action == 3:
                 self.image, self.rect = self.move_hor_vert_sin()
 
-            # Create Boss Bullet Object (fix later side of the bullet):
+            # Boss Bullet:
             self.spawn_bullet()
 
         # Reset Animation when leaving Screen
         if self.rect.top > HEIGHT or self.rect.left > WIDTH or self.rect.right < 0:
             self.enter_animation = True
-            self.rect.center = [WIDTH/2, -1/4 * HEIGHT]
+            self.rect.center = [WIDTH/2, -HEIGHT/4]
 
 
 class BossBullet(pygame.sprite.Sprite):

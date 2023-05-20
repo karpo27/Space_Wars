@@ -21,7 +21,7 @@ class Enemy(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * scale[0], self.image.get_height() * scale[1]))
         self.image_copy = self.image
         self.rect = self.image.get_rect()
-        self.rect.center = [random.randint(0, 3/4 * WIDTH), -80]
+        self.rect.center = [random.randint(int(0 + self.rect.width/2), int(WIDTH - self.rect.width/2)), -80]
 
         # Movement:
         self.movement = movement
@@ -125,7 +125,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def spawn_bullet(self):
         if self.rect.top > 0:
-            # Create Enemy Bullet Object (fix later side of the bullet)
+            # Create Enemy Bullet:
             if self.shoots and self.fire_rate >= self.ref_time:
                 for bullet_type in self.bullet:
                     EnemyBullet(self.rect.center, *ENEMIES_BULLETS[f'{bullet_type}'], self.bullet_group)
