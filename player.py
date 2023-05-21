@@ -1,33 +1,27 @@
-# Scripts
+# Scripts:
 from constants import *
+from character import Character
 from game_effects import *
 
-# Modules
+# Modules:
 import pygame
 from pygame import mixer
 import math
 
 
-class Player(pygame.sprite.Sprite):
-    def __init__(self, img_path, pos, vel, hp, lives, state, explo_scale, part_range, bullet_group, effects_group):
-        super().__init__()
-        self.img_path = img_path
-        self.image = pygame.image.load(self.img_path).convert_alpha()
-        self.rect = self.image.get_rect()
+class Player(Character):
+    def __init__(self, category, img_path, scale, pos, vel, hp, lives, state, fire_rate, explo_scale, part_range, bullet_group, effects_group):
+        super().__init__(category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group)
+        # Image:
         self.pos = pos
         self.rect.center = self.pos
-        self.vel = self.vel_x, self.vel_y = vel
 
         # HP:
-        self.hp = hp
         self.lives = lives
         self.hp_animation = False
 
         # State:
         self.state = state
-        self.invulnerable = False
-        self.invulnerable_ref_time = 120
-        self.invulnerable_rate = 120
 
         # Blink:
         self.empty_surface = pygame.Surface(self.image.get_size(), pygame.SRCALPHA)
@@ -38,19 +32,6 @@ class Player(pygame.sprite.Sprite):
         self.enter_animation = True
         self.y_enter = 5/6 * HEIGHT
         self.vel_enter_y = 0.2
-
-        # Bullet:
-        self.bullet_group = bullet_group
-        self.ref_time = 30
-        self.fire_rate = 30
-
-        # Rotation:
-        self.angle = 0
-
-        # Effects:
-        self.effects_group = effects_group
-        self.explosion_scale = explo_scale
-        self.part_min, self.part_max = part_range
 
     def get_hit(self, pos, col_type):
         if not self.invulnerable:
@@ -84,14 +65,6 @@ class Player(pygame.sprite.Sprite):
         else:
             self.kill()
             self.state = "dead"
-
-    def blink_image(self):
-        if self.blink_rate < self.blink_ref_time:
-            self.image = self.empty_surface
-        elif self.blink_ref_time <= self.blink_rate < 2 * self.blink_ref_time:
-            self.image = pygame.image.load(self.img_path).convert_alpha()
-        else:
-            self.blink_rate = 0
 
     def update(self):
         # Enter Level Animation:
@@ -130,14 +103,14 @@ class Player(pygame.sprite.Sprite):
             if key[pygame.K_SPACE]:
                 # Create Player Bullet Object:
                 if self.fire_rate >= self.ref_time:
-                    PlayerBullet(self.rect.center, *PLAYER_BULLETS['player_bullet_d'], self.bullet_group)
+                    PlayerBullet(self.rect.center, *PLAYER_BULLETS['A'], self.bullet_group)
                     self.fire_rate = 0
 
         # Invulnerability:
         if self.invulnerable:
             if self.invulnerable_rate >= self.invulnerable_ref_time:
                 self.invulnerable = False
-                self.image = pygame.image.load(self.img_path).convert_alpha()
+                self.image = pygame.image.load(f'{self.img_path}{self.category}.png').convert_alpha()
             else:
                 self.invulnerable_rate += 1
                 self.blink_rate += 1

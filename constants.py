@@ -18,13 +18,13 @@ BACKGROUNDS = {
     'level_1': ['Images/Levels_Background/level_1.jpg', 0.8, 'Sounds/background.wav'],
     'win': ['Images/Levels_Background/win.jpg', 0, 'Sounds/background.wav']
 }
-# Player - Image, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
+# Player - Category, Image, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
 PLAYER_ATTRIBUTES = [
-    'Images/Player/player_img.png', [WIDTH / 2, 19 / 18 * HEIGHT], [5, 5], 3, 2, "alive", (0.85, 0.85), (22, 38)
+    'A', 'Images/Player/', (1, 1), [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 2, "alive", 30, (0.85, 0.85), (22, 38)
 ]
 # Player Bullet - Path, Velocity, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
-    'player_bullet_d': ['Images/Player_Bullet/', [0, 13], 'Sounds/laser.wav', 'Sounds/explosion.wav']
+    'A': ['Images/Player_Bullet/', [0, 13], 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 # Enemies - Category, Path, Scale, Movement Type, Velocity, HP, Shoots, Bullet Type, Fire Rate, Explosion Scale, Particles Range:
 ENEMIES = {
@@ -95,5 +95,5 @@ BOSSES_BULLETS = {
     'c4': ['Images/Bosses_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 # List of Enemies per Level:
-ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1']
+ENEMIES_LVL1 = ['a', 'b']
 #ENEMIES_LVL1 = []

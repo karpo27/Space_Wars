@@ -7,7 +7,7 @@ import pygame
 
 class Character(pygame.sprite.Sprite):
 
-    def __init__(self, category, img_path, scale, movement, vel, hp, bullet, fire_rate, explo_scale, part_range, bullet_group, effects_group):
+    def __init__(self, category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group):
         super().__init__()
         # Image:
         self.category = category
@@ -20,7 +20,6 @@ class Character(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         # Movement:
-        self.movement = movement
         self.vel = self.vel_x, self.vel_y = vel
 
         # Rotation:
@@ -41,7 +40,6 @@ class Character(pygame.sprite.Sprite):
 
         # Bullet:
         self.bullet_group = bullet_group
-        self.bullet = bullet
         self.ref_time = fire_rate
         self.fire_rate = fire_rate
 
@@ -80,7 +78,7 @@ class Character(pygame.sprite.Sprite):
         if self.blink_rate < self.blink_ref_time:
             self.image = self.empty_surface
         elif self.blink_ref_time <= self.blink_rate < 2 * self.blink_ref_time:
-            self.image = pygame.image.load(self.img_path).convert_alpha()
+            self.image = pygame.image.load(f'{self.img_path}{self.category}.png').convert_alpha()
         else:
             self.blink_rate = 0
 

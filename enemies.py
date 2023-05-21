@@ -16,15 +16,17 @@ class Enemy(Character):
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
     def __init__(self, category, img_path, scale, movement, vel, hp, shoots, bullet, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
-        super().__init__(category, img_path, scale, movement, vel, hp, bullet, fire_rate, explo_scale, part_range, bullet_group, effects_group)
+        super().__init__(category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group)
         # Image:
         self.rect.center = [random.randint(int(0 + self.rect.width/2), int(WIDTH - self.rect.width/2)), -80]
 
         # Movement:
+        self.movement = movement
         self.counter = 0
 
         # Bullet:
         self.shoots = shoots
+        self.bullet = bullet
 
         # Score:
         self.ui = ui

@@ -8,7 +8,7 @@ import pygame
 class Pointer:
     def __init__(self):
         # Player Icon:
-        self.image = pygame.image.load('Images/Player/player_img.png').convert_alpha()
+        self.image = pygame.image.load('Images/Player/A.png').convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = self.pos_x, self.pos_y = 70, 30
         self.angle = 0

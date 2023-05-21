@@ -1,6 +1,6 @@
 # Scripts
 from constants import *
-from enemies import Enemy
+from character import Character
 from game_effects import Explosion, Particle, HitParticle
 
 # Modules
@@ -10,17 +10,11 @@ import random
 import secrets
 
 
-class Boss(pygame.sprite.Sprite):
+class Boss(Character):
 
     def __init__(self, category, img_path, scale, action, vel, hp, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
-        super().__init__()
-        self.category = category
-        self.scale_x, self.scale_y = scale[0], scale[1]
-        self.img_path = img_path
-        self.image = pygame.image.load(f'{self.img_path}{self.category}.png').convert_alpha()
-        self.image = pygame.transform.scale(self.image, (self.image.get_width() * self.scale_x, self.image.get_height() * self.scale_y))
-        self.image_copy = self.image
-        self.rect = self.image.get_rect()
+        super().__init__(category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group)
+        # Image:
         self.rect.center = [WIDTH/2, -HEIGHT/4]
 
         # Initial Movement Animation:
@@ -31,10 +25,8 @@ class Boss(pygame.sprite.Sprite):
         # Action:
         self.next_action = False
         self.action = action
-        self.movement_action = "X"
+        self.movement_action = "Y-ANGLE"
         # self.movement_action = secrets.choice(self.movements_type)
-        self.vel = self.vel_x, self.vel_y = vel
-        self.angle = 0
         self.movement_ref_time = 800
         self.movement_rate = 0
         # X:
@@ -49,13 +41,11 @@ class Boss(pygame.sprite.Sprite):
         self.x_beam_align = False
 
         # HP:
-        self.hp = hp
         self.half_hp = self.hp/2
 
         # Bullet:
         self.index = 0
         self.bullet = self.action[self.movement_action]
-        self.bullet_group = bullet_group
         self.bullet_type_qty = 1
         self.bullet_type_counter = 0
 
@@ -81,7 +71,7 @@ class Boss(pygame.sprite.Sprite):
     def move_y_angle(self):
         self.move_y(2)
         self.angle += 4
-        return self.rotate(self.angle)
+        return self.rotate()
 
     def move_x_beam(self, pos):
         if pos < self.rect.x:
@@ -89,8 +79,8 @@ class Boss(pygame.sprite.Sprite):
         else:
             self.rect.x += self.vel_x
 
-    def rotate(self, angle):
-        rotated_surface = pygame.transform.rotozoom(self.image_copy, angle, 1)
+    def rotate(self):
+        rotated_surface = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
         rotated_rect = rotated_surface.get_rect(center=self.rect.center)
         return rotated_surface, rotated_rect
 
@@ -183,8 +173,8 @@ class Boss(pygame.sprite.Sprite):
         if self.rect.top > HEIGHT or self.rect.left > WIDTH or self.rect.right < 0:
             self.enter_animation = True
             self.rect.center = [WIDTH/2, -HEIGHT/4]
-            self.image, self.rect = self.rotate(0)
             self.angle = 0
+            self.image, self.rect = self.rotate()
 
 
 class BossBullet(pygame.sprite.Sprite):
