@@ -38,7 +38,6 @@ class Enemy(pygame.sprite.Sprite):
         self.bullet = bullet
         self.ref_time = fire_rate
         self.fire_rate = fire_rate
-        self.reload_speed = 1
 
         # Explosion:
         self.effects_group = effects_group
@@ -132,7 +131,7 @@ class Enemy(pygame.sprite.Sprite):
                     self.fire_rate = 0
             # Reset Variables
             elif self.fire_rate < self.ref_time:
-                self.fire_rate += self.reload_speed
+                self.fire_rate += 1
 
     def get_hit(self, pos, col_type):
         # Hit Particles:

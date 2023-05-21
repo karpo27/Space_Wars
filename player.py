@@ -43,7 +43,6 @@ class Player(pygame.sprite.Sprite):
         self.bullet_group = bullet_group
         self.ref_time = 30
         self.fire_rate = 30
-        self.reload_speed = 1
 
         # Rotation:
         self.angle = 0
@@ -146,7 +145,7 @@ class Player(pygame.sprite.Sprite):
 
         # Reset Fire Bullet Variables:
         if self.fire_rate < self.ref_time:
-            self.fire_rate += self.reload_speed
+            self.fire_rate += 1
 
 
 class PlayerBullet(pygame.sprite.Sprite):
