@@ -12,10 +12,12 @@ import secrets
 
 class Boss(pygame.sprite.Sprite):
 
-    def __init__(self, img_path, scale, action, vel, hp, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
+    def __init__(self, category, img_path, scale, action, vel, hp, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
         super().__init__()
+        self.category = category
         self.scale_x, self.scale_y = scale[0], scale[1]
-        self.image = pygame.image.load(img_path).convert_alpha()
+        self.img_path = img_path
+        self.image = pygame.image.load(f'{self.img_path}{self.category}.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.image.get_width() * self.scale_x, self.image.get_height() * self.scale_y))
         self.image_copy = self.image
         self.rect = self.image.get_rect()

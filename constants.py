@@ -8,11 +8,6 @@ SCREEN = pygame.display.set_mode(SIZE)
 # Icon Window:
 ICON = 'Images/Screen/icon.png'
 
-# Define Clock for Screen FPS:
-# clock = pygame.time.Clock()
-# FPS = 60
-# dt = clock.tick(FPS)
-
 # Mouse Button Constants:
 LEFT = 1
 RIGHT = 3
@@ -31,12 +26,12 @@ PLAYER_ATTRIBUTES = [
 PLAYER_BULLETS = {
     'player_bullet_d': ['Images/Player_Bullet/', [0, 13], 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
-# Enemies - Category, Image, Scale, Movement Type, Velocity, HP, Shoots, Bullet Type, Fire Rate, Explosion Scale, Particles Range:
+# Enemies - Category, Path, Scale, Movement Type, Velocity, HP, Shoots, Bullet Type, Fire Rate, Explosion Scale, Particles Range:
 ENEMIES = {
-    'a': ['A', 'Images/Enemies/', (0.6, 0.6), 4, [1, 2], 2, True, ('a1', 'a2'), 200, (0.8, 0.8), (6, 24)],
+    'a': ['A', 'Images/Enemies/', (0.6, 0.6), 3, [1, 2], 2, True, ('a1', 'a2'), 200, (0.8, 0.8), (6, 24)],
     'b': ['B', 'Images/Enemies/', (0.8, 0.8), 2, [1, 2], 6, True, ('b1', 'b2', 'b3', 'b4', 'b5', 'b6'), 200, (1.5, 1.5), (16, 30)],
-    'c': ['C', 'Images/Enemies/', (0.8, 0.8), 5, [2, 2], 3, True, ('c1', 'c2'), 200, (0.9, 0.9), (9, 26)],
-    'd': ['D', 'Images/Enemies/', (0.4, 0.4), 3, [3, 1], 1, True, 'd', 100, (0.6, 0.6), (6, 24)],
+    'c': ['C', 'Images/Enemies/', (0.8, 0.8), 4, [2, 2], 3, True, ('c1', 'c2'), 200, (0.9, 0.9), (9, 26)],
+    'd': ['D', 'Images/Enemies/', (0.4, 0.4), 5, [3, 1], 1, True, 'd', 100, (0.6, 0.6), (6, 24)],
     'e': ['E', 'Images/Enemies/', (0.8, 0.8), 1, [0, 5], 2, False, None, 0, (1.4, 1.4), (5, 22)],
     'f1': ['F', 'Images/Enemies/', (0.7, 0.7), 1, [1, 2], 3, True, ('f', 'd'), 100, (1.1, 1.1), (9, 26)],
     'f2': ['F', 'Images/Enemies/', (0.7, 0.7), 1, [-1, 2], 3, True, ('f', 'd'), 100, (1.1, 1.1), (9, 26)]
@@ -56,10 +51,10 @@ ENEMIES_BULLETS = {
     'd': ['Images/Enemies_Bullets/', 1, [0, 8], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav'],
     'f': ['Images/Enemies_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
-# Bosses - Image, Scale, Action {Movement: Bullet Type}, Velocity, HP, Fire Rate, Explosion Scale, Particles Range:
+# Bosses - Category, Path, Scale, Action {Movement: Bullet Type}, Velocity, HP, Fire Rate, Explosion Scale, Particles Range:
 BOSSES = {
-    'a': ['Images/Bosses/Captain_Death_Ship.png', (0.6, 0.6), 1, [0, 0], 100, ('a3', 'a2'), 200, (0.8, 0.8), (60, 80)],
-    'b': ['Images/Bosses/General_Bugfix_Ship.png',
+    'a': ['A', 'Images/Bosses/', (0.6, 0.6), 1, [0, 0], 100, ('a3', 'a2'), 200, (0.8, 0.8), (60, 80)],
+    'b': ['B', 'Images/Bosses/',
           (1.1, 1.1),
           {"X": [['a2', 'b0', 'b2'], ['a1', 'b1'], ['b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6'],
                  ['b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']],
@@ -72,7 +67,7 @@ BOSSES = {
           80,
           (2.0, 2.0),
           (160, 190)],
-    'c': ['Images/Bosses/Crimson_Emperor_Ship.png', (0.8, 0.8), 1, [0, 0], 150, ('c1', 'c2'), 200, (0.9, 0.9),
+    'c': ['C', 'Images/Bosses/', (0.8, 0.8), 1, [0, 0], 150, ('c1', 'c2'), 200, (0.9, 0.9),
           (60, 80)],
 }
 # Bosses Bullets - Image, Movement Type, Velocity, Angle, Sound, Explosion Sound:
@@ -100,5 +95,5 @@ BOSSES_BULLETS = {
     'c4': ['Images/Bosses_Bullets/', 1, [0, 6], 0, 'Sounds/laser.wav', 'Sounds/explosion.wav']
 }
 # List of Enemies per Level:
-#ENEMIES_LVL1 = ['b', 'c', 'b', 'c']
-ENEMIES_LVL1 = []
+ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1']
+#ENEMIES_LVL1 = []
