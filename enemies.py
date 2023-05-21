@@ -129,7 +129,7 @@ class Enemy(pygame.sprite.Sprite):
                 for bullet_type in self.bullet:
                     EnemyBullet(self.rect.center, *ENEMIES_BULLETS[f'{bullet_type}'], self.bullet_group)
                     self.fire_rate = 0
-            # Reset Variables
+            # Reset Variables:
             elif self.fire_rate < self.ref_time:
                 self.fire_rate += 1
 

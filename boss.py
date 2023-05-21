@@ -12,7 +12,7 @@ import secrets
 
 class Boss(pygame.sprite.Sprite):
 
-    def __init__(self, img_path, scale, action, vel, hp, shoots, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
+    def __init__(self, img_path, scale, action, vel, hp, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
         super().__init__()
         self.scale_x, self.scale_y = scale[0], scale[1]
         self.image = pygame.image.load(img_path).convert_alpha()
@@ -35,21 +35,27 @@ class Boss(pygame.sprite.Sprite):
         self.angle = 0
         self.movement_ref_time = 800
         self.movement_rate = 0
+        # X:
+        self.ref_time = fire_rate
+        self.fire_rate = self.ref_time
+        self.ref_time_2 = 20
+        self.fire_rate_2 = self.ref_time_2
+        # X-BEAM:
+        self.limit_left = WIDTH/8
+        self.limit_right = 7/9 * WIDTH
+        self.x_beam_pos = secrets.choice([self.limit_left, self.limit_right])
+        self.x_beam_align = False
 
         # HP:
         self.hp = hp
+        self.half_hp = self.hp/2
 
         # Bullet:
         self.index = 0
         self.bullet = self.action[self.movement_action]
         self.bullet_group = bullet_group
-        self.shoots = shoots
         self.bullet_type_qty = 1
         self.bullet_type_counter = 0
-        self.ref_time = fire_rate
-        self.fire_rate = fire_rate
-        self.ref_time_2 = 10
-        self.fire_rate_2 = self.ref_time_2
 
         # Explosion:
         self.effects_group = effects_group
@@ -60,12 +66,12 @@ class Boss(pygame.sprite.Sprite):
         self.ui = ui
         self.score = hp * 10
 
-    def move_x(self):
+    def move_x(self, limit_left, limit_right):
+        if self.rect.left <= limit_left:
+            self.vel_x = self.vel_x * -1
+        elif self.rect.right >= limit_right:
+            self.vel_x = self.vel_x * -1
         self.rect.x += self.vel_x
-        if self.rect.left <= 0:
-            self.vel_x = self.vel_x * -1
-        elif self.rect.right >= WIDTH:
-            self.vel_x = self.vel_x * -1
 
     def move_y(self, value):
         self.rect.y += self.vel_y + value
@@ -75,16 +81,22 @@ class Boss(pygame.sprite.Sprite):
         self.angle += 4
         return self.rotate(self.angle)
 
+    def move_x_beam(self, pos):
+        if pos < self.rect.x:
+            self.rect.x -= self.vel_x
+        else:
+            self.rect.x += self.vel_x
+
     def rotate(self, angle):
         rotated_surface = pygame.transform.rotozoom(self.image_copy, angle, 1)
         rotated_rect = rotated_surface.get_rect(center=self.rect.center)
         return rotated_surface, rotated_rect
 
-    def spawn_bullet(self):
+    def spawn_bullet(self, ref_qty):
         if self.rect.top > 0:
             # Create Enemy Bullet:
-            if self.shoots and self.fire_rate >= self.ref_time:
-                if 3 >= self.bullet_type_qty:
+            if self.fire_rate >= self.ref_time:
+                if ref_qty >= self.bullet_type_qty:
                     if self.fire_rate_2 >= self.ref_time_2:
                         for bullet_type in self.bullet[self.index]:
                             BossBullet(self.rect.center, *BOSSES_BULLETS[f'{bullet_type}'], self.bullet_group)
@@ -93,17 +105,15 @@ class Boss(pygame.sprite.Sprite):
                     else:
                         self.fire_rate_2 += 1
                 else:
+                    # Reset Fire Rate:
                     self.bullet_type_qty = 1
                     self.index += 1
                     self.fire_rate = 0
-            # Reset Variables
-            elif self.fire_rate < self.ref_time:
+            else:
                 self.fire_rate += 1
-
+        # Reset Index:
         if self.index == len(self.bullet):
             self.index = 0
-            #self.fire_cycles_counter = 0
-            #self.bullet_pattern_counter = 0
 
     def get_hit(self, pos, col_type):
         # Hit Particles:
@@ -133,12 +143,15 @@ class Boss(pygame.sprite.Sprite):
                 self.rect.y += self.vel_enter_y
             else:
                 self.enter_animation = False
-        # Perform Movement:
+        # Perform Action:
         else:
             if not self.next_action:
                 if self.movement_action == "X":
-                    self.move_x()
-                    self.spawn_bullet()
+                    if self.hp > self.half_hp:
+                        self.spawn_bullet(1)
+                    else:
+                        self.spawn_bullet(3)
+                    self.move_x(0, WIDTH)
                     # Reset Movement Variables:
                     '''
                     if self.movement_rate < self.movement_ref_time:
@@ -148,19 +161,21 @@ class Boss(pygame.sprite.Sprite):
                         self.movement_rate = 0
                     '''
                 elif self.movement_action == "Y":
-                    self.move_y(0)
+                    self.move_y(1)
                 elif self.movement_action == "Y-ANGLE":
                     self.image, self.rect = self.move_y_angle()
-                elif self.movement_action == "Y-BEAM":
-                    pass
-                elif self.movement_action == "ANGLE-SPAWN":
-                    self.image, self.rect = self.rotate(180)
+                elif self.movement_action == "X-BEAM":
+                    if not self.x_beam_align:
+                        if self.limit_left < self.rect.x < self.limit_right - self.rect.width/2:
+                            self.move_x_beam(self.x_beam_pos)
+                        else:
+                            self.x_beam_align = True
+                    else:
+                        self.move_x(0, WIDTH)
+                        self.spawn_bullet(5)
             else:
                 self.movement_action = secrets.choice(list(self.action.keys()))
                 self.next_action = False
-
-            # Boss Bullet:
-            #self.spawn_bullet()
 
         # Reset Animation when leaving Screen:
         if self.rect.top > HEIGHT or self.rect.left > WIDTH or self.rect.right < 0:
