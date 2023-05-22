@@ -24,6 +24,7 @@ class Character(pygame.sprite.Sprite):
 
         # Movement:
         self.vel = self.vel_x, self.vel_y = vel
+        self.counter = 0
 
         # Rotation:
         self.angle = 0
@@ -57,11 +58,18 @@ class Character(pygame.sprite.Sprite):
     def move_y(self):
         self.rect.y += self.vel_y
 
-    def move_y_angle(self):
-        pass
+    def restrict_x(self, left_limit, right_limit):
+        if self.rect.left <= left_limit:
+            self.vel_x = self.vel_x * -1
+        elif self.rect.right >= right_limit:
+            self.vel_x = self.vel_x * -1
 
-    def move_x_beam(self):
-        pass
+    def restrict_x_counter(self, limit):
+        self.move_x()
+        self.counter += 1
+        if self.counter == limit:
+            self.vel_x = self.vel_x * -1
+            self.counter = 0
 
     def rotate(self):
         rotated_surface = pygame.transform.rotozoom(self.image_copy, self.angle, 1)

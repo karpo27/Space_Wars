@@ -36,70 +36,38 @@ class Enemy(Character):
     def movement_1(self):
         self.move_x()
         self.move_y()
-        if self.rect.left <= 0:
-            self.vel_x = self.vel_x * -1
-        elif self.rect.right >= WIDTH:
-            self.vel_x = self.vel_x * -1
+        self.restrict_x(0, WIDTH)
 
-    def movement_2(self):
-        if self.rect.y < HEIGHT/8:
+    def movement_2(self, max_height):
+        if self.rect.y < max_height:
             self.move_y()
         else:
-            if self.counter == 121:
-                self.counter = 0
-            if 60 < self.counter < 121:
-                self.rect.x += self.vel_x
-                self.counter += 1
-            else:
-                self.rect.x -= self.vel_x
-                self.counter += 1
+            self.restrict_x_counter(100)
+            self.restrict_x(0, WIDTH)
 
     def movement_3(self):
-        if self.rect.y < HEIGHT/3:
-            self.rect.y += self.vel_y
-        else:
-            if self.counter == 121:
-                self.counter = 0
-            if 60 < self.counter < 121:
-                self.rect.x += self.vel_x
-                self.counter += 1
-            else:
-                self.rect.x -= self.vel_x
-                self.counter += 1
-
-    def movement_4(self):
         if self.rect.y < HEIGHT/4:
-            self.rect.y += self.vel_y
+            self.move_y()
         else:
-            self.rect.x += self.vel_x
-            if self.rect.left <= 0:
-                self.vel_x = self.vel_x * -1
-            elif self.rect.right >= WIDTH:
-                self.vel_x = self.vel_x * -1
+            self.move_x()
+            self.restrict_x(0, WIDTH)
 
-    def movement_5(self):
-        if 1/5 * WIDTH < self.rect.x < 11/15 * WIDTH:
-            if self.angle == 0:
-                self.rect.x += self.vel_x
-            elif self.angle == -180:
-                self.rect.x -= self.vel_x
-        elif self.rect.x >= 11/15 * WIDTH:
+    def movement_4(self, left_limit, right_limit):
+        self.move_x()
+        if self.rect.x >= right_limit:
+            self.move_y()
             if self.angle > -180:
-                self.rect.x += self.vel_x
-                self.rect.y += self.vel_y
                 self.angle -= 2
             elif self.angle == -180:
-                self.rect.x -= self.vel_x
-                self.rect.y += self.vel_y
-        elif self.rect.x <= 1/5 * WIDTH:
-            if self.angle < 0:
-                self.rect.x -= self.vel_x
-                self.rect.y += self.vel_y
+                self.vel_x = self.vel_x * -1
+                self.angle = -540
+        elif self.rect.x <= left_limit:
+            self.move_y()
+            if self.angle < -360:
                 self.angle += 2
-            elif self.angle == 0:
-                self.rect.x += self.vel_x
-                self.rect.y += self.vel_y
-
+            elif self.angle == -360:
+                self.vel_x = self.vel_x * -1
+                self.angle = 0
         return self.rotate()
 
     def spawn_bullet(self):
@@ -140,13 +108,13 @@ class Enemy(Character):
             if self.movement == 1:
                 self.movement_1()
             elif self.movement == 2:
-                self.movement_2()
+                self.movement_2(HEIGHT/8)
             elif self.movement == 3:
-                self.movement_3()
+                self.movement_2(HEIGHT/3)
             elif self.movement == 4:
-                self.movement_4()
+                self.movement_3()
             elif self.movement == 5:
-                self.image, self.rect = self.movement_5()
+                self.image, self.rect = self.movement_4(WIDTH/5, 11/15 * WIDTH)
         # Enemy Bullet:
         self.spawn_bullet()
 

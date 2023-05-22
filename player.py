@@ -29,11 +29,6 @@ class Player(Character):
         # State:
         self.state = state
 
-        # Blink:
-        self.empty_surface = pygame.Surface(self.image.get_size(), pygame.SRCALPHA)
-        self.blink_ref_time = self.invulnerable_ref_time/20
-        self.blink_rate = 0
-
     def get_hit(self, pos, col_type):
         if not self.invulnerable:
             # Hit Particles:

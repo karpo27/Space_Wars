@@ -38,8 +38,8 @@ ENEMIES = {
 }
 # Enemies Bullets - Path, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Bounce, Sound, Explosion Sound:
 ENEMIES_BULLETS = {
-    'a1': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [-1, 5], -10, False],
-    'a2': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [1, 5], 10, False],
+    'a1': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [-1, 5], -10, True],
+    'a2': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [1, 5], 10, True],
     'b1': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [-6, 6], -45, True],
     'b2': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False],
     'b3': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [6, 6], 45, True],
@@ -96,5 +96,5 @@ BOSSES_BULLETS = {
 }
 # List of Enemies per Level:
 #ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1', 'f2']
-#ENEMIES_LVL1 = ['b', 'b']
-ENEMIES_LVL1 = []
+ENEMIES_LVL1 = ['d', 'd']
+#ENEMIES_LVL1 = []
