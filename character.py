@@ -1,7 +1,7 @@
-# Scripts
+# Scripts:
 from constants import *
 
-# Modules
+# Modules:
 import pygame
 
 
