@@ -1,6 +1,7 @@
 # Scripts:
 from constants import *
 from character import Character
+from bullet import Bullet
 from game_effects import *
 
 # Modules:
@@ -121,43 +122,12 @@ class Player(Character):
             self.fire_rate += 1
 
 
-class PlayerBullet(pygame.sprite.Sprite):
-    def __init__(self, pos, path, vel, sound, col_sound, group):
-        super().__init__()
-        self.sprites = []
-        for i in range(1, 6):
-            images = pygame.image.load(path + f'{i}.png').convert_alpha()
-            images = pygame.transform.scale(images, (images.get_width() * 0.4, images.get_height() * 0.4))
-            self.sprites.append(images)
+class PlayerBullet(Bullet):
+    def __init__(self, pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, group):
+        super().__init__(pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, group)
 
-        self.index = 0
-        self.image = self.sprites[self.index]
-        self.rect = self.image.get_rect()
-        self.rect.center = pos
-        self.counter = 0
-
-        # Movement:
-        self.vel = self.vel_x, self.vel_y = vel
-
-        # Sound:
-        #self.sound = mixer.Sound(sound)
-        #self.col_sound = mixer.Sound(col_sound)
-
-        # Groups:
-        group.add(self)
-
-    def update(self):
-        # Animation
-        animation_delay = 6
-        self.counter += 1
-
-        if self.counter >= animation_delay and self.index < len(self.sprites) - 1:
-            self.counter = 0
-            self.index += 1
-            self.image = self.sprites[self.index]
-
-        # Movement:
+    def handle_movement(self):
         if self.rect.bottom < 0:
             self.kill()
         else:
-            self.rect.y -= self.vel_y
+            self.move_y()

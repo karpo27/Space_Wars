@@ -1,6 +1,7 @@
 # Scripts
 from constants import *
 from character import Character
+from bullet import Bullet
 from game_effects import Explosion, Particle, HitParticle
 
 # Modules
@@ -151,68 +152,20 @@ class Enemy(Character):
         self.spawn_bullet()
 
 
-class EnemyBullet(pygame.sprite.Sprite):
-    def __init__(self, pos, img_path, movement, vel, angle, sound, col_sound, group):
-        super().__init__()
-        self.sprites = []
-        for i in range(1, 4):
-            images = pygame.image.load(f'{img_path}{i}.png').convert_alpha()
-            images = pygame.transform.scale(images, (images.get_width() * 0.2, images.get_height() * 0.2))
-            self.sprites.append(images)
+class EnemyBullet(Bullet):
+    def __init__(self, pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, group):
+        super().__init__(pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, group)
 
-        self.index = 0
-        self.image = self.sprites[self.index]
-        self.rect = self.image.get_rect()
-        self.rect.center = pos
-        self.counter = 0
-        self.image_copy = self.image
-
-        # Movement
-        self.movement = movement
-        self.vel = self.vel_x, self.vel_y = vel
-        self.angle = angle
-
-        # Sound
-        self.sound = mixer.Sound(sound)
-        self.col_sound = mixer.Sound(col_sound)
-
-        # Groups:
-        group.add(self)
-
-    def move_vertical(self):
-        self.rect.y += self.vel_y
-
-    def move_diagonal(self):
-        self.rect.x += self.vel_x
-        self.rect.y += self.vel_y
-
-    def rotate(self):
-        rotated_surface = pygame.transform.rotozoom(self.image_copy, self.angle, 1)
-        rotated_rect = rotated_surface.get_rect(center=self.rect.center)
-        return rotated_surface, rotated_rect
-
-    def update(self):
-        # Animation:
-        animation_delay = 8
-        self.counter += 1
-
-        if self.counter >= animation_delay and self.index < len(self.sprites) - 1:
-            self.counter = 0
-            self.index += 1
-            self.image = self.sprites[self.index]
-            self.image_copy = self.image
-
-        # Movement:
+    def handle_movement(self):
         if self.rect.top > HEIGHT:
             self.kill()
         else:
             if self.movement == 1:
-                self.move_vertical()
+                self.move_y()
             elif self.movement == 2:
                 self.image, self.rect = self.rotate()
-                self.move_diagonal()
+                self.move_x()
+                self.move_y()
             elif self.movement == 3:
                 pass
-
-
 
