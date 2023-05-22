@@ -39,9 +39,9 @@ class Bullet(pygame.sprite.Sprite):
     def move_x(self):
         self.rect.x += self.vel_x
         if self.bounce:
-            if self.rect.left < 0:
+            if self.rect.left <= 0:
                 self.vel_x = self.vel_x * -1
-            elif self.rect.right > WIDTH:
+            elif self.rect.right >= WIDTH:
                 self.vel_x = self.vel_x * -1
 
     def move_y(self):

@@ -82,5 +82,16 @@ class Character(pygame.sprite.Sprite):
         else:
             self.blink_rate = 0
 
-    def update(self):
+    def animate(self):
         pass
+
+    def handle_action(self):
+        pass
+
+    def reset_variables(self):
+        pass
+
+    def update(self):
+        self.animate()
+        self.handle_action()
+        self.reset_variables()
