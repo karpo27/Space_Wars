@@ -22,9 +22,9 @@ BACKGROUNDS = {
 PLAYER_ATTRIBUTES = [
     'A', 'Images/Player/', (1, 1), [WIDTH/2, 19/18 * HEIGHT], [5, 5], 3, 2, "alive", 30, (0.85, 0.85), (22, 38)
 ]
-# Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Bullet Sound, Explosion Sound:
+# Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Angle, Bounce, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
-    'A': ['Images/Player_Bullet/', 5, (0.4, 0.4), 6, 1, [0, -13], 0]
+    'A': ['Images/Player_Bullet/', 5, (0.4, 0.4), 6, 1, [0, -13], 0, False]
 }
 # Enemies - Category, Path, Scale, Movement Type, Velocity, HP, Shoots, Bullet Type, Fire Rate, Explosion Scale, Particles Range:
 ENEMIES = {
@@ -36,20 +36,20 @@ ENEMIES = {
     'f1': ['F', 'Images/Enemies/', (0.7, 0.7), 1, [1, 2], 3, True, ('f', 'd'), 100, (1.1, 1.1), (9, 26)],
     'f2': ['F', 'Images/Enemies/', (0.7, 0.7), 1, [-1, 2], 3, True, ('f', 'd'), 100, (1.1, 1.1), (9, 26)]
 }
-# Enemies Bullets - Path, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Sound, Explosion Sound:
+# Enemies Bullets - Path, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Bounce, Sound, Explosion Sound:
 ENEMIES_BULLETS = {
-    'a1': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [-1, 5], -10],
-    'a2': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [1, 5], 10],
-    'b1': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [-6, 6], -45],
-    'b2': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0],
-    'b3': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [6, 6], 45],
-    'b4': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [-7, 7], -45],
-    'b5': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 7], 0],
-    'b6': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [7, 7], 45],
-    'c1': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 8], 0],
-    'c2': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0],
-    'd': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 8], 0],
-    'f': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0]
+    'a1': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [-1, 5], -10, False],
+    'a2': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [1, 5], 10, False],
+    'b1': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [-6, 6], -45, True],
+    'b2': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False],
+    'b3': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [6, 6], 45, True],
+    'b4': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [-7, 7], -45, True],
+    'b5': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 7], 0, False],
+    'b6': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 2, [7, 7], 45, True],
+    'c1': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 8], 0, False],
+    'c2': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False],
+    'd': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 8], 0, False],
+    'f': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False]
 }
 # Bosses - Category, Path, Scale, Action {Movement: Bullet Type}, Velocity, HP, Fire Rate, Explosion Scale, Particles Range:
 BOSSES = {
@@ -72,29 +72,29 @@ BOSSES = {
 }
 # Bosses Bullets - Image, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {
-    'a1': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [1, 5], 15],
-    'a2': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [3, 6], 30],
-    'a3': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [5, 5], 45],
-    'a4': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [5, 3], 60],
-    'a5': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [5, 1], 75],
-    'a6': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [5, 0], 90],
+    'a1': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [1, 5], 15, False],
+    'a2': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [3, 6], 30, False],
+    'a3': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [5, 5], 45, False],
+    'a4': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [5, 3], 60, False],
+    'a5': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [5, 1], 75, False],
+    'a6': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [5, 0], 90, False],
 
-    'b0': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0],
-    'b1': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-1, 5], -15],
-    'b2': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-3, 6], -30],
-    'b3': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-5, 5], -45],
-    'b4': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-5, 3], -60],
-    'b5': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-5, 1], -75],
-    'b6': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-5, 0], -90],
-    'b7': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [6, 6], 45],
-    'b8': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [6, 6], 45],
+    'b0': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False],
+    'b1': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-1, 5], -15, False],
+    'b2': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-3, 6], -30, False],
+    'b3': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-5, 5], -45, False],
+    'b4': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-5, 3], -60, False],
+    'b5': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-5, 1], -75, False],
+    'b6': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [-5, 0], -90, False],
+    'b7': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [6, 6], 45, False],
+    'b8': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 2, [6, 6], 45, False],
 
-    'c1': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0],
-    'c2': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0],
-    'c3': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0],
-    'c4': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0]
+    'c1': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False],
+    'c2': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False],
+    'c3': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False],
+    'c4': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False]
 }
 # List of Enemies per Level:
-ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1', 'f2']
-#ENEMIES_LVL1 = []
+#ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1', 'f2']
+ENEMIES_LVL1 = ['b', 'b']
 #ENEMIES_LVL1 = []

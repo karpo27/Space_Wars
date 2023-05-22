@@ -153,8 +153,8 @@ class Enemy(Character):
 
 
 class EnemyBullet(Bullet):
-    def __init__(self, pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, group):
-        super().__init__(pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, group)
+    def __init__(self, pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, bounce, group):
+        super().__init__(pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, bounce, group)
 
     def handle_movement(self):
         if self.rect.top > HEIGHT:

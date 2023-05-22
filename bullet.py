@@ -6,7 +6,7 @@ import pygame
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, group):
+    def __init__(self, pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, bounce, group):
         super().__init__()
         # Image:
         self.sprites = []
@@ -28,6 +28,7 @@ class Bullet(pygame.sprite.Sprite):
         # Movement:
         self.movement = movement
         self.vel = self.vel_x, self.vel_y = vel
+        self.bounce = bounce
 
         # Rotation:
         self.angle = angle
@@ -37,6 +38,11 @@ class Bullet(pygame.sprite.Sprite):
 
     def move_x(self):
         self.rect.x += self.vel_x
+        if self.bounce:
+            if self.rect.left < 0:
+                self.vel_x = self.vel_x * -1
+            elif self.rect.right > WIDTH:
+                self.vel_x = self.vel_x * -1
 
     def move_y(self):
         self.rect.y += self.vel_y
