@@ -19,6 +19,9 @@ class Character(pygame.sprite.Sprite):
         self.image_copy = self.image
         self.rect = self.image.get_rect()
 
+        # Initial Movement Animation:
+        self.enter_animation = None
+
         # Movement:
         self.vel = self.vel_x, self.vel_y = vel
 
@@ -88,10 +91,23 @@ class Character(pygame.sprite.Sprite):
     def handle_action(self):
         pass
 
+    def make_invulnerable(self):
+        if self.invulnerable:
+            if self.invulnerable_rate >= self.invulnerable_ref_time:
+                self.invulnerable = False
+                self.image = pygame.image.load(f'{self.img_path}{self.category}.png').convert_alpha()
+            else:
+                self.invulnerable_rate += 1
+                self.blink_rate += 1
+                self.blink_image()
+
     def reset_variables(self):
         pass
 
     def update(self):
-        self.animate()
-        self.handle_action()
+        if self.enter_animation:
+            self.animate()
+        else:
+            self.handle_action()
+        self.make_invulnerable()
         self.reset_variables()

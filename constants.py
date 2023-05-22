@@ -96,5 +96,5 @@ BOSSES_BULLETS = {
 }
 # List of Enemies per Level:
 #ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1', 'f2']
-ENEMIES_LVL1 = ['b', 'b']
-#ENEMIES_LVL1 = []
+#ENEMIES_LVL1 = ['b', 'b']
+ENEMIES_LVL1 = []

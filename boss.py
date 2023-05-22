@@ -129,51 +129,50 @@ class Boss(Character):
         # Score:
         self.ui.update_score(self.score)
 
-    def update(self):
-        # Enter Level Animation
-        if self.enter_animation:
-            if self.rect.y <= self.y_enter:
-                self.rect.y += self.vel_enter_y
-            else:
-                self.enter_animation = False
-        # Perform Action:
+    def animate(self):
+        if self.rect.y <= self.y_enter:
+            self.rect.y += self.vel_enter_y
         else:
-            if not self.next_action:
-                if self.movement_action == "X":
-                    if self.hp > self.half_hp:
-                        self.spawn_bullet(1)
-                    else:
-                        self.spawn_bullet(3)
-                    self.move_x(0, WIDTH)
-                    # Reset Movement Variables:
-                    '''
-                    if self.movement_rate < self.movement_ref_time:
-                        self.movement_rate += 1
-                    elif self.movement_rate >= self.movement_ref_time:
-                        self.next_action = True
-                        self.movement_rate = 0
-                    '''
-                elif self.movement_action == "Y":
-                    self.move_y(1)
-                elif self.movement_action == "Y-ANGLE":
-                    self.image, self.rect = self.move_y_angle()
-                elif self.movement_action == "X-BEAM":
-                    if not self.x_beam_align:
-                        if self.limit_left < self.rect.x < self.limit_right - self.rect.width/2:
-                            self.move_x_beam(self.x_beam_pos)
-                        else:
-                            self.x_beam_align = True
-                    else:
-                        self.move_x(0, WIDTH)
-                        self.spawn_bullet(5)
-            else:
-                self.movement_action = secrets.choice(list(self.action.keys()))
-                self.next_action = False
+            self.enter_animation = False
 
+    def handle_action(self):
+        if not self.next_action:
+            if self.movement_action == "X":
+                if self.hp > self.half_hp:
+                    self.spawn_bullet(1)
+                else:
+                    self.spawn_bullet(3)
+                self.move_x(0, WIDTH)
+                # Reset Movement Variables:
+                '''
+                if self.movement_rate < self.movement_ref_time:
+                    self.movement_rate += 1
+                elif self.movement_rate >= self.movement_ref_time:
+                    self.next_action = True
+                    self.movement_rate = 0
+                '''
+            elif self.movement_action == "Y":
+                self.move_y(1)
+            elif self.movement_action == "Y-ANGLE":
+                self.image, self.rect = self.move_y_angle()
+            elif self.movement_action == "X-BEAM":
+                if not self.x_beam_align:
+                    if self.limit_left < self.rect.x < self.limit_right - self.rect.width / 2:
+                        self.move_x_beam(self.x_beam_pos)
+                    else:
+                        self.x_beam_align = True
+                else:
+                    self.move_x(0, WIDTH)
+                    self.spawn_bullet(5)
+        else:
+            self.movement_action = secrets.choice(list(self.action.keys()))
+            self.next_action = False
+
+    def reset_variables(self):
         # Reset Animation when leaving Screen:
         if self.rect.top > HEIGHT or self.rect.left > WIDTH or self.rect.right < 0:
             self.enter_animation = True
-            self.rect.center = [WIDTH/2, -HEIGHT/4]
+            self.rect.center = [WIDTH / 2, -HEIGHT / 4]
             self.angle = 0
             self.image, self.rect = self.rotate()
 

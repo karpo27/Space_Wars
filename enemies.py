@@ -133,7 +133,7 @@ class Enemy(Character):
         # Score:
         self.ui.update_score(self.score)
 
-    def update(self):
+    def handle_action(self):
         if self.rect.top > HEIGHT:
             self.kill()
         else:
@@ -147,7 +147,6 @@ class Enemy(Character):
                 self.movement_4()
             elif self.movement == 5:
                 self.image, self.rect = self.movement_5()
-
         # Enemy Bullet:
         self.spawn_bullet()
 
