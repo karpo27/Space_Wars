@@ -124,7 +124,7 @@ class EnemyBullet(Bullet):
         super().__init__(pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, bounce, group)
 
     def handle_movement(self):
-        if self.rect.top > HEIGHT:
+        if self.rect.top > HEIGHT or self.rect.bottom < 0:
             self.kill()
         else:
             if self.movement == 1:

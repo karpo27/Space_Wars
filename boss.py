@@ -2,6 +2,7 @@
 from constants import *
 from character import Character
 from bullet import Bullet
+from enemies import EnemyBullet
 from game_effects import Explosion, Particle, HitParticle
 
 # Modules
@@ -107,7 +108,7 @@ class Boss(Character):
                 if self.bullet_qty >= self.bullet_type_qty:
                     if self.fire_rate_2 >= self.ref_time_2:
                         for bullet_type in self.bullet[self.index]:
-                            BossBullet(self.rect.center, *BOSSES_BULLETS[f'{bullet_type}'], self.bullet_group)
+                            EnemyBullet(self.rect.center, *BOSSES_BULLETS[f'{bullet_type}'], self.bullet_group)
                         self.fire_rate_2 = 0
                         self.bullet_type_qty += 1
                     else:
@@ -184,20 +185,3 @@ class Boss(Character):
                 self.movement_rate = 0
                 self.next_action = True
 
-
-class BossBullet(Bullet):
-
-    def __init__(self, pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, bounce, group):
-        super().__init__(pos, img_path, img_qty, scale, animation_delay, movement, vel, angle, bounce, group)
-
-    def handle_movement(self):
-        # Movement:
-        if self.rect.top > HEIGHT or self.rect.bottom < 0:
-            self.kill()
-        else:
-            if self.movement == 1:
-                self.move_y()
-            elif self.movement == 2:
-                self.image, self.rect = self.rotate()
-                self.move_x()
-                self.move_y()

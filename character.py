@@ -13,9 +13,9 @@ class Character(pygame.sprite.Sprite):
         self.category = category
         self.img_path = img_path
         self.image = pygame.image.load(f'{self.img_path}{self.category}.png').convert_alpha()
-        self.scale_x, self.scale_y = scale[0], scale[1]
+        self.scale= scale
         self.image = pygame.transform.scale(self.image,
-                                            (self.image.get_width() * self.scale_x, self.image.get_height() * self.scale_y))
+                                            (self.image.get_width() * self.scale, self.image.get_height() * self.scale))
         self.image_copy = self.image
         self.rect = self.image.get_rect()
 
