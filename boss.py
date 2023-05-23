@@ -13,7 +13,7 @@ import secrets
 
 class Boss(Character):
 
-    def __init__(self, category, img_path, scale, action, vel, hp, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
+    def __init__(self, category, img_path, scale, action, vel, hp, shoots, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
         super().__init__(category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group)
         # Image:
         self.rect.center = [WIDTH/2, -HEIGHT/4]
@@ -26,27 +26,30 @@ class Boss(Character):
         # Action:
         self.next_action = False
         self.action = action
-        self.movement_action = "X"
-        # self.movement_action = secrets.choice(self.movements_type)
-        self.movement_ref_time = 800
+        self.movement_action = Z
+        #self.movement_action = secrets.choice(self.action)
+        self.movement_duration = self.movement_action['duration']
         self.movement_rate = 0
-        # X:
-        self.ref_time = fire_rate
+        self.ref_time = self.movement_action['fire_rate']
         self.fire_rate = self.ref_time
-        self.ref_time_2 = 20
+        self.ref_time_2 = self.movement_action['fire_rate_2']
         self.fire_rate_2 = self.ref_time_2
+        '''
         # X-BEAM:
         self.limit_left = WIDTH/8
         self.limit_right = 7/9 * WIDTH
         self.x_beam_pos = secrets.choice([self.limit_left, self.limit_right])
         self.x_beam_align = False
+        '''
 
         # HP:
         self.half_hp = self.hp/2
 
         # Bullet:
+        self.shoots = shoots
         self.index = 0
-        self.bullet = self.action[self.movement_action]
+        self.bullet = self.movement_action['bullet']
+        self.bullet_qty = self.movement_action['qty'][0]
         self.bullet_type_qty = 1
         self.bullet_type_counter = 0
 
@@ -56,22 +59,26 @@ class Boss(Character):
         self.ui = ui
         self.score = hp * 10
 
-    def move_y_angle(self):
-        self.move_y()
-        self.angle += 4
-        return self.rotate()
+    def movement_x(self):
+        if self.hp < self.half_hp:
+            self.bullet_qty = self.movement_action['qty'][1]
+        self.spawn_bullet()
+        self.move_x()
+        self.restrict_x(0, WIDTH)
 
-    def move_x_beam(self, pos):
-        if pos < self.rect.x:
-            self.rect.x -= self.vel_x
-        else:
-            self.rect.x += self.vel_x
+    def movement_z(self):
+        if self.hp < self.half_hp:
+            self.bullet_qty = self.movement_action['qty'][1]
+        self.move_y()
+        self.angle -= 4
+        self.spawn_bullet()
+        return self.rotate()
 
     def spawn_bullet(self):
         if self.rect.top > 0:
             # Create Enemy Bullet:
-            if self.fire_rate >= self.ref_time:
-                if 2 >= self.bullet_type_qty:
+            if self.shoots and self.fire_rate >= self.ref_time:
+                if self.bullet_qty >= self.bullet_type_qty:
                     if self.fire_rate_2 >= self.ref_time_2:
                         for bullet_type in self.bullet[self.index]:
                             BossBullet(self.rect.center, *BOSSES_BULLETS[f'{bullet_type}'], self.bullet_group)
@@ -119,44 +126,34 @@ class Boss(Character):
 
     def handle_action(self):
         if not self.next_action:
-            if self.movement_action == "X":
-                if self.hp > self.half_hp:
-                    self.spawn_bullet()
-                else:
-                    self.spawn_bullet()
-                self.move_x()
-                # Reset Movement Variables:
-                '''
-                if self.movement_rate < self.movement_ref_time:
-                    self.movement_rate += 1
-                elif self.movement_rate >= self.movement_ref_time:
-                    self.next_action = True
-                    self.movement_rate = 0
-                '''
-            elif self.movement_action == "Y":
+            if self.movement_action == X:
+                self.movement_x()
+            elif self.movement_action == Y:
                 self.move_y()
-            elif self.movement_action == "Y-ANGLE":
-                self.image, self.rect = self.move_y_angle()
+            elif self.movement_action == Z:
+                self.image, self.rect = self.movement_z()
             elif self.movement_action == "X-BEAM":
-                if not self.x_beam_align:
-                    if self.limit_left < self.rect.x < self.limit_right - self.rect.width / 2:
-                        self.move_x_beam(self.x_beam_pos)
-                    else:
-                        self.x_beam_align = True
-                else:
-                    self.move_x()
-                    self.spawn_bullet()
+                pass
         else:
-            self.movement_action = secrets.choice(list(self.action.keys()))
+            self.movement_action = secrets.choice(self.action)
             self.next_action = False
 
     def reset_variables(self):
         # Reset Animation when leaving Screen:
-        if self.rect.top > HEIGHT or self.rect.left > WIDTH or self.rect.right < 0:
+        if self.rect.top > HEIGHT:
             self.enter_animation = True
-            self.rect.center = [WIDTH / 2, -HEIGHT / 4]
+            self.rect.center = [WIDTH/2, -HEIGHT/4]
             self.angle = 0
             self.image, self.rect = self.rotate()
+            #self.next_action = True
+            #self.movement_rate = 0
+        else:
+            # Reset Movement Variables:
+            if self.movement_rate < self.movement_duration:
+                self.movement_rate += 1
+            elif self.movement_rate >= self.movement_duration:
+                #self.next_action = True
+                self.movement_rate = 0
 
 
 class BossBullet(Bullet):
@@ -166,7 +163,7 @@ class BossBullet(Bullet):
 
     def handle_movement(self):
         # Movement:
-        if self.rect.top > HEIGHT:
+        if self.rect.top > HEIGHT or self.rect.bottom < 0:
             self.kill()
         else:
             if self.movement == 1:
