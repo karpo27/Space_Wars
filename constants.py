@@ -53,6 +53,13 @@ ENEMIES_BULLETS = {
     'f': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False]
 }
 # Bosses Action Movement/Shoot Patterns:
+W = {
+    'bullet': [['b0']],
+    'qty': (1, 1),
+    'fire_rate': 2,
+    'fire_rate_2': 5,
+    'duration': 800
+}
 X = {
     'bullet': [['a2', 'b0', 'b2'], ['a1', 'b1'],
                ['b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6'],
@@ -63,26 +70,26 @@ X = {
     'duration': 1200
 }
 Y = {
-    'bullet': [],
-    'qty': (None, None),
-    'fire_rate': 0,
-    'fire_rate_2': 0,
-    'duration': 800
+    'bullet': [['b6', 'a6', 'c0', 'c1', 'd5']],
+    'qty': (3, 4),
+    'fire_rate': 12,
+    'fire_rate_2': 9,
+    'duration': 900
 }
 Z = {
-    'bullet': [['b0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'd1', 'd2', 'd3', 'd4', 'd5', 'c0', 'c1', 'c2', 'c3', 'c4', 'c5']],
-    'qty': (1, 1),
-    'fire_rate': 50,
-    'fire_rate_2': 5,
-    'duration': 900
+    'bullet': [['b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'c5', 'c4', 'c3', 'c2', 'c1', 'c0']],
+    'qty': (1, 2),
+    'fire_rate': 14,
+    'fire_rate_2': 7,
+    'duration': 1000
 }
 # Bosses - Category, Path, Scale, Action[Movement], Velocity, HP, Shoots, Fire Rate, Explosion Scale, Particles Range:
 BOSSES = {
     'b': ['B', 'Images/Bosses/',
           (1, 1),
           [X, Y, Z],
-          [1, 6],
-          5,
+          [1, 5],
+          3,
           True,
           None,
           (2.0, 2.0),

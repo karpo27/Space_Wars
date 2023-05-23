@@ -26,7 +26,7 @@ class Boss(Character):
         # Action:
         self.next_action = False
         self.action = action
-        self.movement_action = Z
+        self.movement_action = W
         #self.movement_action = secrets.choice(self.action)
         self.movement_duration = self.movement_action['duration']
         self.movement_rate = 0
@@ -34,13 +34,6 @@ class Boss(Character):
         self.fire_rate = self.ref_time
         self.ref_time_2 = self.movement_action['fire_rate_2']
         self.fire_rate_2 = self.ref_time_2
-        '''
-        # X-BEAM:
-        self.limit_left = WIDTH/8
-        self.limit_right = 7/9 * WIDTH
-        self.x_beam_pos = secrets.choice([self.limit_left, self.limit_right])
-        self.x_beam_align = False
-        '''
 
         # HP:
         self.half_hp = self.hp/2
@@ -59,12 +52,25 @@ class Boss(Character):
         self.ui = ui
         self.score = hp * 10
 
+    def movement_w(self):
+        if self.hp < self.half_hp:
+            self.bullet_qty = self.movement_action['qty'][1]
+        self.move_x()
+        self.restrict_x(0, WIDTH)
+        self.spawn_bullet()
+
     def movement_x(self):
         if self.hp < self.half_hp:
             self.bullet_qty = self.movement_action['qty'][1]
-        self.spawn_bullet()
         self.move_x()
         self.restrict_x(0, WIDTH)
+        self.spawn_bullet()
+
+    def movement_y(self):
+        if self.hp < self.half_hp:
+            self.bullet_qty = self.movement_action['qty'][1]
+        self.move_y()
+        self.spawn_bullet()
 
     def movement_z(self):
         if self.hp < self.half_hp:
@@ -129,11 +135,11 @@ class Boss(Character):
             if self.movement_action == X:
                 self.movement_x()
             elif self.movement_action == Y:
-                self.move_y()
+                self.movement_y()
             elif self.movement_action == Z:
                 self.image, self.rect = self.movement_z()
-            elif self.movement_action == "X-BEAM":
-                pass
+            elif self.movement_action == W:
+                self.movement_w()
         else:
             self.movement_action = secrets.choice(self.action)
             self.next_action = False
