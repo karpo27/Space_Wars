@@ -54,11 +54,11 @@ ENEMIES_BULLETS = {
 }
 # Bosses Action Movement/Shoot Patterns:
 W = {
-    'bullet': [['b0']],
+    'bullet': [['a1', 'b1', 'b2']],
     'qty': (1, 1),
     'fire_rate': 2,
     'fire_rate_2': 5,
-    'duration': 800
+    'duration': 1200
 }
 X = {
     'bullet': [['a2', 'b0', 'b2'], ['a1', 'b1'],
@@ -83,17 +83,9 @@ Z = {
     'fire_rate_2': 7,
     'duration': 1000
 }
-# Bosses - Category, Path, Scale, Action[Movement], Velocity, HP, Shoots, Fire Rate, Explosion Scale, Particles Range:
+# Bosses - Category, Path, Scale, Action[Movement], Velocity, HP, Shoot, Fire Rate, Explosion Scale, Particles Range:
 BOSSES = {
-    'b': ['B', 'Images/Bosses/',
-          (1, 1),
-          [X, Y, Z],
-          [1, 5],
-          3,
-          True,
-          None,
-          (2.0, 2.0),
-          (160, 190)]
+    'b': ['B', 'Images/Bosses/', (1, 1), [W, X, Y, Z], [1, 5], 3, False, None, (2.0, 2.0), (160, 190)]
 }
 # Bosses Bullets - Image, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {

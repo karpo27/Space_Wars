@@ -16,7 +16,7 @@ class Enemy(Character):
     spawn_enemy = pygame.USEREVENT + 0
     pygame.time.set_timer(spawn_enemy, time_to_spawn)
 
-    def __init__(self, category, img_path, scale, movement, vel, hp, shoots, bullet, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
+    def __init__(self, category, img_path, scale, movement, vel, hp, shoot, bullet, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
         super().__init__(category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group)
         # Image:
         self.rect.center = [random.randint(int(0 + self.rect.width/2), int(WIDTH - self.rect.width/2)), -80]
@@ -26,7 +26,7 @@ class Enemy(Character):
         self.counter = 0
 
         # Bullet:
-        self.shoots = shoots
+        self.shoot = shoot
         self.bullet = bullet
 
         # Score:
@@ -73,7 +73,7 @@ class Enemy(Character):
     def spawn_bullet(self):
         if self.rect.top > 0:
             # Create Enemy Bullet:
-            if self.shoots and self.fire_rate >= self.ref_time:
+            if self.shoot and self.fire_rate >= self.ref_time:
                 for bullet_type in self.bullet:
                     EnemyBullet(self.rect.center, *ENEMIES_BULLETS[f'{bullet_type}'], self.bullet_group)
                     self.fire_rate = 0
