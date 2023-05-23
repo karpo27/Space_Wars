@@ -26,8 +26,9 @@ class Boss(Character):
         # Action:
         self.next_action = False
         self.action = action
-        #self.movement_action = Y
-        self.movement_action = secrets.choice(self.action)
+        self.action_copy = self.action.copy()
+        self.movement_action = secrets.choice(self.action_copy)
+        self.action_copy.remove(self.movement_action)
         self.movement_duration = self.movement_action['duration']
         self.movement_rate = 0
         self.ref_time = self.movement_action['fire_rate']
@@ -54,7 +55,10 @@ class Boss(Character):
         self.score = hp * 10
 
     def reset_movement_action(self):
-        self.movement_action = secrets.choice(self.action)
+        if len(self.action_copy) == 0:
+            self.action_copy = self.action.copy()
+        self.movement_action = secrets.choice(self.action_copy)
+        self.action_copy.remove(self.movement_action)
         self.reset_shoot()
         self.movement_duration = self.movement_action['duration']
         self.movement_rate = 0

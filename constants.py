@@ -20,7 +20,7 @@ BACKGROUNDS = {
 }
 # Player - Category, Image, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
 PLAYER_ATTRIBUTES = [
-    'A', 'Images/Player/', (1, 1), [WIDTH / 2, 19 / 18 * HEIGHT], [5, 5], 3, 2, "alive", 30, (0.85, 0.85), (22, 38)
+    'A', 'Images/Player/', (1, 1), [WIDTH / 2, 19 / 18 * HEIGHT], [5, 5], 3, 6, "alive", 30, (0.85, 0.85), (22, 38)
 ]
 # Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Angle, Bounce, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
@@ -52,11 +52,11 @@ ENEMIES_BULLETS = {
     'd': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 8], 0, False],
     'f': ['Images/Enemies_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False]
 }
-# Bosses Action Movement/Shoot Patterns:
+# Bosses Action Pattern - Bullet, Quantity, Fire Rate, Fire Rate 2, Movement Duration:
 W = {
     'bullet': [['a1', 'b1', 'b2']],
     'qty': (1, 1),
-    'fire_rate': 2,
+    'fire_rate': 3,
     'fire_rate_2': 5,
     'duration': 1200
 }
@@ -64,7 +64,7 @@ X = {
     'bullet': [['a2', 'b0', 'b2'], ['a1', 'b1'],
                ['b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6'],
                ['b0', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6']],
-    'qty': (1, 3),
+    'qty': (2, 3),
     'fire_rate': 50,
     'fire_rate_2': 20,
     'duration': 1200
