@@ -95,6 +95,6 @@ BOSSES_BULLETS = {
     'c4': ['Images/Bosses_Bullets/', 3, (0.2, 0.2), 8, 1, [0, 6], 0, False]
 }
 # List of Enemies per Level:
-#ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1', 'f2']
-ENEMIES_LVL1 = ['d', 'd']
+ENEMIES_LVL1 = ['a', 'b', 'c', 'd', 'e', 'f1', 'f2']
+#ENEMIES_LVL1 = ['d', 'd']
 #ENEMIES_LVL1 = []

@@ -92,7 +92,6 @@ class Player(Character):
             self.rect.y -= self.vel_y
         elif key[pygame.K_DOWN] and self.rect.bottom < HEIGHT:
             self.rect.y += self.vel_y
-
         # Player Bullet Keyboard:
         if key[pygame.K_SPACE]:
             # Create Player Bullet Object:

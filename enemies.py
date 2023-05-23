@@ -133,6 +133,3 @@ class EnemyBullet(Bullet):
                 self.image, self.rect = self.rotate()
                 self.move_x()
                 self.move_y()
-            elif self.movement == 3:
-                pass
-
