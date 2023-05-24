@@ -97,6 +97,7 @@ class Player(Character):
             # Create Player Bullet Object:
             if self.fire_rate >= self.ref_time:
                 PlayerBullet(self.rect.center, *PLAYER_BULLETS['A'], self.bullet_group)
+                SOUNDS['player_laser'].play().set_volume(0.2)
                 self.fire_rate = 0
 
     def reset_variables(self):

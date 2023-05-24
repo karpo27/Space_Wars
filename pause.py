@@ -34,6 +34,7 @@ class Pause(BaseState):
             if self.index == 0:
                 self.next_state = "LEVEL_1"
                 self.screen_done = True
+                pygame.mixer.music.unpause()
             elif self.index == 1:
                 self.index = 0
                 self.screen = "OPTIONS"

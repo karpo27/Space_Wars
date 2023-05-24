@@ -2,15 +2,14 @@
 from constants import SCREEN
 from splash import Splash
 from game import Game
-from main_menu import Menu
+from menu import Menu
 from level_1 import Level1
 from pause import Pause
 from win import Win
 from game_over import GameOver
 
 # Modules:
-import sys
-import pygame
+
 
 # Set Game States and Initialize Objects:
 states = {

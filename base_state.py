@@ -11,7 +11,6 @@ class BaseState(object):
         self.screen_done = False
         self.quit = False
         self.next_state = None
-        #self.screen_rect = pygame.display.get_surface().get_rect()
         self.persist = {}
 
         # Text Properties:

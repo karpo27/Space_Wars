@@ -14,9 +14,9 @@ RIGHT = 3
 
 # Background Assets - Image, Scroll, Music:
 BACKGROUNDS = {
-    'main_menu': ['Images/Main_Menu/main_menu_img.png', 0.45, 'Sounds/main_menu_music.mp3'],
-    'level_1': ['Images/Levels_Background/level_1.jpg', 0.8, 'Sounds/background.wav'],
-    'win': ['Images/Levels_Background/win.jpg', 0, 'Sounds/background.wav']
+    'main_menu': ['Images/Main_Menu/main_menu_img.png', 0.45],
+    'level_1': ['Images/Levels_Background/level_1.jpg', 0.8],
+    'win': ['Images/Levels_Background/win.jpg', 0]
 }
 # Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
 PLAYER_ATTRIBUTES = [
@@ -136,4 +136,14 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
                 ]
 #ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a', 'd', 'd', 'd', 'b']
-
+# Sounds:
+pygame.mixer.init()
+SOUNDS = {
+    'menu_movement': pygame.mixer.Sound('Sounds/menu_movement.mp3'),
+    #'menu_background': pygame.mixer.Sound('Sounds/menu_background.mp3'),
+    'menu_background': 'Sounds/menu_background.mp3',
+    'menu_enter': pygame.mixer.Sound('Sounds/menu_enter.mp3'),
+    #'level1_background': pygame.mixer.Sound('Sounds/level1_background.mp3'),
+    'level1_background': 'Sounds/level1_background.mp3',
+    'player_laser': pygame.mixer.Sound('Sounds/player_laser.mp3'),
+}

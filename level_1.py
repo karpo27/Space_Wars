@@ -55,6 +55,7 @@ class Level1(BaseState):
     def handle_pause(self):
         self.next_state = "PAUSE"
         self.screen_done = True
+        pygame.mixer.music.pause()
 
     def reset_enemy_timer(self, time):
         self.time_to_spawn = time
