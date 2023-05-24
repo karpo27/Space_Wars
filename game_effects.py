@@ -35,7 +35,7 @@ class Explosion(pygame.sprite.Sprite):
         self.sprites = []
         for i in range(1, 6):
             images = pygame.image.load(f'Images/Explosion/explosion_{i}.png').convert_alpha()
-            images = pygame.transform.scale(images, (images.get_width() * scale[0], images.get_height() * scale[1]))
+            images = pygame.transform.scale(images, (images.get_width() * scale, images.get_height() * scale))
             self.sprites.append(images)
 
         self.index = 0
