@@ -42,23 +42,25 @@ class Level1(BaseState):
         # Define Number of Enemies to spawn in Level 1:
         self.enemies = []
         self.enemy_index = 0
-        for enemy_type in ENEMIES_LVL1:
-            self.enemies.append(ENEMIES[f'{enemy_type}'])
+        for enemy in ENEMIES_LVL1:
+            self.enemies.append(ENEMIES[f'{enemy}'])
         self.boss = [BOSSES['b']]
         self.boss_to_spawn = True
-        # self.boss = []
 
         # Define time delay between enemies to spawn:
-        self.time_to_spawn = random.randint(2000, 5000)
+        self.time_to_spawn = 7000
         self.enemy_event = pygame.USEREVENT + 0
         pygame.time.set_timer(self.enemy_event, self.time_to_spawn)
+        self.left_time = 100
+        self.right_time = 500
 
     def handle_pause(self):
         self.next_state = "PAUSE"
         self.screen_done = True
 
     def reset_enemy_timer(self):
-        pass
+        self.time_to_spawn = random.randint(self.left_time, self.right_time)
+        pygame.time.set_timer(self.enemy_event, self.time_to_spawn)
 
     def spawn_enemy(self):
         k = self.enemies[self.enemy_index]
@@ -70,6 +72,16 @@ class Level1(BaseState):
         k = self.boss[0]
         self.enemies_group.add(Boss(*k, self.ui, self.enemies_bullets_group, self.effects_group))
         self.boss_to_spawn = False
+
+    def check_win(self):
+        if self.player.state == "alive" and not self.boss_to_spawn and len(self.enemies_group) == 0:
+            self.next_state = "WIN"
+            self.screen_done = True
+
+    def check_game_over(self):
+        if self.player.state == "dead":
+            self.next_state = "GAME_OVER"
+            self.screen_done = True
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
@@ -96,14 +108,15 @@ class Level1(BaseState):
                 if self.boss_to_spawn:
                     self.spawn_boss()
 
-        # Go to Win Screen:
-        if self.player.state == "alive" and not self.boss_to_spawn and len(self.enemies_group) == 0:
-            self.next_state = "WIN"
-            self.screen_done = True
-        # Go to Game Over Screen:
-        elif self.player.state == "dead":
-            self.next_state = "GAME_OVER"
-            self.screen_done = True
+        # Change Enemy Timer:
+        if 0 < self.enemy_index <= (len(self.enemies) - 1) / 3:
+            self.left_time = 2000
+            self.right_time = 3000
+
+        # Check Win Condition:
+        self.check_win()
+        # Check Game Over Condition:
+        self.check_game_over()
 
     def draw(self, surface):
         # Check Collisions:
