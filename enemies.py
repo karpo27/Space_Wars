@@ -11,11 +11,6 @@ import random
 
 
 class Enemy(Character):
-    # Define time delay between enemies to spawn:
-    time_to_spawn = random.randint(2000, 5000)
-    spawn_enemy = pygame.USEREVENT + 0
-    pygame.time.set_timer(spawn_enemy, time_to_spawn)
-
     def __init__(self, category, img_path, scale, movement, vel, hp, shoot, bullet, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
         super().__init__(category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group)
         # Image:

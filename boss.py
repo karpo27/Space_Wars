@@ -13,7 +13,6 @@ import secrets
 
 
 class Boss(Character):
-
     def __init__(self, category, img_path, scale, action, vel, hp, shoot, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
         super().__init__(category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group)
         # Image:

@@ -48,14 +48,23 @@ class Level1(BaseState):
         self.boss_to_spawn = True
         # self.boss = []
 
+        # Define time delay between enemies to spawn:
+        self.time_to_spawn = random.randint(2000, 5000)
+        self.enemy_event = pygame.USEREVENT + 0
+        pygame.time.set_timer(self.enemy_event, self.time_to_spawn)
+
     def handle_pause(self):
         self.next_state = "PAUSE"
         self.screen_done = True
+
+    def reset_enemy_timer(self):
+        pass
 
     def spawn_enemy(self):
         k = self.enemies[self.enemy_index]
         self.enemies_group.add(Enemy(*k, self.ui, self.enemies_bullets_group, self.effects_group))
         self.enemy_index += 1
+        self.reset_enemy_timer()
 
     def spawn_boss(self):
         k = self.boss[0]
@@ -80,7 +89,7 @@ class Level1(BaseState):
 
         # Spawn Enemies According to Level:
         if self.enemy_index <= len(self.enemies) - 1:
-            if event.type == Enemy.spawn_enemy:
+            if event.type == self.enemy_event:
                 self.spawn_enemy()
         else:
             if len(self.enemies_group) == 0:
