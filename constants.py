@@ -20,7 +20,7 @@ BACKGROUNDS = {
 }
 # Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
 PLAYER_ATTRIBUTES = [
-    'A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [5, 5], 3, 2, "alive", 30, (0.85, 0.85), (22, 38)
+    'A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [5, 5], 3, 3, "alive", 30, (0.85, 0.85), (22, 38)
 ]
 # Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Angle, Bounce, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
@@ -118,7 +118,6 @@ BOSSES_BULLETS = {
     'd5': ['Images/Bosses_Bullets/', 3, 0.2, 8, 2, [-1, -5], 165, False]
 }
 # List of Enemies per Level:
-'''
 ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'b',
@@ -127,6 +126,15 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'e', 'e', 'e', 'a', 'a', 'd', 'd',
                 'c', 'c', 'b', 'a', 'f1', 'f2', 'f1',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
-                ]'''
-ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a', 'd', 'd', 'd', 'b']
+                'b', 'c', 'b', 'a', 'a', 'a', 'c',
+                'c', 'a', 'c', 'a', 'c', 'a', 'c',
+                'f1', 'f2', 'f1', 'f2', 'f1', 'f2',
+                'f1', 'f2', 'f1', 'f2', 'f1', 'f2',
+                'b', 'b', 'b', 'b',
+                'e', 'b', 'e', 'a', 'a', 'e', 'b', 'e', 'b', 'e',
+                'f1', 'f2', 'f1', 'e', 'f2', 'f1', 'f2',
+                'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
+                'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
+                ]
+#ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a', 'd', 'd', 'd', 'b']
 

@@ -61,6 +61,15 @@ class Level1(BaseState):
         pygame.time.set_timer(self.enemy_event, self.time_to_spawn)
 
     def spawn_enemy(self):
+        if 0 <= self.enemy_index <= (len(self.enemies) - 1) * 1 / 3:
+            self.time_to_spawn = 4000
+            self.reset_enemy_timer(self.time_to_spawn)
+        elif (len(self.enemies) - 1) * 1 / 3 < self.enemy_index <= (len(self.enemies) - 1) * 2 / 3:
+            self.time_to_spawn = 3000
+            self.reset_enemy_timer(self.time_to_spawn)
+        elif (len(self.enemies) - 1) * 2 / 3 < self.enemy_index <= (len(self.enemies) - 1):
+            self.time_to_spawn = 1000
+        self.reset_enemy_timer(self.time_to_spawn)
         k = self.enemies[self.enemy_index]
         self.enemies_group.add(Enemy(*k, self.ui, self.enemies_bullets_group, self.effects_group))
         self.enemy_index += 1
@@ -98,19 +107,9 @@ class Level1(BaseState):
                 self.handle_pause()
 
         # Spawn Enemies According to Level:
-        if event.type == self.enemy_event:
-            if 0 <= self.enemy_index <= (len(self.enemies) - 1) * 1/3:
-                self.time_to_spawn = 5000
-                self.spawn_enemy()
-                self.reset_enemy_timer(self.time_to_spawn)
-            elif (len(self.enemies) - 1) * 1/3 < self.enemy_index <= (len(self.enemies) - 1) * 2/3:
-                self.time_to_spawn = 2500
-                self.spawn_enemy()
-                self.reset_enemy_timer(self.time_to_spawn)
-            elif (len(self.enemies) - 1) * 2/3 < self.enemy_index <= (len(self.enemies) - 1):
-                self.time_to_spawn = 500
-                self.spawn_enemy()
-                self.reset_enemy_timer(self.time_to_spawn)
+        if event.type == self.enemy_event and self.enemy_index < len(self.enemies):
+            self.spawn_enemy()
+
         # Spawn Boss if there's no more enemies:
         if self.enemy_index == len(self.enemies) and len(self.enemies_group) == 0:
             self.spawn_boss()
