@@ -48,30 +48,28 @@ class Level1(BaseState):
         self.boss_to_spawn = True
 
         # Define time delay between enemies to spawn:
-        self.time_to_spawn = 7000
+        self.time_to_spawn = 5000
         self.enemy_event = pygame.USEREVENT + 0
         pygame.time.set_timer(self.enemy_event, self.time_to_spawn)
-        self.left_time = 100
-        self.right_time = 500
 
     def handle_pause(self):
         self.next_state = "PAUSE"
         self.screen_done = True
 
-    def reset_enemy_timer(self):
-        self.time_to_spawn = random.randint(self.left_time, self.right_time)
+    def reset_enemy_timer(self, time):
+        self.time_to_spawn = time
         pygame.time.set_timer(self.enemy_event, self.time_to_spawn)
 
     def spawn_enemy(self):
         k = self.enemies[self.enemy_index]
         self.enemies_group.add(Enemy(*k, self.ui, self.enemies_bullets_group, self.effects_group))
         self.enemy_index += 1
-        self.reset_enemy_timer()
 
     def spawn_boss(self):
-        k = self.boss[0]
-        self.enemies_group.add(Boss(*k, self.ui, self.enemies_bullets_group, self.effects_group))
-        self.boss_to_spawn = False
+        if self.boss_to_spawn:
+            k = self.boss[0]
+            self.enemies_group.add(Boss(*k, self.ui, self.enemies_bullets_group, self.effects_group))
+            self.boss_to_spawn = False
 
     def check_win(self):
         if self.player.state == "alive" and not self.boss_to_spawn and len(self.enemies_group) == 0:
@@ -100,18 +98,22 @@ class Level1(BaseState):
                 self.handle_pause()
 
         # Spawn Enemies According to Level:
-        if self.enemy_index <= len(self.enemies) - 1:
-            if event.type == self.enemy_event:
+        if event.type == self.enemy_event:
+            if 0 <= self.enemy_index <= (len(self.enemies) - 1) * 1/3:
+                self.time_to_spawn = 5000
                 self.spawn_enemy()
-        else:
-            if len(self.enemies_group) == 0:
-                if self.boss_to_spawn:
-                    self.spawn_boss()
-
-        # Change Enemy Timer:
-        if 0 < self.enemy_index <= (len(self.enemies) - 1) / 3:
-            self.left_time = 2000
-            self.right_time = 3000
+                self.reset_enemy_timer(self.time_to_spawn)
+            elif (len(self.enemies) - 1) * 1/3 < self.enemy_index <= (len(self.enemies) - 1) * 2/3:
+                self.time_to_spawn = 2500
+                self.spawn_enemy()
+                self.reset_enemy_timer(self.time_to_spawn)
+            elif (len(self.enemies) - 1) * 2/3 < self.enemy_index <= (len(self.enemies) - 1):
+                self.time_to_spawn = 500
+                self.spawn_enemy()
+                self.reset_enemy_timer(self.time_to_spawn)
+        # Spawn Boss if there's no more enemies:
+        if self.enemy_index == len(self.enemies) and len(self.enemies_group) == 0:
+            self.spawn_boss()
 
         # Check Win Condition:
         self.check_win()

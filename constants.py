@@ -118,6 +118,7 @@ BOSSES_BULLETS = {
     'd5': ['Images/Bosses_Bullets/', 3, 0.2, 8, 2, [-1, -5], 165, False]
 }
 # List of Enemies per Level:
+'''
 ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'b',
@@ -126,6 +127,6 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'e', 'e', 'e', 'a', 'a', 'd', 'd',
                 'c', 'c', 'b', 'a', 'f1', 'f2', 'f1',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
-                ]
-# ENEMIES_LVL1 = ['d', 'd']
+                ]'''
+ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a', 'd', 'd', 'd', 'b']
 
