@@ -70,14 +70,17 @@ class Menu(BaseState):
                 self.index = 1
                 self.screen = "MENU"
                 self.options_qty = 3
+                SOUNDS['menu_back'].play().set_volume(0.3)
         elif self.screen == "CREDITS":
             self.index = 2
             self.screen = "MENU"
             self.options_qty = 3
+            SOUNDS['menu_back'].play().set_volume(0.3)
         elif self.screen == "CONTROLS":
             self.index = 1
             self.screen = "OPTIONS"
             self.options_qty = 2
+            SOUNDS['menu_back'].play().set_volume(0.3)
 
     def get_event(self, event):
         # Main Menu Movement:
@@ -86,12 +89,11 @@ class Menu(BaseState):
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
                 self.index += 1
-                SOUNDS['menu_movement'].play().set_volume(0.2)
+                SOUNDS['menu_movement'].play().set_volume(0.5)
             elif event.key == pygame.K_UP:
                 self.index -= 1
-                SOUNDS['menu_movement'].play().set_volume(0.2)
+                SOUNDS['menu_movement'].play().set_volume(0.5)
             elif event.key == pygame.K_RETURN:
-                SOUNDS['menu_enter'].play().set_volume(0.25)
                 self.handle_action()
 
         # Player Icon Movement Boundaries:
