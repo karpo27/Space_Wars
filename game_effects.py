@@ -1,6 +1,6 @@
 # Scripts
 from constants import *
-from background_creator import *
+from bg_creator import *
 
 # Modules
 import pygame

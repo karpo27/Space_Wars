@@ -2,7 +2,8 @@
 from game_effects import Explosion, Particle, Speakers
 from base_state import BaseState
 from pause import *
-from background_creator import BackgroundCreator
+from bg_creator import BGCreator
+from bg_music import set_bg_music
 from player import *
 from ui import UI
 from enemies import *
@@ -32,7 +33,7 @@ class Level1(BaseState):
         self.effects_group = pygame.sprite.Group()
 
         # Initialize Classes:
-        self.background = BackgroundCreator(*BACKGROUNDS['level_1'])
+        self.background = BGCreator(*BACKGROUNDS['level_1'])
         self.player = Player(*PLAYER_ATTRIBUTES, self.player_bullets_group, self.effects_group)
         self.ui = UI(self.player)
 
@@ -80,19 +81,21 @@ class Level1(BaseState):
             k = self.boss[0]
             self.enemies_group.add(Boss(*k, self.ui, self.enemies_bullets_group, self.effects_group))
             self.boss_to_spawn = False
+            pygame.mixer.music.fadeout(6000)
+            pygame.mixer.music.queue(SOUNDS['boss_bg'], loops=-1)
+            pygame.mixer.music.set_volume(VOL_BOSS_BG)
 
     def check_win(self):
         if self.player.state == "alive" and not self.boss_to_spawn and len(self.enemies_group) == 0:
             self.next_state = "WIN"
             self.screen_done = True
+            set_bg_music(SOUNDS['win_bg'], VOL_WIN_BG, -1)
 
     def check_game_over(self):
         if self.player.state == "dead":
             self.next_state = "GAME_OVER"
             self.screen_done = True
-            pygame.mixer.music.load(SOUNDS['game_over_bg'])
-            pygame.mixer.music.set_volume(VOL_GAME_OVER_BG)
-            pygame.mixer.music.play(-1)
+            set_bg_music(SOUNDS['game_over_bg'], VOL_GAME_OVER_BG, -1)
 
     def get_event(self, event):
         if event.type == pygame.QUIT:

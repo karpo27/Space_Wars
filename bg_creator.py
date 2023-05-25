@@ -5,7 +5,7 @@ from constants import *
 import pygame
 
 
-class BackgroundCreator:
+class BGCreator:
     def __init__(self, background, vel_y):
         # Image
         self.scroll = 0

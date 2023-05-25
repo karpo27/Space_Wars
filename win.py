@@ -1,7 +1,8 @@
 # Scripts:
 from constants import *
 from base_state import BaseState
-from background_creator import BackgroundCreator
+from bg_music import set_bg_music
+from bg_creator import BGCreator
 from text_creator import TextCreator
 from pointer import Pointer
 from game_effects import Particle
@@ -31,7 +32,7 @@ class Win(BaseState):
         self.effects_group = pygame.sprite.Group()
 
         # Initialize Classes:
-        self.background = BackgroundCreator(*BACKGROUNDS['win'])
+        self.background = BGCreator(*BACKGROUNDS['win'])
         self.pointer = Pointer()
 
         # Effects:
@@ -41,6 +42,7 @@ class Win(BaseState):
     def handle_action(self):
         self.next_state = "MENU"
         self.screen_done = True
+        set_bg_music(SOUNDS['menu_bg'], VOL_MENU_BG, -1)
 
     def create_fireworks(self):
         if self.fire_rate >= self.ref_time:
@@ -48,7 +50,7 @@ class Win(BaseState):
             pos = random.randrange(50, WIDTH - 50), random.randrange(50, HEIGHT - 50)
             for num_particles in range(random.randrange(65, 110)):
                 Particle(pos, self.effects_group)
-
+            SOUNDS['win_fireworks'].play().set_volume(VOL_WIN_FIREWORKS)
         # Reset Fire Bullet Variables:
         if self.fire_rate < self.ref_time:
             self.fire_rate += 1

@@ -82,7 +82,7 @@ class Enemy(Character):
         if self.hp > 1:
             for num_particles in range(random.randrange(6, 18)):
                 HitParticle(pos, (0, 0, 255), (135, 206, 250), -1, self.effects_group)
-            SOUNDS['player_hit'].play().set_volume(VOL_PLAYER_HIT)
+            SOUNDS['enemy_hit'].play().set_volume(VOL_ENEMY_HIT)
         # HP:
         self.hp -= 1
         if self.hp <= 0:

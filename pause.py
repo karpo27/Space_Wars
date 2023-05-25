@@ -3,7 +3,8 @@ from constants import *
 from base_state import BaseState
 from submenus import Options, Controls
 from pointer import Pointer
-from background_creator import *
+from bg_music import set_bg_music
+from bg_creator import *
 
 # Modules:
 import pygame
@@ -24,7 +25,7 @@ class Pause(BaseState):
                             self.text[0], 70))
 
         # Initialize Classes:
-        self.background = BackgroundCreator(*BACKGROUNDS['level_1'])
+        self.background = BGCreator(*BACKGROUNDS['level_1'])
         self.options = Options()
         self.controls = Controls()
         self.pointer = Pointer()
@@ -44,9 +45,7 @@ class Pause(BaseState):
                 self.next_state = "MENU"
                 self.screen_done = True
                 SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
-                pygame.mixer.music.load(SOUNDS['menu_bg'])
-                pygame.mixer.music.set_volume(VOL_MENU_BG)
-                pygame.mixer.music.play(-1)
+                set_bg_music(SOUNDS['menu_bg'], VOL_MENU_BG, -1)
         elif self.screen == "OPTIONS":
             if self.index == 0:
                 SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)

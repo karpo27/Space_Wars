@@ -108,6 +108,7 @@ class Boss(Character):
                     if self.fire_rate_2 >= self.ref_time_2:
                         for bullet_type in self.bullet[self.index]:
                             EnemyBullet(self.rect.center, *BOSSES_BULLETS[f'{bullet_type}'], self.bullet_group)
+                        SOUNDS['enemy_laser'].play().set_volume(VOL_ENEMY_LASER)
                         self.fire_rate_2 = 0
                         self.bullet_type_qty += 1
                     else:

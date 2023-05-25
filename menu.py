@@ -3,7 +3,8 @@ import constants
 from base_state import BaseState
 from submenus import Options, Controls, Credits
 from pointer import Pointer
-from background_creator import *
+from bg_music import set_bg_music
+from bg_creator import *
 from text_creator import *
 
 # Modules:
@@ -27,16 +28,14 @@ class Menu(BaseState):
         self.title = TextCreator(0, "GAME PROJECT", self.font_type, 94, 94, self.base_color, self.hover_color,
                                  (WIDTH/2, HEIGHT/3), "GAME PROJECT", 70)
         # Initialize Classes:
-        self.background = BackgroundCreator(*BACKGROUNDS['main_menu'])
+        self.background = BGCreator(*BACKGROUNDS['main_menu'])
         self.options = Options()
         self.controls = Controls()
         self.credits = Credits()
         self.pointer = Pointer()
 
         # Background Music:
-        pygame.mixer.music.load(SOUNDS['menu_bg'])
-        pygame.mixer.music.set_volume(VOL_MENU_BG)
-        pygame.mixer.music.play(-1)
+        set_bg_music(SOUNDS['menu_bg'], VOL_MENU_BG, -1)
 
         # Title and Icon:
         pygame.display.set_caption("Menu")
@@ -46,9 +45,7 @@ class Menu(BaseState):
     def handle_action(self):
         if self.screen == "MENU":
             if self.index == 0:
-                pygame.mixer.music.load(SOUNDS['level1_bg'])
-                pygame.mixer.music.set_volume(VOL_LEVEL1_BG)
-                pygame.mixer.music.play(-1)
+                set_bg_music(SOUNDS['level1_bg'], VOL_LEVEL1_BG, -1)
                 self.screen_done = True
             elif self.index == 1:
                 self.index = 0
