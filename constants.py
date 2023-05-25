@@ -20,7 +20,7 @@ BACKGROUNDS = {
 }
 # Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
 PLAYER_ATTRIBUTES = [
-    'A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [5, 5], 3, 3, "alive", 30, 0.85, (22, 38)
+    'A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 3, "alive", 30, 0.85, (22, 38)
 ]
 # Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Angle, Bounce, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
@@ -84,7 +84,7 @@ Z = {
 }
 # Bosses - Category, Path, Scale, Action[Movement], Velocity, HP, Shoot, Fire Rate, Explosion Scale, Particles Range:
 BOSSES = {
-    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [1, 5], 5, False, None, 2.0, (160, 190)]
+    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 5, False, None, 2.0, (160, 190)]
 }
 # Bosses Bullets - Image, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {

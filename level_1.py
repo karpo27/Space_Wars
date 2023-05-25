@@ -81,9 +81,7 @@ class Level1(BaseState):
             k = self.boss[0]
             self.enemies_group.add(Boss(*k, self.ui, self.enemies_bullets_group, self.effects_group))
             self.boss_to_spawn = False
-            pygame.mixer.music.fadeout(6000)
-            pygame.mixer.music.queue(SOUNDS['boss_bg'], loops=-1)
-            pygame.mixer.music.set_volume(VOL_BOSS_BG)
+            set_bg_music(SOUNDS['boss_bg'], VOL_BOSS_BG, -1, 8000)
 
     def check_win(self):
         if self.player.state == "alive" and not self.boss_to_spawn and len(self.enemies_group) == 0:
