@@ -69,7 +69,7 @@ class Level1(BaseState):
             self.time_to_spawn = 3000
             self.reset_enemy_timer(self.time_to_spawn)
         elif (len(self.enemies) - 1) * 2 / 3 < self.enemy_index <= (len(self.enemies) - 1):
-            self.time_to_spawn = 1000
+            self.time_to_spawn = 1500
         self.reset_enemy_timer(self.time_to_spawn)
         k = self.enemies[self.enemy_index]
         self.enemies_group.add(Enemy(*k, self.ui, self.enemies_bullets_group, self.effects_group))
@@ -90,6 +90,9 @@ class Level1(BaseState):
         if self.player.state == "dead":
             self.next_state = "GAME_OVER"
             self.screen_done = True
+            pygame.mixer.music.load(SOUNDS['game_over_bg'])
+            pygame.mixer.music.set_volume(VOL_GAME_OVER_BG)
+            pygame.mixer.music.play(-1)
 
     def get_event(self, event):
         if event.type == pygame.QUIT:

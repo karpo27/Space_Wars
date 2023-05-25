@@ -35,20 +35,20 @@ class Player(Character):
             if self.hp > 1 and col_type == "bullet":
                 for num_particles in range(random.randrange(6, 16)):
                     HitParticle(pos, (0, 255, 0), (134, 238, 144), 1, self.effects_group)
-
             # HP:
             self.hp_animation = True
             self.hp -= 1
             self.invulnerable = True
             self.invulnerable_rate = 0
             self.blink_rate = 0
-
+            SOUNDS['player_hit'].play().set_volume(VOL_PLAYER_HIT)
             if self.hp < 0:
                 self.destroy()
 
     def destroy(self):
         # Explosion:
         self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
+        SOUNDS['player_explosion'].play().set_volume(VOL_PLAYER_EXPLOSION)
         # Particles:
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
             Particle(self.rect.center, self.effects_group)
@@ -97,7 +97,7 @@ class Player(Character):
             # Create Player Bullet Object:
             if self.fire_rate >= self.ref_time:
                 PlayerBullet(self.rect.center, *PLAYER_BULLETS['A'], self.bullet_group)
-                SOUNDS['player_laser'].play().set_volume(0.2)
+                SOUNDS['player_laser'].play().set_volume(VOL_PLAYER_LASER)
                 self.fire_rate = 0
 
     def reset_variables(self):

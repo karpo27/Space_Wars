@@ -27,6 +27,10 @@ class GameOver(BaseState):
     def handle_action(self):
         self.next_state = "MENU"
         self.screen_done = True
+        SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
+        pygame.mixer.music.load(SOUNDS['menu_bg'])
+        pygame.mixer.music.set_volume(VOL_MENU_BG)
+        pygame.mixer.music.play(-1)
 
     def get_event(self, event):
         if event.type == pygame.QUIT:

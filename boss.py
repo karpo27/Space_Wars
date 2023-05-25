@@ -128,7 +128,7 @@ class Boss(Character):
         if self.hp > 1:
             for num_particles in range(random.randrange(6, 18)):
                 HitParticle(pos, (0, 0, 255), (135, 206, 250), -1, self.effects_group)
-
+            SOUNDS['player_hit'].play().set_volume(VOL_PLAYER_HIT)
         # HP:
         self.hp -= 1
         if self.hp <= 0:
@@ -138,6 +138,7 @@ class Boss(Character):
         self.kill()
         # Explosion:
         self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
+        SOUNDS['boss_explosion'].play().set_volume(VOL_BOSS_EXPLOSION)
         # Particles:
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
             Particle(self.rect.center, self.effects_group)

@@ -72,6 +72,7 @@ class Enemy(Character):
                 for bullet_type in self.bullet:
                     EnemyBullet(self.rect.center, *ENEMIES_BULLETS[f'{bullet_type}'], self.bullet_group)
                     self.fire_rate = 0
+                SOUNDS['enemy_laser'].play().set_volume(VOL_ENEMY_LASER)
             # Reset Variables:
             elif self.fire_rate < self.ref_time:
                 self.fire_rate += 1
@@ -81,6 +82,7 @@ class Enemy(Character):
         if self.hp > 1:
             for num_particles in range(random.randrange(6, 18)):
                 HitParticle(pos, (0, 0, 255), (135, 206, 250), -1, self.effects_group)
+            SOUNDS['player_hit'].play().set_volume(VOL_PLAYER_HIT)
         # HP:
         self.hp -= 1
         if self.hp <= 0:
@@ -90,6 +92,7 @@ class Enemy(Character):
         self.kill()
         # Explosion:
         self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
+        SOUNDS['enemy_explosion'].play().set_volume(VOL_ENEMY_EXPLOSION)
         # Particles:
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
             Particle(self.rect.center, self.effects_group)

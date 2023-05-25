@@ -34,8 +34,8 @@ class Menu(BaseState):
         self.pointer = Pointer()
 
         # Background Music:
-        pygame.mixer.music.load(SOUNDS['menu_background'])
-        pygame.mixer.music.set_volume(0.02)
+        pygame.mixer.music.load(SOUNDS['menu_bg'])
+        pygame.mixer.music.set_volume(VOL_MENU_BG)
         pygame.mixer.music.play(-1)
 
         # Title and Icon:
@@ -46,45 +46,45 @@ class Menu(BaseState):
     def handle_action(self):
         if self.screen == "MENU":
             if self.index == 0:
-                pygame.mixer.music.load(SOUNDS['level1_background'])
-                pygame.mixer.music.set_volume(0.3)
-                pygame.mixer.music.play()
+                pygame.mixer.music.load(SOUNDS['level1_bg'])
+                pygame.mixer.music.set_volume(VOL_LEVEL1_BG)
+                pygame.mixer.music.play(-1)
                 self.screen_done = True
             elif self.index == 1:
                 self.index = 0
                 self.screen = "OPTIONS"
                 self.options_qty = 2
-                SOUNDS['menu_selection'].play().set_volume(0.3)
+                SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
             elif self.index == 2:
                 self.options_qty = 0
                 self.screen = "CREDITS"
-                SOUNDS['menu_selection'].play().set_volume(0.3)
+                SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
             elif self.index == 3:
                 self.quit = True
         elif self.screen == "OPTIONS":
             if self.index == 0:
                 self.options_qty = 2
-                SOUNDS['menu_selection'].play().set_volume(0.3)
+                SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
             elif self.index == 1:
                 self.screen = "CONTROLS"
                 self.index = 0
-                SOUNDS['menu_selection'].play().set_volume(0.3)
+                SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
                 self.options_qty = 0
             elif self.index == 2:
                 self.index = 1
                 self.screen = "MENU"
                 self.options_qty = 3
-                SOUNDS['menu_back'].play().set_volume(0.3)
+                SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
         elif self.screen == "CREDITS":
             self.index = 2
             self.screen = "MENU"
             self.options_qty = 3
-            SOUNDS['menu_back'].play().set_volume(0.3)
+            SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
         elif self.screen == "CONTROLS":
             self.index = 1
             self.screen = "OPTIONS"
             self.options_qty = 2
-            SOUNDS['menu_back'].play().set_volume(0.3)
+            SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
 
     def get_event(self, event):
         # Main Menu Movement:
@@ -93,10 +93,10 @@ class Menu(BaseState):
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
                 self.index += 1
-                SOUNDS['menu_movement'].play().set_volume(0.5)
+                SOUNDS['menu_movement'].play().set_volume(VOL_MENU_MOVEMENT)
             elif event.key == pygame.K_UP:
                 self.index -= 1
-                SOUNDS['menu_movement'].play().set_volume(0.5)
+                SOUNDS['menu_movement'].play().set_volume(VOL_MENU_MOVEMENT)
             elif event.key == pygame.K_RETURN:
                 self.handle_action()
 

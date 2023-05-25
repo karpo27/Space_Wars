@@ -117,6 +117,7 @@ BOSSES_BULLETS = {
     'd5': ['Images/Bosses_Bullets/', 3, 0.2, 8, 2, [-1, -5], 165, False]
 }
 # List of Enemies per Level:
+'''
 ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'b',
@@ -134,24 +135,39 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'f1', 'f2', 'f1', 'e', 'f2', 'f1', 'f2',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
-                ]
-#ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a', 'd', 'd', 'd', 'b']
+                ]'''
+ENEMIES_LVL1 = ['e', 'e', 'e', 'a']
 # Sounds:
 pygame.mixer.init()
 SOUNDS = {
+    'menu_bg': 'Sounds/menu_bg.mp3',
     'menu_movement': pygame.mixer.Sound('Sounds/menu_movement.mp3'),
-    #'menu_background': pygame.mixer.Sound('Sounds/menu_background.mp3'),
-    'menu_background': 'Sounds/menu_background.mp3',
     'menu_selection': pygame.mixer.Sound('Sounds/menu_selection.mp3'),
     'menu_back': pygame.mixer.Sound('Sounds/menu_back.mp3'),
-    #'level1_background': pygame.mixer.Sound('Sounds/level1_background.mp3'),
-    'level1_background': 'Sounds/level1_background.mp3',
+    'level1_bg': 'Sounds/level1_bg.mp3',
     'player_laser': pygame.mixer.Sound('Sounds/player_laser.mp3'),
-    'player_hit': pygame.mixer.Sound('Sounds/player_laser.mp3'),
-    'player_explosion': pygame.mixer.Sound('Sounds/player_laser.mp3'),
-    'enemy_laser': pygame.mixer.Sound('Sounds/player_laser.mp3'),
+    'player_hit': pygame.mixer.Sound('Sounds/player_hit.mp3'),
+    'player_explosion': pygame.mixer.Sound('Sounds/player_explosion.wav'),
+    'enemy_laser': pygame.mixer.Sound('Sounds/enemy_laser.wav'),
     'enemy_hit': pygame.mixer.Sound('Sounds/player_laser.mp3'),
-    'enemy_explosion': pygame.mixer.Sound('Sounds/player_laser.mp3'),
+    'enemy_explosion': pygame.mixer.Sound('Sounds/player_explosion.wav'),
     'boss_laser': pygame.mixer.Sound('Sounds/player_laser.mp3'),
-    'game_over_background': 'Sounds/menu_background.mp3',
+    'boss_explosion': pygame.mixer.Sound('Sounds/boss_explosion.mp3'),
+    'game_over_bg': 'Sounds/game_over_bg.mp3'
 }
+# Volume:
+VOL_MENU_BG = 0.02
+VOL_MENU_MOVEMENT = 0.5
+VOL_MENU_SELECTION = 0.3
+VOL_MENU_BACK = 0.3
+VOL_LEVEL1_BG = 0.3
+VOL_PLAYER_LASER = 0.04
+VOL_PLAYER_HIT = 0.12
+VOL_PLAYER_EXPLOSION = 0.15
+VOL_ENEMY_LASER = 0.3
+VOL_ENEMY_HIT = 0.3
+VOL_ENEMY_EXPLOSION = 0.15
+VOL_BOSS_LASER = 0.3
+VOL_BOSS_EXPLOSION = 0.2
+VOL_GAME_OVER_BG = 0.3
+
