@@ -54,17 +54,21 @@ class Menu(BaseState):
                 self.index = 0
                 self.screen = "OPTIONS"
                 self.options_qty = 2
+                SOUNDS['menu_selection'].play().set_volume(0.3)
             elif self.index == 2:
                 self.options_qty = 0
                 self.screen = "CREDITS"
+                SOUNDS['menu_selection'].play().set_volume(0.3)
             elif self.index == 3:
                 self.quit = True
         elif self.screen == "OPTIONS":
             if self.index == 0:
                 self.options_qty = 2
+                SOUNDS['menu_selection'].play().set_volume(0.3)
             elif self.index == 1:
                 self.screen = "CONTROLS"
                 self.index = 0
+                SOUNDS['menu_selection'].play().set_volume(0.3)
                 self.options_qty = 0
             elif self.index == 2:
                 self.index = 1

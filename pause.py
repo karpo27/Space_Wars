@@ -38,32 +38,39 @@ class Pause(BaseState):
             elif self.index == 1:
                 self.index = 0
                 self.screen = "OPTIONS"
+                SOUNDS['menu_selection'].play().set_volume(0.3)
             elif self.index == 2:
                 self.index = 0
                 self.next_state = "MENU"
                 self.screen_done = True
+                SOUNDS['menu_back'].play().set_volume(0.3)
         elif self.screen == "OPTIONS":
             if self.index == 0:
-                pass
+                SOUNDS['menu_selection'].play().set_volume(0.3)
             elif self.index == 1:
                 self.screen = "CONTROLS"
                 self.index = 0
                 self.options_qty = 0
+                SOUNDS['menu_selection'].play().set_volume(0.3)
             elif self.index == 2:
                 self.index = 1
                 self.screen = "PAUSE"
+                SOUNDS['menu_back'].play().set_volume(0.3)
         elif self.screen == "CONTROLS":
             self.index = 1
             self.screen = "OPTIONS"
             self.options_qty = 2
+            SOUNDS['menu_back'].play().set_volume(0.3)
 
     def get_event(self, event):
         # Pause Menu Movement:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
                 self.index += 1
+                SOUNDS['menu_movement'].play().set_volume(0.5)
             elif event.key == pygame.K_UP:
                 self.index -= 1
+                SOUNDS['menu_movement'].play().set_volume(0.5)
             elif event.key == pygame.K_RETURN:
                 self.handle_action()
 
