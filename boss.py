@@ -4,10 +4,10 @@ from character import Character
 from bullet import Bullet
 from enemies import EnemyBullet
 from game_effects import Explosion, Particle, HitParticle
+from sounds import boss_laser, boss_explosion, player_hit
 
 # Modules
 import pygame
-from pygame import mixer
 import random
 import secrets
 
@@ -108,7 +108,7 @@ class Boss(Character):
                     if self.fire_rate_2 >= self.ref_time_2:
                         for bullet_type in self.bullet[self.index]:
                             EnemyBullet(self.rect.center, *BOSSES_BULLETS[f'{bullet_type}'], self.bullet_group)
-                        SOUNDS['enemy_laser'].play().set_volume(VOL_ENEMY_LASER)
+                        boss_laser.play()
                         self.fire_rate_2 = 0
                         self.bullet_type_qty += 1
                     else:
@@ -129,7 +129,7 @@ class Boss(Character):
         if self.hp > 1:
             for num_particles in range(random.randrange(6, 18)):
                 HitParticle(pos, (0, 0, 255), (135, 206, 250), -1, self.effects_group)
-            SOUNDS['player_hit'].play().set_volume(VOL_PLAYER_HIT)
+            player_hit.play()
         # HP:
         self.hp -= 1
         if self.hp <= 0:
@@ -139,7 +139,7 @@ class Boss(Character):
         self.kill()
         # Explosion:
         self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
-        SOUNDS['boss_explosion'].play().set_volume(VOL_BOSS_EXPLOSION)
+        boss_explosion.play()
         # Particles:
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
             Particle(self.rect.center, self.effects_group)

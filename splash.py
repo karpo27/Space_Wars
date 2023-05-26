@@ -33,7 +33,7 @@ class Splash(BaseState):
             self.splash.clear()
         elif self.time_text >= self.time_fadeout:
             self.screen_done = True
-            set_bg_music(SOUNDS['menu_bg'], VOL_MENU_BG, -1)
+            set_bg_music(SOUNDS2['menu_bg'], VOL_MENU_BG, -1)
         self.time_text += 1
 
     def draw(self, surface):

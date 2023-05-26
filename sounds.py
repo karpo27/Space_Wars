@@ -5,7 +5,7 @@ from constants import *
 import pygame
 
 
-class Sounds:
+class Sound:
     def __init__(self, path, initial_volume):
         self.sound = pygame.mixer.Sound(f'Sounds/{path}')
         self.initial_volume = initial_volume
@@ -19,21 +19,21 @@ class Sounds:
         self.sound.play().set_volume(self.new_volume)
 
 
-# Initialize Object:
-menu_movement = Sounds(*SOUNDS2['menu_movement'])
-sounds_list = [menu_movement]
-'''
-menu_selection
-menu_back
-player_laser
-player_hit
-player_explosion
-enemy_laser
-enemy_hit
-enemy_explosion
-boss_laser
-boss_explosion
-boss_bg
-win_bg
-win_fireworks
-game_over_bg'''
+# Initialize Objects:
+menu_movement = Sound(*SOUNDS['menu_movement'])
+menu_selection = Sound(*SOUNDS['menu_selection'])
+menu_back = Sound(*SOUNDS['menu_back'])
+player_laser = Sound(*SOUNDS['player_laser'])
+player_hit = Sound(*SOUNDS['player_hit'])
+player_explosion = Sound(*SOUNDS['player_explosion'])
+enemy_laser = Sound(*SOUNDS['enemy_laser'])
+enemy_hit = Sound(*SOUNDS['enemy_hit'])
+enemy_explosion = Sound(*SOUNDS['enemy_explosion'])
+boss_laser = Sound(*SOUNDS['boss_laser'])
+boss_explosion = Sound(*SOUNDS['boss_explosion'])
+win_fireworks = Sound(*SOUNDS['win_fireworks'])
+
+sounds_list = [menu_movement, menu_selection, menu_back, player_laser, player_hit, player_explosion, enemy_laser,
+               enemy_hit, enemy_explosion, boss_laser, boss_explosion, win_fireworks]
+
+

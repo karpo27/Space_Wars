@@ -138,11 +138,39 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 ]'''
 ENEMIES_LVL1 = ['e', 'e', 'a']
 # Sounds:
-pygame.mixer.init()
-SOUNDS2 = {
-    'menu_movement': ['menu_movement.mp3', 0.6]
+#pygame.mixer.init()
+SOUNDS = {
+    'menu_movement': ['menu_movement.mp3', 0.6],
+    'menu_selection': ['menu_selection.mp3', 0.4],
+    'menu_back': ['menu_back.mp3', 0.4],
+    'player_laser': ['player_laser.mp3', 0.04],
+    'player_hit': ['player_hit.mp3', 0.1],
+    'player_explosion': ['player_explosion.wav', 0.15],
+    'enemy_laser': ['enemy_laser.wav', 0.25],
+    'enemy_hit': ['player_hit.mp3', 0.1],
+    'enemy_explosion': ['player_explosion.wav', 0.1],
+    'boss_laser': ['player_laser.mp3', 0.3],
+    'boss_explosion': ['boss_explosion.mp3', 0.15],
+    'win_fireworks': ['win_fireworks.mp3', 0.06]
 }
 
+SOUNDS2 = {
+    'menu_bg': 'Sounds/menu_bg.mp3',
+    'level1_bg': 'Sounds/level1_bg.mp3',
+    'boss_bg': 'Sounds/boss_bg.mp3',
+    'win_bg': 'Sounds/win_bg.mp3',
+    'game_over_bg': 'Sounds/game_over_bg.mp3'
+}
+# Volume:
+VOL_LVL = 5
+VOL_CONSTANT = VOL_LVL/5
+VOL_MENU_BG = 0.02
+VOL_LEVEL1_BG = 0.3
+VOL_BOSS_BG = 0.15
+VOL_WIN_BG = 0.1
+VOL_GAME_OVER_BG = 0.15
+
+'''
 SOUNDS = {
     'menu_bg': 'Sounds/menu_bg.mp3',
     'menu_movement': pygame.mixer.Sound('Sounds/menu_movement.mp3'),
@@ -162,15 +190,10 @@ SOUNDS = {
     'win_fireworks': pygame.mixer.Sound('Sounds/win_fireworks.mp3'),
     'game_over_bg': 'Sounds/game_over_bg.mp3'
 }
-# Volume:
-VOL_LVL = 5
-VOL_CONSTANT = VOL_LVL/5
 
-VOL_MENU_BG = 0.02
 VOL_MENU_MOVEMENT = 0.6
 VOL_MENU_SELECTION = 0.4
 VOL_MENU_BACK = 0.4
-VOL_LEVEL1_BG = 0.3
 VOL_PLAYER_LASER = 0.04
 VOL_PLAYER_HIT = 0.1
 VOL_PLAYER_EXPLOSION = 0.15
@@ -179,28 +202,7 @@ VOL_ENEMY_HIT = 0.1
 VOL_ENEMY_EXPLOSION = 0.1
 VOL_BOSS_LASER = 0.3
 VOL_BOSS_EXPLOSION = 0.15
-VOL_BOSS_BG = 0.15
-VOL_WIN_BG = 0.1
-VOL_WIN_FIREWORKS = 0.06
-VOL_GAME_OVER_BG = 0.15
+VOL_WIN_FIREWORKS = 0.06'''
 
-VOLUMES = [
-    VOL_MENU_BG,
-    VOL_MENU_MOVEMENT,
-    VOL_MENU_SELECTION,
-    VOL_MENU_BACK,
-    VOL_LEVEL1_BG,
-    VOL_PLAYER_LASER,
-    VOL_PLAYER_HIT,
-    VOL_PLAYER_EXPLOSION,
-    VOL_ENEMY_LASER,
-    VOL_ENEMY_HIT,
-    VOL_ENEMY_EXPLOSION,
-    VOL_BOSS_LASER,
-    VOL_BOSS_EXPLOSION,
-    VOL_BOSS_BG,
-    VOL_WIN_BG,
-    VOL_WIN_FIREWORKS,
-    VOL_GAME_OVER_BG,
-]
+
 

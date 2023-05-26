@@ -1,9 +1,10 @@
 # Scripts:
 from constants import *
 from base_state import BaseState
-from submenus import Options, Audio, Controls
+from submenus import Options, Controls, audio
 from pointer import Pointer
 from bg_music import set_bg_music
+from sounds import menu_selection, menu_movement, menu_back
 from bg_creator import *
 
 # Modules:
@@ -27,9 +28,13 @@ class Pause(BaseState):
         # Initialize Objects:
         self.background = BGCreator(*BACKGROUNDS['level_1'])
         self.options = Options()
-        self.audio = Audio()
         self.controls = Controls()
         self.pointer = Pointer()
+
+    def handle_movement(self, movement):
+        self.index += movement
+        if self.options_qty >= 1:
+            menu_movement.play()
 
     def handle_action(self):
         if self.screen == "PAUSE":
@@ -40,52 +45,56 @@ class Pause(BaseState):
             elif self.index == 1:
                 self.screen = "OPTIONS"
                 self.index = 0
-                SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
+                menu_selection.play()
             elif self.index == 2:
                 self.next_state = "MENU"
                 self.index = 0
                 self.screen_done = True
-                SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
-                set_bg_music(SOUNDS['menu_bg'], VOL_MENU_BG, -1)
+                menu_selection.play()
+                set_bg_music(SOUNDS2['menu_bg'], VOL_MENU_BG, -1)
         elif self.screen == "OPTIONS":
             if self.index == 0:
                 self.screen = "AUDIO"
                 self.index = 0
                 self.options_qty = 1
-                SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
+                menu_selection.play()
             elif self.index == 1:
                 self.screen = "CONTROLS"
                 self.index = 0
                 self.options_qty = 0
-                SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
+                menu_selection.play()
             elif self.index == 2:
                 self.screen = "PAUSE"
                 self.index = 1
-                SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
+                menu_back.play()
         elif self.screen == "AUDIO":
             self.screen = "OPTIONS"
             self.index = 0
             self.options_qty = 2
-            SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
+            menu_back.play()
         elif self.screen == "CONTROLS":
             self.screen = "OPTIONS"
             self.index = 1
             self.options_qty = 2
-            SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
+            menu_back.play()
 
     def get_event(self, event):
         # Pause Menu Movement:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                self.index += 1
-                SOUNDS['menu_movement'].play().set_volume(VOL_MENU_MOVEMENT)
+                self.handle_movement(1)
             elif event.key == pygame.K_UP:
-                self.index -= 1
-                SOUNDS['menu_movement'].play().set_volume(VOL_MENU_MOVEMENT)
+                self.handle_movement(-1)
             elif event.key == pygame.K_RETURN:
                 self.handle_action()
+            elif event.key == pygame.K_LEFT and self.screen == "AUDIO":
+                if audio.volume > 0:
+                    audio.update_volume(-1)
+            elif event.key == pygame.K_RIGHT and self.screen == "AUDIO":
+                if audio.volume < 10:
+                    audio.update_volume(1)
 
-        # Player Icon Movement Boundaries:
+        # Pointer Movement Boundaries:
         if self.index > self.options_qty:
             self.index = 0
         elif self.index < 0:
@@ -105,9 +114,9 @@ class Pause(BaseState):
                 text.render_text(self.index)
             self.pointer.draw_rotated(self.options.options[self.index].text_position, self.screen)
         elif self.screen == "AUDIO":
-            for text in self.audio.audio:
+            for text in audio.audio:
                 text.render_text(self.index)
-            self.pointer.draw_rotated(self.audio.audio[self.index].text_position, self.screen)
+            self.pointer.draw_rotated(audio.audio[self.index].text_position, self.screen)
         elif self.screen == "CONTROLS":
             for text in self.controls.controls:
                 text.render_text(self.index)

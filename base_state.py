@@ -1,5 +1,5 @@
 # Scripts:
-from constants import WIDTH, HEIGHT, VOL_LVL
+from constants import WIDTH, HEIGHT
 
 # Modules:
 import pygame

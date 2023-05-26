@@ -71,8 +71,8 @@ class Audio(BaseState):
         self.audio.append(TextCreator(self.index + 1, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color, (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
 
     def update_volume(self, value):
-        self.volume += value
         # Update Volumes:
+        self.volume += value
         for sound in sounds_list:
             sound.update_volume(self.volume)
 
@@ -81,3 +81,7 @@ class Audio(BaseState):
         self.audio = []
         self.audio.append(TextCreator(self.index, self.text[0], self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 50))
         self.audio.append(TextCreator(self.index + 1, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color, (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
+
+
+# Initialize Object:
+audio = Audio()

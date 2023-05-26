@@ -12,7 +12,6 @@ from collisions import *
 
 # Modules:
 import pygame
-from pygame import mixer
 
 # Initialize Pygame:
 pygame.init()
@@ -81,19 +80,19 @@ class Level1(BaseState):
             k = self.boss[0]
             self.enemies_group.add(Boss(*k, self.ui, self.enemies_bullets_group, self.effects_group))
             self.boss_to_spawn = False
-            set_bg_music(SOUNDS['boss_bg'], VOL_BOSS_BG, -1, 8000)
+            set_bg_music(SOUNDS2['boss_bg'], VOL_BOSS_BG, -1, 8000)
 
     def check_win(self):
         if self.player.state == "alive" and not self.boss_to_spawn and len(self.enemies_group) == 0:
             self.next_state = "WIN"
             self.screen_done = True
-            set_bg_music(SOUNDS['win_bg'], VOL_WIN_BG, -1)
+            set_bg_music(SOUNDS2['win_bg'], VOL_WIN_BG, -1)
 
     def check_game_over(self):
         if self.player.state == "dead":
             self.next_state = "GAME_OVER"
             self.screen_done = True
-            set_bg_music(SOUNDS['game_over_bg'], VOL_GAME_OVER_BG, -1)
+            set_bg_music(SOUNDS2['game_over_bg'], VOL_GAME_OVER_BG, -1)
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
