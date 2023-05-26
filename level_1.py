@@ -1,9 +1,9 @@
 # Scripts:
 from game_effects import Explosion, Particle, Speakers
 from base_state import BaseState
+from sounds import set_bg_music
 from pause import *
 from bg_creator import BGCreator
-from bg_music import set_bg_music
 from player import *
 from ui import UI
 from enemies import *

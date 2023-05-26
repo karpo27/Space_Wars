@@ -2,7 +2,7 @@
 from constants import *
 from base_state import BaseState
 from text_creator import TextCreator
-from bg_music import set_bg_music
+from sounds import set_bg_music
 
 # Modules:
 import pygame

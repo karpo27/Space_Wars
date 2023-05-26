@@ -3,7 +3,7 @@ from constants import *
 
 # Modules:
 import pygame
-
+pygame.mixer.init()
 
 class Sound:
     def __init__(self, path, initial_volume):
@@ -17,6 +17,17 @@ class Sound:
 
     def play(self):
         self.sound.play().set_volume(self.new_volume)
+
+
+def set_bg_music(music, volume, loop, fadeout_time=None):
+    if fadeout_time is not None:
+        pygame.mixer.music.fadeout(fadeout_time)
+        pygame.mixer.music.queue(music, loops=loop)
+        pygame.mixer.music.set_volume(volume)
+    else:
+        pygame.mixer.music.load(music)
+        pygame.mixer.music.set_volume(volume)
+        pygame.mixer.music.play(loop)
 
 
 # Initialize Objects:

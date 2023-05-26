@@ -2,8 +2,7 @@
 from base_state import BaseState
 from submenus import Options, Controls, Credits, audio
 from pointer import Pointer
-from bg_music import set_bg_music
-from sounds import menu_movement, menu_selection, menu_back
+from sounds import set_bg_music, menu_movement, menu_selection, menu_back
 from bg_creator import *
 from text_creator import *
 

@@ -3,7 +3,7 @@ from constants import *
 from base_state import BaseState
 from text_creator import TextCreator
 from pointer import Pointer
-from sounds import menu_selection
+from sounds import set_bg_music, menu_selection
 
 # Modules:
 import pygame
@@ -29,9 +29,7 @@ class GameOver(BaseState):
         self.next_state = "MENU"
         self.screen_done = True
         menu_selection.play()
-        pygame.mixer.music.load(SOUNDS2['menu_bg'])
-        pygame.mixer.music.set_volume(VOL_MENU_BG)
-        pygame.mixer.music.play(-1)
+        set_bg_music(SOUNDS2['menu_bg'], VOL_MENU_BG, -1)
 
     def get_event(self, event):
         if event.type == pygame.QUIT:

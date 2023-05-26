@@ -3,8 +3,7 @@ from constants import *
 from base_state import BaseState
 from submenus import Options, Controls, audio
 from pointer import Pointer
-from bg_music import set_bg_music
-from sounds import menu_selection, menu_movement, menu_back
+from sounds import set_bg_music, menu_selection, menu_movement, menu_back
 from bg_creator import *
 
 # Modules:
