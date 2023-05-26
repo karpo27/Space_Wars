@@ -1,5 +1,5 @@
 # Scripts:
-from constants import WIDTH, HEIGHT
+from constants import WIDTH, HEIGHT, VOL_LVL
 
 # Modules:
 import pygame
@@ -19,6 +19,9 @@ class BaseState(object):
         self.font_type = 'freesansbold.ttf'
         self.base_color = "white"
         self.hover_color = (193, 225, 193)
+
+        # Audio:
+        self.volume = str(VOL_LVL)
 
     def startup(self, persistent):
         self.persist = persistent
