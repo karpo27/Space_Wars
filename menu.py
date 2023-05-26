@@ -35,9 +35,6 @@ class Menu(BaseState):
         self.credits = Credits()
         self.pointer = Pointer()
 
-        # Background Music:
-        set_bg_music(SOUNDS['menu_bg'], VOL_MENU_BG, -1)
-
         # Title and Icon:
         pygame.display.set_caption("Menu")
         icon = pygame.image.load(ICON)
