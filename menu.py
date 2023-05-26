@@ -1,5 +1,4 @@
 # Scripts:
-import constants
 from base_state import BaseState
 from submenus import Options, Audio, Controls, Credits
 from pointer import Pointer
@@ -30,7 +29,7 @@ class Menu(BaseState):
         # Initialize Classes:
         self.background = BGCreator(*BACKGROUNDS['main_menu'])
         self.options = Options()
-        self.audio = Audio()
+        self.audio = Audio(self.volume)
         self.controls = Controls()
         self.credits = Credits()
         self.pointer = Pointer()
@@ -101,6 +100,12 @@ class Menu(BaseState):
                 SOUNDS['menu_movement'].play().set_volume(VOL_MENU_MOVEMENT)
             elif event.key == pygame.K_RETURN:
                 self.handle_action()
+            elif event.key == pygame.K_LEFT and self.screen == "AUDIO":
+                if self.audio.volume > 0:
+                    self.audio.update_volume(-1)
+            elif event.key == pygame.K_RIGHT and self.screen == "AUDIO":
+                if self.audio.volume < 10:
+                    self.audio.update_volume(1)
 
         # Player Icon Movement Boundaries:
         if self.index > self.options_qty:

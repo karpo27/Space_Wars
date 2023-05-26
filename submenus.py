@@ -27,7 +27,7 @@ class Controls(BaseState):
         self.text_left = ["Forward", "Back", "Left", "Right", "Fire", "Switch Weapon"]
         self.text_right = ["W / ARROW UP", "S / ARROW DOWN", "A / ARROW LEFT", "D / ARROW RIGHT", "SPACE", "ENTER"]
         self.controls = []
-        self.controls.append(TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
+        self.controls.append(TextCreator(self.index, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color,
                                          (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
         for index, text in enumerate(self.text_left):
             self.controls.append(
@@ -50,7 +50,7 @@ class Credits(BaseState):
                      "and allow so many users to code their games.",
                      "I'll keep coding and trying myself harder to incorporate to the IT world."]
         self.credits = []
-        self.credits.append(TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
+        self.credits.append(TextCreator(self.index, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color,
                                         (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
         for index, text in enumerate(self.text):
             self.credits.append(
@@ -59,14 +59,19 @@ class Credits(BaseState):
 
 
 class Audio(BaseState):
-    def __init__(self):
+    def __init__(self, volume):
         # Screen Text and Options:
         super().__init__()
-        self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/3 - 80
-        self.text = [f'VOLUME    «  {self.volume}  »', "BACK"]
+        self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/3
+        self.volume = volume
+        self.text = [f'VOLUME       «  {str(self.volume)}  »']
         self.audio = []
-        #self.audio.append(TextCreator(self.index + 1, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color, (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
-        for index, text in enumerate(self.text):
-            self.audio.append(
-                TextCreator(index, text, self.font_type, 48, 52, self.base_color, self.hover_color, self.pos,
-                            self.text[0], 300))
+        self.audio.append(TextCreator(self.index, self.text[0], self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 50))
+        self.audio.append(TextCreator(self.index + 1, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color, (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
+
+    def update_volume(self, value):
+        self.volume += value
+        self.text = [f'VOLUME       «  {str(self.volume)}  »']
+        self.audio = []
+        self.audio.append(TextCreator(self.index, self.text[0], self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 50))
+        self.audio.append(TextCreator(self.index + 1, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color, (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))

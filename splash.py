@@ -19,10 +19,10 @@ class Splash(BaseState):
         self.splash = []
 
         # Time on Screen:
-        self.time_next_screen = 320
+        self.time_next_screen = 90     # 320
         # Text Time:
-        self.time_fadeout = 240
-        self.time_render = 150
+        self.time_fadeout = 70     # 240
+        self.time_render = 30      # 150
         self.time_text = 0
 
     def update(self, dt):

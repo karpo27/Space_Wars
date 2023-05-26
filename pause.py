@@ -27,7 +27,7 @@ class Pause(BaseState):
         # Initialize Classes:
         self.background = BGCreator(*BACKGROUNDS['level_1'])
         self.options = Options()
-        self.audio = Audio()
+        self.audio = Audio(self.volume)
         self.controls = Controls()
         self.pointer = Pointer()
 

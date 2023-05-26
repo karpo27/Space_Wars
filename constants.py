@@ -159,7 +159,7 @@ SOUNDS = {
     'game_over_bg': 'Sounds/game_over_bg.mp3'
 }
 # Volume:
-VOL_LVL = 1
+VOL_LVL = 5
 
 VOL_MENU_BG = 0.02
 VOL_MENU_MOVEMENT = 0.6
