@@ -1,7 +1,7 @@
 # Scripts:
 from constants import *
 from base_state import BaseState
-from submenus import Options, Controls
+from submenus import Options, Audio, Controls
 from pointer import Pointer
 from bg_music import set_bg_music
 from bg_creator import *
@@ -27,6 +27,7 @@ class Pause(BaseState):
         # Initialize Classes:
         self.background = BGCreator(*BACKGROUNDS['level_1'])
         self.options = Options()
+        self.audio = Audio()
         self.controls = Controls()
         self.pointer = Pointer()
 
@@ -37,17 +38,20 @@ class Pause(BaseState):
                 self.screen_done = True
                 pygame.mixer.music.unpause()
             elif self.index == 1:
-                self.index = 0
                 self.screen = "OPTIONS"
+                self.index = 0
                 SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
             elif self.index == 2:
-                self.index = 0
                 self.next_state = "MENU"
+                self.index = 0
                 self.screen_done = True
                 SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
                 set_bg_music(SOUNDS['menu_bg'], VOL_MENU_BG, -1)
         elif self.screen == "OPTIONS":
             if self.index == 0:
+                self.screen = "AUDIO"
+                self.index = 0
+                self.options_qty = 1
                 SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
             elif self.index == 1:
                 self.screen = "CONTROLS"
@@ -55,12 +59,17 @@ class Pause(BaseState):
                 self.options_qty = 0
                 SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
             elif self.index == 2:
-                self.index = 1
                 self.screen = "PAUSE"
+                self.index = 1
                 SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
-        elif self.screen == "CONTROLS":
-            self.index = 1
+        elif self.screen == "AUDIO":
             self.screen = "OPTIONS"
+            self.index = 0
+            self.options_qty = 2
+            SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
+        elif self.screen == "CONTROLS":
+            self.screen = "OPTIONS"
+            self.index = 1
             self.options_qty = 2
             SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
 
@@ -96,7 +105,9 @@ class Pause(BaseState):
                 text.render_text(self.index)
             self.pointer.draw_rotated(self.options.options[self.index].text_position, self.screen)
         elif self.screen == "AUDIO":
-            pass
+            for text in self.audio.audio:
+                text.render_text(self.index)
+            self.pointer.draw_rotated(self.audio.audio[self.index].text_position, self.screen)
         elif self.screen == "CONTROLS":
             for text in self.controls.controls:
                 text.render_text(self.index)

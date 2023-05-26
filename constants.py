@@ -29,12 +29,12 @@ PLAYER_BULLETS = {
 # Enemies - Category, Path, Scale, Movement Type, Velocity, HP, Shoots, Bullet Type, Fire Rate, Explosion Scale, Particles Range:
 ENEMIES = {
     'a': ['A', 'Images/Enemies/', 0.6, 3, [1, 2], 2, True, ('a1', 'a2'), 200, 0.8, (6, 24)],
-    'b': ['B', 'Images/Enemies/', 0.8, 2, [1, 2], 6, True, ('b1', 'b2', 'b3', 'b4', 'b5', 'b6'), 200, 1.5, (16, 30)],
+    'b': ['B', 'Images/Enemies/', 0.8, 2, [1, 2], 5, True, ('b1', 'b2', 'b3', 'b4', 'b5', 'b6'), 200, 1.5, (16, 30)],
     'c': ['C', 'Images/Enemies/', 0.8, 4, [2, 2], 3, True, ('c1', 'c2'), 200, 0.9, (9, 26)],
     'd': ['D', 'Images/Enemies/', 0.4, 5, [3, 1], 1, True, 'd', 100, 0.6, (6, 24)],
     'e': ['E', 'Images/Enemies/', 0.8, 1, [0, 5], 2, False, None, 0, 1.4, (5, 22)],
-    'f1': ['F', 'Images/Enemies/', 0.7, 1, [1, 2], 3, True, ('f', 'd'), 100, 1.1, (9, 26)],
-    'f2': ['F', 'Images/Enemies/', 0.7, 1, [-1, 2], 3, True, ('f', 'd'), 100, 1.1, (9, 26)]
+    'f1': ['F', 'Images/Enemies/', 0.7, 1, [1, 2], 2, True, ('f', 'd'), 100, 1.1, (9, 26)],
+    'f2': ['F', 'Images/Enemies/', 0.7, 1, [-1, 2], 2, True, ('f', 'd'), 100, 1.1, (9, 26)]
 }
 # Enemies Bullets - Path, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Bounce, Sound, Explosion Sound:
 ENEMIES_BULLETS = {

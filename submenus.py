@@ -58,3 +58,18 @@ class Credits(BaseState):
                             "", 40))
 
 
+class Audio(BaseState):
+    def __init__(self):
+        # Screen Text and Options:
+        super().__init__()
+        self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/3
+        self.text = ["hey"]
+        self.audio = []
+        self.audio.append(TextCreator(self.index, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color,
+                                        (WIDTH/2, 5/6 * HEIGHT), "", 50))
+        for index, text in enumerate(self.text):
+            self.audio.append(
+                TextCreator(index + 1, text, self.font_type, 48, 52, self.base_color, self.hover_color, self.pos,
+                            "", 40))
+
+

@@ -1,7 +1,7 @@
 # Scripts:
 import constants
 from base_state import BaseState
-from submenus import Options, Controls, Credits
+from submenus import Options, Audio, Controls, Credits
 from pointer import Pointer
 from bg_music import set_bg_music
 from bg_creator import *
@@ -30,6 +30,7 @@ class Menu(BaseState):
         # Initialize Classes:
         self.background = BGCreator(*BACKGROUNDS['main_menu'])
         self.options = Options()
+        self.audio = Audio()
         self.controls = Controls()
         self.credits = Credits()
         self.pointer = Pointer()
@@ -48,19 +49,21 @@ class Menu(BaseState):
                 set_bg_music(SOUNDS['level1_bg'], VOL_LEVEL1_BG, -1)
                 self.screen_done = True
             elif self.index == 1:
-                self.index = 0
                 self.screen = "OPTIONS"
+                self.index = 0
                 self.options_qty = 2
                 SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
             elif self.index == 2:
-                self.options_qty = 0
                 self.screen = "CREDITS"
+                self.options_qty = 0
                 SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
             elif self.index == 3:
                 self.quit = True
         elif self.screen == "OPTIONS":
             if self.index == 0:
-                self.options_qty = 2
+                self.screen = "AUDIO"
+                self.index = 0
+                self.options_qty = 1
                 SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
             elif self.index == 1:
                 self.screen = "CONTROLS"
@@ -68,18 +71,23 @@ class Menu(BaseState):
                 SOUNDS['menu_selection'].play().set_volume(VOL_MENU_SELECTION)
                 self.options_qty = 0
             elif self.index == 2:
-                self.index = 1
                 self.screen = "MENU"
+                self.index = 1
                 self.options_qty = 3
                 SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
         elif self.screen == "CREDITS":
-            self.index = 2
             self.screen = "MENU"
+            self.index = 2
             self.options_qty = 3
             SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
-        elif self.screen == "CONTROLS":
-            self.index = 1
+        elif self.screen == "AUDIO":
             self.screen = "OPTIONS"
+            self.index = 0
+            self.options_qty = 2
+            SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
+        elif self.screen == "CONTROLS":
+            self.screen = "OPTIONS"
+            self.index = 1
             self.options_qty = 2
             SOUNDS['menu_back'].play().set_volume(VOL_MENU_BACK)
 
@@ -122,7 +130,9 @@ class Menu(BaseState):
                 text.render_text(self.index)
             self.pointer.draw_rotated(self.credits.credits[self.index].text_position, self.screen)
         elif self.screen == "AUDIO":
-            pass
+            for text in self.audio.audio:
+                text.render_text(self.index)
+            self.pointer.draw_rotated(self.audio.audio[self.index].text_position, self.screen)
         elif self.screen == "CONTROLS":
             for text in self.controls.controls:
                 text.render_text(self.index)
