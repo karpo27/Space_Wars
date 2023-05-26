@@ -24,10 +24,10 @@ class Pause(BaseState):
                 TextCreator(index, text, self.font_type, 48, 52, self.base_color, self.hover_color, self.pos,
                             self.text[0], 70))
 
-        # Initialize Classes:
+        # Initialize Objects:
         self.background = BGCreator(*BACKGROUNDS['level_1'])
         self.options = Options()
-        self.audio = Audio(self.volume)
+        self.audio = Audio()
         self.controls = Controls()
         self.pointer = Pointer()
 

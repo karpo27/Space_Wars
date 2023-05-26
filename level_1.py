@@ -32,7 +32,7 @@ class Level1(BaseState):
         self.enemies_bullets_group = pygame.sprite.Group()
         self.effects_group = pygame.sprite.Group()
 
-        # Initialize Classes:
+        # Initialize Objects:
         self.background = BGCreator(*BACKGROUNDS['level_1'])
         self.player = Player(*PLAYER_ATTRIBUTES, self.player_bullets_group, self.effects_group)
         self.ui = UI(self.player)

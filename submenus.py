@@ -1,6 +1,7 @@
 # Scripts:
 from constants import *
 from base_state import BaseState
+from sounds import sounds_list
 
 # Modules:
 from text_creator import TextCreator
@@ -59,11 +60,11 @@ class Credits(BaseState):
 
 
 class Audio(BaseState):
-    def __init__(self, volume):
+    def __init__(self):
         # Screen Text and Options:
         super().__init__()
         self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/3
-        self.volume = volume
+        self.volume = 5
         self.text = [f'VOLUME       «  {str(self.volume)}  »']
         self.audio = []
         self.audio.append(TextCreator(self.index, self.text[0], self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 50))
@@ -71,6 +72,11 @@ class Audio(BaseState):
 
     def update_volume(self, value):
         self.volume += value
+        # Update Volumes:
+        for sound in sounds_list:
+            sound.update_volume(self.volume)
+
+        # Update Text:
         self.text = [f'VOLUME       «  {str(self.volume)}  »']
         self.audio = []
         self.audio.append(TextCreator(self.index, self.text[0], self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 50))

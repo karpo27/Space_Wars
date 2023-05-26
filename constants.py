@@ -139,6 +139,10 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
 ENEMIES_LVL1 = ['e', 'e', 'a']
 # Sounds:
 pygame.mixer.init()
+SOUNDS2 = {
+    'menu_movement': ['menu_movement.mp3', 0.6]
+}
+
 SOUNDS = {
     'menu_bg': 'Sounds/menu_bg.mp3',
     'menu_movement': pygame.mixer.Sound('Sounds/menu_movement.mp3'),
@@ -160,6 +164,7 @@ SOUNDS = {
 }
 # Volume:
 VOL_LVL = 5
+VOL_CONSTANT = VOL_LVL/5
 
 VOL_MENU_BG = 0.02
 VOL_MENU_MOVEMENT = 0.6
@@ -178,4 +183,24 @@ VOL_BOSS_BG = 0.15
 VOL_WIN_BG = 0.1
 VOL_WIN_FIREWORKS = 0.06
 VOL_GAME_OVER_BG = 0.15
+
+VOLUMES = [
+    VOL_MENU_BG,
+    VOL_MENU_MOVEMENT,
+    VOL_MENU_SELECTION,
+    VOL_MENU_BACK,
+    VOL_LEVEL1_BG,
+    VOL_PLAYER_LASER,
+    VOL_PLAYER_HIT,
+    VOL_PLAYER_EXPLOSION,
+    VOL_ENEMY_LASER,
+    VOL_ENEMY_HIT,
+    VOL_ENEMY_EXPLOSION,
+    VOL_BOSS_LASER,
+    VOL_BOSS_EXPLOSION,
+    VOL_BOSS_BG,
+    VOL_WIN_BG,
+    VOL_WIN_FIREWORKS,
+    VOL_GAME_OVER_BG,
+]
 

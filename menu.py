@@ -3,6 +3,7 @@ from base_state import BaseState
 from submenus import Options, Audio, Controls, Credits
 from pointer import Pointer
 from bg_music import set_bg_music
+from sounds import menu_movement
 from bg_creator import *
 from text_creator import *
 
@@ -26,10 +27,10 @@ class Menu(BaseState):
 
         self.title = TextCreator(0, "GAME PROJECT", self.font_type, 94, 94, self.base_color, self.hover_color,
                                  (WIDTH/2, HEIGHT/3), "GAME PROJECT", 70)
-        # Initialize Classes:
+        # Initialize Objects:
         self.background = BGCreator(*BACKGROUNDS['main_menu'])
         self.options = Options()
-        self.audio = Audio(self.volume)
+        self.audio = Audio()
         self.controls = Controls()
         self.credits = Credits()
         self.pointer = Pointer()
@@ -94,10 +95,12 @@ class Menu(BaseState):
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
                 self.index += 1
-                SOUNDS['menu_movement'].play().set_volume(VOL_MENU_MOVEMENT)
+                menu_movement.play()
+                #SOUNDS['menu_movement'].play().set_volume(VOL_MENU_MOVEMENT)
             elif event.key == pygame.K_UP:
                 self.index -= 1
-                SOUNDS['menu_movement'].play().set_volume(VOL_MENU_MOVEMENT)
+                menu_movement.play()
+                #SOUNDS['menu_movement'].play().set_volume(VOL_MENU_MOVEMENT)
             elif event.key == pygame.K_RETURN:
                 self.handle_action()
             elif event.key == pygame.K_LEFT and self.screen == "AUDIO":

@@ -20,9 +20,6 @@ class BaseState(object):
         self.base_color = "white"
         self.hover_color = (193, 225, 193)
 
-        # Audio:
-        self.volume = VOL_LVL
-
     def startup(self, persistent):
         self.persist = persistent
 
