@@ -19,7 +19,6 @@ class Sound:
     def update_volume(self, new_volume, category):
         self.new_volume = self.initial_volume * new_volume/self.ref_volume
         if category == "music":
-            #print(self.new_volume)
             pygame.mixer.music.set_volume(self.new_volume)
 
     def play_sound(self):
@@ -29,10 +28,10 @@ class Sound:
         if fadeout_time is not None:
             pygame.mixer.music.fadeout(fadeout_time)
             pygame.mixer.music.queue(f'Sounds/{self.path}', loops=loop)
-            pygame.mixer.music.set_volume(self.initial_volume)
+            pygame.mixer.music.set_volume(self.new_volume)
         else:
             pygame.mixer.music.load(f'Sounds/{self.path}')
-            pygame.mixer.music.set_volume(self.initial_volume)
+            pygame.mixer.music.set_volume(self.new_volume)
             pygame.mixer.music.play(loop)
 
 
