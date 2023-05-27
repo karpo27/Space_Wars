@@ -1,7 +1,7 @@
 # Scripts:
 from constants import *
 from base_state import BaseState
-from sound import sounds_list
+from sound import sounds_list, musics_list
 
 # Modules:
 from text_creator import TextCreator
@@ -63,24 +63,35 @@ class Audio(BaseState):
     def __init__(self):
         # Screen Text and Options:
         super().__init__()
-        self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/3
-        self.volume = 5
-        self.text = [f'VOLUME       «  {str(self.volume)}  »']
+        self.pos = self.pos_x, self.pos_y = WIDTH / 2, HEIGHT / 3
+        self.sound_volume = 5
+        self.music_volume = 5
+        self.text = [f'SOUND VOLUME        «  {str(self.sound_volume)}  »',
+                     f'MUSIC VOLUME        «  {str(self.music_volume)}  »']
         self.audio = []
-        self.audio.append(TextCreator(self.index, self.text[0], self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 50))
-        self.audio.append(TextCreator(self.index + 1, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color, (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
+        for index, text in enumerate(self.text):
+            self.audio.append(TextCreator(index, text, self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 70))
+        self.audio.append(TextCreator(self.index + 2, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color, (WIDTH / 2, 5 / 6 * HEIGHT), "", 0))
 
-    def update_volume(self, value):
+    def update_volume(self, value, category):
         # Update Volumes:
-        self.volume += value
-        for sound in sounds_list:
-            sound.update_volume(self.volume)
-
+        if category == "sound":
+            self.sound_volume += value
+            for sound in sounds_list:
+                sound.update_volume(self.sound_volume, "sound")
+        else:
+            self.music_volume += value
+            for music in musics_list:
+                music.update_volume(self.music_volume, "music")
         # Update Text:
-        self.text = [f'VOLUME       «  {str(self.volume)}  »']
+        self.text = [f'SOUND VOLUME         «  {str(self.sound_volume)}  »',
+                     f'MUSIC VOLUME         «  {str(self.music_volume)}  »']
         self.audio = []
-        self.audio.append(TextCreator(self.index, self.text[0], self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 50))
-        self.audio.append(TextCreator(self.index + 1, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color, (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
+        for index, text in enumerate(self.text):
+            self.audio.append(
+                TextCreator(index, text, self.font_type, 48, 52, self.base_color, self.hover_color, self.pos,
+                            self.text[0], 70))
+        self.audio.append(TextCreator(self.index + 2, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color, (WIDTH / 2, 5 / 6 * HEIGHT), "", 0))
 
 
 # Initialize Object:

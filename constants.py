@@ -153,21 +153,12 @@ SOUNDS = {
     'win_fireworks': ['win_fireworks.mp3', 0.06]
 
 }
-
-
 # Music - Path, Volume:
-MUSIC = {
-    'menu_bg': ['menu_bg.mp3', 0.02],
+MUSICS = {
+    'menu_bg': ['menu_bg.mp3', 0.1],
     'level1_bg': ['level1_bg.mp3', 0.3],
-    'boss_bg': ['boss_bg.mp3', 0.13],
+    'boss_bg': ['boss_bg.mp3', 0.1],
     'win_bg': ['win_bg.mp3', 0.1],
     'game_over_bg': ['game_over_bg.mp3', 0.15]
 }
-'''
-# Volume:
-VOL_MENU_BG = 0.02
-VOL_LEVEL1_BG = 0.3
-VOL_BOSS_BG = 0.15
-VOL_WIN_BG = 0.1
-VOL_GAME_OVER_BG = 0.15'''
 

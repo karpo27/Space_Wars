@@ -55,7 +55,7 @@ class Pause(BaseState):
             if self.index == 0:
                 self.screen = "AUDIO"
                 self.index = 0
-                self.options_qty = 1
+                self.options_qty = 2
                 menu_selection.play_sound()
             elif self.index == 1:
                 self.screen = "CONTROLS"
@@ -77,6 +77,22 @@ class Pause(BaseState):
             self.options_qty = 2
             menu_back.play_sound()
 
+    def handle_left_audio(self):
+        if self.index == 0:
+            if audio.sound_volume > 0:
+                audio.update_volume(-1, "sound")
+        elif self.index == 1:
+            if audio.music_volume > 0:
+                audio.update_volume(-1, "music")
+
+    def handle_right_audio(self):
+        if self.index == 0:
+            if audio.sound_volume < 10:
+                audio.update_volume(1, "sound")
+        elif self.index == 1:
+            if audio.music_volume < 10:
+                audio.update_volume(1, "music")
+
     def get_event(self, event):
         # Pause Menu Movement:
         if event.type == pygame.KEYDOWN:
@@ -87,11 +103,9 @@ class Pause(BaseState):
             elif event.key == pygame.K_RETURN:
                 self.handle_action()
             elif event.key == pygame.K_LEFT and self.screen == "AUDIO":
-                if audio.volume > 0:
-                    audio.update_volume(-1)
+                self.handle_left_audio()
             elif event.key == pygame.K_RIGHT and self.screen == "AUDIO":
-                if audio.volume < 10:
-                    audio.update_volume(1)
+                self.handle_right_audio()
 
         # Pointer Movement Boundaries:
         if self.index > self.options_qty:

@@ -16,8 +16,11 @@ class Sound:
         self.new_volume = initial_volume
         self.ref_volume = 5
 
-    def update_volume(self, new_volume):
+    def update_volume(self, new_volume, category):
         self.new_volume = self.initial_volume * new_volume/self.ref_volume
+        if category == "music":
+            #print(self.new_volume)
+            pygame.mixer.music.set_volume(self.new_volume)
 
     def play_sound(self):
         self.sound.play().set_volume(self.new_volume)
@@ -26,22 +29,11 @@ class Sound:
         if fadeout_time is not None:
             pygame.mixer.music.fadeout(fadeout_time)
             pygame.mixer.music.queue(f'Sounds/{self.path}', loops=loop)
-            pygame.mixer.music.set_volume(self.new_volume)
+            pygame.mixer.music.set_volume(self.initial_volume)
         else:
             pygame.mixer.music.load(f'Sounds/{self.path}')
-            pygame.mixer.music.set_volume(self.new_volume)
+            pygame.mixer.music.set_volume(self.initial_volume)
             pygame.mixer.music.play(loop)
-
-'''
-def set_bg_music(self, music, volume, loop, fadeout_time=None):
-    if fadeout_time is not None:
-        pygame.mixer.music.fadeout(fadeout_time)
-        pygame.mixer.music.queue(music, loops=loop)
-        pygame.mixer.music.set_volume(volume)
-    else:
-        pygame.mixer.music.load(music)
-        pygame.mixer.music.set_volume(volume)
-        pygame.mixer.music.play(loop)'''
 
 
 # Initialize Objects:
@@ -58,13 +50,13 @@ boss_laser = Sound(*SOUNDS['boss_laser'])
 boss_explosion = Sound(*SOUNDS['boss_explosion'])
 win_fireworks = Sound(*SOUNDS['win_fireworks'])
 
-menu_bg = Sound(*MUSIC['menu_bg'])
-level1_bg = Sound(*MUSIC['level1_bg'])
-boss_bg = Sound(*MUSIC['boss_bg'])
-win_bg = Sound(*MUSIC['win_bg'])
-game_over_bg = Sound(*MUSIC['game_over_bg'])
+menu_bg = Sound(*MUSICS['menu_bg'])
+level1_bg = Sound(*MUSICS['level1_bg'])
+boss_bg = Sound(*MUSICS['boss_bg'])
+win_bg = Sound(*MUSICS['win_bg'])
+game_over_bg = Sound(*MUSICS['game_over_bg'])
 
 sounds_list = [menu_movement, menu_selection, menu_back, player_laser, player_hit, player_explosion, enemy_laser,
                enemy_hit, enemy_explosion, boss_laser, boss_explosion, win_fireworks]
 
-music_list = [menu_bg, level1_bg, boss_bg, win_bg, game_over_bg]
+musics_list = [menu_bg, level1_bg, boss_bg, win_bg, game_over_bg]
