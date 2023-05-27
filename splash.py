@@ -2,7 +2,7 @@
 from constants import *
 from base_state import BaseState
 from text_creator import TextCreator
-from sounds import set_bg_music
+from sound import menu_bg
 
 # Modules:
 import pygame
@@ -33,7 +33,8 @@ class Splash(BaseState):
             self.splash.clear()
         elif self.time_text >= self.time_fadeout:
             self.screen_done = True
-            set_bg_music(SOUNDS2['menu_bg'], VOL_MENU_BG, -1)
+            menu_bg.play_bg_music(-1)
+            #set_bg_music(SOUNDS2['menu_bg'], VOL_MENU_BG, -1)
         self.time_text += 1
 
     def draw(self, surface):

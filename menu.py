@@ -2,7 +2,7 @@
 from base_state import BaseState
 from submenus import Options, Controls, Credits, audio
 from pointer import Pointer
-from sounds import set_bg_music, menu_movement, menu_selection, menu_back
+from sound import level1_bg, menu_movement, menu_selection, menu_back
 from bg_creator import *
 from text_creator import *
 
@@ -41,22 +41,22 @@ class Menu(BaseState):
     def handle_movement(self, movement):
         self.index += movement
         if self.options_qty >= 1:
-            menu_movement.play()
+            menu_movement.play_sound()
 
     def handle_action(self):
         if self.screen == "MENU":
             if self.index == 0:
-                set_bg_music(SOUNDS2['level1_bg'], VOL_LEVEL1_BG, -1)
+                level1_bg.play_bg_music(-1)
                 self.screen_done = True
             elif self.index == 1:
                 self.screen = "OPTIONS"
                 self.index = 0
                 self.options_qty = 2
-                menu_selection.play()
+                menu_selection.play_sound()
             elif self.index == 2:
                 self.screen = "CREDITS"
                 self.options_qty = 0
-                menu_selection.play()
+                menu_selection.play_sound()
             elif self.index == 3:
                 self.quit = True
         elif self.screen == "OPTIONS":
@@ -64,32 +64,32 @@ class Menu(BaseState):
                 self.screen = "AUDIO"
                 self.index = 0
                 self.options_qty = 1
-                menu_selection.play()
+                menu_selection.play_sound()
             elif self.index == 1:
                 self.screen = "CONTROLS"
                 self.index = 0
-                menu_selection.play()
+                menu_selection.play_sound()
                 self.options_qty = 0
             elif self.index == 2:
                 self.screen = "MENU"
                 self.index = 1
                 self.options_qty = 3
-                menu_back.play()
+                menu_back.play_sound()
         elif self.screen == "CREDITS":
             self.screen = "MENU"
             self.index = 2
             self.options_qty = 3
-            menu_back.play()
+            menu_back.play_sound()
         elif self.screen == "AUDIO":
             self.screen = "OPTIONS"
             self.index = 0
             self.options_qty = 2
-            menu_back.play()
+            menu_back.play_sound()
         elif self.screen == "CONTROLS":
             self.screen = "OPTIONS"
             self.index = 1
             self.options_qty = 2
-            menu_back.play()
+            menu_back.play_sound()
 
     def get_event(self, event):
         # Main Menu Movement:

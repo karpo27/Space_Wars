@@ -1,7 +1,7 @@
 # Scripts:
 from game_effects import Explosion, Particle, Speakers
 from base_state import BaseState
-from sounds import set_bg_music
+from sound import boss_bg, win_bg, game_over_bg
 from pause import *
 from bg_creator import BGCreator
 from player import *
@@ -80,19 +80,19 @@ class Level1(BaseState):
             k = self.boss[0]
             self.enemies_group.add(Boss(*k, self.ui, self.enemies_bullets_group, self.effects_group))
             self.boss_to_spawn = False
-            set_bg_music(SOUNDS2['boss_bg'], VOL_BOSS_BG, -1, 8000)
+            boss_bg.play_bg_music(-1, 7000)
 
     def check_win(self):
         if self.player.state == "alive" and not self.boss_to_spawn and len(self.enemies_group) == 0:
             self.next_state = "WIN"
             self.screen_done = True
-            set_bg_music(SOUNDS2['win_bg'], VOL_WIN_BG, -1)
+            win_bg.play_bg_music(-1)
 
     def check_game_over(self):
         if self.player.state == "dead":
             self.next_state = "GAME_OVER"
             self.screen_done = True
-            set_bg_music(SOUNDS2['game_over_bg'], VOL_GAME_OVER_BG, -1)
+            game_over_bg.play_bg_music(-1)
 
     def get_event(self, event):
         if event.type == pygame.QUIT:

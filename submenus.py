@@ -1,7 +1,7 @@
 # Scripts:
 from constants import *
 from base_state import BaseState
-from sounds import sounds_list
+from sound import sounds_list
 
 # Modules:
 from text_creator import TextCreator

@@ -3,7 +3,7 @@ from constants import *
 from base_state import BaseState
 from submenus import Options, Controls, audio
 from pointer import Pointer
-from sounds import set_bg_music, menu_selection, menu_movement, menu_back
+from sound import menu_bg, menu_selection, menu_movement, menu_back
 from bg_creator import *
 
 # Modules:
@@ -33,7 +33,7 @@ class Pause(BaseState):
     def handle_movement(self, movement):
         self.index += movement
         if self.options_qty >= 1:
-            menu_movement.play()
+            menu_movement.play_sound()
 
     def handle_action(self):
         if self.screen == "PAUSE":
@@ -44,38 +44,38 @@ class Pause(BaseState):
             elif self.index == 1:
                 self.screen = "OPTIONS"
                 self.index = 0
-                menu_selection.play()
+                menu_selection.play_sound()
             elif self.index == 2:
                 self.next_state = "MENU"
                 self.index = 0
                 self.screen_done = True
-                menu_selection.play()
-                set_bg_music(SOUNDS2['menu_bg'], VOL_MENU_BG, -1)
+                menu_selection.play_sound()
+                menu_bg.play_bg_music(-1)
         elif self.screen == "OPTIONS":
             if self.index == 0:
                 self.screen = "AUDIO"
                 self.index = 0
                 self.options_qty = 1
-                menu_selection.play()
+                menu_selection.play_sound()
             elif self.index == 1:
                 self.screen = "CONTROLS"
                 self.index = 0
                 self.options_qty = 0
-                menu_selection.play()
+                menu_selection.play_sound()
             elif self.index == 2:
                 self.screen = "PAUSE"
                 self.index = 1
-                menu_back.play()
+                menu_back.play_sound()
         elif self.screen == "AUDIO":
             self.screen = "OPTIONS"
             self.index = 0
             self.options_qty = 2
-            menu_back.play()
+            menu_back.play_sound()
         elif self.screen == "CONTROLS":
             self.screen = "OPTIONS"
             self.index = 1
             self.options_qty = 2
-            menu_back.play()
+            menu_back.play_sound()
 
     def get_event(self, event):
         # Pause Menu Movement:

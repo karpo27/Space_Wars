@@ -5,7 +5,7 @@ from bg_creator import BGCreator
 from text_creator import TextCreator
 from pointer import Pointer
 from game_effects import Particle
-from sounds import set_bg_music, win_fireworks
+from sound import menu_bg, win_fireworks
 
 # Modules:
 import pygame
@@ -42,7 +42,7 @@ class Win(BaseState):
     def handle_action(self):
         self.next_state = "MENU"
         self.screen_done = True
-        set_bg_music(SOUNDS['menu_bg'], VOL_MENU_BG, -1)
+        menu_bg.play_bg_music(-1)
 
     def create_fireworks(self):
         if self.fire_rate >= self.ref_time:
@@ -50,7 +50,7 @@ class Win(BaseState):
             pos = random.randrange(50, WIDTH - 50), random.randrange(50, HEIGHT - 50)
             for num_particles in range(random.randrange(65, 110)):
                 Particle(pos, self.effects_group)
-            win_fireworks.play()
+            win_fireworks.play_sound()
         # Reset Fire Bullet Variables:
         if self.fire_rate < self.ref_time:
             self.fire_rate += 1

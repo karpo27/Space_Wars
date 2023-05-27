@@ -130,55 +130,44 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'c', 'a', 'c', 'a', 'c', 'a', 'c',
                 'f1', 'f2', 'f1', 'f2', 'f1', 'f2',
                 'f1', 'f2', 'f1', 'f2', 'f1', 'f2',
-                'b', 'b', 'b', 'b',
+                'b', 'b', 'b',
                 'e', 'b', 'e', 'a', 'a', 'e', 'b', 'e', 'b', 'e',
                 'f1', 'f2', 'f1', 'e', 'f2', 'f1', 'f2',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
                 ]'''
 ENEMIES_LVL1 = ['e', 'e', 'a']
-# Sounds:
-#pygame.mixer.init()
+# Sounds - Path, Volume:
 SOUNDS = {
     'menu_movement': ['menu_movement.mp3', 0.6],
     'menu_selection': ['menu_selection.mp3', 0.4],
     'menu_back': ['menu_back.mp3', 0.4],
     'player_laser': ['player_laser.mp3', 0.04],
-    'player_hit': ['player_hit.mp3', 0.1],
+    'player_hit': ['player_hit.mp3', 0.08],
     'player_explosion': ['player_explosion.wav', 0.15],
-    'enemy_laser': ['enemy_laser.wav', 0.25],
-    'enemy_hit': ['player_hit.mp3', 0.1],
-    'enemy_explosion': ['player_explosion.wav', 0.1],
-    'boss_laser': ['player_laser.mp3', 0.3],
+    'enemy_laser': ['enemy_laser.wav', 0.15],
+    'enemy_hit': ['player_hit.mp3', 0.08],
+    'enemy_explosion': ['player_explosion.wav', 0.07],
+    'boss_laser': ['enemy_laser.wav', 0.12],
     'boss_explosion': ['boss_explosion.mp3', 0.15],
     'win_fireworks': ['win_fireworks.mp3', 0.06]
+
 }
 
-SOUNDS2 = {
-    'menu_bg': 'Sounds/menu_bg.mp3',
-    'level1_bg': 'Sounds/level1_bg.mp3',
-    'boss_bg': 'Sounds/boss_bg.mp3',
-    'win_bg': 'Sounds/win_bg.mp3',
-    'game_over_bg': 'Sounds/game_over_bg.mp3'
+
+# Music - Path, Volume:
+MUSIC = {
+    'menu_bg': ['menu_bg.mp3', 0.02],
+    'level1_bg': ['level1_bg.mp3', 0.3],
+    'boss_bg': ['boss_bg.mp3', 0.13],
+    'win_bg': ['win_bg.mp3', 0.1],
+    'game_over_bg': ['game_over_bg.mp3', 0.15]
 }
+'''
 # Volume:
 VOL_MENU_BG = 0.02
 VOL_LEVEL1_BG = 0.3
 VOL_BOSS_BG = 0.15
 VOL_WIN_BG = 0.1
-VOL_GAME_OVER_BG = 0.15
-
-'''
-VOL_MENU_MOVEMENT = 0.6
-VOL_MENU_SELECTION = 0.4
-VOL_MENU_BACK = 0.4
-VOL_PLAYER_LASER = 0.04
-VOL_PLAYER_HIT = 0.1
-VOL_PLAYER_EXPLOSION = 0.15
-VOL_ENEMY_LASER = 0.25
-VOL_ENEMY_HIT = 0.1
-VOL_ENEMY_EXPLOSION = 0.1
-VOL_BOSS_LASER = 0.3
-VOL_BOSS_EXPLOSION = 0.15
-VOL_WIN_FIREWORKS = 0.06'''
+VOL_GAME_OVER_BG = 0.15'''
 

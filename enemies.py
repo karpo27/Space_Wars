@@ -3,7 +3,7 @@ from constants import *
 from character import Character
 from bullet import Bullet
 from game_effects import Explosion, Particle, HitParticle
-from sounds import enemy_laser, enemy_explosion, player_hit
+from sound import enemy_laser, enemy_explosion, player_hit
 
 # Modules
 import pygame
@@ -73,7 +73,7 @@ class Enemy(Character):
                 for bullet_type in self.bullet:
                     EnemyBullet(self.rect.center, *ENEMIES_BULLETS[f'{bullet_type}'], self.bullet_group)
                     self.fire_rate = 0
-                enemy_laser.play()
+                enemy_laser.play_sound()
             # Reset Variables:
             elif self.fire_rate < self.ref_time:
                 self.fire_rate += 1
@@ -83,7 +83,7 @@ class Enemy(Character):
         if self.hp > 1:
             for num_particles in range(random.randrange(6, 18)):
                 HitParticle(pos, (0, 0, 255), (135, 206, 250), -1, self.effects_group)
-            player_hit.play()
+            player_hit.play_sound()
         # HP:
         self.hp -= 1
         if self.hp <= 0:
@@ -93,7 +93,7 @@ class Enemy(Character):
         self.kill()
         # Explosion:
         self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
-        enemy_explosion.play()
+        enemy_explosion.play_sound()
         # Particles:
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
             Particle(self.rect.center, self.effects_group)
