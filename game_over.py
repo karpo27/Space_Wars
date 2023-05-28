@@ -16,11 +16,16 @@ class GameOver(BaseState):
         self.pos = self.pos_x, self.pos_y = WIDTH / 2, HEIGHT / 3
         self.text = ["GAME OVER"]
         self.game_over = []
-        self.game_over.append(TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
-                                          (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
+        # Effects:
+        self.text_size = 10
+        self.ref_time = 3
+        self.increase_rate = 3
         self.game_over.append(
-            TextCreator(self.index + 1, self.text[0], self.font_type, 90, 90, self.base_color, self.hover_color, self.pos,
+            TextCreator(self.index + 1, self.text[0], self.font_type, self.text_size, 90, self.base_color, self.hover_color, self.pos,
                         "", 40))
+        self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color, (WIDTH / 2, 9 / 10 * HEIGHT), "", 50)
+        self.back_ref_time = 600
+        self.back_time = 0
 
         # Initialize Classes:
         self.pointer = Pointer()
@@ -30,6 +35,20 @@ class GameOver(BaseState):
         self.screen_done = True
         menu_selection.play_sound()
         menu_bg.play_bg_music(-1)
+
+    def update_text_size(self):
+        if self.text_size < 110 and self.increase_rate >= self.ref_time:
+            self.text_size += 1
+            self.increase_rate = 0
+            self.game_over = []
+            self.game_over.append(
+                TextCreator(self.index + 1, self.text[0], self.font_type, self.text_size, 90, self.base_color,
+                            self.hover_color, self.pos,
+                            "", 40))
+
+        # Reset Fire Bullet Variables:
+        if self.increase_rate < self.ref_time:
+            self.increase_rate += 1
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
@@ -43,6 +62,13 @@ class GameOver(BaseState):
         surface.fill(pygame.Color("black"))
 
         # Render Game Over:
+        self.update_text_size()
         for text in self.game_over:
             text.render_text(self.index)
-        self.pointer.draw_rotated(self.game_over[self.index].text_position, "GAME OVER")
+
+        # Render Back Text:
+        if self.back_time >= self.back_ref_time:
+            self.back.render_text(self.index)
+            self.pointer.draw_rotated(self.back.text_position, "GAME OVER")
+        else:
+            self.back_time += 1

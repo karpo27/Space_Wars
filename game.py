@@ -1,5 +1,7 @@
 # Scripts:
 from level_1 import Level1
+from game_over import GameOver
+from win import Win
 
 # Modules:
 import pygame
@@ -40,8 +42,10 @@ class Game(object):
         self.state = self.states[self.state_name]
 
     def reset_game(self):
-        del self.states['LEVEL_1']
-        self.states['LEVEL_1'] = Level1()
+        for state in ['LEVEL_1', 'GAME_OVER', 'WIN']:
+            del self.states[state]
+        for state, object in zip(['LEVEL_1', 'GAME_OVER', 'WIN'], [Level1(), GameOver(), Win()]):
+            self.states[state] = object
 
     def update(self, dt):
         # Check State to Next Action:
