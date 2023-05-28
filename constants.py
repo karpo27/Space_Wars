@@ -8,10 +8,6 @@ SCREEN = pygame.display.set_mode(SIZE)
 # Icon Window:
 ICON = 'Images/Screen/icon.png'
 
-# Mouse Button Constants:
-LEFT = 1
-RIGHT = 3
-
 # Background Assets - Image, Scroll, Music:
 BACKGROUNDS = {
     'main_menu': ['Images/Main_Menu/main_menu_img.png', 0.45],
@@ -19,9 +15,7 @@ BACKGROUNDS = {
     'win': ['Images/Levels_Background/win.jpg', 0]
 }
 # Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
-PLAYER_ATTRIBUTES = [
-    'A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38)
-]
+PLAYER_ATTRIBUTES = ['A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38)]
 # Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Angle, Bounce, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
     'A': ['Images/Player_Bullet/', 5, 0.4, 6, 1, [0, -13], 0, False]

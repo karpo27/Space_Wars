@@ -9,26 +9,6 @@ import random
 # Initialize Pygame
 pygame.init()
 
-
-class Speakers:
-    def __init__(self):
-        self.on_image = pygame.image.load('Images/Speakers/speakers_on_img.png')
-        self.off_image = pygame.image.load('Images/Speakers/speakers_off_img.png')
-        self.position = self.x, self.y = (13/14 * WIDTH, 1/75 * HEIGHT)
-        self.on_rect = self.on_image.get_rect(x=self.x, y=self.y)
-        self.off_rect = self.off_image.get_rect(x=self.x, y=self.y)
-        self.state = "off"      # This means game will begin with Speakers-Off as default
-        self.initial_sound = 0.0
-
-    def action(self, x, y, state):
-        if state == "off":
-            SCREEN.blit(self.off_image, (x, y))
-            #mixer.music.set_volume(0.0)
-        elif state == "on":
-            SCREEN.blit(self.on_image, (x, y))
-            #mixer.music.set_volume(0.06)
-
-
 class Explosion(pygame.sprite.Sprite):
     def __init__(self, x, y, scale):
         super().__init__()
@@ -116,8 +96,3 @@ class HitParticle(pygame.sprite.Sprite):
             self.kill()
         else:
             self.kill_timer -= 1
-
-
-# Initialize Classes:
-speakers = Speakers()
-

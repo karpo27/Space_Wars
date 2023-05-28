@@ -1,5 +1,5 @@
 # Scripts:
-from game_effects import Explosion, Particle, Speakers
+from game_effects import Explosion, Particle
 from base_state import BaseState
 from sound import boss_bg, win_bg, game_over_bg
 from pause import *
@@ -97,14 +97,6 @@ class Level1(BaseState):
     def get_event(self, event):
         if event.type == pygame.QUIT:
             self.quit = True
-        # Press Mouse:
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == LEFT:
-            mouse_pos = pygame.mouse.get_pos()
-            if speakers.off_rect.collidepoint(mouse_pos):
-                if speakers.state == "off":
-                    speakers.state = "on"
-                else:
-                    speakers.state = "off"
         elif event.type == pygame.KEYDOWN:
             # Pause Menu Selection:
             if event.key == pygame.K_ESCAPE:
@@ -148,6 +140,3 @@ class Level1(BaseState):
         self.player_bullets_group.draw(SCREEN)
         self.player_group.draw(SCREEN)
         self.effects_group.draw(SCREEN)
-
-        # Extras:
-        speakers.action(speakers.x, speakers.y, speakers.state)
