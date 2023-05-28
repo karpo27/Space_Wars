@@ -20,6 +20,10 @@ class BaseState(object):
         self.base_color = "white"
         self.hover_color = (193, 225, 193)
 
+        # Win/Game Over Timer:
+        self.next_screen_ref_time = 1
+        self.next_screen_rate = 0
+
     def startup(self, persistent):
         self.persist = persistent
 

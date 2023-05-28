@@ -84,15 +84,21 @@ class Level1(BaseState):
 
     def check_win(self):
         if self.player.state == "alive" and not self.boss_to_spawn and len(self.enemies_group) == 0:
-            self.next_state = "WIN"
-            self.screen_done = True
-            win_bg.play_bg_music(-1)
+            if self.next_screen_rate >= self.next_screen_ref_time:
+                self.next_state = "WIN"
+                self.screen_done = True
+                win_bg.play_bg_music(-1)
+            else:
+                self.next_screen_rate += 1
 
     def check_game_over(self):
         if self.player.state == "dead":
-            self.next_state = "GAME_OVER"
-            self.screen_done = True
-            game_over_bg.play_bg_music(-1)
+            if self.next_screen_rate >= self.next_screen_ref_time:
+                self.next_state = "GAME_OVER"
+                self.screen_done = True
+                game_over_bg.play_bg_music(-1)
+            else:
+                self.next_screen_rate += 1
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
