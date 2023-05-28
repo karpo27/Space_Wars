@@ -14,15 +14,12 @@ class GameOver(BaseState):
         super().__init__()
         # Screen Text and Options:
         self.pos = self.pos_x, self.pos_y = WIDTH / 2, HEIGHT / 3
-        self.text = ["GAME OVER"]
         self.game_over = []
         # Effects:
         self.text_size = 10
         self.ref_time = 3
         self.increase_rate = 3
-        self.game_over.append(
-            TextCreator(self.index + 1, self.text[0], self.font_type, self.text_size, 90, self.base_color, self.hover_color, self.pos,
-                        "", 40))
+        self.game_over = TextCreator(self.index + 1, "GAME OVER", self.font_type, self.text_size, 90, self.base_color, self.hover_color, self.pos, "", 40)
         self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color, (WIDTH / 2, 9 / 10 * HEIGHT), "", 50)
         self.back_ref_time = 600
         self.back_time = 0
@@ -40,12 +37,7 @@ class GameOver(BaseState):
         if self.text_size < 110 and self.increase_rate >= self.ref_time:
             self.text_size += 1
             self.increase_rate = 0
-            self.game_over = []
-            self.game_over.append(
-                TextCreator(self.index + 1, self.text[0], self.font_type, self.text_size, 90, self.base_color,
-                            self.hover_color, self.pos,
-                            "", 40))
-
+            self.game_over = TextCreator(self.index + 1, "GAME OVER", self.font_type, self.text_size, 90, self.base_color, self.hover_color, self.pos, "", 40)
         # Reset Fire Bullet Variables:
         if self.increase_rate < self.ref_time:
             self.increase_rate += 1
@@ -63,8 +55,7 @@ class GameOver(BaseState):
 
         # Render Game Over:
         self.update_text_size()
-        for text in self.game_over:
-            text.render_text(self.index)
+        self.game_over.render_text(self.index)
 
         # Render Back Text:
         if self.back_time >= self.back_ref_time:

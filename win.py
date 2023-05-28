@@ -40,9 +40,10 @@ class Win(BaseState):
         self.fire_rate = 70
 
     def handle_action(self):
-        self.next_state = "MENU"
-        self.screen_done = True
-        menu_bg.play_bg_music(-1)
+        if self.back_time >= self.back_ref_time:
+            self.next_state = "MENU"
+            self.screen_done = True
+            menu_bg.play_bg_music(-1)
 
     def create_fireworks(self):
         if self.fire_rate >= self.ref_time:
@@ -60,8 +61,7 @@ class Win(BaseState):
             self.quit = True
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RETURN:
-                if self.back_time >= self.back_ref_time:
-                    self.handle_action()
+                self.handle_action()
 
     def draw(self, surface):
         # Draw Background:
