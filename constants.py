@@ -14,8 +14,8 @@ BACKGROUNDS = {
     'level_1': ['Images/Levels_Background/level_1.jpg', 0.8],
     'win': ['Images/Levels_Background/win.jpg', 0]
 }
-# Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range:
-PLAYER_ATTRIBUTES = ['A', 'Images/Player/', 1, [WIDTH/2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38)]
+# Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range, Propulsion Scale:
+PLAYER_ATTRIBUTES = ['A', 'Images/Player/', 1, [WIDTH/2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38), 0.22]
 # Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Angle, Bounce, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
     'A': ['Images/Player_Bullet/', 5, 0.4, 6, 1, [0, -13], 0, False]
@@ -78,7 +78,7 @@ Z = {
 }
 # Bosses - Category, Path, Scale, Action[Movement], Velocity, HP, Shoot, Fire Rate, Explosion Scale, Particles Range:
 BOSSES = {
-    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 5, False, None, 2.0, (70, 90)]
+    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 3, False, None, 2.0, (70, 90)]
 }
 # Bosses Bullets - Image, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {
@@ -153,7 +153,8 @@ MUSICS = {
     'menu_bg': ['menu_bg.mp3', 0.1],
     'level1_bg': ['level1_bg.mp3', 0.3],
     'boss_bg': ['boss_bg.mp3', 0.1],
+    'win_level_bg': ['win_level_bg.mp3', 0.1],
     'win_bg': ['win_bg.mp3', 0.1],
-    'game_over_bg': ['game_over_bg.mp3', 0.15]
+    'game_over_bg': ['game_over_bg.mp3', 0.1]
 }
 

@@ -12,7 +12,7 @@ import math
 
 
 class Player(Character):
-    def __init__(self, category, img_path, scale, pos, vel, hp, lives, state, fire_rate, explo_scale, part_range, bullet_group, effects_group):
+    def __init__(self, category, img_path, scale, pos, vel, hp, lives, state, fire_rate, explo_scale, part_range, propulsion_scale, bullet_group, effects_group):
         super().__init__(category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group)
         # Image:
         self.pos = pos
@@ -20,9 +20,8 @@ class Player(Character):
 
         # Start Movement Animation:
         self.y_start = 5/6 * HEIGHT
-        self.vel_start_y = 1
         # End Movement Animation:
-        self.y_end = -1/3 * HEIGHT
+        self.y_end = -1/7 * HEIGHT
 
         # HP:
         self.lives = lives
@@ -30,6 +29,9 @@ class Player(Character):
 
         # State:
         self.state = state
+
+        # Propulsion:
+        self.propulsion_scale = propulsion_scale
 
     def get_hit(self, pos, col_type):
         if not self.invulnerable:
@@ -66,15 +68,15 @@ class Player(Character):
 
     def animate_start(self):
         if self.rect.y > self.y_start:
-            self.rect.y -= self.vel_start_y
+            self.rect.y -= 1
         else:
             self.start_animation = False
 
     def animate_end(self):
         if self.rect.bottom > self.y_end:
-            self.rect.y -= 1
+            self.rect.y -= 3
             # Propulsion:
-            self.effects_group.add(Propulsion(self.rect.midbottom))
+            self.effects_group.add(Propulsion(self.rect.midbottom, self.propulsion_scale))
         else:
             self.end_animation = False
             self.state = "winner"

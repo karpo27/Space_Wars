@@ -100,31 +100,21 @@ class HitParticle(pygame.sprite.Sprite):
 
 
 class Propulsion(pygame.sprite.Sprite):
-    def __init__(self, pos):
+    def __init__(self, pos, scale):
         super().__init__()
-        self.sprites = []
-        for i in range(1, 4):
-            images = pygame.image.load(f'Images/Propulsion/{i}.png').convert_alpha()
-            images = pygame.transform.scale(images, (images.get_width() * 0.3, images.get_height() * 0.3))
-            self.sprites.append(images)
-
-        self.index = 0
-        self.image = self.sprites[self.index]
-        self.pos = pos
+        self.selection = random.randint(1, 3)
+        self.image = pygame.image.load(f'Images/Propulsion/{self.selection}.png').convert_alpha()
+        self.scale = scale
+        self.image = pygame.transform.scale(self.image, (self.image.get_width() * self.scale, self.image.get_height() * self.scale))
+        self.pos = [pos[0], pos[1] + 4]
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
-        self.counter = 0
+
+        # Timer:
+        self.ref_time = 9
+        self.rate = 0
 
     def update(self):
-        propulsion_delay = 8
-        # Update Propulsion Animation:
-        self.counter += 1
-
-        if self.counter >= propulsion_delay and self.index < len(self.sprites) - 1:
-            self.counter = 0
-            self.index += 1
-            self.image = self.sprites[self.index]
-
-        # If the Animation is Complete, Reset the Index:
-        if self.index >= len(self.sprites) - 1 and self.counter >= propulsion_delay:
+        if self.rate >= self.ref_time:
             self.kill()
+        self.rate += 1

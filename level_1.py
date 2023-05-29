@@ -1,7 +1,7 @@
 # Scripts:
 from game_effects import Explosion, Particle
 from base_state import BaseState
-from sound import boss_bg, win_bg, game_over_bg
+from sound import boss_bg, win_bg, game_over_bg, win_level_bg
 from pause import *
 from bg_creator import BGCreator
 from player import *
@@ -92,6 +92,7 @@ class Level1(BaseState):
                 self.next_screen_rate += 1
         if self.player.state == "alive":
             self.player.end_animation = True
+            win_level_bg.play_bg_music(0)
 
     def handle_game_over(self):
         if self.next_screen_rate >= self.next_screen_ref_time:

@@ -6,7 +6,7 @@ import pygame
 
 # Initialize Mixer:
 pygame.mixer.init()
-pygame.mixer.set_num_channels(30)
+pygame.mixer.set_num_channels(40)
 
 class Sound:
     def __init__(self, path, initial_volume):
@@ -52,10 +52,11 @@ win_fireworks = Sound(*SOUNDS['win_fireworks'])
 menu_bg = Sound(*MUSICS['menu_bg'])
 level1_bg = Sound(*MUSICS['level1_bg'])
 boss_bg = Sound(*MUSICS['boss_bg'])
+win_level_bg = Sound(*MUSICS['win_level_bg'])
 win_bg = Sound(*MUSICS['win_bg'])
 game_over_bg = Sound(*MUSICS['game_over_bg'])
 
 sounds_list = [menu_movement, menu_selection, menu_back, player_laser, player_hit, player_explosion, enemy_laser,
                enemy_hit, enemy_explosion, boss_laser, boss_explosion, win_fireworks]
 
-musics_list = [menu_bg, level1_bg, boss_bg, win_bg, game_over_bg]
+musics_list = [menu_bg, level1_bg, boss_bg, win_bg, game_over_bg, win_level_bg]
