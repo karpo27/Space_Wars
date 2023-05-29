@@ -19,6 +19,7 @@ class Player(Character):
         self.rect.center = self.pos
 
         # Start Movement Animation:
+        self.start_animation = True
         self.y_start = 5/6 * HEIGHT
         # End Movement Animation:
         self.y_end = -1/7 * HEIGHT

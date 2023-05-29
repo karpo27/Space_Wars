@@ -3,7 +3,7 @@ from constants import *
 from character import Character
 from bullet import Bullet
 from game_effects import Explosion, Particle, HitParticle
-from sound import enemy_laser, enemy_explosion, player_hit
+from sound import enemy_laser, enemy_explosion, enemy_e_flyby, player_hit
 
 # Modules
 import pygame
@@ -28,6 +28,10 @@ class Enemy(Character):
         # Score:
         self.ui = ui
         self.score = hp * 10
+
+        # Sound:
+        if self.category == 'E':
+            enemy_e_flyby.play_sound()
 
     def movement_1(self):
         self.move_x()

@@ -19,7 +19,7 @@ class Character(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         # Initial Movement Animation:
-        self.start_animation = True
+        self.start_animation = None
         # Final Movement Animation:
         self.end_animation = False
 

@@ -130,8 +130,8 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
                 ]'''
-#ENEMIES_LVL1 = ['e', 'e', 'a']
-ENEMIES_LVL1 = []
+ENEMIES_LVL1 = ['e', 'e', 'a']
+#ENEMIES_LVL1 = []
 # Sounds - Path, Volume:
 SOUNDS = {
     'menu_movement': ['menu_movement.mp3', 0.6],
@@ -143,6 +143,7 @@ SOUNDS = {
     'enemy_laser': ['enemy_laser.wav', 0.15],
     'enemy_hit': ['player_hit.mp3', 0.08],
     'enemy_explosion': ['player_explosion.wav', 0.07],
+    'enemy_e_flyby': ['enemy_e_flyby.mp3', 0.07],
     'boss_laser': ['enemy_laser.wav', 0.12],
     'boss_explosion': ['boss_explosion.mp3', 0.1],
     'win_fireworks': ['win_fireworks.mp3', 0.06]
