@@ -82,23 +82,24 @@ class Level1(BaseState):
             self.boss_to_spawn = False
             boss_bg.play_bg_music(-1, 7000)
 
-    def check_win(self):
-        if self.player.state == "alive" and not self.boss_to_spawn and len(self.enemies_group) == 0:
+    def handle_win(self):
+        if self.player.state == "winner":
             if self.next_screen_rate >= self.next_screen_ref_time:
                 self.next_state = "WIN"
                 self.screen_done = True
                 win_bg.play_bg_music(-1)
             else:
                 self.next_screen_rate += 1
+        if self.player.state == "alive":
+            self.player.end_animation = True
 
-    def check_game_over(self):
-        if self.player.state == "dead":
-            if self.next_screen_rate >= self.next_screen_ref_time:
-                self.next_state = "GAME_OVER"
-                self.screen_done = True
-                game_over_bg.play_bg_music(-1)
-            else:
-                self.next_screen_rate += 1
+    def handle_game_over(self):
+        if self.next_screen_rate >= self.next_screen_ref_time:
+            self.next_state = "GAME_OVER"
+            self.screen_done = True
+            game_over_bg.play_bg_music(-1)
+        else:
+            self.next_screen_rate += 1
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
@@ -117,9 +118,11 @@ class Level1(BaseState):
             self.spawn_boss()
 
         # Check Win Condition:
-        self.check_win()
+        if not self.boss_to_spawn and len(self.enemies_group) == 0:
+            self.handle_win()
         # Check Game Over Condition:
-        self.check_game_over()
+        if self.player.state == "dead":
+            self.handle_game_over()
 
     def draw(self, surface):
         # Check Collisions:

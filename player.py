@@ -2,12 +2,12 @@
 from constants import *
 from character import Character
 from bullet import Bullet
-from game_effects import *
+from game_effects import Explosion, Particle, HitParticle, Propulsion
 from sound import player_laser, player_explosion, enemy_hit
 
 # Modules:
 import pygame
-from pygame import mixer
+import random
 import math
 
 
@@ -18,10 +18,11 @@ class Player(Character):
         self.pos = pos
         self.rect.center = self.pos
 
-        # Initial Movement Animation:
-        self.enter_animation = True
-        self.y_enter = 5 / 6 * HEIGHT
-        self.vel_enter_y = 0.2
+        # Start Movement Animation:
+        self.y_start = 5/6 * HEIGHT
+        self.vel_start_y = 1
+        # End Movement Animation:
+        self.y_end = -1/3 * HEIGHT
 
         # HP:
         self.lives = lives
@@ -58,16 +59,25 @@ class Player(Character):
             self.lives -= 1
             self.hp = 3
             self.rect.center = self.pos
-            self.enter_animation = True
+            self.start_animation = True
         else:
             self.kill()
             self.state = "dead"
 
-    def animate(self):
-        if self.rect.y > self.y_enter:
-            self.rect.y -= self.vel_enter_y
+    def animate_start(self):
+        if self.rect.y > self.y_start:
+            self.rect.y -= self.vel_start_y
         else:
-            self.enter_animation = False
+            self.start_animation = False
+
+    def animate_end(self):
+        if self.rect.bottom > self.y_end:
+            self.rect.y -= 1
+            # Propulsion:
+            self.effects_group.add(Propulsion(self.rect.midbottom))
+        else:
+            self.end_animation = False
+            self.state = "winner"
 
     def handle_action(self):
         key = pygame.key.get_pressed()

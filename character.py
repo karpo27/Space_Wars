@@ -19,7 +19,9 @@ class Character(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
         # Initial Movement Animation:
-        self.enter_animation = None
+        self.start_animation = True
+        # Final Movement Animation:
+        self.end_animation = False
 
         # Movement:
         self.vel = self.vel_x, self.vel_y = vel
@@ -92,7 +94,10 @@ class Character(pygame.sprite.Sprite):
         else:
             self.blink_rate = 0
 
-    def animate(self):
+    def animate_start(self):
+        pass
+
+    def animate_end(self):
         pass
 
     def handle_action(self):
@@ -112,8 +117,10 @@ class Character(pygame.sprite.Sprite):
         pass
 
     def update(self):
-        if self.enter_animation:
-            self.animate()
+        if self.start_animation:
+            self.animate_start()
+        elif self.end_animation:
+            self.animate_end()
         else:
             self.handle_action()
         self.make_invulnerable()

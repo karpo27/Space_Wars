@@ -4,7 +4,7 @@ from character import Character
 from bullet import Bullet
 from enemies import EnemyBullet
 from game_effects import Explosion, Particle, HitParticle
-from sound import boss_laser, boss_explosion, player_hit
+from sound import boss_laser, boss_explosion, player_hit, boss_bg
 
 # Modules
 import pygame
@@ -19,9 +19,8 @@ class Boss(Character):
         self.rect.center = [WIDTH/2, -HEIGHT/4]
 
         # Initial Movement Animation:
-        self.enter_animation = True
-        self.y_enter = HEIGHT/25
-        self.vel_enter_y = 1
+        self.y_start = HEIGHT / 25
+        self.vel_start_y = 1
 
         # Action:
         self.next_action = False
@@ -51,8 +50,8 @@ class Boss(Character):
         # Explosion:
         self.destroy_animation = False
         self.explosion_index = 0
-        self.explosion_ref_time = 30
-        self.explosion_rate = 30
+        self.explosion_ref_time = 22
+        self.explosion_rate = 22
 
         # Score:
         self.ui = ui
@@ -144,20 +143,21 @@ class Boss(Character):
             self.ui.update_score(self.score)
 
     def destroy(self):
-        if self.explosion_index < 12:
+        pygame.mixer.music.fadeout(3000)
+        if self.explosion_index < 14:
             if self.explosion_rate >= self.explosion_ref_time:
                 # Explosion:
-                if self.explosion_index == 11:
+                if self.explosion_index == 13:
                     explosion_scale = self.explosion_scale
-                    explosion_pos = [0, 0]
+                    explosion_pos = [self.rect.width/2, self.rect.height/2]
                 else:
-                    explosion_scale = secrets.choice([0.7, 0.8, 0.9, 1])
-                    explosion_pos = [random.randint(0, int(self.rect.width/2)), random.randint(0, int(self.rect.height/2))]
-                self.effects_group.add(Explosion([self.rect.center[0] - explosion_pos[0], self.rect.center[1] - explosion_pos[1]], explosion_scale))
+                    explosion_scale = secrets.choice([0.6, 0.7, 0.8, 0.9, 1])
+                    explosion_pos = [random.randint(0, int(self.rect.width)), random.randint(0, int(self.rect.height))]
+                self.effects_group.add(Explosion([self.rect.right - explosion_pos[0], self.rect.bottom - explosion_pos[1]], explosion_scale))
                 boss_explosion.play_sound()
                 # Particles:
                 for num_particles in range(random.randrange(self.part_min, self.part_max)):
-                    Particle([self.rect.center[0] - explosion_pos[0], self.rect.center[1] - explosion_pos[1]], self.effects_group)
+                    Particle([self.rect.right - explosion_pos[0], self.rect.bottom - explosion_pos[1]], self.effects_group)
                 self.explosion_index += 1
                 self.explosion_rate = 0
             else:
@@ -165,11 +165,11 @@ class Boss(Character):
         else:
             self.kill()
 
-    def animate(self):
-        if self.rect.y <= self.y_enter:
-            self.rect.y += self.vel_enter_y
+    def animate_start(self):
+        if self.rect.y <= self.y_start:
+            self.rect.y += self.vel_start_y
         else:
-            self.enter_animation = False
+            self.start_animation = False
 
     def handle_action(self):
         # Explosion Animation:
@@ -195,7 +195,7 @@ class Boss(Character):
     def reset_variables(self):
         # Reset Animation when leaving Screen:
         if self.rect.top > HEIGHT:
-            self.enter_animation = True
+            self.start_animation = True
             self.rect.center = [WIDTH/2, -HEIGHT/4]
             self.angle = 0
             self.image, self.rect = self.rotate()
