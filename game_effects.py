@@ -1,16 +1,15 @@
-# Scripts
-from constants import *
-from bg_creator import *
+# Scripts:
 
-# Modules
+# Modules:
 import pygame
 import random
 
 # Initialize Pygame
 pygame.init()
 
+
 class Explosion(pygame.sprite.Sprite):
-    def __init__(self, x, y, scale):
+    def __init__(self, pos, scale):
         super().__init__()
         self.sprites = []
         for i in range(1, 6):
@@ -20,12 +19,14 @@ class Explosion(pygame.sprite.Sprite):
 
         self.index = 0
         self.image = self.sprites[self.index]
-        self.rect = self.image.get_rect(x=x, y=y)
+        self.pos = pos
+        self.rect = self.image.get_rect()
+        self.rect.center = self.pos
         self.counter = 0
 
     def update(self):
         explosion_delay = 8
-        # Update Explosion Animation
+        # Update Explosion Animation:
         self.counter += 1
 
         if self.counter >= explosion_delay and self.index < len(self.sprites) - 1:
@@ -33,7 +34,7 @@ class Explosion(pygame.sprite.Sprite):
             self.index += 1
             self.image = self.sprites[self.index]
 
-        # If the Animation is Complete, Reset the Index
+        # If the Animation is Complete, Reset the Index:
         if self.index >= len(self.sprites) - 1 and self.counter >= explosion_delay:
             self.kill()
 

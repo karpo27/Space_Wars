@@ -78,7 +78,7 @@ Z = {
 }
 # Bosses - Category, Path, Scale, Action[Movement], Velocity, HP, Shoot, Fire Rate, Explosion Scale, Particles Range:
 BOSSES = {
-    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 5, False, None, 2.0, (160, 190)]
+    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 5, False, None, 2.0, (70, 90)]
 }
 # Bosses Bullets - Image, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {
@@ -144,7 +144,7 @@ SOUNDS = {
     'enemy_hit': ['player_hit.mp3', 0.08],
     'enemy_explosion': ['player_explosion.wav', 0.07],
     'boss_laser': ['enemy_laser.wav', 0.12],
-    'boss_explosion': ['boss_explosion.mp3', 0.15],
+    'boss_explosion': ['boss_explosion.mp3', 0.1],
     'win_fireworks': ['win_fireworks.mp3', 0.06]
 
 }

@@ -48,7 +48,7 @@ class Player(Character):
 
     def destroy(self):
         # Explosion:
-        self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
+        self.effects_group.add(Explosion(self.rect.center, self.explosion_scale))
         player_explosion.play_sound()
         # Particles:
         for num_particles in range(random.randrange(self.part_min, self.part_max)):

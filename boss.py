@@ -49,6 +49,10 @@ class Boss(Character):
         self.reset_shoot()
 
         # Explosion:
+        self.destroy_animation = False
+        self.explosion_index = 0
+        self.explosion_ref_time = 30
+        self.explosion_rate = 30
 
         # Score:
         self.ui = ui
@@ -133,18 +137,33 @@ class Boss(Character):
         # HP:
         self.hp -= 1
         if self.hp <= 0:
-            self.destroy()
+            self.vel_x, self.vel_y = 0, 0
+            self.angle = 0
+            self.destroy_animation = True
+            # Score:
+            self.ui.update_score(self.score)
 
     def destroy(self):
-        self.kill()
-        # Explosion:
-        self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
-        boss_explosion.play_sound()
-        # Particles:
-        for num_particles in range(random.randrange(self.part_min, self.part_max)):
-            Particle(self.rect.center, self.effects_group)
-        # Score:
-        self.ui.update_score(self.score)
+        if self.explosion_index < 12:
+            if self.explosion_rate >= self.explosion_ref_time:
+                # Explosion:
+                if self.explosion_index == 11:
+                    explosion_scale = self.explosion_scale
+                    explosion_pos = [0, 0]
+                else:
+                    explosion_scale = secrets.choice([0.7, 0.8, 0.9, 1])
+                    explosion_pos = [random.randint(0, int(self.rect.width/2)), random.randint(0, int(self.rect.height/2))]
+                self.effects_group.add(Explosion([self.rect.center[0] - explosion_pos[0], self.rect.center[1] - explosion_pos[1]], explosion_scale))
+                boss_explosion.play_sound()
+                # Particles:
+                for num_particles in range(random.randrange(self.part_min, self.part_max)):
+                    Particle([self.rect.center[0] - explosion_pos[0], self.rect.center[1] - explosion_pos[1]], self.effects_group)
+                self.explosion_index += 1
+                self.explosion_rate = 0
+            else:
+                self.explosion_rate += 1
+        else:
+            self.kill()
 
     def animate(self):
         if self.rect.y <= self.y_enter:
@@ -153,21 +172,25 @@ class Boss(Character):
             self.enter_animation = False
 
     def handle_action(self):
-        if not self.next_action:
-            if self.movement_action == X:
-                self.movement_x()
-            elif self.movement_action == Y:
-                self.movement_y()
-            elif self.movement_action == Z:
-                self.image, self.rect = self.movement_z()
-            elif self.movement_action == W:
-                self.movement_w()
-            # Boss Bullet:
-            if self.hp < self.half_hp:
-                self.bullet_qty = self.movement_action['qty'][1]
-            self.spawn_bullet()
+        # Explosion Animation:
+        if self.destroy_animation:
+            self.destroy()
         else:
-            self.reset_movement_action()
+            if not self.next_action:
+                if self.movement_action == X:
+                    self.movement_x()
+                elif self.movement_action == Y:
+                    self.movement_y()
+                elif self.movement_action == Z:
+                    self.image, self.rect = self.movement_z()
+                elif self.movement_action == W:
+                    self.movement_w()
+                # Boss Bullet:
+                if self.hp < self.half_hp:
+                    self.bullet_qty = self.movement_action['qty'][1]
+                self.spawn_bullet()
+            else:
+                self.reset_movement_action()
 
     def reset_variables(self):
         # Reset Animation when leaving Screen:
@@ -185,4 +208,3 @@ class Boss(Character):
             elif self.movement_rate >= self.movement_duration:
                 self.movement_rate = 0
                 self.next_action = True
-

@@ -92,7 +92,7 @@ class Enemy(Character):
     def destroy(self):
         self.kill()
         # Explosion:
-        self.effects_group.add(Explosion(self.rect.x, self.rect.y, self.explosion_scale))
+        self.effects_group.add(Explosion(self.rect.center, self.explosion_scale))
         enemy_explosion.play_sound()
         # Particles:
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
