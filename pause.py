@@ -47,10 +47,8 @@ class Pause(BaseState):
                 menu_selection.play_sound()
             elif self.index == 2:
                 self.next_state = "MENU"
-                self.index = 0
                 self.screen_done = True
                 menu_selection.play_sound()
-                menu_bg.play_bg_music(-1)
         elif self.screen == "OPTIONS":
             if self.index == 0:
                 self.screen = "AUDIO"

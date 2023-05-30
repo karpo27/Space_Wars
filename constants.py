@@ -6,11 +6,13 @@ SIZE = WIDTH, HEIGHT = (1000, 800)
 SCREEN = pygame.display.set_mode(SIZE)
 
 # Icon Window:
-ICON = 'Images/Screen/icon.png'
+ICON_PATH = 'Images/Screen/icon.png'
+# Game Logo:
+LOGO_PATH = 'Images/Menu/logo.png'
 
 # Background Assets - Image, Scroll, Music:
 BACKGROUNDS = {
-    'main_menu': ['Images/Main_Menu/main_menu_img.png', 0.45],
+    'main_menu': ['Images/Menu/menu.png', 0.45],
     'level_1': ['Images/Levels_Background/level_1.jpg', 0.8],
     'win': ['Images/Levels_Background/win.jpg', 0]
 }

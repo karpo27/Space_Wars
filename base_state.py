@@ -18,7 +18,7 @@ class BaseState(object):
         self.pos = self.pos_x, self.pos_y = WIDTH/2, 3/5 * HEIGHT
         self.font_type = 'freesansbold.ttf'
         self.base_color = "white"
-        self.hover_color = (193, 225, 193)
+        self.hover_color = "#f1d666"
 
         # Win/Game Over Timer:
         self.next_screen_ref_time = 1

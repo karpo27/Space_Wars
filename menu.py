@@ -16,6 +16,11 @@ class Menu(BaseState):
         # Next State:
         self.next_state = "LEVEL_1"
 
+        # Screen Logo:
+        self.logo = self.image = pygame.image.load(f'{LOGO_PATH}').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.center = [WIDTH/2 - 380, HEIGHT/11]
+
         # Screen Text and Options:
         self.screen = "MENU"
         self.options_qty = 3
@@ -24,8 +29,6 @@ class Menu(BaseState):
         for index, text in enumerate(self.text):
             self.menu.append(TextCreator(index, text, self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 70))
 
-        self.title = TextCreator(0, "GAME PROJECT", self.font_type, 94, 94, self.base_color, self.hover_color,
-                                 (WIDTH/2, HEIGHT/3), "GAME PROJECT", 70)
         # Initialize Objects:
         self.background = BGCreator(*BACKGROUNDS['main_menu'])
         self.options = Options()
@@ -35,7 +38,7 @@ class Menu(BaseState):
 
         # Title and Icon:
         pygame.display.set_caption("Menu")
-        icon = pygame.image.load(ICON)
+        icon = pygame.image.load(ICON_PATH)
         pygame.display.set_icon(icon)
 
     def handle_movement(self, movement):
@@ -135,7 +138,7 @@ class Menu(BaseState):
 
         # Render Main Menu:
         if self.screen == "MENU":
-            self.title.render_text(-1)
+            SCREEN.blit(self.logo, self.rect.center)
             for text in self.menu:
                 text.render_text(self.index)
             self.pointer.draw_rotated(self.menu[self.index].text_position, self.screen)
