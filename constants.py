@@ -7,6 +7,8 @@ SCREEN = pygame.display.set_mode(SIZE)
 
 # Icon Window:
 ICON_PATH = 'Images/Screen/icon.png'
+# Splash:
+SPLASH_PATH = 'Images/Splash/created_by.png'
 # Game Logo:
 LOGO_PATH = 'Images/Menu/logo.png'
 

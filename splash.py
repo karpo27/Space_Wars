@@ -15,30 +15,39 @@ class Splash(BaseState):
         self.next_state = "MENU"
 
         # Screen Text:
+        self.image = pygame.image.load(f'{SPLASH_PATH}').convert_alpha()
+        self.rect = self.image.get_rect()
+        self.rect.center = [WIDTH/2 - 180, HEIGHT/4]
         self.pos_y = 2 / 5 * HEIGHT
         self.splash = []
+        # Gradually give Image Opacity:
+        self.empty_surface = pygame.Surface(self.image.get_size(), pygame.SRCALPHA)
+        self.alpha = 0
 
         # Time on Screen:
-        self.time_next_screen = 90     # 320
-        # Text Time:
-        self.time_fadeout = 70     # 240
-        self.time_render = 30      # 150
         self.time_text = 0
+        self.time_render = 45
+        self.time_on_screen = self.time_render + 130
+        self.time_start_fadeout = self.time_on_screen + 160
+        self.time_next_screen = self.time_start_fadeout + 140
 
-    def update(self, dt):
-        if self.time_render <= self.time_text < self.time_fadeout:
-            self.splash.append(TextCreator(0, "Created by Julian Giudice", self.font_type, 28, 28, "white", "white",
-                                           (self.pos_x, self.pos_y), "", 70))
-        elif self.time_fadeout <= self.time_text < self.time_next_screen:
-            self.splash.clear()
-        elif self.time_text >= self.time_fadeout:
-            self.screen_done = True
-            menu_bg.play_bg_music(-1)
-        self.time_text += 1
+    def render_image(self, alpha_value):
+        self.empty_surface.set_alpha(self.alpha)
+        self.empty_surface.blit(self.image, (0, 0))
+        SCREEN.blit(self.empty_surface, self.rect.center)
+        self.alpha += alpha_value
 
     def draw(self, surface):
         # Draw Background:
         surface.fill(pygame.Color("black"))
         # Render Text:
-        for text in self.splash:
-            text.render_text(self.index)
+        if self.time_render <= self.time_text < self.time_on_screen:
+            self.render_image(2)
+        elif self.time_on_screen <= self.time_text < self.time_start_fadeout:
+            SCREEN.blit(self.empty_surface, self.rect.center)
+        elif self.time_start_fadeout <= self.time_text < self.time_next_screen:
+            self.render_image(-2)
+        elif self.time_text >= self.time_next_screen:
+            self.screen_done = True
+            menu_bg.play_bg_music(-1)
+        self.time_text += 1

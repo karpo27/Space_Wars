@@ -17,8 +17,8 @@ class Menu(BaseState):
         self.next_state = "LEVEL_1"
 
         # Screen Logo:
-        self.logo = self.image = pygame.image.load(f'{LOGO_PATH}').convert_alpha()
-        self.rect = self.image.get_rect()
+        self.logo = pygame.image.load(f'{LOGO_PATH}').convert_alpha()
+        self.rect = self.logo.get_rect()
         self.rect.center = [WIDTH/2 - 380, HEIGHT/11]
 
         # Screen Text and Options:
