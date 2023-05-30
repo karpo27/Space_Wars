@@ -20,6 +20,8 @@ class GameOver(BaseState):
         self.ref_time = 3
         self.increase_rate = 3
         self.game_over = TextCreator(self.index + 1, "GAME OVER", self.font_type, self.text_size, 90, self.base_color, self.hover_color, self.pos, "", 40)
+
+        # Back Text:
         self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color, (WIDTH / 2, 9 / 10 * HEIGHT), "", 50)
         self.back_ref_time = 500
         self.back_time = 0

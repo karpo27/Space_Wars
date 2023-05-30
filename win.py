@@ -17,15 +17,14 @@ class Win(BaseState):
         super().__init__()
         # Screen Text and Options:
         self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/10
-        self.text = ["CONGRATULATIONS", "You have saved our Galaxy!"]
-        self.win = []
-        self.win.append(TextCreator(self.index + 1, self.text[0], self.font_type, 78, 78, self.base_color, None,
-                        self.pos, "", 74))
-        self.win.append(TextCreator(self.index + 2, self.text[1], self.font_type, 38, 38, self.base_color, None,
-                        self.pos, "", 74))
-        self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
-                                (WIDTH/2, 9/10 * HEIGHT), "", 50)
-        self.back_ref_time = 600
+        self.text_1 = ""
+        self.text_1_ref_time = 30
+        self.text_1_rate = 0
+        self.text_2 = "You have saved our Galaxy!"
+
+        # Back Text:
+        self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color, (WIDTH / 2, 9 / 10 * HEIGHT), "", 50)
+        self.back_ref_time = 800
         self.back_time = 0
 
         # Create Sprites Group:
@@ -38,6 +37,12 @@ class Win(BaseState):
         # Effects:
         self.ref_time = 70
         self.fire_rate = 70
+
+    def update_text(self):
+        ref_text = "CONGRATULATIONS"
+        if len(self.text_1) < len(ref_text):
+            for i in range(len(self.text_1), len(self.text_1) + 1):
+                self.text_1 += ref_text[i]
 
     def handle_action(self):
         if self.back_time >= self.back_ref_time:
@@ -69,8 +74,15 @@ class Win(BaseState):
         self.create_fireworks()
 
         # Render Win:
-        for text in self.win:
-            text.render_text(self.index)
+        if len(self.text_1) < 15:
+            if self.text_1_rate >= self.text_1_ref_time:
+                self.update_text()
+                self.text_1_rate = 0
+            else:
+                self.text_1_rate += 1
+        if self.back_time >= self.back_ref_time * 3/4:
+            TextCreator(self.index + 2, self.text_2, self.font_type, 38, 38, self.base_color, None, [self.pos[0], self.pos[1] + 74], "", 74).render_text(self.index)
+        TextCreator(self.index + 1, self.text_1, self.font_type, 78, 78, self.base_color, None, self.pos, "", 74).render_text(self.index)
 
         # Render Back Text:
         if self.back_time >= self.back_ref_time:

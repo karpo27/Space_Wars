@@ -19,6 +19,7 @@ class Boss(Character):
         self.rect.center = [WIDTH/2, -HEIGHT/4]
 
         # Initial Movement Animation:
+        self.start_animation = True
         self.y_start = HEIGHT / 25
         self.vel_start_y = 1
 

@@ -14,7 +14,7 @@ class UI(BaseState):
 
         # Score:
         self.score = 0
-        self.score_pos = 1 / 43 * WIDTH + 55, 14 / 17 * HEIGHT + 22
+        self.score_pos = 1/43 * WIDTH + 55, 14/17 * HEIGHT + 22
 
         # Lives:
         self.image = player.image

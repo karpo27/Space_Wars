@@ -84,12 +84,12 @@ class Level1(BaseState):
 
     def handle_win(self):
         if self.player.state == "winner":
-            if self.next_screen_rate >= self.next_screen_ref_time:
-                self.next_state = "WIN"
-                self.screen_done = True
-                win_bg.play_bg_music(-1)
-            else:
-                self.next_screen_rate += 1
+            #if self.next_screen_rate >= self.next_screen_ref_time:
+            self.next_state = "WIN"
+            self.screen_done = True
+            win_bg.play_bg_music(-1)
+            #else:
+                #self.next_screen_rate += 1
         if self.player.state == "alive":
             self.player.end_animation = True
             win_level_bg.play_bg_music(0)
