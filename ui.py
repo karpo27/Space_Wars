@@ -2,6 +2,7 @@
 from constants import *
 from base_state import BaseState
 from text_creator import TextCreator
+from hud import score
 
 # Modules:
 import pygame
@@ -13,8 +14,8 @@ class UI(BaseState):
         self.player = player
 
         # Score:
-        self.score = 0
         self.score_pos = 1/43 * WIDTH + 55, 14/17 * HEIGHT + 22
+        self.score_size = 26
 
         # Lives:
         self.image = player.image
@@ -34,14 +35,6 @@ class UI(BaseState):
         self.border_radius = 4
         self.ref = 27.5
         self.dhp = 0.5
-
-    def update_score(self, value):
-        self.score += value
-
-    def show_score(self):
-        text_score = TextCreator(0, f'Score: {str(self.score)}', self.font_type, 26, 26, self.base_color, None,
-                                 self.score_pos, "", 0)
-        text_score.render_text(-1)
 
     def show_lives(self):
         text_lives = TextCreator(0, f'x {str(self.player.lives)}', self.font_type, 26, 26, self.base_color, None,
@@ -104,6 +97,6 @@ class UI(BaseState):
                         self.ref = 27.5
 
     def draw(self, surface):
-        self.show_score()
+        score.show_score(self.score_pos, self.score_size)
         self.show_bar()
         self.show_lives()

@@ -4,15 +4,14 @@ from character import Character
 from bullet import Bullet
 from game_effects import Explosion, Particle, HitParticle
 from sound import enemy_laser, enemy_explosion, enemy_e_flyby, player_hit
+from hud import score
 
 # Modules
-import pygame
-from pygame import mixer
 import random
 
 
 class Enemy(Character):
-    def __init__(self, category, img_path, scale, movement, vel, hp, shoot, bullet, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
+    def __init__(self, category, img_path, scale, movement, vel, hp, shoot, bullet, fire_rate, explo_scale, part_range, bullet_group, effects_group):
         super().__init__(category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group)
         # Image:
         self.rect.center = [random.randint(int(0 + self.rect.width/2), int(WIDTH - self.rect.width/2)), -80]
@@ -26,8 +25,7 @@ class Enemy(Character):
         self.bullet = bullet
 
         # Score:
-        self.ui = ui
-        self.score = hp * 10
+        self.enemy_score = hp * 10
 
         # Sound:
         if self.category == 'E':
@@ -102,7 +100,7 @@ class Enemy(Character):
         for num_particles in range(random.randrange(self.part_min, self.part_max)):
             Particle(self.rect.center, self.effects_group)
         # Score:
-        self.ui.update_score(self.score)
+        score.update_score(self.enemy_score)
 
     def handle_action(self):
         if self.rect.top > HEIGHT:

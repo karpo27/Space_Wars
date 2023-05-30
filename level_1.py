@@ -72,24 +72,21 @@ class Level1(BaseState):
             self.time_to_spawn = 1500
         self.reset_enemy_timer(self.time_to_spawn)
         k = self.enemies[self.enemy_index]
-        self.enemies_group.add(Enemy(*k, self.ui, self.enemies_bullets_group, self.effects_group))
+        self.enemies_group.add(Enemy(*k, self.enemies_bullets_group, self.effects_group))
         self.enemy_index += 1
 
     def spawn_boss(self):
         if self.boss_to_spawn:
             k = self.boss[0]
-            self.enemies_group.add(Boss(*k, self.ui, self.enemies_bullets_group, self.effects_group))
+            self.enemies_group.add(Boss(*k, self.enemies_bullets_group, self.effects_group))
             self.boss_to_spawn = False
             boss_bg.play_bg_music(-1, 7000)
 
     def handle_win(self):
         if self.player.state == "winner":
-            #if self.next_screen_rate >= self.next_screen_ref_time:
             self.next_state = "WIN"
             self.screen_done = True
             win_bg.play_bg_music(-1)
-            #else:
-                #self.next_screen_rate += 1
         if self.player.state == "alive":
             self.player.end_animation = True
             win_level_bg.play_bg_music(0)

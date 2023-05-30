@@ -1,10 +1,10 @@
 # Scripts
 from constants import *
 from character import Character
-from bullet import Bullet
 from enemies import EnemyBullet
 from game_effects import Explosion, Particle, HitParticle
 from sound import boss_laser, boss_explosion, player_hit, boss_bg
+from hud import score
 
 # Modules
 import pygame
@@ -13,7 +13,7 @@ import secrets
 
 
 class Boss(Character):
-    def __init__(self, category, img_path, scale, action, vel, hp, shoot, fire_rate, explo_scale, part_range, ui, bullet_group, effects_group):
+    def __init__(self, category, img_path, scale, action, vel, hp, shoot, fire_rate, explo_scale, part_range, bullet_group, effects_group):
         super().__init__(category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group)
         # Image:
         self.rect.center = [WIDTH/2, -HEIGHT/4]
@@ -55,8 +55,7 @@ class Boss(Character):
         self.explosion_rate = 22
 
         # Score:
-        self.ui = ui
-        self.score = hp * 10
+        self.enemy_score = hp * 10
 
     def reset_movement_action(self):
         if len(self.action_copy) == 0:
@@ -141,7 +140,7 @@ class Boss(Character):
             self.angle = 0
             self.destroy_animation = True
             # Score:
-            self.ui.update_score(self.score)
+            score.update_score(self.enemy_score)
 
     def destroy(self):
         pygame.mixer.music.fadeout(3000)
