@@ -19,7 +19,7 @@ class Win(BaseState):
         # Screen Text and Options:
         self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/10
         self.text_1 = ""
-        self.text_1_ref_time = 25
+        self.text_1_ref_time = 20
         self.text_1_rate = 0
         self.text_2 = "You have saved our Galaxy!"
 

@@ -48,7 +48,10 @@ class Pause(BaseState):
             elif self.index == 2:
                 self.next_state = "MENU"
                 self.screen_done = True
+                self.index = 0
                 menu_selection.play_sound()
+                pygame.mixer.music.stop()
+                menu_bg.play_bg_music(-1)
         elif self.screen == "OPTIONS":
             if self.index == 0:
                 self.screen = "AUDIO"

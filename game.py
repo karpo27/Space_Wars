@@ -44,8 +44,8 @@ class Game(object):
     def reset_game(self):
         for state in ['LEVEL_1', 'GAME_OVER', 'WIN']:
             del self.states[state]
-        for state, object in zip(['LEVEL_1', 'GAME_OVER', 'WIN'], [Level1(), GameOver(), Win()]):
-            self.states[state] = object
+        for state, class_object in zip(['LEVEL_1', 'GAME_OVER', 'WIN'], [Level1(), GameOver(), Win()]):
+            self.states[state] = class_object
 
     def update(self, dt):
         # Check State to Next Action:
