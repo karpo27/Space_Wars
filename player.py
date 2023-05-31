@@ -3,7 +3,7 @@ from constants import *
 from character import Character
 from bullet import Bullet
 from game_effects import Explosion, Particle, HitParticle, Propulsion
-from sound import player_laser, player_explosion, enemy_hit
+from sound import player_laser, player_explosion, player_item_hp, player_item_life, enemy_hit
 
 # Modules:
 import pygame
@@ -38,8 +38,10 @@ class Player(Character):
         if col_type == "hp item":
             if self.hp < 3:
                 self.hp += 1
+            player_item_hp.play_sound()
         elif col_type == "life item":
             self.lives += 1
+            player_item_life.play_sound()
         else:
             if not self.invulnerable:
                 # Hit Particles:

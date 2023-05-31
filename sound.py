@@ -42,6 +42,8 @@ menu_back = Sound(*SOUNDS['menu_back'])
 player_laser = Sound(*SOUNDS['player_laser'])
 player_hit = Sound(*SOUNDS['player_hit'])
 player_explosion = Sound(*SOUNDS['player_explosion'])
+player_item_hp = Sound(*SOUNDS['player_item_hp'])
+player_item_life = Sound(*SOUNDS['player_item_life'])
 enemy_laser = Sound(*SOUNDS['enemy_laser'])
 enemy_hit = Sound(*SOUNDS['enemy_hit'])
 enemy_explosion = Sound(*SOUNDS['enemy_explosion'])
@@ -57,7 +59,8 @@ win_level_bg = Sound(*MUSICS['win_level_bg'])
 win_bg = Sound(*MUSICS['win_bg'])
 game_over_bg = Sound(*MUSICS['game_over_bg'])
 
-sounds_list = [menu_movement, menu_selection, menu_back, player_laser, player_hit, player_explosion, enemy_laser,
+sounds_list = [menu_movement, menu_selection, menu_back, player_laser, player_hit, player_explosion, player_item_hp,
+               enemy_laser, player_item_life,
                enemy_hit, enemy_explosion, enemy_e_flyby, boss_laser, boss_explosion, win_fireworks]
 
 musics_list = [menu_bg, level1_bg, boss_bg, win_bg, game_over_bg, win_level_bg]

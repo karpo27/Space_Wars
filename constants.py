@@ -117,8 +117,8 @@ BOSSES_BULLETS = {
 }
 # Items - Path, Scale, Vel, Bounce:
 ITEMS = {
-    "hp": ['Images/Items/hp', 0.35, [2, 3], True],
-    "life": ['Images/Items/life', 0.35, [2, 3], True]
+    "hp": ['Images/Items/hp', 0.38, [2, 3], True],
+    "life": ['Images/Items/life', 0.38, [2, 3], True]
 }
 # List of Enemies per Level:
 '''
@@ -140,8 +140,8 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
                 ]'''
-ENEMIES_LVL1 = ['e', 'e', 'a']
-# ENEMIES_LVL1 = []
+ENEMIES_LVL1 = ['e', 'e', 'a', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd']
+#ENEMIES_LVL1 = []
 # Sounds - Path, Volume:
 SOUNDS = {
     'menu_movement': ['menu_movement.mp3', 0.7],
@@ -150,6 +150,8 @@ SOUNDS = {
     'player_laser': ['player_laser.mp3', 0.04],
     'player_hit': ['player_hit.mp3', 0.08],
     'player_explosion': ['player_explosion.wav', 0.15],
+    'player_item_hp': ['player_item_hp.mp3', 0.8],
+    'player_item_life': ['player_item_life.mp3', 0.7],
     'enemy_laser': ['enemy_laser.wav', 0.15],
     'enemy_hit': ['player_hit.mp3', 0.08],
     'enemy_explosion': ['player_explosion.wav', 0.07],
