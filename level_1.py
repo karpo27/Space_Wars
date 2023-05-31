@@ -1,13 +1,16 @@
 # Scripts:
+import random
+
+from constants import *
 from game_effects import Explosion, Particle
 from base_state import BaseState
 from sound import boss_bg, win_bg, game_over_bg, win_level_bg
-from pause import *
 from bg_creator import BGCreator
-from player import *
+from player import Player
 from ui import UI
-from enemies import *
-from boss import *
+from enemies import Enemy
+from boss import Boss
+from items import HP, Life
 from collisions import *
 
 # Modules:
@@ -29,6 +32,8 @@ class Level1(BaseState):
         self.enemies_group = pygame.sprite.Group()
         self.bosses_group = pygame.sprite.Group()
         self.enemies_bullets_group = pygame.sprite.Group()
+        self.hp_items_group = pygame.sprite.Group()
+        self.life_items_group = pygame.sprite.Group()
         self.effects_group = pygame.sprite.Group()
 
         # Initialize Objects:
@@ -82,6 +87,14 @@ class Level1(BaseState):
             self.boss_to_spawn = False
             boss_bg.play_bg_music(-1, 7000)
 
+    def spawn_item_hp(self):
+        number = random.randint(1, 10)
+        if number == 1:
+            self.hp_items_group.add(HP(*ITEMS["hp"]))
+
+    def spawn_item_life(self):
+        self.life_items_group.add(Life(*ITEMS["life"]))
+
     def handle_win(self):
         if self.player.state == "winner":
             self.next_state = "WIN"
@@ -107,13 +120,15 @@ class Level1(BaseState):
             if event.key == pygame.K_ESCAPE:
                 self.handle_pause()
 
-        # Spawn Enemies According to Level:
+        # Spawn Enemies According to Level + Extra HP:
         if event.type == self.enemy_event and self.enemy_index < len(self.enemies):
             self.spawn_enemy()
+            self.spawn_item_hp()
 
-        # Spawn Boss if there's no more enemies:
+        # Spawn Boss if there's no more enemies + Extra Life:
         if self.enemy_index == len(self.enemies) and len(self.enemies_group) == 0:
             self.spawn_boss()
+            self.spawn_item_life()
 
         # Check Win Condition:
         if not self.boss_to_spawn and len(self.enemies_group) == 0:
@@ -127,6 +142,8 @@ class Level1(BaseState):
         check_collision(self.player_bullets_group, self.enemies_group, True, False, "bullet")  # Player Bullet vs Enemy
         check_collision(self.enemies_bullets_group, self.player_group, True, False, "bullet")  # Enemy Bullet vs Player
         check_collision(self.enemies_group, self.player_group, False, False, "body")  # Enemy Body vs Player Body
+        check_collision(self.hp_items_group, self.player_group, True, False, "hp item")  # HP Item vs Player Body
+        check_collision(self.life_items_group, self.player_group, True, False, "life item")  # Life Item vs Player Body
 
         # Draw Background:
         self.background.update()
@@ -139,6 +156,8 @@ class Level1(BaseState):
         self.player_bullets_group.update()
         self.enemies_group.update()
         self.enemies_bullets_group.update()
+        self.hp_items_group.update()
+        self.life_items_group.update()
         self.effects_group.update()
 
         # Draw Sprite Groups:
@@ -146,4 +165,6 @@ class Level1(BaseState):
         self.enemies_group.draw(SCREEN)
         self.player_bullets_group.draw(SCREEN)
         self.player_group.draw(SCREEN)
+        self.hp_items_group.draw(SCREEN)
+        self.life_items_group.draw(SCREEN)
         self.effects_group.draw(SCREEN)

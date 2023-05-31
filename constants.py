@@ -19,7 +19,8 @@ BACKGROUNDS = {
     'win': ['Images/Levels_Background/win.jpg', 0]
 }
 # Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range, Propulsion Scale:
-PLAYER_ATTRIBUTES = ['A', 'Images/Player/', 1, [WIDTH/2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38), 0.22]
+PLAYER_ATTRIBUTES = ['A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38),
+                     0.22]
 # Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Angle, Bounce, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
     'A': ['Images/Player_Bullet/', 5, 0.4, 6, 1, [0, -13], 0, False]
@@ -114,6 +115,11 @@ BOSSES_BULLETS = {
     'd4': ['Images/Bosses_Bullets/', 3, 0.2, 8, 2, [-3, -6], 150, False],
     'd5': ['Images/Bosses_Bullets/', 3, 0.2, 8, 2, [-1, -5], 165, False]
 }
+# Items - Path, Scale, Vel, Bounce:
+ITEMS = {
+    "hp": ['Images/Items/hp', 0.35, [2, 3], True],
+    "life": ['Images/Items/life', 0.35, [2, 3], True]
+}
 # List of Enemies per Level:
 '''
 ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
@@ -134,13 +140,13 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
                 ]'''
-#ENEMIES_LVL1 = ['e', 'e', 'a']
-ENEMIES_LVL1 = []
+ENEMIES_LVL1 = ['e', 'e', 'a']
+# ENEMIES_LVL1 = []
 # Sounds - Path, Volume:
 SOUNDS = {
-    'menu_movement': ['menu_movement.mp3', 0.6],
-    'menu_selection': ['menu_selection.mp3', 0.4],
-    'menu_back': ['menu_back.mp3', 0.4],
+    'menu_movement': ['menu_movement.mp3', 0.7],
+    'menu_selection': ['menu_selection.mp3', 0.5],
+    'menu_back': ['menu_back.mp3', 0.5],
     'player_laser': ['player_laser.mp3', 0.04],
     'player_hit': ['player_hit.mp3', 0.08],
     'player_explosion': ['player_explosion.wav', 0.15],
@@ -162,4 +168,3 @@ MUSICS = {
     'win_bg': ['win_bg.mp3', 0.1],
     'game_over_bg': ['game_over_bg.mp3', 0.1]
 }
-

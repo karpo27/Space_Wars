@@ -35,20 +35,26 @@ class Player(Character):
         self.propulsion_scale = propulsion_scale
 
     def get_hit(self, pos, col_type):
-        if not self.invulnerable:
-            # Hit Particles:
-            if self.hp > 1 and col_type == "bullet":
-                for num_particles in range(random.randrange(6, 16)):
-                    HitParticle(pos, (0, 255, 0), (134, 238, 144), 1, self.effects_group)
-            # HP:
-            self.hp_animation = True
-            self.hp -= 1
-            self.invulnerable = True
-            self.invulnerable_rate = 0
-            self.blink_rate = 0
-            enemy_hit.play_sound()
-            if self.hp < 0:
-                self.destroy()
+        if col_type == "hp item":
+            if self.hp < 3:
+                self.hp += 1
+        elif col_type == "life item":
+            self.lives += 1
+        else:
+            if not self.invulnerable:
+                # Hit Particles:
+                if self.hp > 1 and col_type == "bullet":
+                    for num_particles in range(random.randrange(6, 16)):
+                        HitParticle(pos, (0, 255, 0), (134, 238, 144), 1, self.effects_group)
+                # HP:
+                self.hp_animation = True
+                self.hp -= 1
+                self.invulnerable = True
+                self.invulnerable_rate = 0
+                self.blink_rate = 0
+                enemy_hit.play_sound()
+                if self.hp < 0:
+                    self.destroy()
 
     def destroy(self):
         # Explosion:
