@@ -18,7 +18,7 @@ class Splash(BaseState):
         self.image = pygame.image.load(f'{SPLASH_PATH}').convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.center = [WIDTH/2 - 180, HEIGHT/4]
-        self.pos_y = 2 / 5 * HEIGHT
+        self.pos_y = 2/5 * HEIGHT
         # Empty Surface:
         self.empty_surface = pygame.Surface(self.image.get_size(), pygame.SRCALPHA)
         self.alpha = 0

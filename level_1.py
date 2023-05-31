@@ -143,7 +143,7 @@ class Level1(BaseState):
         check_collision(self.life_items_group, self.player_group, True, False, "life item")  # Life Item vs Player Body
 
         # Draw Background:
-        self.background.update()
+        self.background.draw()
 
         # Draw UI:
         self.ui.draw(SCREEN)

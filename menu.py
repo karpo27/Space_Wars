@@ -36,6 +36,16 @@ class Menu(BaseState):
         self.credits = Credits()
         self.pointer = Pointer()
 
+        # Empty Surface:
+        self.empty_logo = pygame.Surface(self.logo.get_size(), pygame.SRCALPHA)
+        #self.empty_menu = pygame.Surface(self.menu.get_size(), pygame.SRCALPHA)
+        self.alpha = 0
+
+        # Time on Screen:
+        self.time = 0
+        self.time_render_logo = 40
+        self.time_render_options = self.time_render_logo + 215
+
         # Title and Icon:
         pygame.display.set_caption("Menu")
         icon = pygame.image.load(ICON_PATH)
@@ -110,6 +120,13 @@ class Menu(BaseState):
             if audio.music_volume < 10:
                 audio.update_volume(1, "music")
 
+    def render_image(self, surface, alpha_value):
+        surface.set_alpha(self.alpha)
+        surface.fill((255, 255, 255, self.alpha), special_flags=pygame.BLEND_RGBA_MULT)
+        surface.blit(self.logo, (0, 0))
+        SCREEN.blit(surface, self.rect.center)
+        self.alpha += alpha_value
+
     def get_event(self, event):
         # Main Menu Movement:
         if event.type == pygame.QUIT:
@@ -134,11 +151,18 @@ class Menu(BaseState):
 
     def draw(self, surface):
         # Draw Background:
-        self.background.update()
-
-        # Render Main Menu:
+        self.background.draw()
+        # Render Menu:
         if self.screen == "MENU":
-            SCREEN.blit(self.logo, self.rect.center)
+            if self.time_render_logo < self.time <= self.time_render_options:
+                if self.alpha <= 215:
+                    self.render_image(self.empty_logo, 1)
+            elif self.time > self.time_render_options:
+                SCREEN.blit(self.empty_logo, self.rect.center)
+                #self.render_image(self.empty_logo, 1)
+            self.time += 1
+            #SCREEN.blit(self.logo, self.rect.center)
+
             for text in self.menu:
                 text.render_text(self.index)
             self.pointer.draw_rotated(self.menu[self.index].text_position, self.screen)

@@ -44,12 +44,13 @@ class Credits(BaseState):
     def __init__(self):
         # Screen Text and Options:
         super().__init__()
-        self.pos = self.pos_x, self.pos_y = WIDTH / 2, HEIGHT / 3
-        self.text = ["May 2023", "Game Project is a Python game developed by me: Julian Giudice (github.com/karpo27).",
-                     "It's my first game since I started learning Python 6 months ago.",
+        self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/4
+        self.text = ["May 2023", "SPACE WARS is a Python game developed by me: Julian Giudice (github.com/karpo27).",
+                     "It's a Shoot 'em up inspired in Galaga game and has some elements from things I like.",
+                     "Also my first game since I started learning Python 6 months ago.",
                      "I want to thank Pygame for allowing me to use this module,",
                      "and allow so many users to code their games.",
-                     "I'll keep coding and trying myself harder to incorporate to the IT world."]
+                     "I'll keep coding and trying myself harder everyday."]
         self.credits = []
         self.credits.append(TextCreator(self.index, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color,
                                         (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))

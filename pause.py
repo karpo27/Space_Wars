@@ -116,7 +116,7 @@ class Pause(BaseState):
 
     def draw(self, surface):
         # Draw Background
-        self.background.update()
+        self.background.draw()
 
         # Render Pause Menu:
         if self.screen == "PAUSE":
