@@ -1,8 +1,5 @@
 # Scripts:
-import random
-
 from constants import *
-from game_effects import Explosion, Particle
 from base_state import BaseState
 from sound import boss_bg, win_bg, game_over_bg, win_level_bg
 from bg_creator import BGCreator
@@ -15,6 +12,7 @@ from collisions import *
 
 # Modules:
 import pygame
+import random
 
 # Initialize Pygame:
 pygame.init()
@@ -81,11 +79,10 @@ class Level1(BaseState):
         self.enemy_index += 1
 
     def spawn_boss(self):
-        if self.boss_to_spawn:
-            k = self.boss[0]
-            self.enemies_group.add(Boss(*k, self.enemies_bullets_group, self.effects_group))
-            self.boss_to_spawn = False
-            boss_bg.play_bg_music(-1, 7000)
+        k = self.boss[0]
+        self.enemies_group.add(Boss(*k, self.enemies_bullets_group, self.effects_group))
+        self.boss_to_spawn = False
+        boss_bg.play_bg_music(-1, 7000)
 
     def spawn_item_hp(self):
         number = random.randint(1, 10)
@@ -126,7 +123,7 @@ class Level1(BaseState):
             self.spawn_item_hp()
 
         # Spawn Boss if there's no more enemies + Extra Life:
-        if self.enemy_index == len(self.enemies) and len(self.enemies_group) == 0:
+        if self.enemy_index == len(self.enemies) and len(self.enemies_group) == 0 and self.boss_to_spawn:
             self.spawn_boss()
             self.spawn_item_life()
 

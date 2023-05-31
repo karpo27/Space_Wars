@@ -35,8 +35,11 @@ class Item(pygame.sprite.Sprite):
         self.rect.y += self.vel_y
 
     def handle_movement(self):
-        self.move_x()
-        self.move_y()
+        if self.rect.top > HEIGHT:
+            self.kill()
+        else:
+            self.move_x()
+            self.move_y()
 
     def update(self):
         # Movement:

@@ -48,6 +48,11 @@ class Boss(Character):
         self.bullet_type_counter = 0
         self.reset_shoot()
 
+        # State:
+        self.invulnerable = True
+        self.invulnerable_ref_time = 300
+        self.invulnerable_rate = 0
+
         # Explosion:
         self.destroy_animation = False
         self.explosion_index = 0
@@ -128,19 +133,22 @@ class Boss(Character):
             self.index = 0
 
     def get_hit(self, pos, col_type):
-        # Hit Particles:
-        if self.hp > 1:
-            for num_particles in range(random.randrange(6, 18)):
-                HitParticle(pos, (0, 0, 255), (135, 206, 250), -1, self.effects_group)
-            player_hit.play_sound()
-        # HP:
-        self.hp -= 1
-        if self.hp <= 0:
-            self.vel_x, self.vel_y = 0, 0
-            self.angle = 0
-            self.destroy_animation = True
-            # Score:
-            score.update_score(self.enemy_score)
+        print(self.invulnerable)
+        if not self.invulnerable:
+            # Hit Particles:
+            if self.hp > 1:
+                for num_particles in range(random.randrange(6, 18)):
+                    HitParticle(pos, (0, 0, 255), (135, 206, 250), -1, self.effects_group)
+                player_hit.play_sound()
+            # HP:
+            self.hp -= 1
+            if self.hp == 0:
+                self.vel_x, self.vel_y = 0, 0
+                self.angle = 0
+                self.destroy_animation = True
+                # Score:
+                score.update_score(self.enemy_score)
+        print(self.hp)
 
     def destroy(self):
         pygame.mixer.music.fadeout(3000)
@@ -196,6 +204,8 @@ class Boss(Character):
         # Reset Animation when leaving Screen:
         if self.rect.top > HEIGHT:
             self.start_animation = True
+            self.invulnerable = True
+            self.invulnerable_rate = 0
             self.rect.center = [WIDTH/2, -HEIGHT/4]
             self.angle = 0
             self.image, self.rect = self.rotate()

@@ -83,7 +83,7 @@ Z = {
 }
 # Bosses - Category, Path, Scale, Action[Movement], Velocity, HP, Shoot, Fire Rate, Explosion Scale, Particles Range:
 BOSSES = {
-    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 3, False, None, 2.0, (70, 90)]
+    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 20, False, None, 2.0, (70, 90)]
 }
 # Bosses Bullets - Image, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {
@@ -140,8 +140,8 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
                 ]'''
-ENEMIES_LVL1 = ['e', 'e', 'a', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd']
-#ENEMIES_LVL1 = []
+#ENEMIES_LVL1 = ['e', 'e', 'a', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd']
+ENEMIES_LVL1 = []
 # Sounds - Path, Volume:
 SOUNDS = {
     'menu_movement': ['menu_movement.mp3', 0.7],

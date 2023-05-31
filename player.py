@@ -31,6 +31,9 @@ class Player(Character):
         # State:
         self.state = state
 
+        # Blink:
+        self.blinks = True
+
         # Propulsion:
         self.propulsion_scale = propulsion_scale
 

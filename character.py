@@ -40,6 +40,7 @@ class Character(pygame.sprite.Sprite):
 
         # Blink:
         self.empty_surface = pygame.Surface(self.image.get_size(), pygame.SRCALPHA)
+        self.blinks = False
         self.blink_ref_time = self.invulnerable_ref_time / 20
         self.blink_rate = 0
 
@@ -110,8 +111,9 @@ class Character(pygame.sprite.Sprite):
                 self.image = pygame.image.load(f'{self.img_path}{self.category}.png').convert_alpha()
             else:
                 self.invulnerable_rate += 1
-                self.blink_rate += 1
-                self.blink_image()
+                if self.blinks:
+                    self.blink_rate += 1
+                    self.blink_image()
 
     def reset_variables(self):
         pass
