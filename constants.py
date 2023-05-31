@@ -56,7 +56,7 @@ W = {
     'qty': (1, 2),
     'fire_rate': 4,
     'fire_rate_2': 6,
-    'duration': 1200
+    'duration': 1100
 }
 X = {
     'bullet': [['a2', 'b0', 'b2'], ['a1', 'b1'],

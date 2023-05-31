@@ -133,7 +133,6 @@ class Boss(Character):
             self.index = 0
 
     def get_hit(self, pos, col_type):
-        print(self.invulnerable)
         if not self.invulnerable:
             # Hit Particles:
             if self.hp > 1:
@@ -148,7 +147,6 @@ class Boss(Character):
                 self.destroy_animation = True
                 # Score:
                 score.update_score(self.enemy_score)
-        print(self.hp)
 
     def destroy(self):
         pygame.mixer.music.fadeout(3000)
@@ -185,14 +183,14 @@ class Boss(Character):
             self.destroy()
         else:
             if not self.next_action:
-                if self.movement_action == X:
+                if self.movement_action == W:
+                    self.movement_w()
+                elif self.movement_action == X:
                     self.movement_x()
                 elif self.movement_action == Y:
                     self.movement_y()
                 elif self.movement_action == Z:
                     self.image, self.rect = self.movement_z()
-                elif self.movement_action == W:
-                    self.movement_w()
                 # Boss Bullet:
                 if self.hp < self.half_hp:
                     self.bullet_qty = self.movement_action['qty'][1]
@@ -213,8 +211,12 @@ class Boss(Character):
             self.next_action = True
         else:
             # Reset Movement Variables:
-            if self.movement_rate < self.movement_duration:
-                self.movement_rate += 1
-            elif self.movement_rate >= self.movement_duration:
+            if self.movement_rate >= self.movement_duration:
                 self.movement_rate = 0
                 self.next_action = True
+            elif 4/5 * self.movement_duration <= self.movement_rate < self.movement_duration:
+                self.shoot = False
+                self.movement_rate += 1
+            else:
+                self.movement_rate += 1
+
