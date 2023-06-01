@@ -30,18 +30,18 @@ class Splash(BaseState):
         self.time_start_fadeout = self.time_on_screen + 0     # 160 ms
         self.time_next_screen = self.time_start_fadeout + 0   # 140 ms
 
-    def render_image(self, alpha_value):
+    def render_image(self):
         self.empty_surface.set_alpha(self.alpha)
         self.empty_surface.blit(self.image, (0, 0))
         SCREEN.blit(self.empty_surface, self.rect.center)
-        self.alpha += alpha_value
 
     def draw(self, surface):
         # Draw Background:
         surface.fill(pygame.Color("black"))
         # Render Text:
         if self.time_render <= self.time_text < self.time_on_screen:
-            self.render_image(2)
+            self.render_image()
+            self.alpha += 2
         elif self.time_on_screen <= self.time_text < self.time_start_fadeout:
             SCREEN.blit(self.empty_surface, self.rect.center)
         elif self.time_start_fadeout <= self.time_text < self.time_next_screen:
