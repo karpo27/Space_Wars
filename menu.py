@@ -31,6 +31,7 @@ class Menu(BaseState):
         self.options_qty = 3
         self.text = ["PLAY", "OPTIONS", "CREDITS", "QUIT"]
         self.menu = []
+        self.allow_movement = False
         for index, text in enumerate(self.text):
             self.menu.append(TextCreator(index, text, self.font_type, 48, 52, self.base_color, self.hover_color, self.pos, self.text[0], 70))
 
@@ -49,9 +50,9 @@ class Menu(BaseState):
 
         # Time on Screen:
         self.time = 0
-        self.time_render_logo = 40
-        self.time_render_options = self.time_render_logo + 215
-        self.time_render_pointer = self.time_render_options + 255
+        self.time_start_render = 40
+        self.time_finish_render = self.time_start_render + 215
+        self.time_render_options = self.time_finish_render + 60
 
         # Title and Icon:
         pygame.display.set_caption("Menu")
@@ -137,7 +138,7 @@ class Menu(BaseState):
         # Main Menu Movement:
         if event.type == pygame.QUIT:
             self.quit = True
-        elif event.type == pygame.KEYDOWN:
+        elif event.type == pygame.KEYDOWN and self.allow_movement:
             if event.key == pygame.K_DOWN:
                 self.handle_movement(1)
             elif event.key == pygame.K_UP:
@@ -160,21 +161,18 @@ class Menu(BaseState):
         self.background.draw()
         # Render Menu:
         if self.screen == "MENU":
-            if self.time_render_logo < self.time <= self.time_render_options:
+            if self.time_start_render < self.time <= self.time_finish_render:
                 if self.alpha_logo <= 215:
                     self.render_logo(self.logo, self.empty_logo, self.alpha_logo, self.logo_rect.center)
                     self.alpha_logo += 1
-            elif self.time_render_options < self.time <= self.time_render_pointer:
+            elif self.time_finish_render < self.time <= self.time_render_options:
                 SCREEN.blit(self.empty_logo, self.logo_rect.center)
-                for text in self.menu:
-                    text.render_text(self.index)
-                self.render_logo(self.menu_image, self.empty_menu, self.alpha_menu, self.menu_rect.center)
-                self.alpha_menu += 1
-            elif self.time > self.time_render_pointer:
+            elif self.time > self.time_render_options:
                 SCREEN.blit(self.empty_logo, self.logo_rect.center)
                 for text in self.menu:
                     text.render_text(self.index)
                 self.pointer.draw_rotated(self.menu[self.index].text_position, self.screen)
+                self.allow_movement = True
             self.time += 1
         elif self.screen == "OPTIONS":
             for text in self.options.options:
