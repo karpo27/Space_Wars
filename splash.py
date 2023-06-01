@@ -25,10 +25,10 @@ class Splash(BaseState):
 
         # Time on Screen:
         self.time_text = 0
-        self.time_render = 40
-        self.time_on_screen = self.time_render + 130
-        self.time_start_fadeout = self.time_on_screen + 160
-        self.time_next_screen = self.time_start_fadeout + 140
+        self.time_render = 0   # 40 ms
+        self.time_on_screen = self.time_render + 0    # 130 ms
+        self.time_start_fadeout = self.time_on_screen + 0     # 160 ms
+        self.time_next_screen = self.time_start_fadeout + 0   # 140 ms
 
     def render_image(self, alpha_value):
         self.empty_surface.set_alpha(self.alpha)

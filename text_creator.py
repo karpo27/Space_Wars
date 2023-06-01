@@ -30,7 +30,6 @@ class TextCreator:
             self.text_width, self.text_height = self.font_and_size.size(align_text)
         else:
             self.text_width, self.text_height = self.font_and_size.size(text)
-
         self.text_position = [self.pos[0] - self.text_width / 2, self.pos[1] - self.text_height / 2 + self.margin * self.index]
 
     def render_text(self, index):

@@ -23,21 +23,21 @@ class Controls(BaseState):
     def __init__(self):
         # Screen Text and Options:
         super().__init__()
-        self.pos_left = self.left_x, self.left_y = WIDTH / 3, HEIGHT / 3 - 80
+        self.pos_left = self.left_x, self.left_y = WIDTH / 3 + 50, HEIGHT / 3 - 80
         self.pos_right = self.left_x + 300, self.left_y
-        self.text_left = ["Forward", "Back", "Left", "Right", "Fire", "Switch Weapon"]
-        self.text_right = ["W / ARROW UP", "S / ARROW DOWN", "A / ARROW LEFT", "D / ARROW RIGHT", "SPACE", "ENTER"]
+        self.text_left = ["Move Forward", "Move Back", "Move Left", "Move Right", "Fire"]
+        self.text_right = ["W / ARROW UP", "S / ARROW DOWN", "A / ARROW LEFT", "D / ARROW RIGHT", "SPACE"]
         self.controls = []
         self.controls.append(TextCreator(self.index, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color,
-                                         (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
+                                         (WIDTH/2, 5/6 * HEIGHT), "", 50))
         for index, text in enumerate(self.text_left):
             self.controls.append(
-                TextCreator(index + 1, text, self.font_type, 26, 52, self.base_color, self.hover_color, self.pos_left,
-                            self.text_left[0], 40))
+                TextCreator(index + 1, text, self.font_type, 30, 52, self.base_color, self.hover_color, self.pos_left,
+                            self.text_left[0], 44))
         for index, text in enumerate(self.text_right):
             self.controls.append(
-                TextCreator(index + 1, text, self.font_type, 26, 52, self.base_color, self.hover_color, self.pos_right,
-                            self.text_right[0], 40))
+                TextCreator(index + 1, text, self.font_type, 30, 52, self.base_color, self.hover_color, self.pos_right,
+                            self.text_right[0], 44))
 
 
 class Credits(BaseState):
