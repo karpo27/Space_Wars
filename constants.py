@@ -14,7 +14,7 @@ LOGO_PATH = 'Images/Menu/logo.png'
 
 # Background Assets - Path, Scroll Speed:
 BACKGROUNDS = {
-    'main_menu': ['Images/Menu/menu.png', 0.45],
+    'main_menu': ['Images/Menu/menu.png', 0.9],
     'level_1': ['Images/Levels_Background/level_1.jpg', 0.8],
     'win': ['Images/Levels_Background/win.jpg', 0]
 }
@@ -145,7 +145,7 @@ ENEMIES_LVL1 = []
 # Sounds - Path, Volume:
 SOUNDS = {
     'menu_movement': ['menu_movement.mp3', 0.7],
-    'menu_selection': ['menu_selection.mp3', 0.5],
+    'menu_selection': ['menu_selection.mp3', 0.6],
     'menu_back': ['menu_back.mp3', 0.5],
     'player_laser': ['player_laser.mp3', 0.04],
     'player_hit': ['player_hit.mp3', 0.08],
@@ -164,7 +164,7 @@ SOUNDS = {
 # Music - Path, Volume:
 MUSICS = {
     'menu_bg': ['menu_bg.mp3', 0.1],
-    'level1_bg': ['level1_bg.mp3', 0.3],
+    'level1_bg': ['level1_bg.mp3', 0.5],
     'boss_bg': ['boss_bg.mp3', 0.1],
     'win_level_bg': ['win_level_bg.mp3', 0.1],
     'win_bg': ['win_bg.mp3', 0.1],
