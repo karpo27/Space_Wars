@@ -2,7 +2,6 @@
 from constants import *
 from base_state import BaseState
 from submenus import Options, Controls, audio
-from pointer import Pointer
 from sound import menu_bg, menu_selection, menu_movement, menu_back
 from bg_creator import *
 
@@ -28,12 +27,6 @@ class Pause(BaseState):
         self.background = BGCreator(*BACKGROUNDS['level_1'])
         self.options = Options()
         self.controls = Controls()
-        self.pointer = Pointer()
-
-    def handle_movement(self, movement):
-        self.index += movement
-        if self.options_qty >= 1:
-            menu_movement.play_sound()
 
     def handle_action(self):
         if self.screen == "PAUSE":
@@ -78,22 +71,6 @@ class Pause(BaseState):
             self.options_qty = 2
             menu_back.play_sound()
 
-    def handle_left_audio(self):
-        if self.index == 0:
-            if audio.sound_volume > 0:
-                audio.update_volume(-1, "sound")
-        elif self.index == 1:
-            if audio.music_volume > 0:
-                audio.update_volume(-1, "music")
-
-    def handle_right_audio(self):
-        if self.index == 0:
-            if audio.sound_volume < 10:
-                audio.update_volume(1, "sound")
-        elif self.index == 1:
-            if audio.music_volume < 10:
-                audio.update_volume(1, "music")
-
     def get_event(self, event):
         # Pause Menu Movement:
         if event.type == pygame.KEYDOWN:
@@ -104,9 +81,9 @@ class Pause(BaseState):
             elif event.key == pygame.K_RETURN:
                 self.handle_action()
             elif event.key == pygame.K_LEFT and self.screen == "AUDIO":
-                self.handle_left_audio()
+                self.handle_left_audio(audio)
             elif event.key == pygame.K_RIGHT and self.screen == "AUDIO":
-                self.handle_right_audio()
+                self.handle_right_audio(audio)
 
         # Pointer Movement Boundaries:
         if self.index > self.options_qty:
@@ -120,19 +97,10 @@ class Pause(BaseState):
 
         # Render Pause Menu:
         if self.screen == "PAUSE":
-            for text in self.pause:
-                text.render_text(self.index)
-            self.pointer.draw_rotated(self.pause[self.index].text_position, self.screen)
+            self.render_options(self.pause)
         elif self.screen == "OPTIONS":
-            for text in self.options.options:
-                text.render_text(self.index)
-            self.pointer.draw_rotated(self.options.options[self.index].text_position, self.screen)
+            self.render_options(self.options.options)
         elif self.screen == "AUDIO":
-            for text in audio.audio:
-                text.render_text(self.index)
-            self.pointer.draw_rotated(audio.audio[self.index].text_position, self.screen)
+            self.render_options(audio.audio)
         elif self.screen == "CONTROLS":
-            for text in self.controls.controls:
-                text.render_text(self.index)
-            self.pointer.draw_rotated(self.controls.controls[self.index].text_position, self.screen)
-
+            self.render_options(self.controls.controls)

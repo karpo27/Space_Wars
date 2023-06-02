@@ -1,8 +1,7 @@
 # Scripts:
 from base_state import BaseState
 from submenus import Options, Controls, Credits, audio
-from pointer import Pointer
-from sound import level1_bg, menu_movement, menu_selection, menu_back
+from sound import level1_bg, menu_selection, menu_back
 from bg_creator import *
 from text_creator import *
 
@@ -35,11 +34,9 @@ class Menu(BaseState):
         self.options = Options()
         self.controls = Controls()
         self.credits = Credits()
-        self.pointer = Pointer()
 
         # Empty Surface:
         self.empty_surface = pygame.Surface(self.image.get_size(), pygame.SRCALPHA)
-        self.alpha = 0
 
         # Time on Screen:
         self.time = 0
@@ -48,14 +45,9 @@ class Menu(BaseState):
         self.time_render_options = self.time_finish_render + 60     # 60 ms
 
         # Title and Icon:
-        pygame.display.set_caption("Menu")
+        pygame.display.set_caption("Space Wars")
         icon = pygame.image.load(ICON_PATH)
         pygame.display.set_icon(icon)
-
-    def handle_movement(self, movement):
-        self.index += movement
-        if self.options_qty >= 1:
-            menu_movement.play_sound()
 
     def handle_action(self):
         if self.screen == "MENU":
@@ -105,27 +97,26 @@ class Menu(BaseState):
             self.options_qty = 2
             menu_back.play_sound()
 
-    def handle_left_audio(self):
-        if self.index == 0:
-            if audio.sound_volume > 0:
-                audio.update_volume(-1, "sound")
-        elif self.index == 1:
-            if audio.music_volume > 0:
-                audio.update_volume(-1, "music")
-
-    def handle_right_audio(self):
-        if self.index == 0:
-            if audio.sound_volume < 10:
-                audio.update_volume(1, "sound")
-        elif self.index == 1:
-            if audio.music_volume < 10:
-                audio.update_volume(1, "music")
-
-    def render_logo(self):
+    def set_opacity(self):
         self.empty_surface.set_alpha(self.alpha)
         self.empty_surface.fill((255, 255, 255, self.alpha), special_flags=pygame.BLEND_RGBA_MULT)
         self.empty_surface.blit(self.image, (0, 0))
         SCREEN.blit(self.empty_surface, self.rect.center)
+
+    def render_menu(self):
+        if self.time_start_render < self.time <= self.time_finish_render:
+            if self.alpha <= 215:
+                self.set_opacity()
+                self.alpha += 1
+        elif self.time_finish_render < self.time <= self.time_render_options:
+            SCREEN.blit(self.empty_surface, self.rect.center)
+        elif self.time > self.time_render_options:
+            SCREEN.blit(self.empty_surface, self.rect.center)
+            for text in self.menu:
+                text.render_text(self.index)
+            self.pointer.draw_rotated(self.menu[self.index].text_position, self.screen)
+            self.allow_movement = True
+        self.time += 1
 
     def get_event(self, event):
         # Main Menu Movement:
@@ -139,9 +130,9 @@ class Menu(BaseState):
             elif event.key == pygame.K_RETURN:
                 self.handle_action()
             elif event.key == pygame.K_LEFT and self.screen == "AUDIO":
-                self.handle_left_audio()
+                self.handle_left_audio(audio)
             elif event.key == pygame.K_RIGHT and self.screen == "AUDIO":
-                self.handle_right_audio()
+                self.handle_right_audio(audio)
 
         # Pointer Movement Boundaries:
         if self.index > self.options_qty:
@@ -154,32 +145,12 @@ class Menu(BaseState):
         self.background.draw()
         # Render Menu:
         if self.screen == "MENU":
-            if self.time_start_render < self.time <= self.time_finish_render:
-                if self.alpha <= 215:
-                    self.render_logo()
-                    self.alpha += 1
-            elif self.time_finish_render < self.time <= self.time_render_options:
-                SCREEN.blit(self.empty_surface, self.rect.center)
-            elif self.time > self.time_render_options:
-                SCREEN.blit(self.empty_surface, self.rect.center)
-                for text in self.menu:
-                    text.render_text(self.index)
-                self.pointer.draw_rotated(self.menu[self.index].text_position, self.screen)
-                self.allow_movement = True
-            self.time += 1
+            self.render_menu()
         elif self.screen == "OPTIONS":
-            for text in self.options.options:
-                text.render_text(self.index)
-            self.pointer.draw_rotated(self.options.options[self.index].text_position, self.screen)
+            self.render_options(self.options.options)
         elif self.screen == "CREDITS":
-            for text in self.credits.credits:
-                text.render_text(self.index)
-            self.pointer.draw_rotated(self.credits.credits[self.index].text_position, self.screen)
+            self.render_options(self.credits.credits)
         elif self.screen == "AUDIO":
-            for text in audio.audio:
-                text.render_text(self.index)
-            self.pointer.draw_rotated(audio.audio[self.index].text_position, self.screen)
+            self.render_options(audio.audio)
         elif self.screen == "CONTROLS":
-            for text in self.controls.controls:
-                text.render_text(self.index)
-            self.pointer.draw_rotated(self.controls.controls[self.index].text_position, self.screen)
+            self.render_options(self.controls.controls)

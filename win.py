@@ -23,17 +23,11 @@ class Win(BaseState):
         self.text_1_rate = 0
         self.text_2 = "You have saved our Galaxy!"
 
-        # Back Text:
-        self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color, (WIDTH / 2, 9 / 10 * HEIGHT), "", 50)
-        self.back_ref_time = 950
-        self.back_time = 0
-
         # Create Sprites Group:
         self.effects_group = pygame.sprite.Group()
 
         # Initialize Classes:
         self.background = BGCreator(*BACKGROUNDS['win'])
-        self.pointer = Pointer()
 
         # Background Image:
         self.image = self.background.image
@@ -50,10 +44,6 @@ class Win(BaseState):
         # Fireworks Effect:
         self.ref_time = 80
         self.fire_rate = 80
-
-        # Score:
-        self.score_pos = WIDTH/2, 3/4 * HEIGHT
-        self.score_size = 48
 
     def update_text(self):
         ref_text = "CONGRATULATIONS"
@@ -89,14 +79,6 @@ class Win(BaseState):
             TextCreator(self.index + 2, self.text_2, self.font_type, 38, 38, self.base_color, None, [self.pos[0], self.pos[1] + 74], "", 74).render_text(self.index)
         TextCreator(self.index + 1, self.text_1, self.font_type, 78, 78, self.base_color, None, self.pos, "", 74).render_text(self.index)
 
-    def render_back_text(self):
-        if self.back_time >= self.back_ref_time:
-            self.back.render_text(self.index)
-            score.show_score(self.score_pos, self.score_size)
-            self.pointer.draw_rotated(self.back.text_position, "CONGRATULATIONS")
-        else:
-            self.back_time += 1
-
     def render_image(self):
         if self.time_start_render < self.time <= self.time_finish_render:
             self.set_opacity()
@@ -123,7 +105,7 @@ class Win(BaseState):
         # Render Text 1 and Text 2:
         self.render_top_text()
         # Render Back Text and Score:
-        self.render_back_text()
+        self.render_back_text(score)
 
         # Update Sprites Group:
         self.effects_group.update()

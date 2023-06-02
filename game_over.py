@@ -22,18 +22,6 @@ class GameOver(BaseState):
         self.increase_rate = 3
         self.game_over = TextCreator(self.index + 1, "GAME OVER", self.font_type, self.text_size, 90, self.base_color, self.hover_color, self.pos, "", 40)
 
-        # Back Text:
-        self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color, (WIDTH / 2, 9 / 10 * HEIGHT), "", 50)
-        self.back_ref_time = 500
-        self.back_time = 0
-
-        # Initialize Classes:
-        self.pointer = Pointer()
-
-        # Score:
-        self.score_pos = WIDTH / 2, 3 / 4 * HEIGHT
-        self.score_size = 48
-
     def handle_action(self):
         self.next_state = "MENU"
         self.screen_done = True
@@ -48,14 +36,6 @@ class GameOver(BaseState):
         # Reset Fire Bullet Variables:
         if self.increase_rate < self.ref_time:
             self.increase_rate += 1
-
-    def render_back_text(self):
-        if self.back_time >= self.back_ref_time:
-            self.back.render_text(self.index)
-            score.show_score(self.score_pos, self.score_size)
-            self.pointer.draw_rotated(self.back.text_position, "CONGRATULATIONS")
-        else:
-            self.back_time += 1
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
@@ -73,4 +53,4 @@ class GameOver(BaseState):
         self.game_over.render_text(self.index)
 
         # Render Back Text and Score:
-        self.render_back_text()
+        self.render_back_text(score)
