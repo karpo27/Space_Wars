@@ -19,13 +19,13 @@ class Win(BaseState):
         # Screen Text and Options:
         self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/10
         self.text_1 = ""
-        self.text_1_ref_time = 20
+        self.text_1_ref_time = 24
         self.text_1_rate = 0
         self.text_2 = "You have saved our Galaxy!"
 
         # Back Text:
         self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color, (WIDTH / 2, 9 / 10 * HEIGHT), "", 50)
-        self.back_ref_time = 750
+        self.back_ref_time = 950
         self.back_time = 0
 
         # Create Sprites Group:
@@ -35,9 +35,21 @@ class Win(BaseState):
         self.background = BGCreator(*BACKGROUNDS['win'])
         self.pointer = Pointer()
 
-        # Effects:
-        self.ref_time = 70
-        self.fire_rate = 70
+        # Background Image:
+        self.image = self.background.image
+        self.rect = self.image.get_rect()
+        self.rect.center = [0, 0]
+        # Empty Surface:
+        self.empty_surface = pygame.Surface(self.background.image.get_size(), pygame.SRCALPHA)
+        self.alpha = 0
+        # Time on Screen:
+        self.time = 0
+        self.time_start_render = 40  # 40 ms
+        self.time_finish_render = self.time_start_render + 540  # 540 ms
+
+        # Fireworks Effect:
+        self.ref_time = 80
+        self.fire_rate = 80
 
         # Score:
         self.score_pos = WIDTH/2, 3/4 * HEIGHT
@@ -85,6 +97,14 @@ class Win(BaseState):
         else:
             self.back_time += 1
 
+    def render_image(self):
+        if self.time_start_render < self.time <= self.time_finish_render:
+            self.set_opacity()
+            self.alpha += 0.5
+        elif self.time_finish_render < self.time:
+            SCREEN.blit(self.empty_surface, self.rect.center)
+        self.time += 1
+
     def get_event(self, event):
         if event.type == pygame.QUIT:
             self.quit = True
@@ -94,7 +114,10 @@ class Win(BaseState):
 
     def draw(self, surface):
         # Draw Background:
-        self.background.update()
+        surface.fill(pygame.Color("black"))
+        self.render_image()
+
+        # Draw Fireworks:
         self.create_fireworks()
 
         # Render Text 1 and Text 2:

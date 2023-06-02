@@ -60,7 +60,7 @@ win_bg = Sound(*MUSICS['win_bg'])
 game_over_bg = Sound(*MUSICS['game_over_bg'])
 
 sounds_list = [menu_movement, menu_selection, menu_back, player_laser, player_hit, player_explosion, player_item_hp,
-               enemy_laser, player_item_life,
-               enemy_hit, enemy_explosion, enemy_e_flyby, boss_laser, boss_explosion, win_fireworks]
+               enemy_laser, player_item_life, enemy_hit, enemy_explosion, enemy_e_flyby, boss_laser, boss_explosion,
+               win_fireworks]
 
 musics_list = [menu_bg, level1_bg, boss_bg, win_bg, game_over_bg, win_level_bg]

@@ -1,5 +1,5 @@
 # Scripts:
-from constants import WIDTH, HEIGHT
+from constants import WIDTH, HEIGHT, SCREEN
 
 # Modules:
 import pygame
@@ -20,9 +20,20 @@ class BaseState(object):
         self.base_color = "white"
         self.hover_color = "#f1d666"
 
-        # Win/Game Over Timer:
-        self.next_screen_ref_time = 1
-        self.next_screen_rate = 0
+        # Empty Surface:
+        self.image = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+        self.rect = self.image.get_rect()
+        self.rect.center = [0, 0]
+        self.empty_surface = None
+        self.alpha = 0
+
+    def set_opacity(self):
+        self.empty_surface.set_alpha(self.alpha)
+        self.empty_surface.blit(self.image, (0, 0))
+        SCREEN.blit(self.empty_surface, self.rect.center)
+
+    def render_image(self):
+        pass
 
     def startup(self, persistent):
         self.persist = persistent
