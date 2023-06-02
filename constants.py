@@ -19,8 +19,8 @@ BACKGROUNDS = {
     'win': ['Images/Levels_Background/win.jpg', 0]
 }
 # Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range, Propulsion Scale:
-PLAYER_ATTRIBUTES = ['A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38),
-                     0.22]
+PLAYER = ['A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38),
+          0.22]
 # Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Angle, Bounce, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
     'A': ['Images/Player_Bullet/', 5, 0.4, 6, 1, [0, -13], 0, False]

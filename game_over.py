@@ -2,7 +2,6 @@
 from constants import *
 from base_state import BaseState
 from text_creator import TextCreator
-from pointer import Pointer
 from sound import menu_bg, menu_selection
 from hud import score
 

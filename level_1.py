@@ -36,7 +36,7 @@ class Level1(BaseState):
 
         # Initialize Objects:
         self.background = BGCreator(*BACKGROUNDS['level_1'])
-        self.player = Player(*PLAYER_ATTRIBUTES, self.player_bullets_group, self.effects_group)
+        self.player = Player(*PLAYER, self.player_bullets_group, self.effects_group)
         self.ui = UI(self.player)
 
         # Add Player Sprites to group:

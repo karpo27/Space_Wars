@@ -3,7 +3,6 @@ from constants import *
 from base_state import BaseState
 from bg_creator import BGCreator
 from text_creator import TextCreator
-from pointer import Pointer
 from game_effects import Particle
 from sound import menu_bg, win_fireworks
 from hud import score

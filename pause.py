@@ -2,7 +2,7 @@
 from constants import *
 from base_state import BaseState
 from submenus import Options, Controls, audio
-from sound import menu_bg, menu_selection, menu_movement, menu_back
+from sound import menu_bg, menu_selection, menu_back
 from bg_creator import *
 
 # Modules:

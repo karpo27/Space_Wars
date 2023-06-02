@@ -44,11 +44,6 @@ class Menu(BaseState):
         self.time_finish_render = self.time_start_render + 215      # 215 ms
         self.time_render_options = self.time_finish_render + 60     # 60 ms
 
-        # Title and Icon:
-        pygame.display.set_caption("Space Wars")
-        icon = pygame.image.load(ICON_PATH)
-        pygame.display.set_icon(icon)
-
     def handle_action(self):
         if self.screen == "MENU":
             if self.index == 0:

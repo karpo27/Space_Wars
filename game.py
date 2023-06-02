@@ -1,4 +1,5 @@
 # Scripts:
+from constants import ICON_PATH
 from level_1 import Level1
 from game_over import GameOver
 from win import Win
@@ -8,6 +9,11 @@ import pygame
 
 
 class Game(object):
+    # Title and Icon:
+    pygame.display.set_caption("Space Wars")
+    icon = pygame.image.load(ICON_PATH)
+    pygame.display.set_icon(icon)
+
     def __init__(self, screen, states, initial_state):
         # Screen:
         self.screen = screen

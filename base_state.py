@@ -8,8 +8,6 @@ from sound import menu_movement
 import pygame
 
 
-
-
 class BaseState(object):
     def __init__(self):
         # Game State:
