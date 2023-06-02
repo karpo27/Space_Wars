@@ -10,7 +10,7 @@ pygame.font.init()
 
 class TextCreator:
     def __init__(self, index, text, font, font_size, hover_font_size, base_color, hover_color, pos, align_text, margin):
-        # Text Font, Size and Color
+        # Text Font, Size and Color:
         self.text = text
         self.font = font
         self.font_size = font_size
@@ -22,7 +22,7 @@ class TextCreator:
         self.text_and_color = self.font_and_size.render(self.text, True, self.base_color)
         self.text_rect = self.text_and_color.get_rect()
 
-        # Text Align and Position
+        # Text Align and Position:
         self.pos = pos
         self.margin = margin
         self.index = index
@@ -30,7 +30,7 @@ class TextCreator:
             self.text_width, self.text_height = self.font_and_size.size(align_text)
         else:
             self.text_width, self.text_height = self.font_and_size.size(text)
-        self.text_position = [self.pos[0] - self.text_width / 2, self.pos[1] - self.text_height / 2 + self.margin * self.index]
+        self.text_position = [self.pos[0] - self.text_width/2, self.pos[1] - self.text_height/2 + self.margin * self.index]
 
     def render_text(self, index):
         if index == self.index:
