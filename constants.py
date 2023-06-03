@@ -15,12 +15,17 @@ LOGO_PATH = 'Images/Menu/logo.png'
 # Background Assets - Path, Scroll Speed:
 BACKGROUNDS = {
     'main_menu': ['Images/Menu/menu.png', 0.9],
-    'level_1': ['Images/Levels_Background/level_1.jpg', 0.8],
-    'win': ['Images/Levels_Background/win.jpg', 0]
+    'scene_1': ['Images/Scenes/scene_1.jfif', 0],
+    'level_1': ['Images/Levels_bg/level_1.jpg', 0.8],
+    'win': ['Images/Levels_bg/win.jpg', 0]
+}
+# Player - Category, Path, Scale, Start Pos, Velocity, Final Pos X, HP, State:
+SCENE_CHARS = {
+    'operator': ['operator', 'Images/Scenes/', 1, [-WIDTH/6, 4/5 * HEIGHT], [2, 0], WIDTH/3, 1, "alive"],
+    'minister': ['minister', 'Images/Scenes/', 1, [7/6 * WIDTH, 4/5 * HEIGHT], [-2, 0], 3/4 * WIDTH, 1, "alive"]
 }
 # Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range, Propulsion Scale:
-PLAYER = ['A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38),
-          0.21]
+PLAYER = ['A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38), 0.21]
 # Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Angle, Bounce, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
     'A': ['Images/Player_Bullet/', 5, 0.4, 6, 1, [0, -13], 0, False]
@@ -147,6 +152,7 @@ SOUNDS = {
     'menu_movement': ['menu_movement.mp3', 0.7],
     'menu_selection': ['menu_selection.mp3', 0.6],
     'menu_back': ['menu_back.mp3', 0.5],
+    'scene_1_galaxy': ['scene_1_galaxy.mp3', 0.3],
     'player_laser': ['player_laser.mp3', 0.04],
     'player_hit': ['player_hit.mp3', 0.08],
     'player_explosion': ['player_explosion.wav', 0.15],

@@ -7,7 +7,7 @@ import pygame
 
 class Character(pygame.sprite.Sprite):
 
-    def __init__(self, category, img_path, scale, vel, hp, fire_rate, explo_scale, part_range, bullet_group, effects_group):
+    def __init__(self, category, img_path, scale, vel, hp, fire_rate=None, explo_scale=None, part_range=None, bullet_group=None, effects_group=None):
         super().__init__()
         # Image:
         self.category = category
@@ -52,7 +52,8 @@ class Character(pygame.sprite.Sprite):
         # Explosion:
         self.effects_group = effects_group
         self.explosion_scale = explo_scale
-        self.part_min, self.part_max = part_range
+        if part_range is not None:
+            self.part_min, self.part_max = part_range
 
     def move_x(self):
         self.rect.x += self.vel_x

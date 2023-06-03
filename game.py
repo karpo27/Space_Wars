@@ -1,5 +1,6 @@
 # Scripts:
 from constants import ICON_PATH
+from scene_1 import Scene1
 from level_1 import Level1
 from game_over import GameOver
 from win import Win
@@ -48,9 +49,9 @@ class Game(object):
         self.state = self.states[self.state_name]
 
     def reset_game(self):
-        for state in ['LEVEL_1', 'GAME_OVER', 'WIN']:
+        for state in ['SCENE_1', 'LEVEL_1', 'GAME_OVER', 'WIN']:
             del self.states[state]
-        for state, class_object in zip(['LEVEL_1', 'GAME_OVER', 'WIN'], [Level1(), GameOver(), Win()]):
+        for state, class_object in zip(['SCENE_1', 'LEVEL_1', 'GAME_OVER', 'WIN'], [Scene1(), Level1(), GameOver(), Win()]):
             self.states[state] = class_object
 
     def update(self, dt):
