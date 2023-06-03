@@ -14,18 +14,24 @@ class SceneChar(Character):
 
         # Start Movement Animation:
         self.start_animation = True
-        self.x_start = self.start_pos[0]
+        self.start_pos_x = self.start_pos[0]
         # End Movement Animation:
         self.final_pos = final_pos
 
     def animate_start(self):
-        if self.rect.x != self.final_pos:
-            self.rect.x += self.vel_x
+        if self.start_pos_x < self.final_pos:
+            if self.rect.x < self.final_pos:
+                self.rect.x += self.vel_x
+            else:
+                self.start_animation = False
         else:
-            self.start_animation = False
+            if self.rect.x > self.final_pos:
+                self.rect.x += self.vel_x
+            else:
+                self.start_animation = False
 
     def animate_end(self):
-        if self.rect.x != self.x_start:
+        if self.rect.x != self.start_pos_x:
             self.rect.x -= self.vel_x
         else:
             self.end_animation = False

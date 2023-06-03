@@ -36,10 +36,13 @@ class Scene1(BaseState):
 
         # Initialize Objects:
         self.operator = SceneChar(*SCENE_CHARS['operator'])
-        self.minister = SceneChar(*SCENE_CHARS['operator'])
+        self.minister = SceneChar(*SCENE_CHARS['minister'])
 
         # Create Sprites Group:
         self.scene_chars_group = pygame.sprite.Group()
+
+        # Add Player Sprites to group:
+        self.scene_chars_group.add(self.operator, self.minister)
 
     def render_image(self):
         if self.time_start_render < self.time <= self.time_finish_render:
