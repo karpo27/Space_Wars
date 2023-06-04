@@ -4,7 +4,7 @@ from base_state import BaseState
 from bg_creator import BGCreator
 from scene_chars import SceneChar
 from text_creator import TextCreator
-from sound import scene_1_galaxy
+from sound import scene_1_galaxy, level1_bg
 
 # Modules:
 import pygame
@@ -31,10 +31,8 @@ class Scene1(BaseState):
         self.time = 0
         self.time_start_render = 150  # 150 ms
         self.time_finish_render = self.time_start_render + 510  # 510 ms
-        self.time_start_animation_operator = self.time_finish_render + 30  # 30 ms
-        self.time_start_animation_dialogue = self.time_start_animation_operator + 20  # 20 ms
-        self.time_start_dialogue = self.time_start_animation_dialogue + 50
-        self.time_start_animation_commander = self.time_start_dialogue + 150
+        self.time_start_animation_scene_chars = self.time_finish_render + 30  # 30 ms
+        self.time_start_dialogue = self.time_start_animation_scene_chars + 200  # 200 ms
         self.end_scene = False
 
         # Initialize Objects:
@@ -46,18 +44,18 @@ class Scene1(BaseState):
         self.scene_chars_group = pygame.sprite.Group()
 
         # Add Player Sprites to group:
-        self.scene_chars_group.add(self.operator)
+        self.scene_chars_group.add(self.operator, self.commander)
 
-        # Screen Text and Options:
-        self.pos = self.pos_x, self.pos_y = WIDTH / 2 - 132, 4 / 5 * HEIGHT - 80
+        # Screen Dialogue:
+        self.pos = self.pos_x, self.pos_y = WIDTH / 2 - 128, 4 / 5 * HEIGHT - 75
         self.dialogue = [
-            ["OPERATOR:", "Commander! ", "I'm receiving a message...", "... Andromeda has been destroyed.", ""],
-            ["COMMANDER:", "It's the BUGS!", "God damn it!...", "General Bugfix will take over", "this galaxy."],
-            ["OPERATOR:", "The fleet is on the other", "side of the galaxy...", "What should we do?", ""],
-            ["COMMANDER:", "We're doomed...", "by the time reinforcements", "reach here, we'll be dust.", ""],
-            ["OPERATOR:", "...", "We have player on it's", "way back to planet Earth", ""],
-            ["COMMANDER:", "DO IT!!!", "Let's hope he can", "handle the whole swarm", "army..."],
-            ["OPERATOR:", "Pilot! Pilot!", "Do you read me?", "... ... ...", "... ... ..."],
+            ['OPERATOR:', '"Commander!', 'I\'m receiving a message...', '... Andromeda has been destroyed."', ''],
+            ['COMMANDER:', '"It\'s the BUGS!', 'God damn it!...', 'General Bugfix will exterminate this', 'galaxy."'],
+            ['OPERATOR:', '"The fleet is on the other side', 'of the galaxy...', 'What should we do?"', ''],
+            ['COMMANDER:', '"We\'re doomed...', 'by the time reinforcements', 'reach here, we\'ll be dust."', ''],
+            ['OPERATOR:', '"...', 'We have an X-Wing pilot on it\'s way', 'back to planet Earth.', 'Should I call him?"'],
+            ['COMMANDER:', '"DO IT!!!', 'Let\'s hope he can handle the whole', 'swarm army..."', ''],
+            ['OPERATOR:', '"... Pilot!, Pilot!', 'Do you read me?', '... ... ...', '... ... ..."'],
         ]
         self.index_1 = 0
         self.index_2 = 0
@@ -65,7 +63,7 @@ class Scene1(BaseState):
         self.text = ""
         self.text_list = []
         self.text_list.append(self.text)
-        self.text_ref_time = 6
+        self.text_ref_time = 5
         self.text_rate = 0
 
     def render_top_text(self):
@@ -83,6 +81,7 @@ class Scene1(BaseState):
                     self.index_1 += 1
                     self.text = ""
                     self.text_list.append(self.text)
+                    self.text_rate = 0
                 for index, text in enumerate(self.text_list):
                     TextCreator(index, text, self.font_type, 20, 20, self.base_color, self.base_color, self.pos,
                                 self.dialogue[0][0], 32).render_text(index)
@@ -116,19 +115,24 @@ class Scene1(BaseState):
         surface.fill(pygame.Color("black"))
         self.render_image()
 
-        if self.time_start_animation_dialogue <= self.time and not self.end_scene:
+        if self.time_start_animation_scene_chars <= self.time:
             # Update Sprites Group:
             self.scene_chars_group.update()
             # Draw Sprite Groups:
             self.scene_chars_group.draw(SCREEN)
 
-        if not self.operator.start_animation:
+        if not self.commander.start_animation:
             self.scene_chars_group.add(self.dialogue_globe)
 
-        if self.time_start_animation_commander <= self.time:
-            self.scene_chars_group.add(self.commander)
         # Render Text 1 and Text 2:
         if self.time_start_dialogue <= self.time:
             self.render_top_text()
 
-        # level1_bg.play_bg_music(-1)
+        # End Scene Logic:
+        if self.end_scene:
+            self.alpha -= 0.5
+            self.set_opacity()
+            self.scene_chars_group.remove(self.dialogue_globe)
+            if self.alpha <= 0:
+                self.screen_done = True
+                level1_bg.play_bg_music(-1)

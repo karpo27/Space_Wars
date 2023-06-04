@@ -30,7 +30,4 @@ class SceneChar(Character):
                 self.start_animation = False
 
     def animate_end(self):
-        if self.rect.x != self.start_pos_x:
-            self.rect.x -= self.vel_x
-        else:
-            self.end_animation = False
+        self.rect.x -= self.vel_x
