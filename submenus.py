@@ -44,7 +44,7 @@ class Credits(BaseState):
     def __init__(self):
         # Screen Text and Options:
         super().__init__()
-        self.pos = self.pos_x, self.pos_y = WIDTH / 2, HEIGHT / 4
+        self.pos = self.pos_x, self.pos_y = WIDTH/2, HEIGHT/4
         self.text = ["May 2023", "SPACE WARS is a Python game developed by me: Julian Giudice (github.com/karpo27).",
                      "It's a Shoot 'em up inspired in Galaga game and has some elements from things I like.",
                      "Also my first game since I started learning Python 6 months ago.",
@@ -52,12 +52,10 @@ class Credits(BaseState):
                      "and allow so many users to code their games.",
                      "I'll keep coding and trying myself harder everyday."]
         self.credits = []
-        self.credits.append(TextCreator(self.index, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color,
-                                        (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
+        self.credits.append(TextCreator(self.index, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color, (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
         for index, text in enumerate(self.text):
             self.credits.append(
-                TextCreator(index + 1, text, self.font_type, 22, 52, self.base_color, self.hover_color, self.pos,
-                            "", 40))
+                TextCreator(index + 1, text, self.font_type, 22, 52, self.base_color, self.hover_color, self.pos, "", 40))
 
 
 class Audio(BaseState):

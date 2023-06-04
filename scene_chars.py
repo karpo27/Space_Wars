@@ -1,12 +1,11 @@
 # Scripts:
-from constants import WIDTH, HEIGHT, SCREEN, SCENE_CHARS
 from character import Character
 
 # Modules:
 
 
 class SceneChar(Character):
-    def __init__(self, category, img_path, scale, start_pos, vel, final_pos, hp, state):
+    def __init__(self, category, img_path, scale, start_pos, vel, final_pos, hp):
         super().__init__(category, img_path, scale, vel, hp)
         # Image:
         self.start_pos = start_pos

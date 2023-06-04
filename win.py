@@ -46,9 +46,8 @@ class Win(BaseState):
 
     def update_text(self):
         ref_text = "CONGRATULATIONS"
-        if len(self.text_1) < len(ref_text):
-            for i in range(len(self.text_1), len(self.text_1) + 1):
-                self.text_1 += ref_text[i]
+        for i in range(len(self.text_1), len(self.text_1) + 1):
+            self.text_1 += ref_text[i]
 
     def handle_action(self):
         if self.back_time >= self.back_ref_time:

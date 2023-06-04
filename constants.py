@@ -19,10 +19,11 @@ BACKGROUNDS = {
     'level_1': ['Images/Levels_bg/level_1.jpg', 0.8],
     'win': ['Images/Levels_bg/win.jpg', 0]
 }
-# Player - Category, Path, Scale, Start Pos, Velocity, Final Pos X, HP, State:
+# Player - Category, Path, Scale, Start Pos, Velocity, Final Pos X, HP:
 SCENE_CHARS = {
-    'operator': ['operator', 'Images/Scenes/', 1, [-WIDTH/6, 4/5 * HEIGHT], [4, 0], WIDTH/8, 1, "alive"],
-    'minister': ['minister', 'Images/Scenes/', 1, [7/6 * WIDTH, 4/5 * HEIGHT], [-4, 0], 3/4 * WIDTH, 1, "alive"]
+    'operator': ['O', 'Images/Scenes/', 1, [-WIDTH/6, 4/5 * HEIGHT], [5, 0], WIDTH/9, 1],
+    'commander': ['C', 'Images/Scenes/', 1, [7/6 * WIDTH, 4/5 * HEIGHT], [-5, 0], 3/4 * WIDTH, 1],
+    'dialogue': ['D', 'Images/Scenes/', 1.3, [WIDTH/2, 4/5 * HEIGHT], [0, 0], 2 * WIDTH, 1]
 }
 # Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range, Propulsion Scale:
 PLAYER = ['A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38), 0.21]
@@ -152,7 +153,7 @@ SOUNDS = {
     'menu_movement': ['menu_movement.mp3', 0.7],
     'menu_selection': ['menu_selection.mp3', 0.6],
     'menu_back': ['menu_back.mp3', 0.5],
-    'scene_1_galaxy': ['scene_1_galaxy.mp3', 0.25],
+    'scene_1_galaxy': ['scene_1_galaxy.mp3', 0.2],
     'player_laser': ['player_laser.mp3', 0.04],
     'player_hit': ['player_hit.mp3', 0.08],
     'player_explosion': ['player_explosion.wav', 0.15],
