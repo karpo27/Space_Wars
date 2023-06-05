@@ -51,12 +51,11 @@ After you opened it:
 - Defeat the enemies and achieve the highest score!
 
 ## Screenshots
-
-![image](https://github.com/karpo27/Space_Wars/assets/54405665/8092511f-b382-4013-a550-98bb4d7314f7)
-![image](https://github.com/karpo27/Space_Wars/assets/54405665/51628602-5a11-422e-9b3f-1201228c594e)
-![image](https://github.com/karpo27/Space_Wars/assets/54405665/4fa16aa1-d29d-401f-acd8-6b635cee7d5b)
-![image](https://github.com/karpo27/Space_Wars/assets/54405665/d3f8d6c7-99d2-4d4d-b2ea-a42ccfa364a5)
-![image](https://github.com/karpo27/Space_Wars/assets/54405665/1234f6d9-744b-4841-96e3-6315169f0f03)
+<p align="center">
+  <img src="https://github.com/karpo27/Space_Wars/assets/54405665/8092511f-b382-4013-a550-98bb4d7314f7">
+  <img src="https://github.com/karpo27/Space_Wars/assets/54405665/d3f8d6c7-99d2-4d4d-b2ea-a42ccfa364a5">
+  <img src="https://github.com/karpo27/Space_Wars/assets/54405665/1234f6d9-744b-4841-96e3-6315169f0f03">
+</p>
 
 # Demo Video
 
