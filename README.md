@@ -13,7 +13,7 @@ Table of Contents:
 - [How to Play](#How-to-Play)
 - [Controls](#Controls)
 - [Screenshots](#Screenshots)
-- [Demo_Video](#Demo_Video)
+- [Demo Video](#Demo-Video)
 - [Usage](#Usage)
 - [Contributing](#Contributing)
 
@@ -30,13 +30,15 @@ Table of Contents:
 ## Installation
 
 1- Ensure you have Python 3.x installed on your system.
+
 2- Clone this repository or download the ZIP file and extract it to your desired location.
-3- Install the required dependencies by running the following command:
-pip install pygame
+
+3- Install the required dependencies by running the following command: pip install pygame
 
 ## How to Play
 
 I'll give you 3 alternatives for running this game:
+
 - Option 1- Run the main.py file in VSCode, Pycharm, etc.
 - Option 2- Run .exe file directly after you download the files.
 - Option 3- Open a terminal or command prompt and navigate to the game directory. Run the following command to start the game: python main.py
