@@ -47,14 +47,14 @@ class Scene1(BaseState):
         self.scene_chars_group.add(self.operator, self.commander)
 
         # Screen Dialogue:
-        self.pos = self.pos_x, self.pos_y = WIDTH / 2 - 128, 4 / 5 * HEIGHT - 75
+        self.pos = self.pos_x, self.pos_y = WIDTH/2 - 128, 4/5 * HEIGHT - 75
         self.dialogue = [
-            ['OPERATOR:', '"Commander!', 'I\'m receiving a message...', '... Andromeda has been destroyed."', ''],
-            ['COMMANDER:', '"It\'s the BUGS!', 'God damn it!...', 'General Bugfix will exterminate this', 'galaxy."'],
-            ['OPERATOR:', '"The fleet is on the other side', 'of the galaxy...', 'What should we do?"', ''],
-            ['COMMANDER:', '"We\'re doomed...', 'by the time reinforcements', 'reach here, we\'ll be dust."', ''],
+            ['OPERATOR:', '"Commander!', 'I\'m receiving a message...', '... Andromeda has been destroyed."'],
+            ['COMMANDER:', '"It\'s the BUGS!!!', 'God damn it!...', 'General Bugfix will exterminate us."'],
+            ['OPERATOR:', '"The fleet is on the other side of the', 'galaxy...', 'What should we do?"'],
+            ['COMMANDER:', '"We\'re doomed...', 'by the time reinforcements reach', 'here, we\'ll be dust."'],
             ['OPERATOR:', '"...', 'We have an X-Wing pilot on it\'s way', 'back to planet Earth.', 'Should I call him?"'],
-            ['COMMANDER:', '"DO IT!!!', 'Let\'s hope he can handle the whole', 'swarm army..."', ''],
+            ['COMMANDER:', '"DO IT!!!', 'Let\'s hope he can handle the whole', 'swarm army..."'],
             ['OPERATOR:', '"... Pilot!, Pilot!', 'Do you read me?', '... ... ...', '... ... ..."'],
         ]
         self.index_1 = 0
@@ -73,9 +73,9 @@ class Scene1(BaseState):
                 if i != 0:
                     if self.text_rate >= self.text_ref_time:
                         self.text += self.dialogue[self.index_2][self.index_1][-i]
+                        self.text_list[self.index_1] = self.text
                         self.text_rate = 0
                     else:
-                        self.text_list[self.index_1] = self.text
                         self.text_rate += 1
                 else:
                     self.index_1 += 1
@@ -91,6 +91,7 @@ class Scene1(BaseState):
                 self.text = ""
                 self.text_list = []
                 self.text_list.append(self.text)
+                self.text_rate = 0
         else:
             for scene_char in self.scene_chars_group:
                 scene_char.end_animation = True
@@ -102,7 +103,7 @@ class Scene1(BaseState):
             self.alpha += 0.5
         elif self.time_finish_render < self.time:
             SCREEN.blit(self.empty_surface, self.rect.center)
-        if self.alpha == 210:
+        if self.alpha == 210 and not self.end_scene:
             scene_1_galaxy.play_sound()
         self.time += 1
 
@@ -114,6 +115,15 @@ class Scene1(BaseState):
         # Draw Background:
         surface.fill(pygame.Color("black"))
         self.render_image()
+
+        # End Scene Logic:
+        if self.end_scene:
+            self.alpha -= 0.7
+            self.set_opacity()
+            self.scene_chars_group.remove(self.dialogue_globe)
+            if self.alpha <= 0:
+                self.screen_done = True
+                level1_bg.play_bg_music(-1)
 
         if self.time_start_animation_scene_chars <= self.time:
             # Update Sprites Group:
@@ -127,12 +137,3 @@ class Scene1(BaseState):
         # Render Text 1 and Text 2:
         if self.time_start_dialogue <= self.time:
             self.render_top_text()
-
-        # End Scene Logic:
-        if self.end_scene:
-            self.alpha -= 0.5
-            self.set_opacity()
-            self.scene_chars_group.remove(self.dialogue_globe)
-            if self.alpha <= 0:
-                self.screen_done = True
-                level1_bg.play_bg_music(-1)

@@ -14,6 +14,7 @@ class Menu(BaseState):
         super().__init__()
         # Next State:
         self.next_state = "SCENE_1"
+        # self.next_state = "LEVEL_1"
 
         # Logo:
         self.image = pygame.image.load(f'{LOGO_PATH}').convert_alpha()
