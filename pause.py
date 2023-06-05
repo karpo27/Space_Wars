@@ -1,5 +1,4 @@
 # Scripts:
-from constants import *
 from base_state import BaseState
 from submenus import Options, Controls, audio
 from sound import menu_bg, menu_selection, menu_back

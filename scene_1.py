@@ -44,7 +44,7 @@ class Scene1(BaseState):
         self.scene_chars_group = pygame.sprite.Group()
 
         # Add Player Sprites to group:
-        self.scene_chars_group.add(self.operator, self.commander)
+        self.scene_chars_group.add(self.operator, self.commander)   # type: ignore
 
         # Screen Dialogue:
         self.pos = self.pos_x, self.pos_y = WIDTH/2 - 128, 4/5 * HEIGHT - 75
@@ -123,7 +123,7 @@ class Scene1(BaseState):
         if self.end_scene:
             self.alpha -= 0.5
             self.set_opacity()
-            self.scene_chars_group.remove(self.dialogue_globe)
+            self.scene_chars_group.remove(self.dialogue_globe)  # type: ignore
             if self.alpha <= 140:
                 pygame.mixer.music.fadeout(6000)
             if self.alpha <= 0:
@@ -138,7 +138,7 @@ class Scene1(BaseState):
             # Draw Sprite Groups:
             self.scene_chars_group.draw(SCREEN)
         if not self.commander.start_animation and not self.added_dialogue_globe:
-            self.scene_chars_group.add(self.dialogue_globe)
+            self.scene_chars_group.add(self.dialogue_globe)     # type: ignore
             scene_1_dialogue_globe.play_sound()
             self.added_dialogue_globe = True
 

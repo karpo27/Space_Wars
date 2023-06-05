@@ -1,5 +1,4 @@
 # Scripts:
-from constants import *
 
 # Modules:
 import pygame

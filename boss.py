@@ -3,7 +3,7 @@ from constants import *
 from character import Character
 from enemies import EnemyBullet
 from game_effects import Explosion, Particle, HitParticle
-from sound import boss_laser, boss_explosion, player_hit, boss_bg
+from sound import boss_laser, boss_explosion, player_hit
 from hud import score
 
 # Modules

@@ -40,7 +40,7 @@ class Level1(BaseState):
         self.ui = UI(self.player)
 
         # Add Player Sprites to group:
-        self.player_group.add(self.player)
+        self.player_group.add(self.player)  # type: ignore
 
         # Define Number of Enemies to spawn in Level 1:
         self.enemies = []
@@ -75,22 +75,22 @@ class Level1(BaseState):
             self.time_to_spawn = 1500
         self.reset_enemy_timer(self.time_to_spawn)
         k = self.enemies[self.enemy_index]
-        self.enemies_group.add(Enemy(*k, self.enemies_bullets_group, self.effects_group))
+        self.enemies_group.add(Enemy(*k, self.enemies_bullets_group, self.effects_group))   # type: ignore
         self.enemy_index += 1
 
     def spawn_boss(self):
         k = self.boss[0]
-        self.enemies_group.add(Boss(*k, self.enemies_bullets_group, self.effects_group))
+        self.enemies_group.add(Boss(*k, self.enemies_bullets_group, self.effects_group))    # type: ignore
         self.boss_to_spawn = False
         boss_bg.play_bg_music(-1, 7000)
 
     def spawn_item_hp(self):
         number = random.randint(1, 10)
         if number == 1:
-            self.hp_items_group.add(HP(*ITEMS["hp"]))
+            self.hp_items_group.add(HP(*ITEMS["hp"]))   # type: ignore
 
     def spawn_item_life(self):
-        self.life_items_group.add(Life(*ITEMS["life"]))
+        self.life_items_group.add(Life(*ITEMS["life"]))     # type: ignore
 
     def handle_win(self):
         if self.player.state == "winner":
