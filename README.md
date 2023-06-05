@@ -10,7 +10,7 @@ Table of Contents:
 
 - [Features](#Features)
 - [Installation](#Installation)
-- [How to Play](#How to Play)
+- [How to Play](#How-to-Play)
 - [Controls](#Controls)
 - [Screenshots](#Screenshots)
 - [Demo_Video](#Demo_Video)
