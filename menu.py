@@ -1,7 +1,7 @@
 # Scripts:
 from base_state import BaseState
 from submenus import Options, Controls, Credits, audio
-from sound import level1_bg, menu_selection, menu_back, menu_bg
+from sound import scene_1_bg, menu_selection, menu_back
 from bg_creator import *
 from text_creator import *
 
@@ -14,7 +14,7 @@ class Menu(BaseState):
         super().__init__()
         # Next State:
         self.next_state = "SCENE_1"
-        # self.next_state = "LEVEL_1"
+        #self.next_state = "LEVEL_1"
 
         # Logo:
         self.image = pygame.image.load(f'{LOGO_PATH}').convert_alpha()
@@ -48,7 +48,8 @@ class Menu(BaseState):
     def handle_action(self):
         if self.screen == "MENU":
             if self.index == 0:
-                pygame.mixer.music.fadeout(5000)
+                menu_selection.play_sound()
+                scene_1_bg.play_bg_music(-1, 5000)
                 self.screen_done = True
             elif self.index == 1:
                 self.screen = "OPTIONS"

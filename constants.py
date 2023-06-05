@@ -146,14 +146,17 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
                 ]'''
-#ENEMIES_LVL1 = ['e', 'e', 'a', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd']
-ENEMIES_LVL1 = []
+ENEMIES_LVL1 = ['e', 'e', 'a', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd']
+#ENEMIES_LVL1 = []
 # Sounds - Path, Volume:
 SOUNDS = {
     'menu_movement': ['menu_movement.mp3', 0.7],
     'menu_selection': ['menu_selection.mp3', 0.6],
     'menu_back': ['menu_back.mp3', 0.5],
-    'scene_1_galaxy': ['scene_1_galaxy.mp3', 0.2],
+    'scene_1_galaxy_laser': ['scene_1_galaxy_laser.mp3', 0.2],
+    'scene_1_galaxy_explosion': ['scene_1_galaxy_explosion.mp3', 0.2],
+    'scene_1_dialogue_globe': ['scene_1_dialogue_globe.mp3', 0.1],
+    'scene_1_dialogue_letter': ['scene_1_dialogue_letter.mp3', 0.1],
     'player_laser': ['player_laser.mp3', 0.04],
     'player_hit': ['player_hit.mp3', 0.08],
     'player_explosion': ['player_explosion.wav', 0.15],
@@ -171,7 +174,8 @@ SOUNDS = {
 # Music - Path, Volume:
 MUSICS = {
     'menu_bg': ['menu_bg.mp3', 0.1],
-    'level1_bg': ['level1_bg.mp3', 0.5],
+    'scene_1_bg': ['scene_1_bg.mp3', 0.1],
+    'level_1_bg': ['level_1_bg.mp3', 0.5],
     'boss_bg': ['boss_bg.mp3', 0.1],
     'win_level_bg': ['win_level_bg.mp3', 0.1],
     'win_bg': ['win_bg.mp3', 0.1],

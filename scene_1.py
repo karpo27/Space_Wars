@@ -4,7 +4,7 @@ from base_state import BaseState
 from bg_creator import BGCreator
 from scene_chars import SceneChar
 from text_creator import TextCreator
-from sound import scene_1_galaxy, level1_bg
+from sound import channel, scene_1_galaxy_laser, scene_1_galaxy_explosion, scene_1_dialogue_globe, scene_1_dialogue_letter, level_1_bg
 
 # Modules:
 import pygame
@@ -63,8 +63,9 @@ class Scene1(BaseState):
         self.text = ""
         self.text_list = []
         self.text_list.append(self.text)
-        self.text_ref_time = 5
+        self.text_ref_time = 4
         self.text_rate = 0
+        self.added_dialogue_globe = False
 
     def render_top_text(self):
         if self.index_2 < len(self.dialogue):
@@ -73,6 +74,7 @@ class Scene1(BaseState):
                 if i != 0:
                     if self.text_rate >= self.text_ref_time:
                         self.text += self.dialogue[self.index_2][self.index_1][-i]
+                        scene_1_dialogue_letter.play_sound()
                         self.text_list[self.index_1] = self.text
                         self.text_rate = 0
                     else:
@@ -110,17 +112,23 @@ class Scene1(BaseState):
             self.alpha += 0.5
         elif self.time_finish_render < self.time:
             SCREEN.blit(self.empty_surface, self.rect.center)
-        if self.alpha == 210 and not self.end_scene:
-            scene_1_galaxy.play_sound()
+        if self.alpha == 70 and not self.end_scene:
+            scene_1_galaxy_laser.play_sound(True)
+            scene_1_galaxy_explosion.play_sound(True)
         self.time += 1
+        if not self.end_scene:
+            self.render_skip_text()
 
     def finish_scene(self):
-        self.alpha -= 0.7
-        self.set_opacity()
-        self.scene_chars_group.remove(self.dialogue_globe)
-        if self.alpha <= 0:
-            self.screen_done = True
-            level1_bg.play_bg_music(-1)
+        if self.end_scene:
+            self.alpha -= 0.5
+            self.set_opacity()
+            self.scene_chars_group.remove(self.dialogue_globe)
+            if self.alpha <= 140:
+                pygame.mixer.music.fadeout(6000)
+            if self.alpha <= 0:
+                self.screen_done = True
+                level_1_bg.play_bg_music(-1)
 
     def update_scene_chars(self):
         # Draw and Update Sprites:
@@ -129,15 +137,31 @@ class Scene1(BaseState):
             self.scene_chars_group.update()
             # Draw Sprite Groups:
             self.scene_chars_group.draw(SCREEN)
-        if not self.commander.start_animation:
+        if not self.commander.start_animation and not self.added_dialogue_globe:
             self.scene_chars_group.add(self.dialogue_globe)
+            scene_1_dialogue_globe.play_sound()
+            self.added_dialogue_globe = True
+
         # Dialogue Logic:
-        if self.time_start_dialogue <= self.time:
+        if self.time_start_dialogue <= self.time and not self.end_scene:
             self.render_top_text()
+
+    def render_skip_text(self):
+        # Skip Text:
+        TextCreator(self.index, "Press ENTER to Skip", self.font_type, 14, 14, self.base_color, self.base_color,
+                    (7/8 * WIDTH, 1/40 * HEIGHT), "", 50).render_text(self.index)
+
+    def handle_ending(self):
+        for scene_char in self.scene_chars_group:
+            scene_char.end_animation = True
+        self.end_scene = True
 
     def get_event(self, event):
         if event.type == pygame.QUIT:
             self.quit = True
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                self.handle_ending()
 
     def draw(self, surface):
         # Draw Black Background:
@@ -145,7 +169,6 @@ class Scene1(BaseState):
         # Draw Background Image:
         self.render_image()
         # Finish Scene:
-        if self.end_scene:
-            self.finish_scene()
+        self.finish_scene()
         # Draw Scene Chars:
         self.update_scene_chars()
