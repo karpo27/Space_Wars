@@ -11,7 +11,6 @@ Table of Contents:
 - [Features](#Features)
 - [Installation](#Installation)
 - [How to Play](#How-to-Play)
-- [Controls](#Controls)
 - [Screenshots](#Screenshots)
 - [Demo Video](#Demo-Video)
 - [Usage](#Usage)
@@ -46,14 +45,10 @@ I'll give you 3 alternatives for running this game:
 After you opened it:
 
 - Use the arrow keys or WASD to control your spaceship's movement.
-- Press the spacebar or left mouse button to shoot and destroy the enemy bugs.
+- Press the spacebar to shoot and destroy the enemy bugs.
 - Avoid colliding with enemy bugs or their projectiles to prevent losing health.
 - Collect power-ups and upgrades to enhance your firepower and defense (developing...)
 - Defeat the enemies and achieve the highest score!
-
-## Controls
-
-![image](https://github.com/karpo27/Space_Wars/assets/54405665/4407c96d-2c11-4895-8e1f-f0fea47a26f5)
 
 ## Screenshots
 
