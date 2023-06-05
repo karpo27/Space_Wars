@@ -13,8 +13,8 @@ Table of Contents:
 - [How to Play](#How-to-Play)
 - [Screenshots](#Screenshots)
 - [Demo Video](#Demo-Video)
-- [Usage](#Usage)
 - [Contributing](#Contributing)
+- [How to reach me](#How-to-reach-me)
 
 ## Features
 - User-friendly controls and intuitive interface
@@ -58,9 +58,6 @@ After you opened it:
 </p>
 
 # Demo Video
-
-## Usage
-After downloading the application, you can run it by 
 
 ## Contributing
 If you find any bugs or want to suggest new features, please open an issue on the GitHub repository. You can also submit a pull request if you want to contribute to the development of the application.
