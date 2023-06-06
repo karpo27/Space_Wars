@@ -53,8 +53,8 @@ After you opened it:
 ## Screenshots
 <p align="center">
   <img src="https://github.com/karpo27/Space_Wars/assets/54405665/8092511f-b382-4013-a550-98bb4d7314f7">
-  <img src="https://github.com/karpo27/Space_Wars/assets/54405665/d3f8d6c7-99d2-4d4d-b2ea-a42ccfa364a5">
-  <img src="https://github.com/karpo27/Space_Wars/assets/54405665/1234f6d9-744b-4841-96e3-6315169f0f03">
+  <img src="https://github.com/karpo27/Space_Wars/assets/54405665/3ca53208-3d19-4b77-8628-d57f125dd687">
+  <img src="https://github.com/karpo27/Space_Wars/assets/54405665/b62568e5-947a-4618-a22c-9746fcef54c1">
 </p>
 
 # Demo Video
