@@ -97,27 +97,35 @@ class Player(Character):
         if not self.keyboard_blocked:
             key = pygame.key.get_pressed()
             # Player Keyboard Diagonal Movement - (UP-LEFT, DOWN-LEFT, UP-RIGHT, DOWN-RIGHT):
-            if key[pygame.K_LEFT] and key[pygame.K_UP] and self.rect.left > 0 and self.rect.top > 0:
-                self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
-                self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)
-            elif key[pygame.K_LEFT] and key[pygame.K_DOWN] and self.rect.left > 0 and self.rect.bottom < HEIGHT:
-                self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
-                self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
-            elif key[pygame.K_RIGHT] and key[pygame.K_UP] and self.rect.right < WIDTH and self.rect.top > 0:
-                self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
-                self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)
-            elif key[pygame.K_RIGHT] and key[pygame.K_DOWN] and self.rect.right < WIDTH and self.rect.bottom < HEIGHT:
-                self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
-                self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
+            if key[pygame.K_LEFT] and key[pygame.K_UP] or key[pygame.K_w] and key[pygame.K_a]:
+                if self.rect.left > 0 and self.rect.top > 0:
+                    self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
+                    self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)
+            elif key[pygame.K_LEFT] and key[pygame.K_DOWN] or key[pygame.K_a] and key[pygame.K_s]:
+                if self.rect.left > 0 and self.rect.bottom < HEIGHT:
+                    self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
+                    self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
+            elif key[pygame.K_RIGHT] and key[pygame.K_UP] or key[pygame.K_d] and key[pygame.K_w]:
+                if self.rect.right < WIDTH and self.rect.top > 0:
+                    self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
+                    self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)
+            elif key[pygame.K_RIGHT] and key[pygame.K_DOWN] or key[pygame.K_d] and key[pygame.K_s]:
+                if self.rect.right < WIDTH and self.rect.bottom < HEIGHT:
+                    self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
+                    self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
             # Player Keyboard Movement - (LEFT, RIGHT, UP, DOWN):
-            elif key[pygame.K_LEFT] and self.rect.left > 0:
-                self.rect.x -= self.vel_x
-            elif key[pygame.K_RIGHT] and self.rect.right < WIDTH:
-                self.rect.x += self.vel_x
-            elif key[pygame.K_UP] and self.rect.top > 0:
-                self.rect.y -= self.vel_y
-            elif key[pygame.K_DOWN] and self.rect.bottom < HEIGHT:
-                self.rect.y += self.vel_y
+            elif key[pygame.K_LEFT] or key[pygame.K_a]:
+                if self.rect.left > 0:
+                    self.rect.x -= self.vel_x
+            elif key[pygame.K_RIGHT] or key[pygame.K_d]:
+                if self.rect.right < WIDTH:
+                    self.rect.x += self.vel_x
+            elif key[pygame.K_UP] or key[pygame.K_w]:
+                if self.rect.top > 0:
+                    self.rect.y -= self.vel_y
+            elif key[pygame.K_DOWN] or key[pygame.K_s]:
+                if self.rect.bottom < HEIGHT:
+                    self.rect.y += self.vel_y
             # Player Bullet Keyboard:
             if key[pygame.K_SPACE]:
                 # Create Player Bullet Object:

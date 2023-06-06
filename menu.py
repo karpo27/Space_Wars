@@ -119,15 +119,15 @@ class Menu(BaseState):
         if event.type == pygame.QUIT:
             self.quit = True
         elif event.type == pygame.KEYDOWN and self.allow_movement:
-            if event.key == pygame.K_DOWN:
+            if event.key in [pygame.K_DOWN, pygame.K_s]:
                 self.handle_movement(1)
-            elif event.key == pygame.K_UP:
+            elif event.key in [pygame.K_UP, pygame.K_w]:
                 self.handle_movement(-1)
             elif event.key == pygame.K_RETURN:
                 self.handle_action()
-            elif event.key == pygame.K_LEFT and self.screen == "AUDIO":
+            elif event.key in [pygame.K_LEFT, pygame.K_a] and self.screen == "AUDIO":
                 self.handle_left_audio(audio)
-            elif event.key == pygame.K_RIGHT and self.screen == "AUDIO":
+            elif event.key in [pygame.K_RIGHT, pygame.K_d] and self.screen == "AUDIO":
                 self.handle_right_audio(audio)
 
         # Pointer Movement Boundaries:

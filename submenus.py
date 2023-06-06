@@ -25,8 +25,8 @@ class Controls(BaseState):
         super().__init__()
         self.pos_left = self.left_x, self.left_y = WIDTH / 3 + 50, HEIGHT / 3 - 80
         self.pos_right = self.left_x + 300, self.left_y
-        self.text_left = ["Move Forward", "Move Back", "Move Left", "Move Right", "Fire"]
-        self.text_right = ["W / ARROW UP", "S / ARROW DOWN", "A / ARROW LEFT", "D / ARROW RIGHT", "SPACE"]
+        self.text_left = ["Move Forward", "Move Back", "Move Left", "Move Right", "Fire", "Pause Menu"]
+        self.text_right = ["W / ARROW UP", "S / ARROW DOWN", "A / ARROW LEFT", "D / ARROW RIGHT", "SPACE", "ESC"]
         self.controls = []
         self.controls.append(TextCreator(self.index, "BACK", self.font_type, 48, 52, self.base_color, self.hover_color,
                                          (WIDTH / 2, 5 / 6 * HEIGHT), "", 50))
