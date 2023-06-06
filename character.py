@@ -54,6 +54,9 @@ class Character(pygame.sprite.Sprite):
         if part_range is not None:
             self.part_min, self.part_max = part_range
 
+        # Others:
+        self.keyboard_blocked = False
+
     def move_x(self):
         self.rect.x += self.vel_x
 

@@ -146,8 +146,8 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
                 ]'''
-ENEMIES_LVL1 = ['e', 'e', 'a', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd']
-#ENEMIES_LVL1 = []
+#ENEMIES_LVL1 = ['e', 'e', 'a', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd']
+ENEMIES_LVL1 = []
 # Sounds - Path, Volume:
 SOUNDS = {
     'menu_movement': ['menu_movement.mp3', 0.7],

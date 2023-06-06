@@ -55,6 +55,9 @@ class Level1(BaseState):
         self.enemy_event = pygame.USEREVENT + 0
         pygame.time.set_timer(self.enemy_event, self.time_to_spawn)
 
+        # Level Music:
+        self.play_win_level_music = True
+
     def handle_pause(self):
         self.next_state = "PAUSE"
         self.screen_done = True
@@ -99,7 +102,9 @@ class Level1(BaseState):
             win_bg.play_bg_music(-1)
         if self.player.state == "alive":
             self.player.end_animation = True
-            win_level_bg.play_bg_music(0)
+            if self.play_win_level_music:
+                win_level_bg.play_bg_music(0)
+                self.play_win_level_music = False
 
     def handle_game_over(self):
         if self.next_screen_rate >= self.next_screen_ref_time:
@@ -129,6 +134,7 @@ class Level1(BaseState):
 
         # Check Win Condition:
         if not self.boss_to_spawn and len(self.enemies_group) == 0:
+            self.player.keyboard_blocked = True
             self.handle_win()
         # Check Game Over Condition:
         if self.player.state == "dead":

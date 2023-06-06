@@ -94,36 +94,37 @@ class Player(Character):
             self.state = "winner"
 
     def handle_action(self):
-        key = pygame.key.get_pressed()
-        # Player Keyboard Diagonal Movement - (UP-LEFT, DOWN-LEFT, UP-RIGHT, DOWN-RIGHT):
-        if key[pygame.K_LEFT] and key[pygame.K_UP] and self.rect.left > 0 and self.rect.top > 0:
-            self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
-            self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)
-        elif key[pygame.K_LEFT] and key[pygame.K_DOWN] and self.rect.left > 0 and self.rect.bottom < HEIGHT:
-            self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
-            self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
-        elif key[pygame.K_RIGHT] and key[pygame.K_UP] and self.rect.right < WIDTH and self.rect.top > 0:
-            self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
-            self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)
-        elif key[pygame.K_RIGHT] and key[pygame.K_DOWN] and self.rect.right < WIDTH and self.rect.bottom < HEIGHT:
-            self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
-            self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
-        # Player Keyboard Movement - (LEFT, RIGHT, UP, DOWN):
-        elif key[pygame.K_LEFT] and self.rect.left > 0:
-            self.rect.x -= self.vel_x
-        elif key[pygame.K_RIGHT] and self.rect.right < WIDTH:
-            self.rect.x += self.vel_x
-        elif key[pygame.K_UP] and self.rect.top > 0:
-            self.rect.y -= self.vel_y
-        elif key[pygame.K_DOWN] and self.rect.bottom < HEIGHT:
-            self.rect.y += self.vel_y
-        # Player Bullet Keyboard:
-        if key[pygame.K_SPACE]:
-            # Create Player Bullet Object:
-            if self.fire_rate >= self.ref_time:
-                PlayerBullet(self.rect.center, *PLAYER_BULLETS['A'], self.bullet_group)
-                player_laser.play_sound()
-                self.fire_rate = 0
+        if not self.keyboard_blocked:
+            key = pygame.key.get_pressed()
+            # Player Keyboard Diagonal Movement - (UP-LEFT, DOWN-LEFT, UP-RIGHT, DOWN-RIGHT):
+            if key[pygame.K_LEFT] and key[pygame.K_UP] and self.rect.left > 0 and self.rect.top > 0:
+                self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
+                self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)
+            elif key[pygame.K_LEFT] and key[pygame.K_DOWN] and self.rect.left > 0 and self.rect.bottom < HEIGHT:
+                self.rect.x -= math.sqrt((self.vel_x ** 2) / 2)
+                self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
+            elif key[pygame.K_RIGHT] and key[pygame.K_UP] and self.rect.right < WIDTH and self.rect.top > 0:
+                self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
+                self.rect.y -= math.sqrt((self.vel_y ** 2) / 2)
+            elif key[pygame.K_RIGHT] and key[pygame.K_DOWN] and self.rect.right < WIDTH and self.rect.bottom < HEIGHT:
+                self.rect.x += math.sqrt((self.vel_x ** 2) / 2)
+                self.rect.y += math.sqrt((self.vel_y ** 2) / 2)
+            # Player Keyboard Movement - (LEFT, RIGHT, UP, DOWN):
+            elif key[pygame.K_LEFT] and self.rect.left > 0:
+                self.rect.x -= self.vel_x
+            elif key[pygame.K_RIGHT] and self.rect.right < WIDTH:
+                self.rect.x += self.vel_x
+            elif key[pygame.K_UP] and self.rect.top > 0:
+                self.rect.y -= self.vel_y
+            elif key[pygame.K_DOWN] and self.rect.bottom < HEIGHT:
+                self.rect.y += self.vel_y
+            # Player Bullet Keyboard:
+            if key[pygame.K_SPACE]:
+                # Create Player Bullet Object:
+                if self.fire_rate >= self.ref_time:
+                    PlayerBullet(self.rect.center, *PLAYER_BULLETS['A'], self.bullet_group)
+                    player_laser.play_sound()
+                    self.fire_rate = 0
 
     def reset_variables(self):
         # Reset Fire Bullet Variables:
