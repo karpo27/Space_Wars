@@ -89,7 +89,7 @@ Z = {
 }
 # Bosses - Category, Path, Scale, Action[Movement], Velocity, HP, Shoot, Fire Rate, Explosion Scale, Particles Range:
 BOSSES = {
-    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 3, False, None, 2.0, (70, 90)]
+    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 30, False, None, 2.0, (70, 90)]
 }
 # Bosses Bullets - Image, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {

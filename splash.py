@@ -23,10 +23,10 @@ class Splash(BaseState):
 
         # Time on Screen:
         self.time_text = 0
-        self.time_render = 0   # 40 ms
-        self.time_on_screen = self.time_render + 0    # 130 ms
-        self.time_start_fadeout = self.time_on_screen + 0     # 160 ms
-        self.time_next_screen = self.time_start_fadeout + 0   # 140 ms
+        self.time_render = 40   # 40 ms
+        self.time_on_screen = self.time_render + 130    # 130 ms
+        self.time_start_fadeout = self.time_on_screen + 160     # 160 ms
+        self.time_next_screen = self.time_start_fadeout + 140   # 140 ms
 
     def render_image(self):
         if self.time_render <= self.time_text < self.time_on_screen:

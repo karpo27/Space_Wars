@@ -5,7 +5,6 @@ import pygame
 
 
 class Character(pygame.sprite.Sprite):
-
     def __init__(self, category, img_path, scale, vel, hp, fire_rate=None, explo_scale=None, part_range=None, bullet_group=None, effects_group=None):
         super().__init__()
         # Image:
