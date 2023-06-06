@@ -59,7 +59,7 @@ After you opened it:
 
 ## Demo Video
 
-(deveoloping...)
+(developing...)
 
 ## Contributing
 If you find any bugs or want to suggest new features, please open an issue on the GitHub repository. You can also submit a pull request if you want to contribute to the development of the application.
