@@ -3,7 +3,7 @@ from constants import *
 from character import Character
 from enemies import EnemyBullet
 from game_effects import Explosion, Particle, HitParticle
-from sound import boss_laser, boss_explosion, player_hit
+from sound import boss_laser, boss_deflect, boss_explosion, player_hit
 from hud import score
 
 # Modules
@@ -147,6 +147,10 @@ class Boss(Character):
                 self.destroy_animation = True
                 # Score:
                 score.update_score(self.enemy_score)
+        else:
+            for num_particles in range(random.randrange(6, 18)):
+                HitParticle(pos, (255, 255, 255), (159, 163, 167), 1, self.effects_group)
+            boss_deflect.play_sound()
 
     def destroy(self):
         pygame.mixer.music.fadeout(3000)

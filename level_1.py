@@ -85,7 +85,7 @@ class Level1(BaseState):
         k = self.boss[0]
         self.enemies_group.add(Boss(*k, self.enemies_bullets_group, self.effects_group))    # type: ignore
         self.boss_to_spawn = False
-        boss_bg.play_bg_music(-1, 7000)
+        boss_bg.play_bg_music(-1, 6000)
 
     def spawn_item_hp(self):
         number = random.randint(1, 10)

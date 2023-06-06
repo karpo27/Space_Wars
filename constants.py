@@ -23,7 +23,8 @@ BACKGROUNDS = {
 SCENE_CHARS = {
     'operator': ['O', 'Images/Scenes/', 1, [-WIDTH/6, 4/5 * HEIGHT], [5, 0], WIDTH/9, 1],
     'commander': ['C', 'Images/Scenes/', 1, [7/6 * WIDTH, 4/5 * HEIGHT], [-5, 0], 3/4 * WIDTH, 1],
-    'dialogue': ['D', 'Images/Scenes/', 1.3, [WIDTH/2, 4/5 * HEIGHT], [0, 4], 2 * WIDTH, 1]
+    'dialogue': ['D', 'Images/Scenes/', 1.3, [WIDTH/2, 4/5 * HEIGHT], [0, 4], 2 * WIDTH, 1],
+    'general_bugfix': ['B', 'Images/Scenes/', 1, [WIDTH/2, 4/5 * HEIGHT], [0, 0], 2 * WIDTH, 1]
 }
 # Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range, Propulsion Scale:
 PLAYER = ['A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38), 0.21]
@@ -158,15 +159,16 @@ SOUNDS = {
     'scene_1_dialogue_globe': ['scene_1_dialogue_globe.mp3', 0.1],
     'scene_1_dialogue_letter': ['scene_1_dialogue_letter.mp3', 0.1],
     'player_laser': ['player_laser.mp3', 0.04],
-    'player_hit': ['player_hit.mp3', 0.08],
+    'player_hit': ['player_hit.mp3', 0.07],
     'player_explosion': ['player_explosion.wav', 0.15],
     'player_item_hp': ['player_item_hp.mp3', 0.8],
     'player_item_life': ['player_item_life.mp3', 0.7],
     'enemy_laser': ['enemy_laser.wav', 0.15],
-    'enemy_hit': ['player_hit.mp3', 0.08],
+    'enemy_hit': ['player_hit.mp3', 0.07],
     'enemy_explosion': ['player_explosion.wav', 0.07],
     'enemy_e_flyby': ['enemy_e_flyby.mp3', 0.07],
     'boss_laser': ['enemy_laser.wav', 0.12],
+    'boss_deflect': ['boss_deflect.mp3', 0.12],
     'boss_explosion': ['boss_explosion.mp3', 0.1],
     'win_fireworks': ['win_fireworks.mp3', 0.06]
 
