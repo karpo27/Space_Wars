@@ -151,7 +151,7 @@ ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
                 ]
 # Test Groups:
 #ENEMIES_LVL1 = ['d', 'd', 'd', 'd', 'd', 'd', 'd']
-#ENEMIES_LVL1 = []aa
+#ENEMIES_LVL1 = []
 
 # Sounds - Path, Volume:
 SOUNDS = {
