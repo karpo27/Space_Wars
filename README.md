@@ -12,7 +12,7 @@ Table of Contents:
 - [Installation](#Installation)
 - [How to Play](#How-to-Play)
 - [Screenshots](#Screenshots)
-- [Demo Video](#Demo-Video)
+- [Demo Videos](#Demo-Videos)
 - [Contributing](#Contributing)
 - [How to reach me](#How-to-reach-me)
 
@@ -57,7 +57,7 @@ After you opened it:
   <img src="https://github.com/karpo27/Space_Wars/assets/54405665/b62568e5-947a-4618-a22c-9746fcef54c1">
 </p>
 
-## Demo Video
+## Demo Videos
 
 https://github.com/karpo27/Space_Wars/assets/54405665/d9672d58-bfef-4fdf-b137-fa37a50e51dc
 
