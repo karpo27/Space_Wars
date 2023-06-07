@@ -41,7 +41,7 @@ class BaseState(object):
         # Back Text:
         self.back = TextCreator(self.index, "BACK", self.font_type, 48, 48, self.base_color, self.hover_color,
                                 (WIDTH / 2, 9 / 10 * HEIGHT), "", 50)
-        self.back_ref_time = 950
+        self.back_ref_time = 750
         self.back_time = 0
 
         # Score:
