@@ -59,7 +59,9 @@ After you opened it:
 
 ## Demo Video
 
-(developing...)
+https://github.com/karpo27/Space_Wars/assets/54405665/d9672d58-bfef-4fdf-b137-fa37a50e51dc
+
+https://github.com/karpo27/Space_Wars/assets/54405665/bbb73445-997d-4bbf-96a3-26829d04395f
 
 ## Contributing
 If you find any bugs or want to suggest new features, please open an issue on the GitHub repository. You can also submit a pull request if you want to contribute to the development of the application.
