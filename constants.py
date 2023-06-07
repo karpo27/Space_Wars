@@ -175,7 +175,6 @@ SOUNDS = {
     'boss_deflect': ['boss_deflect.mp3', 0.11],
     'boss_explosion': ['boss_explosion.mp3', 0.1],
     'win_fireworks': ['win_fireworks.mp3', 0.06]
-
 }
 # Music - Path, Volume:
 MUSICS = {
