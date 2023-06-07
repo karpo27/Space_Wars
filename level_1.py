@@ -69,10 +69,10 @@ class Level1(BaseState):
 
     def spawn_enemy(self):
         if 0 <= self.enemy_index <= (len(self.enemies) - 1) * 1 / 3:
-            self.time_to_spawn = 4000
+            self.time_to_spawn = 3700
             self.reset_enemy_timer(self.time_to_spawn)
         elif (len(self.enemies) - 1) * 1 / 3 < self.enemy_index <= (len(self.enemies) - 1) * 2 / 3:
-            self.time_to_spawn = 3000
+            self.time_to_spawn = 2900
             self.reset_enemy_timer(self.time_to_spawn)
         elif (len(self.enemies) - 1) * 2 / 3 < self.enemy_index <= (len(self.enemies) - 1):
             self.time_to_spawn = 1500
