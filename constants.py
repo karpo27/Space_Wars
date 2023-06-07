@@ -27,7 +27,7 @@ SCENE_CHARS = {
     'general_bugfix': ['B', 'Images/Scenes/', 1, [WIDTH/2, 4/5 * HEIGHT], [0, 0], 2 * WIDTH, 1]
 }
 # Player - Category, Path, Scale, Pos, Velocity, HP, Lives, State, Explosion Scale, Particles Range, Propulsion Scale:
-PLAYER = ['A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 0, "alive", 30, 0.85, (22, 38), 0.21]
+PLAYER = ['A', 'Images/Player/', 1, [WIDTH / 2, 19 / 18 * HEIGHT], [6, 6], 3, 3, "alive", 30, 0.85, (22, 38), 0.21]
 # Player Bullet - Path, Image Quantity, Scale, Animation Delay, Movement, Velocity, Angle, Bounce, Bullet Sound, Explosion Sound:
 PLAYER_BULLETS = {
     'A': ['Images/Player_Bullet/', 5, 0.4, 6, 1, [0, -13], 0, False]
@@ -37,7 +37,7 @@ ENEMIES = {
     'a': ['A', 'Images/Enemies/', 0.6, 3, [1, 2], 2, True, ('a1', 'a2'), 200, 0.8, (6, 24)],
     'b': ['B', 'Images/Enemies/', 0.8, 2, [1, 2], 5, True, ('b1', 'b2', 'b3', 'b4', 'b5', 'b6'), 200, 1.5, (16, 30)],
     'c': ['C', 'Images/Enemies/', 0.8, 4, [2, 2], 3, True, ('c1', 'c2'), 200, 0.9, (9, 26)],
-    'd': ['D', 'Images/Enemies/', 0.4, 5, [3, 1], 1, True, 'd', 100, 0.6, (6, 24)],
+    'd': ['D', 'Images/Enemies/', 0.4, 5, [4, 1], 1, True, 'd', 100, 0.6, (6, 24)],
     'e': ['E', 'Images/Enemies/', 0.8, 1, [0, 5], 2, False, None, 0, 1.4, (5, 22)],
     'f1': ['F', 'Images/Enemies/', 0.7, 1, [1, 2], 2, True, ('f', 'd'), 100, 1.1, (9, 26)],
     'f2': ['F', 'Images/Enemies/', 0.7, 1, [-1, 2], 2, True, ('f', 'd'), 100, 1.1, (9, 26)]
@@ -90,7 +90,7 @@ Z = {
 }
 # Bosses - Category, Path, Scale, Action[Movement], Velocity, HP, Shoot, Fire Rate, Explosion Scale, Particles Range:
 BOSSES = {
-    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 30, False, None, 2.0, (70, 90)]
+    'b': ['B', 'Images/Bosses/', 1, [W, X, Y, Z], [2, 5], 150, False, None, 2.0, (70, 90)]
 }
 # Bosses Bullets - Image, Image Quantity, Scale, Animation Delay, Movement Type, Velocity, Angle, Sound, Explosion Sound:
 BOSSES_BULLETS = {
@@ -128,27 +128,31 @@ ITEMS = {
     "life": ['Images/Items/life', 0.38, [2, 3], True]
 }
 # List of Enemies per Level:
-'''
+
 ENEMIES_LVL1 = ['a', 'a', 'a', 'a', 'a', 'a',
-                'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
+                'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'b',
                 'a', 'b', 'a',
-                'f1', 'f1', 'f1', 'f2', 'f2', 'f1', 'f2',
+                'f1', 'f1', 'f1', 'e', 'f2', 'f2', 'f1', 'f2',
                 'e', 'e', 'e', 'a', 'a', 'd', 'd',
                 'c', 'c', 'b', 'a', 'f1', 'f2', 'f1',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'b', 'c', 'b', 'a', 'a', 'a', 'c',
                 'c', 'a', 'c', 'a', 'c', 'a', 'c',
                 'f1', 'f2', 'f1', 'f2', 'f1', 'f2',
-                'f1', 'f2', 'f1', 'f2', 'f1', 'f2',
+                'f1', 'f2', 'f1', 'f2'
                 'b', 'b', 'b',
                 'e', 'b', 'e', 'a', 'a', 'e', 'b', 'e', 'b', 'e',
                 'f1', 'f2', 'f1', 'e', 'f2', 'f1', 'f2',
                 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd',
                 'c', 'b', 'c', 'a', 'a', 'c', 'b', 'c', 'e', 'e',
-                ]'''
-#ENEMIES_LVL1 = ['e', 'e', 'a', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd']
-ENEMIES_LVL1 = []
+                'a', 'b', 'c', 'a', 'b', 'c', 'a', 'e', 'e', 'b',
+                'c', 'b', 'e', 'a', 'e', 'b', 'e', 'e', 'a', 'b',
+                ]
+# Test Groups:
+#ENEMIES_LVL1 = ['d', 'd', 'd', 'd', 'd', 'd', 'd']
+#ENEMIES_LVL1 = []
+
 # Sounds - Path, Volume:
 SOUNDS = {
     'menu_movement': ['menu_movement.mp3', 0.7],
@@ -159,16 +163,16 @@ SOUNDS = {
     'scene_1_dialogue_globe': ['scene_1_dialogue_globe.mp3', 0.1],
     'scene_1_dialogue_letter': ['scene_1_dialogue_letter.mp3', 0.1],
     'player_laser': ['player_laser.mp3', 0.04],
-    'player_hit': ['player_hit.mp3', 0.07],
+    'player_hit': ['player_hit.mp3', 0.06],
     'player_explosion': ['player_explosion.wav', 0.15],
     'player_item_hp': ['player_item_hp.mp3', 0.8],
     'player_item_life': ['player_item_life.mp3', 0.7],
     'enemy_laser': ['enemy_laser.wav', 0.15],
-    'enemy_hit': ['player_hit.mp3', 0.07],
+    'enemy_hit': ['player_hit.mp3', 0.06],
     'enemy_explosion': ['player_explosion.wav', 0.07],
     'enemy_e_flyby': ['enemy_e_flyby.mp3', 0.07],
     'boss_laser': ['enemy_laser.wav', 0.12],
-    'boss_deflect': ['boss_deflect.mp3', 0.12],
+    'boss_deflect': ['boss_deflect.mp3', 0.11],
     'boss_explosion': ['boss_explosion.mp3', 0.1],
     'win_fireworks': ['win_fireworks.mp3', 0.06]
 

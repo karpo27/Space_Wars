@@ -88,7 +88,7 @@ class Level1(BaseState):
         boss_bg.play_bg_music(-1, 6000)
 
     def spawn_item_hp(self):
-        number = random.randint(1, 10)
+        number = random.randint(1, 15)
         if number == 1:
             self.hp_items_group.add(HP(*ITEMS["hp"]))   # type: ignore
 

@@ -115,7 +115,7 @@ class Enemy(Character):
             elif self.movement == 4:
                 self.movement_3()
             elif self.movement == 5:
-                self.image, self.rect = self.movement_4(WIDTH/5, 11/15 * WIDTH)
+                self.image, self.rect = self.movement_4(WIDTH/3, 2/3 * WIDTH - 60)
         # Enemy Bullet:
         self.spawn_bullet()
 
